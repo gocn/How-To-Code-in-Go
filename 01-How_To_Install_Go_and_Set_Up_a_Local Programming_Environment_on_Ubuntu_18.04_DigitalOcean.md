@@ -30,17 +30,34 @@ Once the terminal is open, you will manually install the Go binaries. While you 
 
 Before downloading Go, make sure that you are in the home (`~`) directory:
 
+```shell
+cd ~
+```
+
 Use `curl` to retrieve the tarball URL that you copied from the official Go downloads page:
+
+```shell
+curl -LO https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz
+```
 
 Next, use `sha256sum` to verify the tarball:
 
+```shell
+sha256sum go1.12.1.linux-amd64.tar.gz
+```
+
 The hash that is displayed from running the above command should match the hash that was on the downloads page. If it does not, then this is not a valid file and you should download the file again.
 
-```
-Output2a3fdabf665496a0db5f41ec6af7a9b15a49fbe71a85a50ca38b1f13a103aeec  go1.12.1.linux-amd64.tar.gz
+```shell
+Output
+2a3fdabf665496a0db5f41ec6af7a9b15a49fbe71a85a50ca38b1f13a103aeec  go1.12.1.linux-amd64.tar.gz
 ```
 
 Next, extract the downloaded archive and install it to the desired location on the system. It’s considered best practice to keep it under `/usr/local`:
+
+```shell
+sudo tar -xvf go1.12.1.linux-amd64.tar.gz -C /usr/local
+```
 
 You will now have a directory called `go` in the `/usr/local` directory.
 
@@ -61,7 +78,7 @@ You will see directories like `github.com`, `golang.org`, or others when your pr
 
 Here is what a typical workspace may look like:
 
-```
+```shell
 .
 ├── bin
 │   ├── buffalo                                      # command executable
@@ -86,11 +103,15 @@ The default directory for the Go workspace as of 1.8 is your user’s home direc
 
 Issue the following command to create the directory structure for your Go workspace:
 
+```shell
+mkdir -p $HOME/go/{bin,src}
+```
+
 The `-p` option tells `mkdir` to create all `parents` in the directory, even if they don’t currently exist. Using `{bin,src}` creates a set of arguments to `mkdir` and tells it to create both the `bin` directory and the `src` directory.
 
 This will ensure the following directory structure is now in place:
 
-```
+```shell
 └── $HOME
     └── go
         ├── bin
@@ -103,19 +124,21 @@ You can set your `$GOPATH` by adding the global variables to your `~/.profile`. 
 
 First, open `~/.profile` with `nano` or your preferred text editor:
 
+```shell
+nano ~/.profile
+```
+
 Set your `$GOPATH` by adding the following to the file:
 
-~/.profile
-
 ```
+~/.profile
 export GOPATH=$HOME/go
 ```
 
 When Go compiles and installs tools, it will put them in the `$GOPATH/bin` directory. For convenience, it’s common to add the workspace’s `/bin` subdirectory to your `PATH` in your `~/.profile`:
 
-~/.profile
-
 ```
+~/.profile
 export PATH=$PATH:$GOPATH/bin
 ```
 
@@ -123,9 +146,8 @@ This will allow you to run any programs you compile or download via the Go tools
 
 Finally, you need to add the `go` binary to your `PATH`. You can do this by adding `/usr/local/go/bin` to the end of the line:
 
-~/.profile
-
 ```
+~/.profile
 export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 ```
 
@@ -133,26 +155,41 @@ Adding `/usr/local/go/bin` to your `$PATH` makes all of the Go tools available a
 
 To update your shell, issue the following command to load the global variables:
 
+```shell
+. ~/.profile
+```
+
 You can verify your `$PATH` is updated by using the `echo` command and inspecting the output:
+
+```shell
+echo $PATH
+```
 
 You will see your `$GOPATH/bin` which will show up in your home directory. If you are logged in as `root`, you would see `/root/go/bin` in the path.
 
 ```
-Output/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/go/bin:/usr/local/go/bin
+Output
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/go/bin:/usr/local/go/bin
 ```
 
 You will also see the path to the Go tools for `/usr/local/go/bin`:
 
 ```
-Output/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/go/bin:/usr/local/go/bin
+Output
+/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/go/bin:/usr/local/go/bin
 ```
 
 Verify the installation by checking the current version of Go:
 
+```shell
+go version
+```
+
 And we should receive output like this:
 
 ```
-Outputgo version go1.12.1 linux/amd64
+Output
+go version go1.12.1 linux/amd64
 ```
 
 Now that you have the root of the workspace created and your `$GOPATH` environment variable set, you can create your future projects with the following directory structure. This example assumes you are using `github.com` as your repository:
@@ -169,13 +206,21 @@ $GOPATH/src/github.com/digitalocean/godo
 
 This project structure will make projects available with the `go get` tool. It will also help readability later. You can verify this by using the `go get` command and fetch the `godo` library:
 
+```shell
+go get github.com/digitalocean/godo
+```
+
 This will download the contents of the `godo` library and create the `$GOPATH/src/github.com/digitalocean/godo` directory on your machine.
 
 You can check to see if it successfully downloaded the `godo` package by listing the directory:
 
+```shell
+ll $GOPATH/src/github.com/digitalocean/godo
+```
+
 You should see output similar to this:
 
-```
+```shell
 Outputdrwxr-xr-x 4 root root  4096 Apr  5 00:43 ./
 drwxr-xr-x 3 root root  4096 Apr  5 00:43 ../
 drwxr-xr-x 8 root root  4096 Apr  5 00:43 .git/
@@ -198,7 +243,21 @@ Now that you have the Go workspace set up, create a “Hello, World!” program.
 
 From your home directory, open up a command-line text editor, such as `nano`, and create a new file:
 
+```sh
+nano hello.go
+```
+
 Write your program in the new file:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, World!")
+}
+```
 
 This code will use the `fmt` package and call the `Println` function with `Hello, World!` as the argument. This will cause the phrase `Hello, World!` to print out to the terminal when the program is run.
 
@@ -213,7 +272,8 @@ go run hello.go
 The `hello.go` program will cause the terminal to produce the following output:
 
 ```
-OutputHello, World!
+Output
+Hello, World!
 ```
 
 In this step, you used a basic program to verify that your Go workspace is properly configured.
