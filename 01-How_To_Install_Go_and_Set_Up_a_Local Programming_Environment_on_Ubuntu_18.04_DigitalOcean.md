@@ -34,28 +34,29 @@
 cd ~
 ```
 
+
 根据从官方 Go 下载页面复制的压缩包 URL，使用 `curl` 命令拉取下载：
 
-  ```sh
+  ```shell
   curl -LO https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz
   ```
 
 接下来，使用 `sha256sum` 命令来校验压缩包：
 
-```sh
+```shell
 sha256sum go1.12.1.linux-amd64.tar.gz
 ```
 
 运行上面命令显示的哈希值应该和下载页面的哈希值一致，如果不一致的话，那么这个压缩包就不是一个有效文件，需要重新下载。
 
-```sh
+```shell
 Output
 2a3fdabf665496a0db5f41ec6af7a9b15a49fbe71a85a50ca38b1f13a103aeec  go1.12.1.linux-amd64.tar.gz
 ```
 
 接下来，解压下载的文件并将其安装到系统所需位置。一般都是放在 `/usr/local` 目录下面：
 
-```sh
+```shell
 sudo tar -xvf go1.12.1.linux-amd64.tar.gz -C /usr/local
 ```
 
@@ -78,7 +79,7 @@ sudo tar -xvf go1.12.1.linux-amd64.tar.gz -C /usr/local
 
 下面是典型的工作区目录结构：
 
-```
+```shell
 .
 ├── bin
 │   ├── buffalo                                      # command executable
@@ -111,7 +112,7 @@ mkdir -p $HOME/go/{bin,src}
 
 以上命令将确保下面的目录结构各就各位：
 
-```
+```shell
 └── $HOME
     └── go
         ├── bin
@@ -124,7 +125,7 @@ mkdir -p $HOME/go/{bin,src}
 
 首先，使用 `nano` 或你喜欢的文本编辑器打开 `~/.profile`：
 
-```sh
+```shell
 nano ~/.profile
 ```
 
@@ -153,12 +154,11 @@ export PATH=$PATH:$GOPATH/bin:/usr/local/go/bin
 
 将 `/usr/local/go/bin` 添加到 `$PATH` 中，可以使所有 Go 工具都可以在系统上的任何位置使用。
 
-为了更新你的 shell 配置，请使用下面的命令来加载全局变量：
+为了更新你的 shell 配置，请使用下面的命令来加载全局变量:
 
 ```shell
 . ~/.profile
 ```
-
 您可以通过使用 `echo` 命令并检查其输出，来验证你的 `$PATH` 是否已更新：
 
 ```shell
@@ -174,14 +174,14 @@ Output
 
 你还会看到  `/usr/local/go/bin` 的 Go 工具的路径：
 
-```
+```shell
 Output
 /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/go/bin:/usr/local/go/bin
 ```
 
 通过检查 Go 的当前版本来验证安装：
 
-```sh
+```shell
 go version
 ```
 
@@ -206,12 +206,10 @@ $GOPATH/src/github.com/digitalocean/godo
 
 该项目结构使项目可以通过 `go get` 工具使用。它也有助于以后的可读性。 你可以通过使用 `go get` 命令并获取 `godo` 库来验证这一点：
 
-```
+```shell
 go get github.com/digitalocean/godo
 ```
-
 这将下载 `godo` 库的内容并在你的计算机上创建 `$GOPATH/src/github.com/digitalocean/godo` 目录。
-
 你可以通过列出目录来检查下看看是否成功下载了 `godo`包：
 
 ```shell
@@ -221,6 +219,7 @@ ll $GOPATH/src/github.com/digitalocean/godo
 你应该看到类似下面这样的输出：
 
 ```shell
+>>>>>>> main
 Outputdrwxr-xr-x 4 root root  4096 Apr  5 00:43 ./
 drwxr-xr-x 3 root root  4096 Apr  5 00:43 ../
 drwxr-xr-x 8 root root  4096 Apr  5 00:43 .git/
@@ -249,7 +248,7 @@ nano hello.go
 
 在新文件里写下你的程序：
 
-```shell
+```go
 package main
 
 import "fmt"
