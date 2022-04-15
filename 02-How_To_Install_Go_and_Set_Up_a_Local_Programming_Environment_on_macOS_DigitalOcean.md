@@ -28,15 +28,24 @@ Now that you have opened up Terminal, you can download and install [Xcode](https
 
 Xcode is an _integrated development environment_ (IDE) that is comprised of software development tools for macOS. You can check if Xcode is already installed by typing the following in the Terminal window:
 
+```shell
+xcode-select -p
+```
+
 The following output means that Xcode is installed:
 
 ```
-Output/Library/Developer/CommandLineTools
+Output
+/Library/Developer/CommandLineTools
 ```
 
 If you received an error, then in your web browser install \[Xcode from the App Store\] ([https://itunes.apple.com/us/app/xcode/id497799835?mt=12&ign-mpt=uo%3D2](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&ign-mpt=uo%3D2)) and accept the default options.
 
 Once Xcode is installed, return to your Terminal window. Next, you’ll need to install Xcode’s separate Command Line Tools app, which you can do by typing:
+
+```shell
+xcode-select --install
+```
 
 At this point, Xcode and its Command Line Tools app are fully installed, and we are ready to install the package manager Homebrew.
 
@@ -45,6 +54,10 @@ At this point, Xcode and its Command Line Tools app are fully installed, and we 
 While the macOS Terminal has a lot of the functionality of Linux Terminals and other Unix systems, it does not ship with a package manager that accommodates best practices. A **package manager** is a collection of software tools that work to automate installation processes that include initial software installation, upgrading and configuring of software, and removing software as needed. They keep installations in a central location and can maintain all software packages on the system in formats that are commonly used. [**Homebrew**](https://brew.sh/) provides macOS with a free and open source software package managing system that simplifies the installation of software on macOS.
 
 To install Homebrew, type this into your Terminal window:
+
+```shell
+/usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+```
 
 Homebrew is made with Ruby, so it will be modifying your computer’s Ruby path. The `curl` command pulls a script from the specified URL. This script will explain what it will do and then pauses the process to prompt you to confirm. This provides you with a lot of feedback on what the script is going to be doing to your system and gives you the opportunity to verify the process.
 
@@ -60,9 +73,13 @@ Once the installation process is complete, we’ll put the Homebrew directory at
 
 You should create or open the `~/.bash_profile` file with the command-line text editor **nano** using the `nano` command:
 
+```shell
+nano ~/.bash_profile
+```
+
 Once the file opens up in the Terminal window, write the following:
 
-```
+```shell
 export PATH=/usr/local/bin:$PATH
 ```
 
@@ -70,41 +87,68 @@ To save your changes, hold down the `CTRL` key and the letter `o`, and when prom
 
 Activate these changes by executing the following in Terminal:
 
+```shell
+source ~/.bash_profile
+```
+
 Once you have done this, the changes you have made to the `PATH` environment variable will go into effect.
 
 You can make sure that Homebrew was successfully installed by typing:
 
+```shell
+brew doctor
+```
+
 If no updates are required at this time, the Terminal output will read:
 
 ```
-OutputYour system is ready to brew.
+Output
+Your system is ready to brew.
 ```
 
 Otherwise, you may get a warning to run another command such as `brew update` to ensure that your installation of Homebrew is up to date.
 
 Once Homebrew is ready, you can install Go.
 
-##Step 4 — Installing Go
+## Step 4 — Installing Go
 
 You can use Homebrew to search for all available packages with the `brew search` command. For the purpose of this tutorial, you will search for Go-related packages or modules:
+
+```shell
+brew search golang
+```
 
 **Note**: This tutorial does not use `brew search go` as it returns too many results. Because `go` is such a small word and would match many packages, it has become common to use `golang` as the search term. This is common practice when searching the internet for Go-related articles as well. The term _Golang_ was born from the domain for Go, which is `golang.org`.
 
 The Terminal will output a list of what you can install:
 
 ```
-Outputgolanggolang-migrate
+Output
+golanggolang-migrate
 ```
 
 Go will be among the items on the list. Go ahead and install it:
+
+```shell
+brew install golang
+```
 
 The Terminal window will give you feedback regarding the installation process of Go. It may take a few minutes before installation is complete.
 
 To check the version of Go that you installed, type the following:
 
+```shell
+go version
+```
+
 This will output the specific version of Go that is currently installed, which will by default be the most up-to-date, stable version of Go that is available.
 
 In the future, to update Go, you can run the following commands to first update Homebrew and then update Go. You don’t have to do this now, as you just installed the latest version:
+
+```shell
+brew update
+brew upgrade golang
+```
 
 `brew update` will update the formulae for Homebrew itself, ensuring you have the latest information for packages you want to install. `brew upgrade golang` will update the `golang` package to the latest release of the package.
 
@@ -125,7 +169,7 @@ The `src` subdirectory may contain multiple version control repositories (such a
 
 Here is what a typical workspace may look like:
 
-```
+```shell
 .
 ├── bin
 │   ├── buffalo                                      # command executable
@@ -150,11 +194,15 @@ The default directory for the Go workspace as of 1.8 is your user’s home direc
 
 Issue the following command to create the directory structure for your Go workspace:
 
+```shell
+mkdir -p $HOME/go/{bin,src}
+```
+
 The `-p` option tells `mkdir` to create all `parents` in the directory, even if they don’t currently exist. Using `{bin,src}` creates a set of arguments to `mkdir` and tells it to create both the `bin` directory and the `src` directory.
 
 This will ensure the following directory structure is now in place:
 
-```
+```shell
 └── $HOME
     └── go
         ├── bin
@@ -167,27 +215,28 @@ You can set your `$GOPATH` by adding it to your `~/.bash_profile`.
 
 First, open `~/.bash_profile` with `nano` or your preferred text editor:
 
+```shell
+nano ~/.bash_profile
+```
+
 Set your `$GOPATH` by adding the following to the file:
 
+```shell
 ~/.bash\_profile
-
-```
 export GOPATH=$HOME/go
 ```
 
 When Go compiles and installs tools, it will put them in the `$GOPATH/bin` directory. For convenience, it’s common to add the workspace’s `/bin` subdirectory to your `PATH` in your `~/.bash_profile`:
 
+```shell
 ~/.bash\_profile
-
-```
 export PATH=$PATH:$GOPATH/bin
 ```
 
 You should now have the following entries in your `~/.bash_profile`:
 
+```shell
 ~/.bash\_profile
-
-```
 export GOPATH=$HOME/go
 export PATH=$PATH:$GOPATH/bin
 ```
@@ -196,23 +245,32 @@ This will now allow you to run any programs you compile or download via the Go t
 
 To update your shell, issue the following command to load the global variables you just created:
 
+```shell
+. ~/.bash_profile
+```
+
 You can verify your `$PATH` is updated by using the `echo` command and inspecting the output:
+
+```shell
+echo $PATH
+```
 
 You should see your `$GOPATH/bin` which will show up in your home directory. If you were logged in as `sammy`, you would see `/Users/sammy/go/bin` in the path.
 
 ```
-Output/Users/sammy/go/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+Output
+/Users/sammy/go/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 ```
 
 Now that you have the root of the workspace created and your `$GOPATH` environment variable set, you will create your future projects with the following directory structure. This example assumes you are using [github.com](https://www.github.com/) as your repository:
 
-```
+```shell
 $GOPATH/src/github.com/username/project
 ```
 
 If you were working on the [https://github.com/digitalocean/godo](https://github.com/digitalocean/godo) project, you would put it in the following directory:
 
-```
+```shell
 $GOPATH/src/github.com/digitalocean/godo
 ```
 
@@ -220,11 +278,19 @@ Structuring your projects in this manner will make projects available with the `
 
 You can verify this by using the `go get` command to fetch the `godo` library:
 
+```shell
+go get github.com/digitalocean/godo
+```
+
 We can see it successfully downloaded the `godo` package by listing the directory:
+
+```shell
+ls -l $GOPATH/src/github.com/digitalocean/godo
+```
 
 You will receive output similar to this:
 
-```
+```shell
 Output-rw-r--r--  1 sammy  staff   2892 Apr  5 15:56 CHANGELOG.md
 -rw-r--r--  1 sammy  staff   1851 Apr  5 15:56 CONTRIBUTING.md
 .
@@ -244,7 +310,21 @@ Because you are creating a single Go source file, and not an actual project, you
 
 From your home directory, open up a command-line text editor, such as `nano`, and create a new file:
 
+```shell
+nano hello.go
+```
+
 Once the text file opens up in Terminal, type out your program:
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	fmt.Println("Hello, World!")
+}
+```
 
 Exit nano by typing the `control` and `x` keys, and when prompted to save the file press `y`.
 
@@ -252,10 +332,15 @@ This code will use the `fmt` package and call the `Println` function with `Hello
 
 Once you exit out of `nano` and return to your shell, run the program:
 
+```shell
+go run hello.go
+```
+
 The `hello.go` program that you just created will cause Terminal to produce the following output:
 
-```
-OutputHello, World!
+```shell
+Output
+Hello, World!
 ```
 
 In this step, you used a basic program to verify that your Go workspace is properly configured.
