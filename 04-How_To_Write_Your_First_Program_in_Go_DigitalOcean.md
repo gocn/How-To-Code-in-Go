@@ -1,86 +1,119 @@
-# How To Write Your First Program in Go
+# 如何用 Go 编写你的第一个程序
 
-## Introduction
+## 前言
 
-The “Hello, World!” program is a classic and time-honored tradition in computer programming. It’s a simple and complete first program for beginners, and it’s a good way to make sure your environment is properly configured.
+“Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。
 
-This tutorial will walk you through creating this program in Go. However, to make the program more interesting, you’ll modify the traditional “Hello, World!” program so that it asks the user for their name. You’ll then use the name in the greeting. When you’re done with the tutorial, you’ll have a program that looks like this when you run it:
+本教程将引导你在 Go 中创建此程序。 但是，为了使程序更有趣，你将修改传统的 “Hello, World!” 程序，以便它可以询问用户的姓名。 然后，你将在回复中使用该姓名。 完成本教程后，你将拥有一个运行起来如下所示的程序：
 
 ```
-OutputPlease enter your name.
+Output
+Please enter your name.
 Sammy
 Hello, Sammy! I'm Go!
 ```
 
-## Prerequisites
+## 安装前提
 
-Before you begin this tutorial, you will need a [local Go development environment](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go) set up on your computer. You can set this up by following one of these tutorials:
+在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
 
--   [How to Install Go and Set Up a Local Programming Environment on macOS](https://www.digitalocean.com/community/tutorials/how-to-install-go-and-set-up-a-local-programming-environment-on-macos)
--   [How to Install Go and Set Up a Local Programming Environment on Ubuntu 18.04](https://www.digitalocean.com/community/tutorials/how-to-install-go-and-set-up-a-local-programming-environment-on-ubuntu-18-04)
--   [How to Install Go and Set Up a Local Programming Environment on Windows 10](https://www.digitalocean.com/community/tutorials/how-to-install-go-and-set-up-a-local-programming-environment-on-windows-10)
+-   [如何在 macOS 上安装 Go 和设置本地编程环境](https://github.com/gocn/How-To-Code-in-Go/blob/main/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean.md)
+-   [如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境](https://github.com/gocn/How-To-Code-in-Go/blob/main/01-How_To_Install_Go_and_Set_Up_a_Local%20Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md)
+-   [如何在 Windows 10 上安装 Go 和设置本地编程环境](https://github.com/gocn/How-To-Code-in-Go/blob/main/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean.md)
 
-## Step 1 — Writing the Basic “Hello, World!” Program
+## 第一步 — 编写最基本的 “Hello, World!” 程序
 
-To write the “Hello, World!” program, open up a command-line text editor such as `nano` and create a new file:
-
-Once the text file opens up in the terminal window, you’ll type out your program:
-
-hello.go
-
-Let’s break down the different components of the code.
-
-`package` is a Go _keyword_ that defines which code bundle this file belongs to. There can be only one package per folder, and each `.go` file has to declare the same package name at the top of its file. In this example, the code belongs to the `main` package.
-
-`import` is a Go _keyword_ that tells the Go compiler which other packages you want to use in this file. Here you import the `fmt` package that comes with the standard library. The `fmt` package provides formatting and printing functions that can be useful when developing.
-
-`fmt.Println` is a Go _function_, found in the `fmt` package, that tells the computer to print some text to the screen.
-
-You follow the `fmt.Println` function by a sequence of characters, like `"Hello, World!"`, enclosed in quotation marks. Any characters that are inside of quotation marks are called a _string_. The `fmt.Println` function will print this string to the screen when the program runs.
-
-Save and exit `nano` by typing `CTRL + X`, when prompted to save the file, press `Y`.
-
-Now you can try your program.
-
-## Step 2 — Running a Go Program
-
-With your “Hello, World!” program written, you’re ready to run the program. You’ll use the `go` command, followed by the name of the file you just created.
-
-The program will execute and display this output:
+为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 `nano`，然后创建一个新文件：
 
 ```
-OutputHello, World!
+nano hello.go
 ```
 
-Let’s explore what actually happened.
-
-Go programs need to compile before they run. When you call `go run` with the name of a file, in this case `hello.go`, the `go` command will _compile_ the application and then run the resulting binary. For programs written in _compiled_ programming languages, a compiler will take the source code of a program and generate another type of lower-level code (such as machine code) to produce an executable program.
-
-Go applications require a `main` package and exactly **one** `main()` function that serves as the entry point for the application. The `main` function takes no arguments and returns no values. Instead it tells the Go compiler that the package should be compiled as an executable package.
-
-Once compiled, the code executes by entering the `main()` function in the `main` package. It executes the line `fmt.Println("Hello, World!")` by _calling_ the `fmt.Println` function. The string value of `Hello, World!` is then _passed_ to the function. In this example, the string `Hello, World!` is also called an _argument_ since it is a value that is passed to a method.
-
-The quotes that are on either side of `Hello, World!` are not printed to the screen because you use them to tell Go where your string begins and ends.
-
-In this step, you’ve created a working “Hello, World!” program with Go. In the next step, you will explore how to make the program more interactive.
-
-## Step 3 — Prompting for User Input
-
-Every time you run your program, it produces the same output. In this step, you can add to your program to prompt the user for their name. You’ll then use their name in the output.
-
-Instead of modifying your existing program, create a new program called `greeting.go` with the `nano` editor:
-
-First, add this code, which prompts the user to enter their name:
-
-greeting.go
-
-Once again, you use the `fmt.Println` function to print some text to the screen.
-
-Now add the highlighted line to store the user’s input:
-
-greeting.go
+在 nano 中打开文本文件后，输入你的程序代码：
 
 ```go
+hello.go
+package main
+
+import "fmt"
+
+func main() {
+  fmt.Println("Hello, World!")
+}
+```
+
+让我们分解下代码的各个部分。
+
+`package` 是一个 Go 关键字，它定义了这个文件属于哪个代码包。 每个文件夹只能有一个包，并且文件夹中每个 `.go` 文件必须在其文件顶部声明相同的包名。 在这个例子中，代码属于 `main` 包。
+
+`import` 是一个 Go 关键字，它告诉 Go 编译器你想在这个文件中使用哪些其他包。 在这里，你导入标准库附带的 `fmt` 包。 `fmt` 包提供了在开发时很有用的格式化和打印功能。
+
+`fmt.Println` 是一个 Go 函数，位于 `fmt` 包中，它告诉计算机将一些文本打印到屏幕上。
+
+在 `fmt.Println` 函数后面跟着一系列字符，例如 `"Hello, World!"`，用引号括起来。 引号内的任何字符都称为 _string_。 `fmt.Println` 函数会在程序运行时将此字符串打印到屏幕上。
+
+按 `CTRL` 和 `X` 键退出 `nano`。 当提示保存文件时，按 `Y`，然后按 `ENTER` 退出。
+
+现在你可以试试你的程序了。
+
+## 第二步 — 运行 Go 程序
+
+你的 “Hello, World!” 程序写好之后，你就可以运行程序了。你可以用 `go`  命令然后后面跟着你刚刚创建的文件名。
+
+```
+go run hello.go
+```
+
+程序执行后会显示以下输出：
+
+```
+Output
+Hello, World!
+```
+
+让我们来探索下实际发生了什么。
+
+Go 程序在运行之前必须要先编译。当你使用文件名调用 `go run` 时，在本例中为 `hello.go`，`go` 命令将 _编译_ 应用程序，然后运行生成的二进制文件。 对于用 _编译型_ 编程语言编写的程序，编译器将获取程序的源代码并生成另一种类型的低级代码（例如机器代码）来生成可执行程序。
+
+Go 应用程序需要一个 `main` 包和一个确切的 **唯一** `main()` 函数，作为应用程序的入口点。 `main` 函数不接受任何参数并且不返回任何值。 相反，它告诉 Go 编译器应该将包编译为可执行包。
+
+编译后，代码通过在 `main` 包中输入 `main()` 函数来执行。 它通过_调用_ `fmt.Println` 函数来执行`fmt.Println("Hello, World!")` 行。 `Hello, World!` 的字符串值被传递给函数。 在此示例中，字符串 `Hello, World!` 也称为 _参数_，因为它是传递给方法的值。
+
+`Hello, World!` 两边的引号不会打印到屏幕上，因为你用它们告诉 Go 你的字符串在哪里开始和结束。
+
+在这一步中，你已经用 Go 编程创建了一个有效的“Hello, World！” 。 在下一步中，你将探索如何使程序更具交互性。
+
+## 第三步 — 提示用户输入
+
+每次运行程序时，它都会产生相同的输出。 在此步骤中，你可以把提示用户输入他们的姓名添加到程序中。 然后，你将在输出中使用他们的名字。
+
+不要修改现有程序，而是使用 `nano` 编辑器创建一个名为 `greeting.go` 的新程序：
+
+```
+nano greeting.go
+```
+
+首先，添加这段代码，提示用户输入他们的姓名：
+
+```go
+greeting.go
+package main
+
+import (
+	"fmt"
+)
+
+func main() {
+  fmt.Println("Please enter your name.")
+}
+```
+
+再一次，你使用 `fmt.Println` 函数将一些文本打印到屏幕上。
+
+现在添加下面高亮行代码来存储用户的输入：
+
+```
+greeting.go
 package main
 
 import (
@@ -93,13 +126,12 @@ func main() {
 }
 ```
 
-The `var name string` line will create a new variable using the `var` _keyword_. You name the variable `name`, and it will be of type `string`.
+`var name string` 行将使用 `var` _关键字_ 创建一个新变量。 你将变量命名为 “name” ，它的类型为 “string” 。
 
-Then, add the highlighted line to capture the user’s input:
-
-greeting.go
+然后添加下面高亮行代码来捕捉用户的输入：
 
 ```
+greeting.go
 package main
 
 import (
@@ -113,15 +145,14 @@ func main() {
 }
 ```
 
-The `fmt.Scanln` method tells the computer to wait for input from the keyboard ending with a new line or (`\n`), character. This pauses the program, allowing the user to enter any text they want. The program will continue when the user presses the `ENTER` key on their keyboard. All of the keystrokes, including the `ENTER` keystroke, are then captured and converted to a string of characters.
+`fmt.Scanln` 方法告诉计算机等待以换行符或 (`\n`) 字符结尾的键盘输入。 该方法会暂停程序，允许用户输入他们想要的任何文本。 当用户按下键盘上的 `ENTER` 键时，程序将继续。 然后捕获所有点击，包括 `ENTER` ，然后将其转换为字符串。
 
-You want to use those characters in your program’s output, so you save those characters by _writing_ them into the string _variable_ called `name`. Go stores that string in your computer’s memory until the program finishes running.
+你想在程序中使用这些字符输出，因此你通过将这些字符 _写入_ 到被称为 `name` 的字符串 _变量_ 中来保存这些字符。 Go 将该字符串存储在计算机的内存中，直到程序完成运行。
 
-Finally, add the following highlighted line in your program to print the output:
-
-greeting.go
+最后，在程序中添加以下高亮行来打印输出：
 
 ```
+greeting.go
 package main
 
 import (
@@ -136,74 +167,108 @@ func main() {
 }
 ```
 
-This time, instead of using the `fmt.Println` method again, you’re using `fmt.Printf`. The `fmt.Printf` function takes a string, and using special printing _verbs_, (`%s`), it injects the value of `name` into the string. You do this because Go does not support _string interpolation_, which would let you take the value assigned to a variable and place it inside of a string.
+这一次，你使用的是 `fmt.Printf`，而不是再次使用 `fmt.Println` 方法。 `fmt.Printf` 函数接受一个字符串，并使用特殊的打印 _占位符_, (`%s`)，将 `name` 的值注入到字符串中。 你这样做是因为 Go 不支持 _字符串插值_ ，它可以让你获取分配给变量的值并将其插入在字符串中。
 
-Save and exit `nano` by pressing `CTRL + X`, and press `Y` when prompted to save the file.
+按 `CTRL` 和 `X` 键退出 `nano`。 当提示保存文件时，按 `Y`。
 
-Now run the program. You’ll be prompted for your name, so enter it and press `ENTER`. The output might not be exactly what you expect:
+现在运行程序。 系统将提示你输入你的姓名，因此请输入并按 `ENTER`。 输出可能不完全符合你的预期：
 
 ```
-OutputPlease enter your name.
+Output
+Please enter your name.
 Sammy
 Hi, Sammy
 ! I'm Go!
 ```
 
-Instead of `Hi, Sammy! I'm Go!`, there’s a line break right after the name.
+而不是 `Hi, Sammy! I'm Go!`，名字后面有一个换行符。
 
-The program captured **all** of our keystrokes, including the `ENTER` key that we pressed to tell the program to continue. In a string, pressing the `ENTER` key creates a special character that creates a new line. The program’s output is doing exactly what you told it to do; it’s displaying the text you entered, including that new line. It’s not what you expected the output to be, but you can fix it with additional functions.
+该程序捕获了我们 **所有** 的点击，包括我们按下以告诉程序继续的 `ENTER` 键。 在字符串中，按 `ENTER` 键会创建一个特殊字符，该字符会创建一个新行。 该程序的输出完全按照你的要求执行； 它正在显示你输入的文本，包括新行。 这不是你期望的输出，但你可以使用其他功能对其进行修复。
 
-Open the `greeting.go` file in your editor:
-
-Locate this line in your program:
-
-greeting.go
-
-Add the following line right after it:
-
-greeting.go
+在你的编辑器里面打开 `greeting.go`
 
 ```
+nano greeting.go
+```
+
+在你的程序里定位到下面这一行：
+
+```
+greeting.go
+...
+fmt.Scanln(&name)
+...
+```
+
+在其后面增加下面一行：
+
+```
+greeting.go
 name = strings.TrimSpace(name)
 ```
 
-This uses the `TrimSpace` function, from Go’s standard library `strings` package, on the string that you captured with `fmt.Scanln`. The `strings.TrimSpace` function removes any space characters, including new lines, from the start and end of a string. In this case, it removes the newline character at the end of the string created when you pressed `ENTER`.
+上面使用了 Go 标准库 `strings` 包中的 `TrimSpace` 函数，来处理你使用 `fmt.Scanln` 捕获的字符串。 `strings.TrimSpace` 函数从字符串的开头和结尾删除任何空格字符，包括换行符。 在这种情况下，它会删除你按下 `ENTER` 时创建的字符串末尾的换行符。
 
-To use the `strings` package you need to import it at the top of the program.
+要使用 `strings` 包，你需要在程序顶部导入它。
 
-Locate these lines in your program:
-
-greeting.go
-
-Add the following line to import the `strings` package:
-
-greeting.go
+在你的程序找到下面这几行代码：
 
 ```
+greeting.go
+import (
+	"fmt"
+)
+```
+
+增加下面几行来导入  `strings` 包：
+
+```
+greeting.go
 import (
 "fmt"
 "strings"
 )
 ```
 
-Your program will now contain the following:
+你的程序现在包含了以下代码：
 
+```go
 greeting.go
+package main
 
-Save and exit `nano`. Press `CTRL + X`, then press `Y` when prompted to save the file.
+import (
+	"fmt"
+	"strings"
+)
 
-Run the program again:
+func main() {
+	fmt.Println("Please enter your name.")
+	var name string
+	fmt.Scanln(&name)
+	name = strings.TrimSpace(name)
+	fmt.Printf("Hi, %s! I'm Go!", name)
+}
+```
 
-This time, after you enter your name and press `ENTER`, you get the expected output:
+按 `CTRL` 和 `X` 键退出 `nano`。 当提示保存文件时，按 `Y`。
+
+再次运行程序：
 
 ```
-OutputPlease enter your name.
+go run greeting.go
+```
+
+这一次，在你输入你的名字并按 `ENTER` 后，你会得到预期的输出：
+
+```
+Output
+Please enter your name.
 Sammy
 Hi, Sammy! I'm Go!
 ```
 
-You now have a Go program that takes input from a user and prints it back to the screen.
+你现在有一个 Go 程序，它接受用户的输入并将其打印回屏幕。
 
-## Conclusion
+## 总结
 
-In this tutorial, you wrote a “Hello, World!” program that takes input from a user, processes the results, and displays the output. Now that you have a basic program to work with, try to expand your program further. For example, ask for the user’s favorite color, and have the program say that its favorite color is red. You might even try to use this same technique to create a simple Mad-Lib program.
+在本教程中，你编写了 一个 “Hello, World！” 程序，可以从用户那里获取输入、处理结果并显示输出。 既然你有一个基本程序可以使用，请尝试进一步扩展你的程序。 例如，询问用户最喜欢的颜色，让程序说它最喜欢的颜色是红色。 你甚至可以尝试使用相同的技术来创建一个简单的 Mad-Lib 程序。
