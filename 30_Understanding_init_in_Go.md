@@ -1,18 +1,18 @@
-# Understanding init in Go
-## Introduction
+# 了解 Go 中的 init
+## 简介
 
-In Go, the predefined `init()` function sets off a piece of code to run before any other part of your package. This code will execute as soon as the [package is imported](https://www.digitalocean.com/community/tutorials/importing-packages-in-go), and can be used when you need your application to initialize in a specific state, such as when you have a specific configuration or set of resources with which your application needs to start. It is also used when *importing a side effect*, a technique used to set the state of a program by importing a specific package. This is often used to `register` one package with another to make sure that the program is considering the correct code for the task.
+在 Go 中，预定义的 `init()` 函数设置了一段代码，在你的包的任何其他部分之前运行。这段代码将在[包被导入](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)后立即执行，当你需要你的应用程序在一个特定的状态下初始化时，例如你有一个特定的配置或一组资源，你的应用程序需要用它来启动。它也可以在*导入副作用*时使用，这是一种通过导入特定包来设置程序状态的技术。这经常被用于 `register` 一个包和另一个包，以确保程序考虑任务的正确代码。
 
-Although `init()` is a useful tool, it can sometimes make code difficult to read, since a hard-to-find `init()` instance will greatly affect the order in which the code is run. Because of this, it is important for developers who are new to Go to understand the facets of this function, so that they can make sure to use `init()` in a legible manner when writing code.
+尽管 `init()` 是一个有用的工具，但它有时会使代码难以阅读，因为难以找到的 `init()` 实例会大大影响代码的运行顺序。正因为如此，对于刚接触 Go 的开发者来说，了解这个函数的方方面面是非常重要的，这样他们在写代码时就能确保以可读的方式使用 `init()`。
 
-In this tutorial, you’ll learn how `init()` is used for the setup and initialization of specific package variables, one time computations, and the registration of a package for use with another package.
+在本教程中，你将学习 `init()` 如何用于设置和初始化特定包的变量、一次性计算，以及注册一个包以便与另一个包一起使用。
 
-## Prerequisites
+## 先决条件
 
-For some of the examples in this article, you will need:
+对于本文中的一些例子，你将需要。
 
-* A Go workspace set up by following [How To Install Go and Set Up a Local Programming Environment](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go). This tutorial will use the following file structure:
-```bash
+* 按照 [如何安装 Go 和设置本地编程环境]（https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go）设置的 Go 工作空间。本教程将使用以下文件结构：
+```shell
 .
 ├── bin 
 │ 
@@ -20,12 +20,13 @@ For some of the examples in this article, you will need:
     └── github.com
         └── gopherguides
 ```
-## Declaring `init()`
+## 定义 `init()`
 
-Any time you declare an `init()` function, Go will load and run it prior to anything else in that package. To demonstrate this, this section will walk through how to define an `init()` function and show the effects on how the package runs.
+只要你定义一个 `init()` 函数，Go 就会在该包的其他东西之前加载并运行它。为了证明这一点，本节将介绍如何定义一个 `init()` 函数，并展示对包的运行的影响。
 
-Let’s first take the following as an example of code without the `init()` function:
+首先，让我们以下面这个没有 `init()` 函数的代码为例：
 
+<center>main.go</center>
 
 ```go
 package main
@@ -39,21 +40,22 @@ func main() {
 }
 ```
 
-In this program, we declared a global [variable](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go) called `weekday`. By default, the value of `weekday` is an empty string.
+在这个程序中，我们声明了一个全局[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go)，叫做 `weekday`。默认情况下，`weekday` 的值是一个空字符串。
 
-Let’s run this code:
+让我们运行这段代码：
 
-```go
+```shell
 go run main.go
 ```
 
-Because the value of `weekday` is blank, when we run the program, we will get the following output:
+因为 `weekday` 的值是空的，当我们运行程序时，我们将得到以下输出：
 
-```bash
-Output
+```shell
 Today is
 ```
-We can fill in the blank variable by introducing an `init()` function that initializes the value of `weekday` to the current day. Add in the following highlighted lines to `main.go`:
+我们可以通过引入一个 `init()` 函数，将 `weekday` 的值初始化为当前日期，来填补这个空白变量。在 `main.go` 中加入以下高亮行：
+
+<center>main.go</center>
 
 ```go
 package main
@@ -73,31 +75,31 @@ func main() {
 	fmt.Printf("Today is %s", weekday)
 }
 ```
-In this code, we imported and used the `time` package to get the current day of the week (`Now().Weekday().String()`), then used `init()` to initialize `weekday` with that value.
-Now when we run the program, it will print out the current weekday:
+在这段代码中，我们导入并使用了 `time` 包来获取当前的星期（`Now().Weekday().String()`），然后使用 `init()` 用这个值来初始化 `weekday`。
+现在当我们运行该程序时，它将打印出当前的工作日：
 
-```bash
-Output
+```shell
 Today is Monday
 ```
-While this illustrates how `init()` works, a much more typical use case for `init()` is to use it when importing a package. This can be useful when you need to do specific setup tasks in a package before you want the package to be used. To demonstrate this, let’s create a program that will require a specific initialization for the package to work as intended.
-## Initializing Packages on Import
+虽然这说明了 `init()` 是如何工作的，但 `init()` 更典型的使用情况是在导入软件包时使用它。当你在使用软件包之前需要在软件包中进行特定的设置任务时，这就很有用。为了证明这一点，让我们创建一个程序，该程序需要一个特定的初始化，以便包能够如期工作。
 
-First, we will write some code that selects a random creature from a [slice](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go) and prints it out. However, we won’t use `init()` in our initial program. This will better show the problem we have, and how `init()` will solve our problem.
+## 导入时初始化软件包
 
-From within your `src/github.com/gopherguides/` directory, create a folder called `creature` with the following command:
+首先，我们将写一些代码，从[切片](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go)中选择一个随机的生物并打印出来。然而，我们不会在初始程序中使用 `init()`。这将更好地展示我们的问题，以及 `init()` 将如何解决我们的问题。
 
-```bash
+在你的 `src/github.com/gopherguides/ `目录中，用以下命令创建一个名为 `creature` 的文件夹。
+
+```shell
 mkdir creature
 ```
 
-Inside the `creature` folder, create a file called `creature.go`:
+在 `creature` 文件夹下，创建一个名为 `creature.go` 的文件：
 
-```bash
+```shell
 nano creature/creature.go
 ```
 
-In this file, add the following contents:
+在这个文件中，添加以下内容：
 
 ```go
 package creature
@@ -114,27 +116,27 @@ func Random() string {
 }
 ```
 
-This file defines a variable called `creatures` that has a set of sea creatures initialized as values. It also has an [exported](https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go#exported-and-unexported-items) `Random` function that will return a random value from the `creatures` variable.
+这个文件定义了一个叫做 `creatures` 的变量，它有一组初始化为数值的海洋生物。它还有一个[exported](https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go#exported-and-unexported-items) `Random` 函数，将从 `creatures` 变量中返回一个随机值。
 
-Save and quit this file.
+保存并退出这个文件。
 
-Next, let’s create a `cmd` package that we will use to write our `main()` function and call the `creature` package.
+接下来，让我们创建一个 `cmd` 包，我们将用它来编写 `main()` 函数并调用 `creature` 包。
 
-At the same file level from which we created the `creature` folder, create a `cmd` folder with the following command:
+在我们创建 `creature` 文件夹的同一文件层，用以下命令创建一个 `cmd` 文件夹：
 
-```bash
+```shell
 mkdir cmd
 ```
 
-Inside the `cmd` folder, create a file called `main.go`:
+在 `cmd` 文件夹中，创建一个名为 `main.go` 的文件：
 
-```bash
+```shell
 nano cmd/main.go
 ```
 
-Add the following contents to the file:
+在文件中添加以下内容：
 
-cmd/main.go
+<center>cmd/main.go</center>
 
 ```go
 package main
@@ -153,46 +155,48 @@ func main() {
 }
 ```
 
-Here we imported the `creature` package, and then in the `main()` function, used the `creature.Random()` function to retrieve a random creature and print it out four times.
+这里我们导入了 `creature` 包，然后在 `main()` 函数中，使用 `creature.Random() `函数来检索一个随机生物并打印出来四次。
 
-Save and quit `main.go`.
+保存并退出 `main.go`。
 
-We now have our entire program written. However, before we can run this program, we’ll need to also create a couple of configuration files for our code to work properly. Go uses [Go Modules](https://blog.golang.org/using-go-modules) to configure package dependencies for importing resources. These modules are configuration files placed in your package directory that tell the compiler where to import packages from. While learning about modules is beyond the scope of this article, we can write just a couple lines of configuration to make this example work locally.
+我们现在已经写好了我们的整个程序。然而，在我们运行这个程序之前，我们还需要创建几个配置文件，以便我们的代码能够正常工作。Go 使用[Go Modules](https://blog.golang.org/using-go-modules)来配置导入资源的软件包依赖性。这些模块是放置在你的包目录中的配置文件，告诉编译器从哪里导入包。虽然对模块的学习超出了本文的范围，但我们只需写几行配置就可以让这个例子在本地运行。
 
-In the `cmd` directory, create a file named `go.mod`:
+在 `cmd` 目录下，创建一个名为 `go.mod` 的文件：
 
-```bash
+```shell
 nano cmd/go.mod
 ```
 
-Once the file is open, place in the following contents:
+文件打开后，放入以下内容：
 
-cmd/go.mod
+<center>cmd/go.mod</center>
 
 ```go
 module github.com/gopherguides/cmd
- replace github.com/gopherguides/creature => ../creature
+replace github.com/gopherguides/creature => ../creature
 ```
-The first line of this file tells the compiler that the `cmd` package we created is in fact `github.com/gopherguides/cmd`. The second line tells the compiler that `github.com/gopherguides/creature` can be found locally on disk in the `../creature` directory.
-Save and close the file. Next, create a `go.mod` file in the `creature` directory:
 
-```bash
+这个文件的第一行告诉编译器，我们创建的 `cmd` 包实际上是 `github.com/gopherguides/cmd`。第二行告诉编译器，`github.com/gopherguides/creature`可以在磁盘上的 `.../creature` 目录下找到。
+保存并关闭该文件。接下来，在 `creature` 目录下创建一个 `go.mod` 文件。
+
+```shell
 nano creature/go.mod
 ```
 
-Add the following line of code to the file:
+在文件中添加以下一行代码：
 
-creature/go.mod
+<center>creature/go.mod</center>
+
 
 ```go
  module github.com/gopherguides/creature
 ```
-This tells the compiler that the `creature` package we created is actually the `github.com/gopherguides/creature` package. Without this, the `cmd` package would not know where to import this package from.
-Save and quit the file.
+这告诉编译器，我们创建的 `creature` 包实际上是 `github.com/gopherguides/creature` 包。没有这个，`cmd` 包就不知道从哪里导入这个包。
+保存并退出该文件。
 
-You should now have the following directory structure and file layout:
+现在你应该有以下的目录结构和文件布局：
 
-```bash
+```shell
 ├── cmd
 │   ├── go.mod
 │   └── main.go
@@ -200,30 +204,29 @@ You should now have the following directory structure and file layout:
     ├── go.mod
     └── creature.go
 ```
-Now that we have all the configuration completed, we can run the `main` program with the following command:
-```bash
+现在我们已经完成了所有的配置，我们可以用下面的命令运行 `main` 程序：
+```shell
 go run cmd/main.go
 ```
 
-This will give:
+这将输出：
 
-```bash
-Output
+```shell
 jellyfish
 squid
 squid
 dolphin
 ```
-When we ran this program, we received four values and printed them out. If we run the program multiple times, we will notice that we **always** get the same output, rather than a random result as expected. This is because the `rand` package creates pseudorandom numbers that will consistently generate the same output for a single initial state. To achieve a more random number, we can *seed* the package, or set a changing source so that the initial state is different every time we run the program. In Go, it is common to use the current time to seed the `rand` package.
-Since we want the `creature` package to handle the random functionality, open up this file:
+当我们运行这个程序时，我们收到了四个数值并打印出来。如果我们多次运行这个程序，我们会注意到，我们***总是***得到相同的输出，而不是预期的随机结果。这是因为 `rand` 包创建了伪随机数，对于单一的初始状态会持续产生相同的输出。为了实现更多的随机数，我们可以用 *seed* 包，或者设置一个不断变化的源，这样每次运行程序时的初始状态都会不同。在 Go 中，通常使用当前时间作为 `rand` 包的种子。
+由于我们想让 `creature` 包来处理随机功能，所以打开这个文件。
 
-```bash
+```shell
 nano creature/creature.go
 ```
 
-Add the following highlighted lines to the `creature.go` file:
+在 `creature.go` 文件中添加以下高亮行：
 
-creature/creature.go
+<center>creature/creature.go</center>
 
 ```go
 package creature
@@ -241,30 +244,29 @@ func Random() string {
 	return creatures[i]
 }
 ```
-In this code, we imported the `time` package and used `Seed()` to seed the current time. Save and exit the file.
-Now, when we run the program we will get a random result:
+在这段代码中，我们导入了 `time` 包，并使用当前时间作为 `Seed()` 的种子。保存并退出该文件。
+现在，当我们运行该程序时，我们将得到一个随机的结果：
 
-```bash
+```shell
 go run cmd/main.go
 ```
 
-```bash
-Output
+```shell
 jellyfish
 octopus
 shark
 jellyfish
 ```
-If you continue to run the program over and over, you will continue to get random results. However, this is not yet an ideal implementation of our code, because every time `creature.Random()` is called, it also re-seeds the `rand` package by calling `rand.Seed(time.Now().UnixNano())` again. Re-seeding will increase the chance of seeding with the same initial value if the internal clock has not changed, which will cause possible repetitions of the random pattern, or will increase CPU processing time by having your program wait for the clock to change.
-To fix this, we can use an `init()` function. Let’s update the `creature.go` file:
+如果你继续反复运行该程序，你将继续得到随机结果。然而，这还不是我们代码的理想实现，因为每次调用 `creature.Random()` 时，也会通过再次调用 `rand.Seed(time.Now().UnixNano()` 来重新播种 `rand` 包。如果内部时钟没有改变，重新播种会增加用相同初始值播种的机会，这将导致随机模式可能的重复，或者会因为让你的程序等待时钟改变而增加 CPU 处理时间。
+为了解决这个问题，我们可以使用一个 `init()` 函数。让我们更新 `creature.go` 文件：
 
-```bash
+```shell
 nano creature/creature.go
 ```
 
-Add the following lines of code:
+添加以下几行代码：
 
-creature/creature.go
+<center>creature/creature.go</center>
 
 ```go
 package creature
@@ -285,24 +287,25 @@ func Random() string {
 	return creatures[i]
 }
 ```
-Adding the `init()` function tells the compiler that when the `creature` package is imported, it should run the `init()` function once, providing a single seed for the random number generation. This ensures that we don’t run code more than we have to. Now if we run the program, we will continue to get random results:
-```bash
+添加 `init()` 函数告诉编译器，当 `creature` 包被导入时，它应该运行一次 `init()` 函数，为随机数生成提供一个种子。这确保了我们不会超过必须的时间来运行代码。现在，如果我们运行该程序，我们将继续得到随机结果：
+
+```shell
 go run cmd/main.go
 ```
 
-```bash
-Output
+```shell
 dolphin
 squid
 dolphin
 octopus
 ```
-In this section, we have seen how using `init()` can ensure that the appropriate calculations or initializations are performed prior to the package being used. Next, we will see how to use multiple `init()` statements in a package.
-## Multiple Instances of `init()`
+在这一节中，我们已经看到使用 `init()` 可以确保在使用包之前进行适当的计算或初始化。接下来，我们将看到如何在一个包中使用多个 `init()` 语句。
 
-Unlike the `main()` function that can only be declared once, the `init()` function can be declared multiple times throughout a package. However, multiple `init()`s can make it difficult to know which one has priority over the others. In this section, we will show how to maintain control over multiple `init()` statements.
+## 多个 `init()` 实例
 
-In most cases, `init()` functions will execute in the order that you encounter them. Let’s take the following code as an example:
+与只能声明一次的 `main()` 函数不同，`init()` 函数可以在一个包中多次声明。然而，多个 `init()` 会使我们很难知道哪个函数比其他函数有优先权。在本节中，我们将展示如何保持对多个 `init()` 语句的控制。
+
+在大多数情况下，`init()`函数将按照你遇到它们的顺序执行。让我们以下面的代码为例：
 
 main.go
 
@@ -330,27 +333,26 @@ func init() {
 func main() {}
 ```
 
-If we run the program with the following command:
+如果我们用以下命令运行该程序：
 
-```bash
+```shell
 go run main.go
 ```
 
-We’ll receive the following output:
+我们将收到以下输出：
 
-```bash
-Output
+```shell
 First init
 Second init
 Third init
 Fourth init
 ```
-Notice that each `init()` is run in the order in which the compiler encounters it. However, it may not always be so easy to determine the order in which the `init()` function will be called.
-Let’s look at a more complicated package structure in which we have multiple files each with their own `init()` function declared in them. To illustrate this, we will create a program that shares a variable called `message` and prints it out.
+注意，每个 `init()` 都是按照编译器遇到它的顺序来运行的。然而，要确定 `init()` 函数的调用顺序可能并不总是那么容易。
+让我们看看一个更复杂的包结构，其中我们有多个文件，每个文件都有自己的 `init()` 函数声明。为了说明这一点，我们将创建一个程序，共享一个名为 `message` 的变量并将其打印出来。
 
-Delete the `creature` and `cmd` directories and their contents from the earlier section, and replace them with the following directories and file structure:
+删除前面的 `creature` 和 `cmd` 目录及其内容，用下面的目录和文件结构取代它们：
 
-```bash
+```shell
 ├── cmd
 │   ├── a.go
 │   ├── b.go
@@ -358,8 +360,9 @@ Delete the `creature` and `cmd` directories and their contents from the earl
 └── message
     └── message.go
 ```
-Now let’s add the contents of each file. In `a.go`, add the following lines:
-cmd/a.go
+现在我们来添加每个文件的内容。在 `a.go` 中，添加以下几行：
+
+<center>cmd/a.go</center>
 
 ```go
 package main
@@ -375,11 +378,11 @@ func init() {
 }
 ```
 
-This file contains a single `init()` function that prints out the value of `message.Message` from the `message` package.
+这个文件包含一个 `init() `函数，打印出 `message` 包中 `message.Message` 的值。
 
-Next, add the following contents to `b.go`:
+接下来，在 `b.go` 中添加以下内容：
 
-cmd/b.go
+<center>cmd/b.go</center>
 
 ```go
 package main
@@ -396,11 +399,11 @@ func init() {
 }
 ```
 
-In `b.go`, we have a single `init()` function that set’s the value of `message.Message` to `Hello` and prints it out.
+在 `b.go` 中，我们有一个 `init()` 函数，将 `message.Message` 的值设置为 `Hello` 并打印出来。
 
-Next, create `main.go` to look like the following:
+接下来，创建 `main.go`，看起来像下面这样：
 
-cmd/main.go
+<center>cmd/main.go</center>
 
 ```go
 package main
@@ -408,11 +411,11 @@ package main
 func main() {}
 ```
 
-This file does nothing, but provides an entry point for the program to run.
+这个文件什么也不做，但为程序的运行提供了一个入口点。
 
-Finally, create your `message.go` file like the following:
+最后，创建你的 `message.go` 文件，如下所示：
 
-message/message.go
+<center>message/message.go</center>
 
 ```go
 package message
@@ -420,51 +423,49 @@ package message
 var Message string
 ```
 
-Our `message` package declares the exported `Message` variable.
+我们的 `message` 包声明了导出的 `Message` 变量。
 
-To run the program, execute the following command from the `cmd` directory:
+要运行该程序，在 `cmd` 目录下执行以下命令：
 
-```go
+```shell
 go run *.go
 ```
 
-Because we have multiple Go files in the `cmd` folder that make up the `main` package, we need to tell the compiler that all the `.go` files in the `cmd` folder should be compiled. Using `*.go` tells the compiler to load all the files in the `cmd` folder that end in `.go`. If we issued the command of `go run main.go`, the program would fail to compile as it would not see the code in the `a.go` and `b.go` files.
+因为我们在 `cmd` 文件夹中有多个 Go 文件组成 `main` 包，我们需要告诉编译器，`cmd` 文件夹中所有的 `.go` 文件都应该被编译。使用 `*.go` 告诉编译器加载 `cmd` 文件夹中所有以 `.go` 结尾的文件。如果我们发出 `go run main.go` 的命令，程序将无法编译，因为它看不到 `a.go` 和 `b.go` 文件中的代码。
 
-This will give the following output:
+这将得到以下输出：
 
-```go
-Output
+```shell
 a ->
 b -> Hello
 ```
-Per the Go language specification for [Package Initialization](https://golang.org/ref/spec#Package_initialization), when multiple files are encountered in a package, they are processed alphabetically. Because of this, the first time we printed out `message.Message` from `a.go`, the value was blank. The value wasn’t initialized until the `init()` function from `b.go` had been run.
-If we were to change the file name of `a.go` to `c.go`, we would get a different result:
+根据 Go 语言对[包初始化](https://golang.org/ref/spec#Package_initialization)的规范，当一个包中遇到多个文件时，会按字母顺序处理。正因为如此，我们第一次从 `a.go` 中打印出 `message.Message` 时，其值是空白的。在运行 `b.go` 的 `init()` 函数之前，该值没有被初始化。
+如果我们把 `a.go` 的文件名改为 `c.go`，我们会得到一个不同的结果：
 
-```go
-Output
+```shell
 b -> Hello
 a -> Hello
 ```
 
-Now the compiler encounters `b.go` first, and as such, the value of `message.Message` is already initialized with `Hello` when the `init()` function in `c.go` is encountered.
+现在编译器先遇到了 `b.go`，因此，当遇到 `c.go` 中的 `init()` 函数时，`message.Message` 的值已经被初始化为 `Hello`。
 
-This behavior could create a possible problem in your code. It is common in software development to change file names, and because of how `init()` is processed, changing file names may change the order in which `init()` is processed. This could have the undesired effect of changing your program’s output. To ensure reproducible initialization behavior, build systems are encouraged to present multiple files belonging to the same package in lexical file name order to a compiler. One way to ensure that all `init()` functions are loaded in order is to declare them all in one file. This will prevent the order from changing even if file names are changed.
+这种行为可能会在你的代码中产生一个可能的问题。在软件开发中，改变文件名是很常见的，由于 `init()` 的处理方式，改变文件名可能改变 `init()` 的处理顺序。这可能会产生改变你的程序输出的不良后果。为了确保可重复的初始化行为，我们鼓励构建系统以词法文件名的顺序向编译器展示属于同一软件包的多个文件。确保所有 `init()` 函数按顺序加载的一个方法是在一个文件中声明它们。这将防止即使文件名被改变，顺序也不会改变。
 
-In addition to ensuring the order of your `init()` functions does not change, you should also try to avoid managing state in your package by using *global variables*, i.e., variables that are accessible from anywhere in the package. In the preceding program, the `message.Message` variable was available to the entire package and maintained the state of the program. Because of this access, the `init()` statements were able to change the variable and destablize the predictability of your program. To avoid this, try to work with variables in controlled spaces that have as little access as possible while still allowing the program to work.
+除了确保你的 `init()` 函数的顺序不发生变化外，你还应该尽量避免使用*全局变量*来管理包中的状态，即在包中任何地方都可以访问的变量。在前面的程序中， `message.Message` 变量对整个包都是可用的，并保持着程序的状态。由于这种访问，`init()` 语句能够改变该变量并破坏你的程序的可预测性。为了避免这种情况，尽量在受控的空间内处理变量，在允许程序工作的同时，尽可能减少访问。
 
-We have seen that you can have multiple `init()` declarations in a single package. However, doing so may create undesired effects and make your program hard to read or predict. Avoiding multiple `init()` statements or keeping them all in one file will ensure that the behavior of your program does not change when files are moved around or names are changed.
+我们已经看到，你可以在一个包中有多个 `init()` 声明。然而，这样做可能会产生不想要的效果，使你的程序难以阅读或预测。避免多个 `init()` 声明或将它们全部放在一个文件中，将确保当文件被移动或名称被改变时，你的程序的行为不会改变。
 
-Next, we will examine how `init()` is used to import with side effects.
+接下来，我们将检查 `init()` 是如何被用来导入产生副作用的。
 
-## Using `init()` for Side Effects
+## 使用 `init()` 的副作用
 
-In Go, it is sometimes desirable to import a package not for its content, but for the side effects that occur upon importing the package. This often means that there is an `init()` statement in the imported code that executes before any of the other code, allowing for the developer to manipulate the state in which their program is starting. This technique is called *importing for a side effect*.
+在 Go 中，有时导入一个包并不是为了它的内容，而是为了导入包后产生的副作用。这通常意味着在导入的代码中有一个 `init()` 语句，在其他代码之前执行，允许开发者操纵他们程序开始的状态。这种技术被称为*导入的副作用*。
 
-A common use case for importing for side effects is to *register* functionality in your code, which lets a package know what part of the code your program needs to use. In the `image`[ package](https://golang.org/pkg/image/), for example, the `image.Decode` function needs to know which format of image it is trying to decode (`jpg`, `png`, `gif`, etc.) before it can execute. You can accomplish this by first importing a specific program that has an `init()` statement side effect.
+为副作用而导入的一个常见用例是在你的代码中*注册*功能，这让包知道你的程序需要使用哪部分代码。例如，在`image`[包](https://golang.org/pkg/image/)中，`image.Decode` 函数在执行前需要知道它要解码的图像格式（`jpg`，`png`，`gif`，等等）。你可以通过首先导入一个有 `init()` 语句副作用的特定程序来完成这个任务。
 
-Let’s say you are trying to use `image.Decode` on a `.png` file with the following code snippet:
+假设你试图在一个`.png` 文件上使用 `image.Decode`，代码片段如下：
 
-Sample Decoding Snippet
+<center>Sample Decoding Snippet</center>
 
 ```go
 . . .
@@ -478,11 +479,11 @@ func decode(reader io.Reader) image.Rectangle {
 . . .
 ```
 
-A program with this code will still compile, but any time we try to decode a `png` image, we will get an error.
+使用这段代码的程序仍然可以编译，但任何时候我们试图对 `png` 图像进行解码时，都会出现错误。
 
-To fix this, we would need to first register an image format for `image.Decode`. Luckily, the `image/png` package contains the following `init()` statement:
+为了解决这个问题，我们需要首先为 `image.Decode` 注册一个图像格式。幸运的是，`image/png` 包包含以下 `init()` 语句：
 
-image/png/reader.go
+<center>image/png/reader.go</center>
 
 ```go
 func init() {
@@ -490,9 +491,9 @@ func init() {
 }
 ```
 
-Therefore, if we import `image/png` into our decoding snippet, then the `image.RegisterFormat()` function in `image/png` will run before any of our code:
+因此，如果我们将 `image/png` 导入我们的解码片段，那么 `image/png` 中的 `image.RegisterFormat()` 函数将在我们任何代码之前运行：
 
-Sample Decoding Snippet
+<center>Sample Decoding Snippet</center>
 
 ```go
 . . .
@@ -507,13 +508,13 @@ func decode(reader io.Reader) image.Rectangle {
 	return m.Bounds()
 }
 ```
-This will set the state and register that we require the `png` version of `image.Decode()`. This registration will happen as a side effect of importing `image/png`.
-You may have noticed the [blank identifier](https://golang.org/ref/spec#Blank_identifier) (`_`) before `"image/png"`. This is needed because Go does not allow you to import packages that are not used throughout the program. By including the blank identifier, the value of the import itself is discarded, so that only the side effect of the import comes through. This means that, even though we never call the `image/png` package in our code, we can still import it for the side effect.
+这将设置状态并注册我们需要 `image.Decode()` 的 `png` 版本。这个注册将作为导入 `image/png` 的一个副作用发生。
+你可能已经注意到了在`image/png`之前的[空白标识符](https://golang.org/ref/spec#Blank_identifier)(`_`) 。 这是有必要的，因为 Go 不允许你导入那些在整个程序中不使用的包。通过包括空白标识符，导入本身的值被丢弃了，所以只有导入的副作用才会出现。这意味着，即使我们在代码中从未调用 `image/png` 包，我们仍然可以导入它的副作用。
 
-It is important to know when you need to import a package for its side effect. Without the proper registration, it is likely that your program will compile, but not work properly when it is run. The packages in the standard library will declare the need for this type of import in their documentation. If you write a package that requires importing for side effect, you should also make sure the `init()` statement you are using is documented so users that import your package will be able to use it properly.
+当你需要导入一个包的时候，知道它的副作用是很重要的。如果没有适当的注册，你的程序很可能会被编译，但在运行时却不能正常工作。标准库中的包会在其文档中声明需要这种类型的导入。如果你写了一个需要导入副作用的包，你也应该确保你所使用的 `init()` 语句是有文档的，这样导入你的包的用户就能正确使用它。
 
-## Conclusion
+## 总结
 
-In this tutorial we learned that the `init()` function loads before the rest of the code in your package is loaded, and that it can perform specific tasks for a package like initializing a desired state. We also learned that the order in which the compiler executes multiple `init()` statements is dependent on the order in which the compiler loads the source files. If you would like to learn more about `init()`, check out the official [Golang documentation](https://golang.org/doc/effective_go.html#init), or read through [the discussion in the Go community about the function](https://github.com/golang/go/issues/25885).
+在本教程中，我们了解到 `init()` 函数是在你的包中的其他代码被加载之前加载的，它可以为一个包执行特定的任务，如初始化一个期望的状态。我们还了解到，编译器执行多个 `init()` 语句的顺序取决于编译器加载源文件的顺序。如果你想了解更多关于 `init()` 的信息，请查看官方的[Golang 文档](https://golang.org/doc/effective_go.html#init)，或者阅读[Go 社区中关于该函数的讨论](https://github.com/golang/go/issues/25885)。
 
-You can read more about functions with our [How To Define and Call Functions in Go](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go) article, or explore [the entire How To Code in Go series](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go). 
+你可以通过我们的[如何在 Go 中定义和调用函数](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)文章阅读更多关于函数的信息，或者探索[整个 Go 中如何编程系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
