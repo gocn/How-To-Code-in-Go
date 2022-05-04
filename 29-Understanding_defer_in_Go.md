@@ -1,19 +1,20 @@
-# Understanding defer in Go
+# 了解 Go 中的 defer
 
-## Introduction
+## 简介
 
-Go has many of the common control-flow keywords found in other programming languages such as `if`, `switch`, `for`, etc. One keyword that isn’t found in most other programming languages is `defer`, and though it’s less common you’ll quickly see how useful it can be in your programs.
+Go 有许多其他编程语言中常见的控制流关键字，如 `if`、`switch`、`for `等。有一个关键词在大多数其他编程语言中都没有，那就是  `defer` ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。
 
-One of the primary uses of a `defer` statement is for cleaning up resources, such as open files, network connections, and [database handles](https://en.wikipedia.org/wiki/Handle_(computing)). When your program is finished with these resources, it’s important to close them to avoid exhausting the program’s limits and to allow other programs access to those resources. `defer` makes our code cleaner and less error prone by keeping the calls to close the file/resource in proximity to the open call.
+`defer`语句的主要用途之一是清理资源，如打开的文件、网络连接和[数据库句柄](https://en.wikipedia.org/wiki/Handle_(computing))。当你的程序使用完这些资源后，关闭它们很重要，以避免耗尽程序的限制，并允许其他程序访问这些资源。`defer` 通过保持关闭文件/资源的调用与打开调用相近，使我们的代码更加简洁，不易出错。
 
-In this article we will learn how to properly use the `defer` statement for cleaning up resources as well as several common mistakes that are made when using `defer`.
+在这篇文章中，我们将学习如何正确使用 `defer` 语句来清理资源，以及使用 `defer` 时常犯的几个错误。
 
-## What is a `defer` Statement
+## 什么是 `defer` 语句
 
-A `defer` statement adds the [function](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go) call following the `defer` keyword onto a stack. All of the calls on that stack are called when the function in which they were added returns. Because the calls are placed on a stack, they are called in last-in-first-out order.
+一个 `defer` 语句将 `defer` 关键字后面的[function](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)调用添加到一个栈中。当添加这些调用的函数返回时，堆栈中的所有调用都被调用。因为这些调用被放在堆栈中，所以它们是按照后进先出的顺序调用的。
 
-Let’s look at how `defer` works by printing out some text:
+让我们看看 `defer` 是如何工作的，打印出一些文本：
 
+<center>main.go</center>
 
 ```go
 package main
@@ -27,19 +28,20 @@ func main() {
 ```
 
 
-In the `main` function, we have two statements. The first statement starts with the `defer` keyword, followed by a `print` statement that prints out `Bye`. The next line prints out `Hi`.
+在 `main` 函数中，我们有两条语句。第一条语句以 `defer` 关键字开始，后面是 `print` 语句，打印出 `Bye`。下一行打印出 `Hi`。
 
-If we run the program, we will see the following output:
+如果我们运行该程序，我们将看到以下输出：
 
-```bash
-OutputHi
+```shell
+Hi
 Bye
 ```
 
-Notice that `Hi` was printed first. This is because any statement that is preceded by the `defer` keyword isn’t invoked until the end of the function in which `defer` was used.
+请注意，`Hi` 被首先打印出来。这是因为任何在 `defer` 关键字前面的语句在使用了 `defer` 的函数结束之前都不会被调用。
 
-Let’s take another look at the program, and this time we’ll add some comments to help illustrate what is happening:
+让我们再看看这个程序，这次我们将添加一些注释来帮助说明正在发生的事情：
 
+<center>main.go</center>
 
 ```go
 package main
@@ -59,14 +61,15 @@ func main() {
 ```
 
 
-The key to understanding `defer` is that when the `defer` statement is executed, the arguments to the deferred function are evaluated immediately. When a `defer` executes, it places the statement following it on a list to be invoked prior to the function returning.
+理解 `defer` 的关键是，当 `defer` 语句被执行时，延迟函数的参数被立即评估。当 `defer` 执行时，它把后面的语句放在一个列表中，在函数返回之前被调用。
 
-Although this code illustrates the order in which `defer` would be run, it’s not a typical way it would be used when writing a Go program. It’s more likely we are using `defer` to clean up a resource, such as a file handle. Let’s look at how to do that next.
+虽然这段代码说明了`defer`的运行顺序，但这并不是编写 Go 程序时的典型使用方式。我们更可能使用 `defer` 来清理资源，例如文件句柄。接下来让我们看看如何做到这一点。
 
-## Using `defer` to Clean Up Resources
+## 使用 `defer` 来清理资源
 
-Using `defer` to clean up resources is very common in Go. Let’s first look at a program that writes a string to a file but does not use `defer` to handle the resource clean-up:
+使用 `defer` 来清理资源在 Go 中是非常常见的。让我们先看看一个将字符串写入文件的程序，但没有使用 `defer` 来处理资源清理的问题：
 
+<center>main.go</center>
 
 ```go
 package main
@@ -98,12 +101,13 @@ func write(fileName string, text string) error {
 ```
 
 
-In this program, there is a function called `write` that will first attempt to create a file. If it has an error, it will return the error and exit the function. Next, it tries to write the string `This is a readme file` to the specified file. If it receives an error, it will return the error and exit the function. Then, the function will try to close the file and release the resource back to the system. Finally the function returns `nil` to signify that the function executed without error.
+在这个程序中，有一个叫做 `write` 的函数，它将首先尝试创建一个文件。如果它有错误，它将返回错误并退出函数。接下来，它试图将字符串 `This is a readme file` 写到指定文件中。如果它收到一个错误，它将返回错误并退出该函数。然后，该函数将尝试关闭该文件并将资源释放回系统。最后，该函数返回 `nil` 以表示该函数的执行没有错误。
 
-Although this code works, there is a subtle bug. If the call to `io.WriteString` fails, the function will return without closing the file and releasing the resource back to the system.
+虽然这段代码可以工作，但有一个微妙的错误。如果对 `io.WriteString` 的调用失败，该函数将在没有关闭文件并将资源释放回系统的情况下返回。
 
-We could fix the problem by adding another `file.Close()` statement, which is how you would likely solve this in a language without `defer`:
+我们可以通过添加另一个 `file.Close()` 语句来解决这个问题，在没有 `defer` 的语言中，你可能会这样解决：
 
+<center>main.go</center>
 
 ```go
 package main
@@ -135,12 +139,13 @@ func write(fileName string, text string) error {
 }
 ```
 
-Now even if the call to `io.WriteString` fails, we will still close the file. While this was a relatively easy bug to spot and fix, with a more complicated function, it may have been missed.
+现在，即使调用 `io.WriteString` 失败了，我们仍然会关闭该文件。虽然这是一个相对容易发现和修复的错误，但对于一个更复杂的函数来说，它可能会被遗漏。
 
-Instead of adding the second call to `file.Close()`, we can use a `defer` statement to ensure that regardless of which branches are taken during execution, we always call `Close()`.
+我们可以使用 `defer` 语句来确保在执行过程中无论采取何种分支，我们都会调用 `Close()` ，而不是增加对 `file.Close()` 的第二次调用。
 
-Here’s the version that uses the `defer` keyword:
+下面是使用 `defer`关键字的版本：
 
+<center>main.go</center>
 
 ```go
 package main
@@ -171,16 +176,17 @@ func write(fileName string, text string) error {
 }
 ```
 
-This time we added the line of code: `defer file.Close()`. This tells the compiler that it should execute the `file.Close` prior to exiting the function `write`.
+这一次我们添加了这行代码，`defer file.Close()`。这告诉编译器，它应该在退出函数 `write` 之前执行 `file.Close`。
 
-We have now ensured that even if we add more code and create another branch that exits the function in the future, we will always clean up and close the file.
+现在我们已经确保，即使我们在未来添加更多的代码并创建另一个退出该函数的分支，我们也会一直清理并关闭该文件。
 
-However, we have introduced yet another bug by adding the defer. We are no longer checking the potential error that can be returned from the `Close` method. This is because when we use `defer`, there is no way to communicate any return value back to our function.
+然而，我们通过添加 `defer` 引入了另一个错误。我们不再检查可能从 `Close` 方法返回的潜在错误。这是因为当我们使用 `defer` 时，没有办法将任何返回值传回给我们的函数。
 
-In Go, it is considered a safe and accepted practice to call `Close()` more than once without affecting the behavior of your program. If `Close()` is going to return an error, it will do so the first time it is called. This allows us to call it explicitly in the successful path of execution in our function.
+在 Go 中，在不影响程序行为的情况下多次调用 `Close()` 被认为是一种安全和公认的做法。如果 `Close()` 要返回一个错误，它将在第一次被调用时返回。这使得我们可以在函数的成功执行路径中明确地调用它。
 
-Let’s look at how we can both `defer` the call to `Close`, and still report on an error if we encounter one.
+让我们看看我们如何既能 `defer` 对 `Close` 的调用，又能在遇到错误时报告错误。
 
+<center>main.go</center>
 
 ```go
 package main
@@ -212,16 +218,17 @@ func write(fileName string, text string) error {
 }
 ```
 
-The only change in this program is the last line in which we return `file.Close()`. If the call to `Close` results in an error, this will now be returned as expected to the calling function. Keep in mind that our `defer file.Close()` statement is also going to run after the `return` statement. This means that `file.Close()` is potentially called twice. While this isn’t ideal, it is an acceptable practice as it should not create any side effects to your program.
+这个程序中唯一的变化是最后一行，我们返回 `file.Close()`。如果对 `Close` 的调用导致错误，现在将按照预期返回给调用函数。请记住，我们的 `defer file.Close()` 语句也将在 `return `语句之后运行。这意味着 `file.Close()` 有可能被调用两次。虽然这并不理想，但这是可以接受的做法，因为它不应该对你的程序产生任何副作用。
 
-If, however, we receive an error earlier in the function, such as when we call `WriteString`, the function will return that error, and will also try to call `file.Close` because it was deferred. Although `file.Close` may (and likely will) return an error as well, it is no longer something we care about as we received an error that is more likely to tell us what went wrong to begin with.
+然而，如果我们在函数的早期收到一个错误，例如当我们调用 `WriteString` 时，函数将返回该错误，并且也将尝试调用 `file.Close`，因为它被推迟了。尽管 `file.Close` 也可能（而且很可能）返回一个错误，但这不再是我们关心的事情，因为我们收到的错误更有可能告诉我们一开始就出了什么问题。
 
-So far, we have seen how we can use a single `defer` to ensure that we clean up our resources properly. Next we will see how we can use multiple `defer` statements for cleaning up more than one resource.
+到目前为止，我们已经看到我们如何使用一个 `defer` 来确保我们正确地清理我们的资源。接下来我们将看到如何使用多个 `defer` 语句来清理多个资源。
 
-## Multiple `defer` Statements
+## 多个 `defer` 语句
 
-It is normal to have more than one `defer` statement in a function. Let’s create a program that only has `defer` statements in it to see what happens when we introduce multiple defers:
+在一个函数中拥有多个 `defer` 语句是很正常的。让我们创建一个只有 `defer` 语句的程序，看看当我们引入多个 `defer` 时，会发生什么情况：
 
+<center>main.go</center>
 
 ```go
 package main
@@ -235,21 +242,21 @@ func main() {
 }
 ```
 
+如果我们运行该程序，我们将收到以下输出结果：
 
-If we run the program, we will receive the following output:
-
-```bash
-Outputthree
+```shell
+three
 two
 one
 ```
 
-Notice that the order is the opposite in which we called the `defer` statements. This is because each deferred statement that is called is stacked on top of the previous one, and then called in reverse when the function exits scope (*Last In, First Out*).
+注意，顺序与我们调用 `defer` 语句的顺序相反。这是因为每个被调用的延迟语句都是堆叠在前一个语句之上的，然后在函数退出范围时反向调用（*后进先出*）。
 
-You can have as many deferred calls as needed in a function, but it is important to remember they will all be called in the opposite order they were executed.
+在一个函数中，你可以根据需要有尽可能多的延迟调用，但重要的是要记住它们都将以相反的顺序被调用。
 
-Now that we understand the order in which multiple defers will execute, let’s see how we would use multiple defers to clean up multiple resources. We’ll create a program that opens a file, writes to it, then opens it again to copy the contents to another file.
+现在我们了解了多个延迟的执行顺序，让我们看看如何使用多个延迟来清理多个资源。我们将创建一个程序，打开一个文件，向其写入内容，然后再次打开，将内容复制到另一个文件。
 
+<center>main.go</center>
 
 ```go
 package main
@@ -313,15 +320,15 @@ func fileCopy(source string, destination string) error {
 ```
 
 
-We added a new function called `fileCopy`. In this function, we first open up our source file that we are going to copy from. We check to see if we received an error opening the file. If so, we `return` the error and exit the function. Otherwise, we `defer` the closing of the source file we just opened.
+我们添加了一个新的函数，叫做 `fileCopy`。在这个函数中，我们首先打开我们要复制的源文件。我们检查我们是否收到了一个打开文件的错误。如果是的话，我们 `return` 错误并退出该函数。否则，我们 `defer` 关闭我们刚刚打开的源文件。
 
-Next we create the destination file. Again, we check to see if we received an error creating the file. If so, we `return` that error and exit the function. Otherwise, we also `defer` the `Close()` for the destination file. We now have two `defer` functions that will be called when the function exits its scope.
+接下来我们创建目标文件。再次，我们检查我们是否收到了创建文件的错误。如果是的话，我们 `return` 该错误并退出该函数。否则，我们也 `defer` 目标文件的 `Close()`。我们现在有两个 `defer` 函数，当函数退出其作用域时将被调用。
 
-Now that we have both files open, we will `Copy()` the data from the source file to the destination file. If that is successful, we will attempt to close both files. If we receive an error trying to close either file, we will `return` the error and exit function scope.
+现在我们已经打开了两个文件，我们将`Copy()` 数据从源文件到目标文件。如果成功的话，我们将尝试关闭两个文件。如果我们在试图关闭任何一个文件时收到错误，我们将 `return` 错误并退出函数作用域。
 
-Notice that we explicitly call `Close()` for each file, even though the `defer` will also call `Close()`. This is to ensure that if there is an error closing a file, we report the error. It also ensures that if for any reason the function exits early with an error, for instance if we failed to copy between the two files, that each file will still try to close properly from the deferred calls.
+注意，我们为每个文件明确地调用 `Close()`，尽管 `defer` 也将调用 `Close()`。这是为了确保如果关闭文件时出现错误，我们会报告这个错误。这也确保了如果因为任何原因函数提前退出，例如我们在两个文件之间复制失败，每个文件仍将尝试从延迟调用中正确关闭。
 
-## Conclusion
+## 总结
 
-In this article we learned about the `defer` statement, and how it can be used to ensure that we properly clean up system resources in our program. Properly cleaning up system resources will make your program use less memory and perform better. To learn more about where `defer` is used, read the article on Handling Panics, or explore our entire [How To Code in Go series](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go).
+在这篇文章中，我们了解了 `defer` 语句，以及如何使用它来确保我们在程序中正确清理系统资源。正确地清理系统资源将使你的程序使用更少的内存，表现更好。要了解更多关于 `defer` 的使用，请阅读处理恐慌的文章，或者探索我们整个[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
 
