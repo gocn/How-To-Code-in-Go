@@ -9,7 +9,7 @@
 
 ## 先决条件
 
-对于本文中的一些例子，你将需要。
+对于本文中的一些例子，你将需要：
 
 * 按照 [如何安装 Go 和设置本地编程环境]（https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go）设置的 Go 工作空间。本教程将使用以下文件结构：
 ```shell
@@ -461,7 +461,7 @@ a -> Hello
 
 在 Go 中，有时导入一个包并不是为了它的内容，而是为了导入包后产生的副作用。这通常意味着在导入的代码中有一个 `init()` 语句，在其他代码之前执行，允许开发者操纵他们程序开始的状态。这种技术被称为*导入的副作用*。
 
-为副作用而导入的一个常见用例是在你的代码中*注册*功能，这让包知道你的程序需要使用哪部分代码。例如，在`image`[包](https://golang.org/pkg/image/)中，`image.Decode` 函数在执行前需要知道它要解码的图像格式（`jpg`，`png`，`gif`，等等）。你可以通过首先导入一个有 `init()` 语句副作用的特定程序来完成这个任务。
+为副作用而导入的一个常见用例是在你的代码中*注册*功能，这让包知道你的程序需要使用哪部分代码。例如，在 `image` [包](https://golang.org/pkg/image/)中，`image.Decode` 函数在执行前需要知道它要解码的图像格式（`jpg`，`png`，`gif`，等等）。你可以通过首先导入一个有 `init()` 语句副作用的特定程序来完成这个任务。
 
 假设你试图在一个`.png` 文件上使用 `image.Decode`，代码片段如下：
 

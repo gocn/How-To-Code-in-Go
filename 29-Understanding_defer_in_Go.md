@@ -2,7 +2,7 @@
 
 ## 简介
 
-Go 有许多其他编程语言中常见的控制流关键字，如 `if`、`switch`、`for `等。有一个关键词在大多数其他编程语言中都没有，那就是  `defer` ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。
+Go 有许多其他编程语言中常见的控制流关键字，如 `if`、`switch`、`for` 等。有一个关键词在大多数其他编程语言中都没有，那就是  `defer` ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。
 
 `defer`语句的主要用途之一是清理资源，如打开的文件、网络连接和[数据库句柄](https://en.wikipedia.org/wiki/Handle_(computing))。当你的程序使用完这些资源后，关闭它们很重要，以避免耗尽程序的限制，并允许其他程序访问这些资源。`defer` 通过保持关闭文件/资源的调用与打开调用相近，使我们的代码更加简洁，不易出错。
 
@@ -10,7 +10,7 @@ Go 有许多其他编程语言中常见的控制流关键字，如 `if`、`switc
 
 ## 什么是 `defer` 语句
 
-一个 `defer` 语句将 `defer` 关键字后面的[function](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)调用添加到一个栈中。当添加这些调用的函数返回时，堆栈中的所有调用都被调用。因为这些调用被放在堆栈中，所以它们是按照后进先出的顺序调用的。
+一个 `defer` 语句将 `defer` 关键字后面的[函数](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)调用添加到一个栈中。当添加这些调用的函数返回时，堆栈中的所有调用都被调用。因为这些调用被放在堆栈中，所以它们是按照后进先出的顺序调用的。
 
 让我们看看 `defer` 是如何工作的，打印出一些文本：
 
@@ -63,7 +63,7 @@ func main() {
 
 理解 `defer` 的关键是，当 `defer` 语句被执行时，延迟函数的参数被立即评估。当 `defer` 执行时，它把后面的语句放在一个列表中，在函数返回之前被调用。
 
-虽然这段代码说明了`defer`的运行顺序，但这并不是编写 Go 程序时的典型使用方式。我们更可能使用 `defer` 来清理资源，例如文件句柄。接下来让我们看看如何做到这一点。
+虽然这段代码说明了 `defer` 的运行顺序，但这并不是编写 Go 程序时的典型使用方式。我们更可能使用 `defer` 来清理资源，例如文件句柄。接下来让我们看看如何做到这一点。
 
 ## 使用 `defer` 来清理资源
 
@@ -143,7 +143,7 @@ func write(fileName string, text string) error {
 
 我们可以使用 `defer` 语句来确保在执行过程中无论采取何种分支，我们都会调用 `Close()` ，而不是增加对 `file.Close()` 的第二次调用。
 
-下面是使用 `defer`关键字的版本：
+下面是使用 `defer` 关键字的版本：
 
 <center>main.go</center>
 

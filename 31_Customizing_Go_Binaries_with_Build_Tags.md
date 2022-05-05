@@ -10,7 +10,7 @@
 
 ## 先决条件
 
-要遵循本文的例子，你将需要。
+要遵循本文的例子，你将需要：
 
 * 按照 [如何安装 Go 和设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置的 Go 工作区。
 
@@ -375,7 +375,7 @@ go build -tags "enterprise pro"
 
 在本教程中，你使用构建标签来控制你的哪些代码被编译到二进制中。首先，你声明了构建标签并使用它们与 `go build`，然后你用布尔逻辑组合了多个标签。然后，你建立了一个程序，代表了免费版、专业版和企业版的不同功能集，显示了构建标签对项目的强大控制能力。
 
-如果你想了解更多关于构建标签的信息，请看一下[Golang 的相关文档](https://golang.org/pkg/go/build/#hdr-Build_Constraints)，或者继续探索我们的[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+如果你想了解更多关于构建标签的信息，请看一下 [Golang 的相关文档](https://golang.org/pkg/go/build/#hdr-Build_Constraints)，或者继续探索我们的[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
 
  
 
