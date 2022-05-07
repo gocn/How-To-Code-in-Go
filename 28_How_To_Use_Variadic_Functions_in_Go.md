@@ -1,3 +1,4 @@
+# How To Use Variadic Functions in Go
 ### Introduction
 
 A _variadic function_ is a function that accepts zero, one, or more values as a single argument. While variadic functions are not the common case, they can be used to make your code cleaner and more readable.

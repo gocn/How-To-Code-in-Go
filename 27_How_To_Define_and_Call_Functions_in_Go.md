@@ -1,3 +1,4 @@
+# How To Define and Call Functions in Go
 ### Introduction
 
 A _function_ is a section of code that, once defined, can be reused. Functions are used to make your code easier to understand by breaking it into small, understandable tasks that can be used more than once throughout your program.
