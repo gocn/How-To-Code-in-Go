@@ -1,22 +1,22 @@
 - 原文地址：[How To Use Interfaces in Go | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-interfaces-in-go)
 - 原文作者：digitalocean
-- 本文永久链接：
+- 本文永久链接：https://github.com/gocn/How-To-Code-in-Go/blob/main/37-How_To_Use_Interfaces_in_Go.md
 - 译者：[zxmfke](https://github.com/zxmfke)
 - 校对：
 
-# How To Use Interfaces in Go
+# 如何在Go使用interface
 
-## Introduction
+## 简述
 
-Writing flexible, reusable, and modular code is vital for developing versatile programs. Working in this way ensures code is easier to maintain by avoiding the need to make the same change in multiple places. How you accomplish this varies from language to language. For instance, [*inheritance*](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming)) is a common approach that is used in languages such as Java, C++, C#, and more.
+编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同的语言有不同的是实现方法。例如，[*继承*](https://en.wikipedia.org/wiki/Inheritance_(object-oriented_programming))是一种常见的方法，在Java、C++、C#等语言中都有使用。
 
-Developers can also attain those same design goals through [*composition*](https://en.wikipedia.org/wiki/Object_composition). Composition is a way to combine objects or data types into more complex ones. This is the approach that Go uses to promote code reuse, modularity, and flexibility. Interfaces in Go provide a method of organizing complex compositions, and learning how to use them will allow you to create common, reusable code.
+开发者们也可以通过[*组合*](https://en.wikipedia.org/wiki/Object_composition)实现这个设计目标。组合是一个将多个对象和数据类型组合到一个复杂的结构体中的方式。这个是Go用来促进代码复用，模块化和灵活性的方法。在Go中intrerface提供了一个方法用于构建复杂的组合，并且学习使用它们，将会使你创建通用的可重复使用的代码。
 
-In this article, we will learn how to compose custom types that have common behaviors, which will allow us to reuse our code. We’ll also learn how to implement interfaces for our own custom types that will satisfy interfaces defined from another package.
+在这篇文章中，我们将会学习如何构建那些有相同行为的自定义类型，用于复用代码。 我们还将学习如何为我们自己的自定义类型实现interface，以满足在另一个包中定义的接口。
 
-## Defining a Behavior
+## 定义一个行为
 
-One of the core implementations of composition is the use of interfaces. An interface defines a behavior of a type. One of the most commonly used interfaces in the Go standard library is the [`fmt.Stringer`](https://golang.org/pkg/fmt/#Stringer) interface:
+组合实现的核心之一是使用interface。一个interface定义一个类型的行为。Go标准库中最常用的interface之一是[`fmt.Stringer`](https://golang.org/pkg/fmt/#Stringer) 接口：
 
 ```go
 type Stringer interface {
@@ -24,13 +24,11 @@ type Stringer interface {
 }
 ```
 
-The first line of code defines a `type` called `Stringer`. It then states that it is an `interface`. Just like defining a struct, Go uses curly braces (`{}`) to surround the definition of the interface. In comparison to defining structs, we only define the interface’s *behavior*; that is, “what can this type do”.
+第一行代码定义一个`type`叫`Stringer`。然后表明它是一个`interface`。就好像定义一个结构体，Go使用大括号(`{}`)来囊括interface的定义。跟结构体的定义相比，我们只定义`interface`的*行为*，就是“这个类型可以做什么”
 
-In the case of the `Stringer` interface, the only behavior is the `String()` method. The method takes no arguments and returns a string.
+对这个`Stringer`接口的例子来说，唯一的行为就是`String()`这个方法。这个方法没有参数。
 
-Next, let’s look at some code that has the `fmt.Stringer` behavior:
-
-main.go
+接着，让我们看一些代码，这些代码有`fmt.Stringer`的行为：
 
 ```go
 package main
@@ -55,9 +53,7 @@ func main() {
 }
 ```
 
-The first thing we do is create a new type called `Article`. This type has a `Title` and an `Author` field and both are of the string [data type](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go):
-
-main.go
+第一件事是我们创建了一个新的类型叫做`Article`。这个类型有一个`Title`和一个`Author`字段，两个都是string的 [数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go):
 
 ```go
 ...
@@ -68,9 +64,7 @@ type Article struct {
 ...
 ```
 
-Next, we define a [`method`](https://www.digitalocean.com/community/tutorials/defining-methods-in-go) called `String` on the `Article` type. The `String` method will return a string that represents the `Article` type:
-
-main.go
+接着，我们定义了一个[`方法`](https://www.digitalocean.com/community/tutorials/defining-methods-in-go)叫做`String`在这个`Article`类型。`String`方法将会返回一个用于表示`Article`类型的字符串：
 
 ```go
 ...
@@ -80,9 +74,7 @@ func (a Article) String() string {
 ...
 ```
 
-Then, in our `main` [function](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go), we create an instance of the `Article` type and assign it to the [variable](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go) called `a`. We provide the values of `"Understanding Interfaces in Go"` for the `Title` field, and `"Sammy Shark"` for the `Author` field:
-
-main.go
+然后，在我们的`main`[function](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)里，我们创建一个`Article`类型的实例，并且将它赋值给一个[variable](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go)叫`a`。我们给`Title`字段设置了一个值，为`"理解Go中的Interfaces"`，给`Author`字段赋值`"Sammy Shark"`：
 
 ```go
 ...
@@ -93,32 +85,28 @@ a := Article{
 ...
 ```
 
-Then, we print out the result of the `String` method by calling `fmt.Println` and passing in the result of the `a.String()` method call:
-
-main.go
+紧接着，我们通过调用`fmt.Println`并传入调用`a.String()`后的结果，打印出`String`方法的结果：
 
 ```go
 ...
 fmt.Println(a.String())
 ```
 
-After running the program you’ll see the following output:
+随后运行程序，你会发现如下输出：
 
 ```
 OutputThe "Understanding Interfaces in Go" article was written by Sammy Shark.
 ```
 
-So far, we haven’t used an interface, but we did create a type that had a behavior. That behavior matched the `fmt.Stringer` interface. Next, let’s see how we can use that behavior to make our code more reusable.
+至此，我们还没有使用interface，但是我们创建了一个具备一个行为的类型。这个行为匹配`fmt.Stringer`接口。随后，让我们看看如何利用这种行为来使我们的代码更容易重复使用。
 
-## Defining an Interface
+## 定义一个interface
 
-Now that we have our type defined with the desired behavior, we can look at how to use that behavior.
+现在，我们已经用所需的行为定义了我们的类型，我们可以看看如何使用该行为。
 
-Before we do that, however, let’s look at what we would need to do if we wanted to call the `String` method from the `Article` type in a function:
+然而，在这之前，让我们看看如果我们想在一个函数中从`Article`类型中调用`String`方法，我们需要做什么：
 
-main.go
-
-```
+```go
 package main
 
 import "fmt"
@@ -145,11 +133,9 @@ func Print(a Article) {
 }
 ```
 
-In this code we add a new function called `Print` that takes an `Article` as an argument. Notice that the only thing the `Print` function does is call the `String` method. Because of this, we could instead define an interface to pass to the function:
+这段代码中，我们添加了一个名为`Print`的新函数，该函数接收一个`Article`作为参数。请注意，`Print`函数唯一做的事情是调用`String`方法。正因为如此，我们反而可以定义一个接口来传递给函数。
 
-main.go
-
-```
+```go
 package main
 
 import "fmt"
@@ -180,9 +166,7 @@ func Print(s Stringer) {
 }
 ```
 
-Here we created an interface called `Stringer`:
-
-main.go
+这里我们创建了一个interface叫做`Stringer`：
 
 ```go
 ...
@@ -192,17 +176,13 @@ type Stringer interface {
 ...
 ```
 
-Copy
+`Stringer`interface只有一个方法，叫做`String()`，返回一个`string`。[method](https://www.digitalocean.com/community/tutorials/defining-methods-in-go)是一个特殊的函数，在Go中被限定于一个特殊类型。不像函数，一个方法只能从它所定义的类型的实例中被调用。
 
-The `Stringer` interface has only one method, called `String()` that returns a `string`. A [method](https://www.digitalocean.com/community/tutorials/defining-methods-in-go) is a special function that is scoped to a specific type in Go. Unlike a function, a method can only be called from the instance of the type it was defined on.
+然后我们更新`Print`方法的签名来接收一个`Stringer`，而不是一个`Article`的具体类型。因为编译器知道`Stringer`接口定义了`String`方法，所以它只接收也有`String`方法的类型。
 
-We then update the signature of the `Print` method to take a `Stringer`, and not a concrete type of `Article`. Because the compiler knows that a `Stringer` interface defines the `String` method, it will only accept types that also have the `String` method.
+现在我们可以对任何满足`Stringer`接口的东西使用`Print`方法。让我们创建另一个类型来证明这一点：
 
-Now we can use the `Print` method with anything that satisfies the `Stringer` interface. Let’s create another type to demonstrate this:
-
-main.go
-
-```
+```go
 package main
 
 import "fmt"
@@ -250,20 +230,18 @@ func Print(s Stringer) {
 }
 ```
 
-We now add a second type called `Book`. It also has the `String` method defined. This means it also satisfies the `Stringer` interface. Because of this, we can also send it to our `Print` function:
+现在，我们添加了第二个类型叫`Book`。它同样也有定义`String`方法。这表示它也满足`Stringer`接口。因此，我们也可以传递它到`Print`函数：
 
 ```
 OutputThe "Understanding Interfaces in Go" article was written by Sammy Shark.
 The "All About Go" book was written by Jenny Dolphin. It has 25 pages.
 ```
 
-So far, we have demonstrated how to use just a single interface. However, an interface can have more than one behavior defined. Next, we’ll see how we can make our interfaces more versatile by declaring more methods.
+到目前为止，我们已经演示了如何只使用一个interface。然而，一个interface可以有不止一个行为的定义。接下来，我们将看到如何通过声明更多的方法来使我们的interface更加通用。
 
-## Multiple Behaviors in an Interface
+## 多行为interface
 
-One of the core tenants of writing Go code is to write small, concise types and compose them up to larger, more complex types. The same is true when composing interfaces. To see how we build up an interface, we’ll first start by defining only one interface. We’ll define two shapes, a `Circle` and `Square`, and they will both define a method called `Area`. This method will return the geometric area of their respective shapes:
-
-main.go
+编写Go代码的核心原则之一是编写小而简洁的类型，并将它们组成更大，更复杂的类型。组合interface也是一样的。为了了解我们是如何建立一个interface的，我们先从只定义一个interface开始。我们将会定义2个形状，一个`Circle`和一个`Square`，然后他们都会定义一个方法叫`Area`。这个方法会返回它们对应形状的几何面积：
 
 ```go
 package main
@@ -310,9 +288,7 @@ func Less(s1, s2 Sizer) Sizer {
 }
 ```
 
-Because each type declares the `Area` method, we can create an interface that defines that behavior. We create the following `Sizer` interface:
-
-main.go
+因为每个类型都定义了`Area`方法，我们可以创建一个interface来定义这个行为。我们创建如下的`Sizer`interface:
 
 ```go
 ...
@@ -322,9 +298,7 @@ type Sizer interface {
 ...
 ```
 
-We then define a function called `Less` that takes two `Sizer` and returns the smallest one:
-
-main.go
+然后定义一个函数叫做`Less`，传入2个`Sizer`并返回最小的那一个：
 
 ```go
 ...
@@ -337,19 +311,17 @@ func Less(s1, s2 Sizer) Sizer {
 ...
 ```
 
-Notice that we not only accept both arguments as the type `Sizer`, but we also return the result as a `Sizer` as well. This means that we no longer return a `Square` or a `Circle`, but the interface of `Sizer`.
+注意到我们不仅接收2个都为`Sizer`的类型，而且返回的结果也用`Sizer`。这意味着我们不再返回一个`Square`或者一个`Circle`，而是`Sizer`interface。
 
-Finally, we print out what had the smallest area:
+最后，我们打印出哪一个是最小的面积：
 
 ```
 Output{Width:5 Height:10} is the smallest
 ```
 
-Next, let’s add another behavior to each type. This time we’ll add the `String()` method that returns a string. This will satisfy the `fmt.Stringer` interface:
+接着，让我们给每个类型添加另一个行为。这次我们添加`String()`方法，返回一个string。这个满足`fmt.Stringer`interface:
 
-main.go
-
-```
+```go
 package main
 
 import (
@@ -415,9 +387,7 @@ func PrintArea(s Shaper) {
 }
 ```
 
-Because both the `Circle` and the `Square` type implement both the `Area` and `String` methods, we can now create another interface to describe that wider set of behavior. To do this, we’ll create an interface called `Shaper`. We’ll compose this of the `Sizer` interface and the `fmt.Stringer` interface:
-
-main.go
+因为`Circle`和`Square`类型都同时实现了`Area`和`String`方法，我们现在可以创建另一个interface来描述这些更广泛的行为。为了实现这个，我们创建了一个interface叫做`Shaper`。这个`Shaper`将由`Sizer`interface和`fmt.Stringer`interface组成：
 
 ```go
 ...
@@ -428,11 +398,9 @@ type Shaper interface {
 ...
 ```
 
-**Note:** It is considered idiomatic to try to name your interface by ending in `er`, such as `fmt.Stringer`, `io.Writer`, etc. This is why we named our interface `Shaper`, and not `Shape`.
+**注意：** 基于习惯，尝试以`er`结尾来给你的interface命名，例如`fmt.Stringer`，`io.Writer`等等。这也是为什么我们用`Shaper`来命名我们的interface，而不是`Shape`。
 
-Now we can create a function called `PrintArea` that takes a `Shaper` as an argument. This means that we can call both methods on the passed in value for both the `Area` and `String` method:
-
-main.go
+现在我们可以创建一个名为`PrintArea`的函数，该函数以`Shaper`为参数。这意味着我们可以对传入的值调用`Area`和`String`这两个方法：
 
 ```go
 ...
@@ -441,7 +409,7 @@ func PrintArea(s Shaper) {
 }
 ```
 
-If we run the program, we will receive the following output:
+如果我们运行程序，我们将会收到如下输出：
 
 ```
 Outputarea of Circle {Radius: 10.00} is 314.16
@@ -449,12 +417,10 @@ area of Square {Width: 5.00, Height: 10.00} is 50.00
 Square {Width: 5.00, Height: 10.00} is the smallest
 ```
 
-We have now seen how we can create smaller interfaces and build them up into larger ones as needed. While we could have started with the larger interface and passed it to all of our functions, it is considered best practice to send only the smallest interface to a function that is needed. This typically results in clearer code, as anything that accepts a specific smaller interface only intends to work with that defined behavior.
+我们现在已经看到了我们如何创建较小的interface，并根据需要将它们建立成较大的interface。虽然我们可以从较大的interface开始，并将其传递给我们所有的函数，但最好的做法是只将最小的interface发送给需要的函数。这通常会使代码更加清晰，因为任何接收特定的较小的interface的东西都只打算执行其定义的行为。
 
-For example, if we passed `Shaper` to the `Less` function, we may assume that it is going to call both the `Area` and `String` methods. However, since we only intend to call the `Area` method, it makes the `Less` function clear as we know that we can only call the `Area` method of any argument passed to it.
+例如，如果我们将`Shaper`传递给`Less`函数，我们可能会认为它要同时调用`Area`和`String`方法。然而，由于我们只打算调用`Area`方法，这使得`Less`函数很清楚，因为我们知道我们只能调用传递给它的任何参数的`Area`方法。
 
-## Conclusion
+## 总结
 
-We have seen how creating smaller interfaces and building them up to larger ones allows us to share only what we need to a function or method. We also learned that we can compose our interfaces from other interfaces, including those defined from other packages, not just our packages.
-
-If you’d like to learn more about the Go programming language, check out the entire [How To Code in Go series](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go).
+我们已经看到，创建较小的interface并将其构建为较大的interface，可以让我们只分享我们需要的函数或方法。我们还了解到，我们可以从其他interface中组成我们的interface，包括从其他包中定义的interface，而不仅仅是我们的包。
