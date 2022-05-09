@@ -11,7 +11,7 @@
 
 让我们看一个在循环中使用`break`语句的示例：
 
-```
+```go
 package main
 
 import "fmt"
@@ -34,7 +34,7 @@ func main() {
 
 当我们运行此代码时，输出将如下所示：
 
-```
+```shell
 Output
 The value of i is 0
 The value of i is 1
@@ -51,7 +51,7 @@ Exiting program
 
 要记住，`break` 语句只会停止调用它的最内层循环的执行。如果您有一组嵌套循环，如果需要，您将需要为每个循环设置break。
 
-```
+```go
 package main
 
 import "fmt"
@@ -79,7 +79,7 @@ func main() {
 
 如果我们运行程序，可以看到输出：
 
-```
+```shell
 Output
 The value of outer is 0
 The value of inner is 0
@@ -109,7 +109,7 @@ Exiting program
 
 使用与前面的[Break 语句](https://www.digitalocean.com/community/tutorials/how-to-use-break-and-continue-statements-when-working-with-loops-in-go#break-statement)部分相同的 `for` 循环程序，我们将使用 `continue` 语句而不是 `break` 语句：
 
-```
+```go
 package main
 
 import "fmt"
@@ -128,7 +128,7 @@ func main() {
 
 使用 `continue` 语句而不是 `break` 语句的区别在于，当变量 `i` 等于 `5` 时，尽管中断了，我们的代码仍将继续执行。让我们看看我们的输出：
 
-```
+```shell
 Output
 The value of i is 0
 The value of i is 1

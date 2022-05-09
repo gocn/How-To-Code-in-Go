@@ -15,7 +15,7 @@
 
 _ForClause循环_ 被定义为有一个 _初始语句_，后跟一个 _条件_，然后是一个 _后置语句_。它们按以下语法排列：
 
-```
+```go
 for [ Initial Statement ] ; [ Condition ] ; [ Post Statement ] {
     [Action]
 }
@@ -23,11 +23,17 @@ for [ Initial Statement ] ; [ Condition ] ; [ Post Statement ] {
 
 为了解释前面组成元素的作用，让我们看一个使用 ForClause 语法在指定值范围内递增的 `for` 循环：
 
+```go
+for i := 0; i < 5; i++ {
+	fmt.Println(i)
+}
+```
+
 让我们分解这个循环并识别每个部分
 
 循环的第一部分是 `i := 0` ，这是初始语句：
 
-```
+```go
 for i := 0; i < 5; i++ {
 	fmt.Println(i)
 }
@@ -37,7 +43,7 @@ for i := 0; i < 5; i++ {
 
 接下来是条件：
 
-```
+```go
 for i := 0; i < 5; i++ {
 	fmt.Println(i)
 }
@@ -47,7 +53,7 @@ for i := 0; i < 5; i++ {
 
 最后，是一个后置语句：
 
-```
+```go
 for i := 0; i < 5; i++ {
 	fmt.Println(i)
 }
@@ -57,7 +63,7 @@ for i := 0; i < 5; i++ {
 
 当我们运行这个程序时，输出如下所示：
 
-```
+```shell
 Output
 0
 1
@@ -72,14 +78,14 @@ Output
 
 我们不限于从 0 开始或以指定值结束。我们可以为我们的初始语句分配任何值，也可以在我们的后置语句中赋予任何值。这允许我们创建任何所需的范围来循环：
 
-```
+```go
 for i := 20; i < 25; i++ {
 	fmt.Println(i)
 }
 ```
 在这里，迭代会从 20（包括）到 25（不包括），所以输出如下所示：
 
-```
+```shell
 Output
 20
 21
@@ -92,7 +98,7 @@ Output
 
 首先，让我们使用正值递增的后置语句：
 
-```
+```go
 for i := 0; i < 15; i += 3 {
 	fmt.Println(i)
 }
@@ -100,7 +106,7 @@ for i := 0; i < 15; i += 3 {
 
 在这种情况下，设置 `for` 循环以便打印出从 0 到 15 的数字，但增量为 3，因此每三个数字打印一次，如下所示：
 
-```
+```shell
 Output
 0
 3
@@ -111,7 +117,7 @@ Output
 
 我们也可以为我们的后置语句使用负值来向后迭代，但我们必须相应地调整我们的初始语句和条件参数：
 
-```
+```go
 for i := 100; i > 0; i -= 10 {
 	fmt.Println(i)
 }
@@ -119,7 +125,7 @@ for i := 100; i > 0; i -= 10 {
 
 在这里，我们将 `i` 初始值设置为`100`，使用 `i < 0` 的条件在处停止，并且后置语句使用 `-=` 运算符将值减 10。循环开始于 `100` 并结束于 `0`，每次迭代减少 10。我们可以在输出中看到这种情况：
 
-```
+```shell
 Output
 100
 90
@@ -135,7 +141,7 @@ Output
 
 您也可以从语法中不使用初始语句和后置语句，而只使用条件。这就是所谓的 _条件循环_：
 
-```
+```go
 i := 0
 for i < 5 {
 	fmt.Println(i)
@@ -147,7 +153,7 @@ for i < 5 {
 
 有时您可能不知道完成某项任务所需的迭代次数。在这种情况下，您可以省略所有语句，并使用 `break` 关键字退出执行：
 
-```
+```go
 for {
 	if someCondition {
 		break
@@ -157,7 +163,7 @@ for {
 ```
 
 这方面的一个例子可能是，如果我们正在从一个不确定大小的结构（如[缓冲区](https://golang.org/pkg/bytes/#Buffer)）中读取，并且我们不知道何时完成读取：
-```
+```go
 package main
 
 import (
@@ -196,7 +202,7 @@ func main() {
 在我们研究使用 RangeClause 之前，让我们看看如何使用 ForClause 语法遍历切片：
 
 
-```
+```go
 package main
 
 import "fmt"
@@ -212,7 +218,7 @@ func main() {
 
 运行它将给出以下输出，打印出切片的每个元素：
 
-```
+```shell
 Output
 hammerhead
 great white
@@ -224,7 +230,7 @@ requiem
 
 现在，让我们使用 RangeClause 执行相同的操作：
 
-```
+```go
 package main
 
 import "fmt"
@@ -240,7 +246,7 @@ func main() {
 
 在这种情况下，我们打印出列表中的每个项。虽然我们使用了变量 `i` 和 `shark` ，但我们可以将变量称为任何其他[有效的变量名](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#naming-variables-rules-and-style)，我们会得到相同的输出：
 
-```
+```shell
 Output
 0 hammerhead
 1 great white
@@ -255,7 +261,7 @@ Output
 有时，我们只想要切片元素内的值，而不是索引。但是，如果我们将前面的代码更改为仅打印值，我们将收到编译时错误：
 
 
-```
+```go
 package main
 
 import "fmt"
@@ -269,7 +275,7 @@ func main() {
 }
 ```
 
-```
+```shell
 Output
 src/range-error.go:8:6: i declared and not used
 ```
@@ -279,7 +285,7 @@ src/range-error.go:8:6: i declared and not used
 因此，Go 具有[空白标识符](https://golang.org/ref/spec#Blank_identifier)，即下划线 ( `_` )。在 `for` 循环中，您可以使用空白标识符来忽略从 `range` 关键字返回的任何值。在这种情况下，我们要忽略索引，它是返回的第一个参数。
 
 
-```
+```go
 package main
 
 import "fmt"
@@ -293,7 +299,7 @@ func main() {
 }
 ```
 
-```
+```shell
 Output
 hammerhead
 great white
@@ -308,7 +314,7 @@ requiem
 您也可以使用 `range` 将项目添加到列表中：
 
 
-```
+```go
 package main
 
 import "fmt"
@@ -324,7 +330,7 @@ func main() {
 }
 ```
 
-```
+```shell
 Output
 ['hammerhead', 'great white', 'dogfish', 'frilled', 'bullhead', 'requiem', 'shark', 'shark', 'shark', 'shark', 'shark', 'shark']
 ```
@@ -335,7 +341,7 @@ Output
 
 我们也可以使用 `range` 运算符来填充切片的值
 
-```
+```go
 package main
 
 import "fmt"
@@ -354,7 +360,7 @@ func main() {
 
 在这个例子中，切片 `integers` 初始化了十个空值，但 `for` 循环会设置列表中的所有值，如下所示：
 
-```
+```shell
 Output
 [0 0 0 0 0 0 0 0 0 0]
 [0 1 2 3 4 5 6 7 8 9]
@@ -364,7 +370,7 @@ Output
 
 我们也可以使用 `range` 运算符来遍历字符串中的每个字符：
 
-```
+```go
 package main
 
 import "fmt"
@@ -378,7 +384,7 @@ func main() {
 }
 ```
 
-```
+```shell
 Output
 S
 a
@@ -388,7 +394,7 @@ y
 ```
 
 当遍历 [map](https://www.digitalocean.com/community/tutorials/understanding-maps-in-go) 时，`range`将返回**键**和**值**：
-```
+```go
 package main
 
 import "fmt"
@@ -402,7 +408,7 @@ func main() {
 }
 ```
 
-```
+```shell
 Output
 color: blue
 location: ocean
@@ -420,7 +426,7 @@ animal: shark
 
 嵌套循环在结构上类似于[嵌套`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#nested-if-statements)。它的构造如下：
 
-```
+```go
 for {
     [Action]
     for {
@@ -433,7 +439,7 @@ for {
 
 让我们实现一个嵌套 `for` 循环，以便我们仔细看看。在这个例子中，外层循环将遍历一个名为 `numList` 的整数切片，而内层循环将遍历一个名为 `alphaList` 的字符串切片。
 
-```
+```go
 package main
 
 import "fmt"
@@ -453,7 +459,7 @@ func main() {
 
 当我们运行这个程序时，我们将得到以下输出：
 
-```
+```shell
 Output
 1
 a
@@ -473,7 +479,7 @@ c
 
 嵌套 `for` 循环可用于遍历由切片组成的切片中的项。在由切片组成的切片中，如果我们只使用一个 `for` 循环，程序会将每个内部列表作为一项输出：
 
-```
+```go
 package main
 
 import "fmt"
@@ -491,7 +497,7 @@ func main() {
 }
 ```
 
-```
+```shell
 Output
 [0 1 2]
 [-1 -2 -3]
@@ -499,7 +505,7 @@ Output
 ```
 
 为了访问内部切片的每个单独项，我们将实现一个嵌套`for`循环：
-```
+```go
 package main
 
 import "fmt"
@@ -519,7 +525,7 @@ func main() {
 }
 ```
 
-```
+```shell
 Output
 0
 1
