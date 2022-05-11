@@ -1,65 +1,92 @@
-### Introduction
+# 理解 GOPATH
 
-This article will walk you through understanding what the `GOPATH` is, how it works, and how to set it up. This is a crucial step for setting up a Go development environment, as well as understanding how Go finds, installs, and builds source files. In this article we will use `GOPATH` when referring to the concept of the folder structure we will be discussing. We will use `$GOPATH` to refer to the environment variable that Go uses to find the folder structure.
+### 介绍
 
-A [Go Workspace](https://golang.org/doc/code.html#Workspaces) is how Go manages our source files, compiled binaries, and cached objects used for faster compilation later. It is typical, and also advised, to have only one Go Workspace, though it is possible to have multiple spaces. The `GOPATH` acts as the root folder of a workspace.
+本文将带领您了解什么是 `GOPATH`，它是如何工作的，以及如何设置它。这是设置 Go 开发环境以及理解 Go 如何查找、安装和构建源文件的关键步骤。在本文中，我们将使用 `GOPATH` 来指代我们将要讨论的文件夹结构的概念。我们将使用 `$GOPATH` 来指代 Go 用来查找文件夹结构的环境变量。
 
-## Setting the `$GOPATH` Environment Variable
+[Go 工作区](https://golang.org/doc/code.html#Workspaces) 是 Go 管理源码文件、编译的二进制文件和用于后续更快编译的缓存的对象。虽然可能有多个空间，但只有一个 Go 工作区是典型的，也是被建议的使用方式。`GOPATH` 充当工作区的根文件夹。
 
-The `$GOPATH` environment variable lists places for Go to look for Go Workspaces.
+## 设置 `$GOPATH` 环境变量
 
-By default, Go assumes our `GOPATH` location is at `$HOME/go`, where `$HOME` is the root directory of our user account on our computer. We can change this by setting the `$GOPATH` environment variable. For further study, follow this tutorial on [reading and setting environment variables in Linux](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps).
+`$GOPATH` 环境变量列出了 Go 用来寻找 Go 工作区的地方。
 
-For more information on setting the `$GOPATH` variable, see the Go [documentation](https://golang.org/doc/code.html#Workspaces).
+默认情况下，Go 假设 `GOPATH` 位于 `$HOME/go`，其中 `$HOME` 是电脑上上我们帐户的根目录。我们可以通过设置 `$GOPATH` 环境变量来修改它。为了进一步的研究，请参考[在 Linux 中阅读和设置环境变量](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps)的教程。
 
-Furthermore, this [series](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go) walks through installing Go and setting up a Go development environment.
+想要了解更多关于设置 `$GOPATH` 变量的信息，可以参考 Go [文档](https://golang.org/doc/code.html#Workspaces)。
 
-## `$GOPATH` Is Not `$GOROOT`
+此外，[本系列教程](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go) 简单介绍了安装 Go 和设置 Go 开发环境的方法。
 
-The `$GOROOT` is where Go’s code, compiler, and tooling lives — this is **not** our source code. The `$GOROOT` is usually something like `/usr/local/go`. Our `$GOPATH` is usually something like `$HOME/go`.
+## `$GOPATH` 不是 `$GOROOT`
 
-While we don’t need to specifically set up the `$GOROOT` variable anymore, it is still referenced in older materials.
+`$GOROOT` 是 Go 的代码、编译器和工具所在的地方ーー这**不是**我们的源代码。`$GOROOT` 通常类似于 `/usr/local/go`。我们的 `$GOPATH` 通常类似于 `$HOME/go`。
 
-Now, let’s discuss the structure of the Go Workspace.
+虽然我们不再需要专门设置 `$GOROOT` 变量，但它仍然在旧材料中被引用。
 
-## Anatomy of the Go Workspace
+现在，让我们讨论一下 Go Workspace 的结构。
 
-Inside of a Go Workspace, or `GOPATH`, there are three directories: `bin`, `pkg`, and `src`. Each of these directories has special meaning to the Go tool chain.
+## Go 工作区剖析
 
-Let’s take a look at each of these directories.
+在一个 Go Workspace 或者 `GOPATH` 中，有三个目录: `bin`、 `pkg` 和 `src`。这些目录中的每一个对于 Go 工具链都有特殊的意义。
 
-The `$GOPATH/bin` directory is where Go places binaries that `go install` compiles. Our operating system uses the `$PATH` environment variable to find binary applications that can execute without a full path. It is recommended to add this directory to our global `$PATH` variable.
+```
+.
+├── bin
+├── pkg
+└── src
+  └── github.com/foo/bar
+    └── bar.go
+```
 
-For example, if we don’t add `$GOPATH/bin` to `$PATH` to execute a program from there, we would need to run:
+让我们来看看每个目录。
 
-When `$GOPATH/bin` is added to `$PATH` we can make the same call like such:
+`$GOPATH/bin` 目录是 Go 放置 `go install` 编译的二进制文件的地方。我们的操作系统使用 `$PATH` 环境变量查找可以在没有完整路径的情况下执行的二进制应用程序。建议将此目录添加到全局 `$PATH` 变量中。
 
-The `$GOPATH/pkg` directory is where Go stores pre-compiled object files to speed up subsequent compiling of programs. Typically, most developers won’t need to access this directory. If you experience issues with compilation, you can safely delete this directory and Go will then rebuild it.
+例如，如果我们不在 `$PATH` 中添加 `$GOPATH/bin` 来执行一个程序，我们需要运行:
 
-The `src` directory is where all of our `.go` files, or source code, must be located. This shouldn’t be confused with the source code the Go tooling uses, which is located at the `$GOROOT`. As we write Go applications, packages, and libraries, we will place these files under `$GOPATH/src/path/to/code`.
+```
+$ $GOPATH/bin/myapp
+```
 
-## What Are Packages?
+当 `$GOPATH/bin` 被添加到 `$PATH` 时，我们可以像这样进行同样的调用:
 
-Go code is organized in packages. A package represents all the files in a single directory on disk. One directory can contain only certain files from the same package. Packages are stored, with all user-written Go source files, under the `$GOPATH/src` directory. We can understand package resolution by importing different packages.
+```
+$ myapp
+```
 
-If our code lives at `$GOPATH/src/blue/red` then its package name should be `red`.
+`$GOPATH/pkg` 目录是 Go 存储预编译目标文件的地方，以加速程序的后续编译。通常，大多数开发人员不需要访问这个目录。如果遇到编译问题，可以安全地删除该目录，然后 Go 将重新生成该目录。
 
-The import statement for the `red` package would be:
+在 `src` 目录是我们放置所有的 `.go` 文件，或源代码的地方。这不应与 Go 工具使用的源代码混淆，后者位于 `$GOROOT` 中。在编写 Go 应用程序、包和库时，我们将把这些文件放在 `$GOPATH/src/path/to/code` 下。
 
-Packages that live in source code repositories, like GitHub and BitBucket, have the full location of the repository as part of their import path.
+## 包是什么？
 
-For example, we would import the source code at [https://github.com/gobuffalo/buffalo](https://github.com/gobuffalo/buffalo) using the following import path:
+Go 代码是以包的形式组织的。包表示磁盘上单个目录中的所有文件。一个目录只能包含来自同一包的某些文件。包与所有用户编写的 Go 源文件一起存储在 `$GOPATH/src` 目录下。我们可以通过导入不同的软件包来理解软件包解析。
 
-Therefore, this source code would be in the following location on disk:
+如果我们的代码是 `$GOPATH/src/blue/red`，那么它的包名应该是 `red`。
+
+```
+import "blue/red"
+```
+
+`red` 包的导入声明如下:
+
+存储在源代码仓库中的软件包，如 GitHub 和 BitBucket，将仓库的完整位置作为导入路径的一部分。
+
+例如，我们可以使用下面的导入路径来导入 [https://github.com/gobuffalo/buffalo](https://github.com/gobuffalo/buffalo) 的源代码:
+
+```
+import "github.com/gobuffalo/buffalo"
+```
+
+因此，这个源代码应该位于磁盘上的下列位置:
 
 ```
 $GOPATH/src/github.com/gobuffalo/buffalo
 ```
 
-## Conclusion
+## 结论
 
-In this article we discussed the `GOPATH` as a set of folder’s that Go expects our source code to live within, as well as what those folders are, and what they contain. We discussed how to change that location from the default of `$HOME/go` to the user’s choice by setting the `$GOPATH` environment variable. Finally, we discussed how Go searches for packages within that folder structure.
+在这篇文章中，我们讨论了 `GOPATH` 作为一个文件夹的集合，Go 期望我们的源代码保存在里面，以及这些文件夹是什么，它们包含什么。我们讨论了如何通过设置 `$GOPATH` 环境变量，将默认的 `$HOME/go` 位置改为用户选择的位置。最后，我们讨论了 Go 如何在该文件夹结构中搜索包。
 
-Introduced in Go 1.11, [Go Modules](https://github.com/golang/go/wiki/Modules) aim to replace Go Workspaces and the `GOPATH`. While it is recommended to start using modules, some environments, such as corporate environments, may not be ready to use modules.
+在 Go 1.11中引入的 [Go 模块](https://github.com/golang/Go/wiki/Modules)旨在取代 Go Workspaces 和 `GOPATH`。虽然建议开始使用模块，但是有些环境(如公司环境)，可能还没有准备好使用模块。
 
-The `GOPATH` is one of the trickier aspects of setting up Go, but once it is set up, we can usually forget about it.
+`GOPATH` 是 Go 设置中比较棘手的一个方面，但是一旦设置好了，我们通常会忘记它。
