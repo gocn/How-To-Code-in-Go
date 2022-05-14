@@ -1,20 +1,20 @@
-# Understanding Package Visibility in Go
+# 理解Go中包的可见性
 
-### Introduction
+### 介绍
 
-When creating a [package in Go](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go), the end goal is usually to make the package accessible for other developers to use, either in higher order packages or whole programs. By [importing the package](https://www.digitalocean.com/community/tutorials/importing-packages-in-go), your piece of code can serve as the building block for other, more complex tools. However, only certain packages are available for importing. This is determined by the visibility of the package.
+当创建一个[Go中的包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过[导入包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 
-*Visibility* in this context means the file space from which a package or other construct can be referenced. For example, if we define a variable in a function, the visibility (scope) of that variable is only within the function in which it was defined. Similarly, if you define a variable in a package, you can make it visible to just that package, or allow it to be visible outside the package as well.
+这里的*可见性*是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。
 
-Carefully controlling package visibility is important when writing ergonomic code, especially when accounting for future changes that you may want to make to your package. If you need to fix a bug, improve performance, or change functionality, you’ll want to make the change in a way that won’t break the code of anyone using your package. One way to minimize breaking changes is to allow access only to the parts of your package that are needed for it to be used properly. By limiting access, you can make changes internally to your package with less of a chance of affecting how other developers are using your package.
+在编写符合人体工程学的代码时，仔细控制包的可见性是很重要的，特别是在考虑到将来可能要对你的包进行修改时。如果你需要修复一个错误，提高性能，或改变功能，你会希望以一种不会破坏使用你的包的人的代码的方式进行改变。尽量减少破坏性修改的一个方法是只允许访问你的包中需要正常使用的部分。通过限制访问，你可以在内部对包进行修改，而减少影响其他开发者使用你的包的机会。
 
-In this article, you will learn how to control package visibility, as well as how to protect parts of your code that should only be used inside your package. To do this, we will create a basic logger to log and debug messages, using packages with varying degrees of item visibility.
+在这篇文章中，将学习如何控制包的可见性，以及如何保护代码中只应在包内使用的部分。为了做到这一点，我们将创建一个基本的记录器来记录和调试信息，使用具有不同程度的项目可见性的包。
 
-## Prerequisites
+## 前提条件
 
-To follow the examples in this article, you will need:
+要遵循本文中的示例，你将需要：
 
-- A Go workspace set up by following [How To Install Go and Set Up a Local Programming Environment](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go). This tutorial will use the following file structure:
+- 按照[如何安装 Go 并设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置的 Go 工作区。 本教程将使用以下文件结构：
 
 ```
 .
@@ -25,17 +25,15 @@ To follow the examples in this article, you will need:
         └── gopherguides
 ```
 
-## Exported and Unexported Items
+## 可导出与不可导出
 
-Unlike other program languages like Java and [Python](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3) that use *access modifiers* such as `public`, `private`, or `protected` to specify scope, Go determines if an item is `exported` and `unexported` through how it is declared. Exporting an item in this case makes it `visible` outside the current package. If it’s not exported, it is only visible and usable from within the package it was defined.
+不同于其他程序语言，如Java和[Python](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3)使用*访问修饰符*如`public`、`private`或`protected`来指定范围不同，Go通过其声明方式来决定一个项目是否`exported`和`unxported`。在这种情况下，导出一个项目会使它在当前包之外是 "可见的"。如果它没有被导出，它只能在它被定义的包内可见和使用。
 
-This external visibility is controlled by capitalizing the first letter of the item declared. All declarations, such as `Types`, `Variables`, `Constants`, `Functions`, etc., that start with a capital letter are visible outside the current package.
+这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 "类型"、"变量"、"常量"、"函数"等，在当前包外是可见的。
 
-Let’s look at the following code, paying careful attention to capitalization:
+让我们看看下面的代码，仔细注意一下大写字母。
 
-greet.go
-
-```
+```go
 package greet
 
 import "fmt"
@@ -47,36 +45,30 @@ func Hello(name string) string {
 }
 ```
 
-This code declares that it is in the `greet` package. It then declares two symbols, a variable called `Greeting`, and a function called `Hello`. Because they both start with a capital letter, they are both `exported` and available to any outside program. As stated earlier, crafting a package that limits access will allow for better API design and make it easier to update your package internally without breaking anyone’s code that is depending on your package.
+这段代码声明它是在`greet`包中。然后声明了两个符号，一个叫做 `Greeting` 的变量和一个叫做 `Hello` 的函数。因为它们都以大写字母开头，所以它们都被 "可导出" 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
 
-## Defining Package Visibility
+## 定义包的可见性
 
-To give a closer look at how package visibility works in a program, let’s create a `logging` package, keeping in mind what we want to make visible outside our package and what we won’t make visible. This logging package will be responsible for logging any of our program messages to the console. It will also look at what *level* we are logging at. A level describes the type of log, and is going to be one of three statuses: `info`, `warning`, or `error`.
+为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个`logging`包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么*级别*上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：`信息`、`警告`或`错误`。
 
-First, within your `src` directory, let’s create a directory called `logging` to put our logging files in:
+首先，在你的 `src` 目录下，创建一个名为 `logging` 的目录来放置日志文件：
 
 ```bash
 mkdir logging
 ```
 
-
-Move into that directory next:
+进入目录：
 
 ```bash
 cd logging
 ```
-
-
-Then, using an editor like nano, create a file called `logging.go`:
+然后，使用nano这样的编辑器，创建一个名为`logging.go`的文件：
 
 ```bash
 nano logging.go
 ```
 
-
-Place the following code in the `logging.go` file we just created:
-
-logging/logging.go
+在刚刚创建的`logging.go`文件中写入以下代码：
 
 ```go
 package logging
@@ -101,14 +93,13 @@ func Log(statement string) {
 }
 ```
 
+这段代码的第一行声明了一个名为 `logging` 的包。在这个包中，有两个 "导出 "的函数。`Debug`和`Log`。这些函数可以被任何其他导入`logging`的包所调用。还有一个名为`debug`的私有变量。这个变量只能从`logging`包内访问。值得注意的是，虽然函数`Debug`和变量`debug`的拼写相同，但函数是大写的，变量不是。这使得它们成为具有不同作用域的不同声明。
 
-The first line of this code declared a package called `logging`. In this package, there are two `exported` functions: `Debug` and `Log`. These functions can be called by any other package that imports the `logging` package. There is also a private variable called `debug`. This variable is only accessible from within the `logging` package. It is important to note that while the function `Debug` and the variable `debug` both have the same spelling, the function is capitalized and the variable is not. This makes them distinct declarations with different scopes.
+保存并退出该文件。
 
-Save and quit the file.
+为了在我们代码的其他地方使用这个包，我们可以[`import`它到一个新的包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)。我们将创建这个新的包，但需要一个新的目录来首先存储这些源文件。
 
-To use this package in other areas of our code, we can [`import` it into a new package](https://www.digitalocean.com/community/tutorials/importing-packages-in-go). We’ll create this new package, but we’ll need a new directory to store those source files in first.
-
-Let’s move out of the `logging` directory, create a new directory called `cmd`, and move into that new directory:
+让我们离开`logging`目录，创建一个名为`cmd`的新目录，然后进入这个新目录：
 
 ```bash
 cd ..
@@ -116,17 +107,13 @@ mkdir cmd
 cd cmd
 ```
 
-
-Create a file called `main.go` in the `cmd` directory we just created:
+在刚刚创建的`cmd`目录下创建一个名为`main.go`的文件：
 
 ```bash
 nano main.go
 ```
 
-
-Now we can add the following code:
-
-cmd/main.go
+现在我们可以添加以下代码：
 
 ```go
 package main
@@ -140,19 +127,15 @@ func main() {
 }
 ```
 
+现在整个程序已经写好了。然而，在运行这个程序之前，我们还需要创建几个配置文件，以便我们的代码能够正常工作。Go使用[Go模块](https://blog.golang.org/using-go-modules)来配置导入资源的软件包依赖性。Go模块是放置在你的包目录中的配置文件，它告诉编译器从哪里导入包。虽然对模块的学习超出了本文的范围，但我们可以只写几行配置来使这个例子在本地工作。
 
-We now have our entire program written. However, before we can run this program, we’ll need to also create a couple of configuration files for our code to work properly. Go uses [Go Modules](https://blog.golang.org/using-go-modules) to configure package dependencies for importing resources. Go modules are configuration files placed in your package directory that tell the compiler where to import packages from. While learning about modules is beyond the scope of this article, we can write just a couple lines of configuration to make this example work locally.
-
-Open the following `go.mod` file in the `cmd` directory:
+在`cmd`目录下打开以下`go.mod`文件：
 
 ```bash
 nano go.mod
 ```
 
-
-Then place the following contents in the file:
-
-go.mod
+然后在文件中放置以下内容：
 
 ```
 module github.com/gopherguides/cmd
@@ -160,29 +143,24 @@ module github.com/gopherguides/cmd
 replace github.com/gopherguides/logging => ../logging
 ```
 
-The first line of this file tells the compiler that the `cmd` package has a file path of `github.com/gopherguides/cmd`. The second line tells the compiler that the package `github.com/gopherguides/logging` can be found locally on disk in the `../logging` directory.
+这个文件的第一行告诉编译器，`cmd`包的文件路径是`github.com/gopherguides/cmd`。第二行告诉编译器，`github.com/gopherguides/logging`包可以在磁盘上的`.../logging`目录下找到。
 
-We’ll also need a `go.mod` file for our `logging` package. Let’s move back into the `logging` directory and create a `go.mod` file:
+我们还需要一个`go.mod`文件用于我们的`logging`包。让我们回到`logging`目录中，创建一个`go.mod`文件。
 
 ```bash
 cd ../logging
 nano go.mod
 ```
 
-
-Add the following contents to the file:
-
-go.mod
+在文件中加入以下内容：
 
 ```
 module github.com/gopherguides/logging
 ```
 
-This tells the compiler that the `logging` package we created is actually the `github.com/gopherguides/logging` package. This makes it possible to import the package in our `main` package with the following line that we wrote earlier:
+这告诉编译器，我们创建的`logging`包实际上是`github.com/gopherguides/logging`包。这使得在 `main` 包中导入该包成为可能，之前写了以下这一行：
 
-cmd/main.go
-
-```
+```go
 package main
 
 import "github.com/gopherguides/logging"
@@ -194,7 +172,7 @@ func main() {
 }
 ```
 
-You should now have the following directory structure and file layout:
+你现在应该有以下目录结构和文件布局：
 
 ```
 ├── cmd
@@ -205,29 +183,26 @@ You should now have the following directory structure and file layout:
     └── logging.go
 ```
 
-Now that we have all the configuration completed, we can run the `main` program from the `cmd` package with the following commands:
+现在我们已经完成了所有的配置，可以用以下命令运行`cmd`包中的`main`程序：
 
 ```bash
 cd ../cmd
 go run main.go
 ```
 
+你将得到类似以下的输出：
 
-You will get output similar to the following:
-
+```Output
+2019-08-28T11:36:09-05:00 This is a debug statement...
 ```
-Output2019-08-28T11:36:09-05:00 This is a debug statement...
-```
 
-The program will print out the current time in RFC 3339 format followed by whatever statement we sent to the logger. [RFC 3339](https://tools.ietf.org/html/rfc3339) is a time format that was designed to represent time on the internet and is commonly used in log files.
+该程序将以RFC 3339格式打印出当前时间，后面是我们发送给记录器的任何语句。[RFC 3339](https://tools.ietf.org/html/rfc3339)是一种时间格式，被设计用来表示互联网上的时间，通常用于日志文件。
 
-Because the `Debug` and `Log` functions are exported from the logging package, we can use them in our `main` package. However, the `debug` variable in the `logging` package is not exported. Trying to reference an unexported declaration will result in a compile-time error.
+因为`Debug`和`Log`函数是从日志包中导出的，我们可以在`main`包中使用它们。然而，`logging`包中的`debug`变量没有被导出。试图引用一个未导出的声明将导致一个编译时错误。
 
-Add the following highlighted line to `main.go`:
+在`main.go`中添加错误操作的一行`fmt.Println(logging.debug)`：
 
-cmd/main.go
-
-```
+```go
 package main
 
 import "github.com/gopherguides/logging"
@@ -241,24 +216,22 @@ func main() {
 }
 ```
 
-Save and run the file. You will receive an error similar to the following:
+保存并运行该文件，你将收到一个类似于以下的错误：
 
-```
-Output. . .
+```Output
+. . .
 ./main.go:10:14: cannot refer to unexported name logging.debug
 ```
 
-Now that we have seen how `exported` and `unexported` items in packages behave, we will next look at how `fields` and `methods` can be exported from `structs`.
+现在我们已经了解了包中的 `exported` 和 `unexported` 项的行为，接下来我们将看看如何从 `structs` 中导出 `fields` 和 `methods`。
 
-## Visibility Within Structs
+## 结构内的可见性
 
-While the visibility scheme in the logger we built in the last section may work for simple programs, it shares too much state to be useful from within multiple packages. This is because the exported variables are accessible to multiple packages that could modify the variables into contradictory states. Allowing the state of your package to be changed in this way makes it hard to predict how your program will behave. With the current design, for example, one package could set the `Debug` variable to `true`, and another could set it to `false` in the same instance. This would create a problem since both packages that are importing the `logging` package are affected.
+虽然在上一节中构建的记录器中的可见性方案可能对简单的程序有效，但它分享了太多的状态，在多个包中都是有用的。这是因为导出的变量可以被多个包所访问，这些包可以将变量修改成相互矛盾的状态。允许你的包的状态以这种方式被改变，使得你很难预测你的程序将如何表现。例如，在目前的设计中，一个包可以将`Debug`变量设置为`true`，而另一个包可以在同一实例中将其设置为`false`。这将产生一个问题，因为导入`logging`包的两个包都会受到影响。
 
-We can make the logger isolated by creating a struct and then hanging methods off of it. This will allow us to create an `instance` of a logger to be used independently in each package that consumes it.
+我们可以通过创建一个结构，然后把方法挂在它上面，使日志记录器隔离。这将允许我们创建一个日志记录器的`instance`实例，在每个使用它的包中独立使用。
 
-Change the `logging` package to the following to refactor the code and isolate the logger:
-
-logging/logging.go
+将`logging`包改为以下内容，以重构代码并隔离记录器：
 
 ```go
 package logging
@@ -288,14 +261,11 @@ func (l *Logger) Log(s string) {
 }
 ```
 
+在这段代码中，我们创建了一个`Logger`结构。这个结构将存放未导出的状态，包括要打印出来的时间格式和`debug`变量设置为`true`或`false`。`New`函数设置初始状态来创建记录器，例如时间格式和调试状态。然后，它将内部给它的值存储到未导出的变量`timeFormat`和`debug`中。我们还在`Logger`类型上创建了一个名为`Log`的方法，该方法接收我们想要打印出来的语句。在`Log`方法内有一个对其本地方法变量`l`的引用，以获得对其内部字段的访问，如`l.timeFormat`和`l.debug`。
 
-In this code, we created a `Logger` struct. This struct will house our unexported state, including the time format to print out and the `debug` variable setting of `true` or `false`. The `New` function sets the initial state to create the logger with, such as the time format and debug state. It then stores the values we gave it internally to the unexported variables `timeFormat` and `debug`. We also created a method called `Log` on the `Logger` type that takes a statement we want to print out. Within the `Log` method is a reference to its local method variable `l` to get access back to its internal fields such as `l.timeFormat` and `l.debug`.
+这种方法将允许在许多不同的包中创建一个`Logger`，并独立于其他包的使用方式而使用它。
 
-This approach will allow us to create a `Logger` in many different packages and use it independently of how the other packages are using it.
-
-To use it in another package, let’s alter `cmd/main.go` to look like the following:
-
-cmd/main.go
+为了在其他软件包中使用它，让我们把`cmd/main.go`改成下面的样子：
 
 ```go
 package main
@@ -313,20 +283,18 @@ func main() {
 }
 ```
 
-
-Running this program will give you the following output:
-
-```
-Output2019-08-28T11:56:49-05:00 This is a debug statement...
-```
-
-In this code, we created an instance of the logger by calling the exported function `New`. We stored the reference to this instance in the `logger` variable. We can now call `logging.Log` to print out statements.
-
-If we try to reference an unexported field from the `Logger` such as the `timeFormat` field, we will receive a compile-time error. Try adding the following highlighted line and running `cmd/main.go`:
-
-cmd/main.go
+运行这个程序将给你带来以下输出：
 
 ```
+Output
+2019-08-28T11:56:49-05:00 This is a debug statement...
+```
+
+在这段代码中，我们通过调用导出的函数`New`创建了一个记录器的实例。将这个实例的引用存储在`logger`变量中。现在可以调用`logging.Log`来打印出语句。
+
+如果试图从`logger`中引用一个未导出的字段，如`timeFormat`字段，将收到一个编译时错误。尝试添加以下高亮行，并运行`cmd/main.go`。
+
+```go
 package main
 
 import (
@@ -344,30 +312,29 @@ func main() {
 }
 ```
 
-This will give the following error:
+这将给出如下错误信息：
 
-```
-Output. . .
+```Output
+. . .
 cmd/main.go:14:20: logger.timeFormat undefined (cannot refer to unexported field or method timeFormat)
 ```
 
-The compiler recognizes that `logger.timeFormat` is not exported, and therefore can’t be retrieved from the `logging` package.
+编译器认识到`logger.timeFormat`没有被导出，因此不能从`logging`包中检索到。
 
-## Visibility Within Methods
+## 方法中的可见性
 
-In the same way as struct fields, methods can also be exported or unexported.
+与结构字段相同，方法也可以被导出或未导出。
 
-To illustrate this, let’s add *leveled* logging to our logger. Leveled logging is a means of categorizing your logs so that you can search your logs for specific types of events. The levels we will put into our logger are:
+为了说明这一点，让我们为日志器添加*级别*的日志记录。分级日志是一种对日志进行分类的方法，这样就可以在日志中搜索特定类型的事件。我们将在记录器中加入的级别是。
 
-- The `info` level, which represents information type events that inform the user of an action, such as `Program started`, or `Email sent`. These help us debug and track parts of our program to see if expected behavior is happening.
-- The `warning` level. These types of events identify when something unexpected is happening that is not an error, like `Email failed to send, retrying`. They help us see parts of our program that aren’t going as smoothly as we expected them to.
-- The `error` level, which means the program encountered a problem, like `File not found`. This will often result in the program’s operation failing.
+- `info`级别，代表信息类型的事件，通知用户一个动作，如 "程序开始"，或 "电子邮件发送"。这些帮助我们调试和跟踪我们程序的一部分，看看是否有预期的行为发生。
+- `warning` 级别。这些类型的事件可以识别出一些不属于错误的意外情况，如 "邮件发送失败，重试"。它们帮助我们看到我们的程序中没有像我们预期的那样顺利进行的部分。
+- `error`级别，意味着程序遇到了问题，如 "未找到文件"。这往往会导致程序的运行失败。
 
-You may also desire to turn on and off certain levels of logging, especially if your program isn’t performing as expected and you’d like to debug the program. We’ll add this functionality by changing the program so that when `debug` is set to `true`, it will print all levels of messages. Otherwise, if it’s `false`, it will only print error messages.
+你也可能希望打开和关闭某些级别的日志记录，特别是当你的程序没有按照预期执行，你想调试程序的时候。我们将通过改变程序来增加这个功能，当`debug`被设置为`true`时，它将打印所有级别的信息。否则，如果它是`false`，它将只打印错误信息。
 
-Add leveled logging by making the following changes to `logging/logging.go`:
+通过对`logging/logging.go`进行以下修改来增加分级日志：
 
-logging/logging.go
 
 ```go
 package logging
@@ -407,14 +374,11 @@ func (l *Logger) write(level string, s string) {
 }
 ```
 
+在这个例子中，我们为`Log`方法引入了一个新的参数。我们现在可以传入日志信息的`级别`。`Log`方法决定了它是什么级别的消息。如果是 `info` 或 `warning` 消息，并且 `debug` 字段是 `true`,，那么它就会写下该消息。否则，它将忽略该消息。如果是其他级别的信息，比如 `error`，它将写出该信息。
 
-In this example, we introduced a new argument to the `Log` method. We can now pass in the `level` of the log message. The `Log` method determines what level of message it is. If it’s an `info` or `warning` message, and the `debug` field is `true`, then it writes the message. Otherwise it ignores the message. If it is any other level, like `error`, it will write out the message regardless.
+大多数确定消息是否被打印出来的逻辑存在于`Log`方法中。我们还引入了一个未导出的方法，叫做 `write`。`write`方法是实际输出日志信息的方法。
 
-Most of the logic for determining if the message is printed out exists in the `Log` method. We also introduced an unexported method called `write`. The `write` method is what actually outputs the log message.
-
-We can now use this leveled logging in our other package by changing `cmd/main.go` to look like the following:
-
-cmd/main.go
+现在我们可以在其他软件包中使用这种分级日志，方法是将`cmd/main.go`改成下面的样子：
 
 ```go
 package main
@@ -435,20 +399,16 @@ func main() {
 }
 ```
 
-
-Running this will give you:
-
-```
-Output[info] 2019-09-23T20:53:38Z starting up service
+运行这个将返回：
+```Output
+[info] 2019-09-23T20:53:38Z starting up service
 [warning] 2019-09-23T20:53:38Z no tasks found
 [error] 2019-09-23T20:53:38Z exiting: no work performed
 ```
 
-In this example, `cmd/main.go` successfully used the exported `Log` method.
+在这个例子中，`cmd/main.go`成功使用了导出的`Log`方法。
 
-We can now pass in the `level` of each message by switching `debug` to `false`:
-
-main.go
+现在我们可以通过将`debug`切换为`false`来传递每个消息的`level'：
 
 ```go
 package main
@@ -469,18 +429,15 @@ func main() {
 }
 ```
 
+现在我们将看到，只有 `error` 级别的信息会被打印出来：
 
-Now we will see that only the `error` level messages print:
-
+```Output
+[error] 2019-08-28T13:58:52-05:00 exiting: no work performed
 ```
-Output[error] 2019-08-28T13:58:52-05:00 exiting: no work performed
-```
 
-If we try to call the `write` method from outside the `logging` package, we will receive a compile-time error:
+如果我们试图从`logging`包之外调用`write`方法，我们将收到一个编译时错误：
 
-main.go
-
-```
+```go
 package main
 
 import (
@@ -498,15 +455,17 @@ func main() {
 
 	logger.write("error", "log this message...")
 }
-Outputcmd/main.go:16:8: logger.write undefined (cannot refer to unexported field or method logging.(*Logger).write)
+```
+```Output
+cmd/main.go:16:8: logger.write undefined (cannot refer to unexported field or method logging.(*Logger).write)
 ```
 
-When the compiler sees that you are trying to reference something from another package that starts with a lowercase letter, it knows that it is not exported, and therefore throws a compiler error.
+当编译器看到你试图引用另一个包中以小写字母开头的东西时，它知道这个东西没有被导出，因此抛出一个编译器错误。
 
-The logger in this tutorial illustrates how we can write code that only exposes the parts we want other packages to consume. Because we control what parts of the package are visible outside the package, we are now able to make future changes without affecting any code that depends on our package. For example, if we wanted to only turn off `info` level messages when `debug` is false, you could make this change without affecting any other part of your API. We could also safely make changes to the log message to include more information, such as the directory the program was running from.
+本教程中的记录器说明了如何编写代码，只暴露出希望其他包消费的部分。因为我们控制了包的哪些部分在包外是可见的，所以现在能够在未来进行修改而不影响任何依赖包的代码。例如，如果想只在`debug`为false时关闭`info`级别的消息，你可以在不影响你的API的任何其他部分的情况下做出这个改变。我们也可以安全地对日志信息进行修改，以包括更多的信息，如程序运行的目录。
 
-## Conclusion
+## 总结
 
-This article showed how to share code between packages while also protecting the implementation details of your package. This allows you to export a simple API that will seldom change for backwards compatibility, but will allow for changes privately in your package as needed to make it work better in the future. This is considered a best practice when creating packages and their corresponding APIs.
+这篇文章展示了如何在包之间共享代码，同时也保护你的包的实现细节。这允许你输出一个简单的API，为了向后兼容而很少改变，但允许在你的包中根据需要私下改变，使其在未来更好地工作。这被认为是创建包和它们相应的API时的最佳做法。
 
-To learn more about packages in Go, check out our [Importing Packages in Go](https://www.digitalocean.com/community/tutorials/importing-packages-in-go) and [How To Write Packages in Go](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go) articles, or explore our entire [How To Code in Go series](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go).
+要了解更多关于Go中的包，请查看我们的[在Go中导入包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)和[如何在Go中编写包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)文章，或者探索我们整个[如何在Go中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
