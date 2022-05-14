@@ -1,19 +1,18 @@
-# How To Write Packages in Go
+# 如何在 Go 中编写包
 
-A package is made up of Go files that live in the same directory and have the same package statement at the beginning. You can include additional functionality from packages to make your programs more sophisticated. Some packages are available through the Go Standard Library and are therefore installed with your Go installation. Others can be installed with Go’s `go get` command. You can also build your own Go packages by creating Go files in the same directory across which you want to share code by using the necessary package statement.
+一个包由同一目录下的 Go 文件组成的，并且在文件开头有相同的包声明。你可以从包中加入额外的功能，使你的程序更加复杂。有些包可以通过 Go 标准库获得，因此在安装 Go 时就已经安装了。其他的可以用 Go 的`go get`命令来安装。你也可以通过在同一目录下创建Go文件来建立你自己的Go包，你可以通过使用必要的包声明来分享代码。
 
-This tutorial will guide you through writing Go packages for use within other programming files.
+本教程将指导你如何编写Go包，以便在其他编程文件中使用。
+## 前提条件
 
-## Prerequisites
+- 按照[如何安装和设置Go的本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)系列教程中的一个教程设置Go编程环境。按照本地编程环境教程中的步骤5创建你的Go工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。
+- 为了加深你对GOPATH的了解，请阅读文章[了解GOPATH](https://www.digitalocean.com/community/tutorials/understanding-the-gopath)。
 
-- Set up a Go programming environment following one of the tutorials from the [How To Install and Set Up a Local Programming Environment for Go](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go) series. Create your Go Workspace following Step 5 in the Local Programming Environment tutorials. To follow the example and naming conventions in this article, read the first section Writing and Importing Packages.
-- To deepen your knowledge of the GOPATH, read our article [Understanding the GOPATH](https://www.digitalocean.com/community/tutorials/understanding-the-gopath).
+## 编写和导入软件包
 
-## Writing and Importing Packages
+编写包就像编写任何其他Go文件一样，包可以包含函数、[类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go)和[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)的定义，然后可以在其他Go程序中使用。
 
-Writing a package is just like writing any other Go file. Packages can contain definitions of functions, [types](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go), and [variables](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables) that can then be used in other Go programs.
-
-Before we create a new package, we need to be in our Go workspace. This is typically under our `gopath`. For the example, in this tutorial we will call the package `greet`. To do this, we’ve created a directory called `greet` in our `gopath` under our project space. If our organization were `gopherguides`, and we wanted to create the `greet` package under the organization while using Github as our code repository, then our directory would look like this:
+在我们创建一个新的包之前，我们需要进入我们的Go工作区。这通常是在我们的`gopath`下。对于这个例子，本教程中我们将把包称为`greet`。为了做到这一点，在我们的项目空间下的`gopath`中创建了一个名为`greet`的目录。当使用Github作为代码库，组织名称为`gopherguides`，想在此组织下创建`greet`包，那么我们的目录会是这样的：
 
 ```
 └── $GOPATH
@@ -22,7 +21,7 @@ Before we create a new package, we need to be in our Go workspace. This is typic
             └── gopherguides
 ```
 
-The `greet` directory is within the `gopherguides` directory:
+`greet`目录在`gopherguides`目录中：
 
 ```
 └── $GOPATH
@@ -32,7 +31,7 @@ The `greet` directory is within the `gopherguides` directory:
                 └── greet
 ```
 
-Finally, we can add the first file in our directory. It is considered common practice that the `primary` or `entry point` file in a package is named after the name of the directory. In this case, we would create a file called `greet.go` inside the `greet` directory:
+最后，我们可以添加我们目录中的第一个文件。通常的做法是，包中的 `主要`或 `入口` 文件是以目录名来命名的。在这种情况下，将在`greet`目录下创建一个名为`greet.go`的文件：
 
 ```
 └── $GOPATH
@@ -43,11 +42,9 @@ Finally, we can add the first file in our directory. It is considered common pra
                     └── greet.go
 ```
 
-With the file created, we can begin to write our code that we want to reuse or share across projects. In this case, we will create a function called `Hello` that prints out `Hello World`.
+创建了文件后，我们就可以开始编写我们想要重复使用或在不同项目中共享的代码。在本例中，我们将创建一个打印出 `Hello World`的 `Hello` 的函数。
 
-Open your `greet.go` file in your text editor and add the following code:
-
-greet.go
+在文本编辑器中打开 `greet.go` 文件，增加如下代码：
 
 ```go
 package greet
@@ -59,24 +56,21 @@ func Hello() {
 }
 ```
 
-
-Let’s break this first file down. The first line of each file needs the name of the `package` that you are working in. Since you’re in the `greet` package, you use the `package` keyword followed by the name of the package:
+让我们把这个文件分解一下，每个文件中第一行需要是所处的`包`名称。因为你在`greet`包里，所以通过使用`package`关键字，后面加包的名称：
 
 ```go
 package greet
 ```
 
+这将告诉编译器把文件中的所有内容作为`greet`包的一部分。
 
-This will tell the compiler to treat everything in the file as being part of the `greet` package.
-
-Next you declare any other packages you need to use with the `import` statement. You’re only using one in this file—the `fmt` package:
+接下来，你用 `import` 语句声明你需要使用的任何其他包。在这个文件中你只使用一个包，`fmt`包：
 
 ```go
 import "fmt"
 ```
 
-
-Lastly, you create the function `Hello`. It will use the `fmt` package to print out `Hello, World!`:
+最后，你创建函数`Hello`，它将使用`fmt`包来打印出`Hello, World!`。
 
 ```go
 func Hello() {
@@ -84,10 +78,9 @@ func Hello() {
 }
 ```
 
+现在已经编写了`greet`包，可以在你创建的任何其他包中使用它。让我们创建一个新的包，在其中使用`greet`包。
 
-Now that you’ve written the `greet` package, you can use it in any other package you create. Let’s create a new package in which you’ll use your `greet` package.
-
-You’re going to create a package called `example`, which means you need a directory called `example`. Create this package in your `gopherguides` organization, so the directory structure looks like so:
+接下来创建一个名为`example`的包，这意味着需要一个名为`example`的目录。在`gopherguides`中创建这个包，所以目录结构看起来像这样：
 
 ```
 └── $GOPATH
@@ -97,7 +90,7 @@ You’re going to create a package called `example`, which means you need a dire
                     └── example
 ```
 
-Now that you have your directory for your new package, you can create the entry point file. Because this is going to be an executable program, it is considered best practice to name the entry point file `main.go`:
+现在你有了新包的目录，可以创建入口文件。因为这将是一个可执行的程序，最好的做法是将入口文件命名为`main.go`：
 
 ```
 └── $GOPATH
@@ -108,9 +101,7 @@ Now that you have your directory for your new package, you can create the entry 
                     └── main.go
 ```
 
-In your text editor, open `main.go` and add the following code to call the `greet` package:
-
-main.go
+在文本编辑器中，打开`main.go`，添加以下代码来调用`greet`包：
 
 ```go
 package main
@@ -122,27 +113,23 @@ func main() {
 }
 ```
 
+因为正在导入一个包，通过用点符号来调用指定包的函数。*点符号*是指在使用的包的名称和想使用的包中资源之间加一个句号`.`。例如，在`greet`包中，有`Hello`函数作为一个资源。如果想调用该资源，可以使用 `greet.Hello()` 的形式。
 
-Because you’re importing a package, you need to call the function by referencing the package name in dot notation. *Dot notation* is the practice of putting a period `.` between the name of the package you are using and the resource within that package that you want to use. For instance, in your `greet` package, you have the `Hello` function as a resource. If you want to call that resource, you use the dot notation of `greet.Hello()`.
-
-Now, you can open your terminal and run the program on the command line:
+现在，可以打开终端，在命令行上运行该程序：
 
 ```bash
 go run main.go
 ```
 
+完成后，您将收到以下输出：
 
-When you do, you’ll receive the following output:
-
+```Output
+Hello, World!
 ```
-OutputHello, World!
-```
 
-To see how you can use variables in a package, let’s add a variable definition in your `greet.go` file:
+为了解如何在包中使用变量，让我们在`greet.go`文件中添加一个变量定义：
 
-greet.go
-
-```
+```go
 package greet
 
 import "fmt"
@@ -154,11 +141,9 @@ func Hello() {
 }
 ```
 
-Next, open your `main.go` file and add the following highlighted line to call the variable from `greet.go` in a `fmt.Println()` function:
+接下来，打开`main.go`文件，添加以下高亮行，在`fmt.Println()`函数中调用`greet.go`中的变量:
 
-main.go
-
-```
+```go
 package main
 
 import (
@@ -174,25 +159,22 @@ func main() {
 }
 ```
 
-Once you run the program again:
+再次运行此程序：
 
 ```bash
 go run main.go
 ```
 
+你会收到以下输出：
 
-You’ll receive the following output:
-
-```
-OutputHello, World!
+```Output
+Hello, World!
 Sammy
 ```
 
-Finally, let’s also define a type in the `greet.go` file. You’ll create the type `Octopus` with `name` and `color` fields, and a function that will print out the fields when called:
+最后，让我们也在`greet.go`文件中定义一个类型。创建一个带有 `name` 和 `color`字段的 `Octopus` 类型，以及一个在调用时将打印出字段的函数：
 
-greet.go
-
-```
+```go
 package greet
 
 import "fmt"
@@ -213,11 +195,9 @@ func Hello() {
 }
 ```
 
-Open `main.go` to create an instance of that type at the end of the file:
+打开`main.go`，在文件的末尾创建一个该类型的实例:
 
-main.go
-
-```
+```go
 package main
 
 import (
@@ -240,34 +220,31 @@ func main() {
 }
 ```
 
-Once you’ve created an instance of `Octopus` type with `oct := greet.Octopus`, you can access the functions and fields of the type within the `main.go` file’s namespace. This lets you write `oct.String()` on the last line without invoking `greet`. You could also, for example, call one of the types fields such as `oct.Color` without referencing the name of the `greet` package.
+一旦你用`oct := greet.Octopus`创建了一个`Octopus`类型的实例，就可以在`main.go`文件的命名空间中访问该类型的函数和字段。这使得在最后一行直接写`oct.String()`，而不用调用`greet`。同样的，也可以在不引用`greet`包的名字的情况下调用`oct.Color`等类型字段。
 
-The `String` method on the `Octopus` type uses the `fmt.Sprintf` function to create a sentence, and `returns` the result, a string, to the caller (in this case, your main program).
+`Octopus`类型上的`String`方法使用`fmt.Sprintf`函数来输出一段文本，并将结果即一个字符串，`返回`给调用者（在这里是指主程序）。
 
-When you run the program, you’ll receive the following output:
+当你运行该程序时，你会收到以下输出：
 
 ```bash
 go run main.go
 ```
 
-
-```
-OutputHello, World!
+```Output
+Hello, World!
 Sammy
 The octopus's name is "Jesse" and is the color orange.
 ```
 
-By creating the `String` method on `Octopus`, you now have a reusable way to print out information about your custom type. If you want to change the behavior of this method in the future, you only have to edit this one method.
+通过在`Octopus`上创建`String`方法，你现在有一个可重复使用的方法来打印出自定义类型的信息。如果想在将来改变这个方法的行为，只需要编辑这一个方法。
 
-## Exported Code
+## 可导出代码
 
-You may have noticed that all of the declarations in the `greet.go` file you called were capitalized. Go does not have the concept of `public`, `private`, or `protected` modifiers like other languages do. External visibility is controlled by capitalization. Types, variables, functions, and so on, that start with a capital letter are available, publicly, outside the current package. A symbol that is visible outside its package is considered to be `exported`.
+你可能已经注意到，调用的`greet.go`文件中所有的声明都是大写的。Go没有像其他语言那样有`public`、`private`或`protected`修饰符的概念。外部可见性是由大写字母控制的。以大写字母开头的类型、变量、函数等等，在当前包之外是可以公开使用的。一个在其包外可见的符号被认为是 `可导出` 的。
 
-If you add a new method to `Octopus` called `reset`, you can call it from within the `greet` package, but not from your `main.go` file, which is outside the `greet` package:
+如果你给`Octopus`添加了一个名为`reset`的新方法，可以在`greet`包内调用它，但是不能在`main.go`文件中调用，因为调用者在`greet`包之外：
 
-greet.go
-
-```
+```go
 package greet
 
 import "fmt"
@@ -293,11 +270,9 @@ func Hello() {
 }
 ```
 
-If you try to call `reset` from the `main.go` file:
+如果你试图从`main.go`文件中调用`reset`：
 
-main.go
-
-```
+```go
 package main
 
 import (
@@ -322,17 +297,15 @@ func main() {
 }
 ```
 
-You’ll receive the following compilation error:
+你会收到以下编译错误：
 
+```Output
+oct.reset undefined (cannot refer to unexported field or method greet.Octopus.reset)
 ```
-Outputoct.reset undefined (cannot refer to unexported field or method greet.Octopus.reset)
-```
 
-To `export` the `reset` functionality from `Octopus`, capitalize the `R` in `reset`:
+要从 `Octopus` 中`导出` `reset` 功能，请将`reset` 中的`R` 大写：
 
-greet.go
-
-```
+```go
 package greet
 
 import "fmt"
@@ -358,11 +331,9 @@ func Hello() {
 }
 ```
 
-As a result you can call `Reset` from your other package without getting an error:
+如此一来，可以从其他包中调用`Reset'而不会得到错误：
 
-main.go
-
-```
+```go
 package main
 
 import (
@@ -389,24 +360,23 @@ func main() {
 }
 ```
 
-Now if you run the program:
+现在，如果你运行这个程序：
 
 ```bash
 go run main.go
 ```
 
+你将收到以下输出：
 
-You will receive the following output:
-
-```
-OutputHello, World!
+```Output
+Hello, World!
 Sammy
 The octopus's name is "Jesse" and is the color orange
 The octopus's name is "" and is the color .
 ```
 
-By calling `Reset`, you cleared out all the information in the `Name` and `Color` fields. When you call the `String` method, it will print nothing where `Name` and `Color` normally appear because the fields are now empty.
+通过调用`Reset`，清除了`Name`和`Color`字段中的所有信息。当调用`String`方法时，`Name`和`Color`打印为空，因为这些字段现在是空的。
 
-## Conclusion
+## 总结
 
-Writing a Go package is the same as writing any other Go file, but placing it in another directory allows you to isolate the code to be reused elsewhere. This tutorial covered how to write definitions within a package, demonstrated how to make use of those definitions within another Go programming file, and explained the options for where to keep the package in order to access it.
+编写Go包与编写其他Go文件是一样的，但把它放在另一个目录中可以隔离代码，以便在其他地方重复使用。本教程介绍了如何在包中编写定义，演示了如何在另一个Go文件中使用这些定义，并解释了控制包是否可访问的选项。
