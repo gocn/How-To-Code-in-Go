@@ -1,21 +1,21 @@
-### Introduction
+### 介绍
 
-Go provides two methods to create errors in the standard library, [`errors.New` and `fmt.Errorf`](https://www.digitalocean.com/community/tutorials/handling-errors-in-go#creating-errors). When communicating more complicated error information to your users, or to your future self when debugging, sometimes these two mechanisms are not enough to adequately capture and report what has happened. To convey this more complex error information and attain more functionality, we can implement the standard library interface type, [`error`](https://golang.org/pkg/builtin/#error).
+GO 标准库提供了[`errors.New` and `fmt.Errorf`](https://www.digitalocean.com/community/tutorials/handling-errors-in-go#creating-errors) 这两种方法来在创建错误。但是这两种方法并不能满足你的用户或者后期调试时提供更加复杂的错误信息或者报告发生了什么。为了传递这种更复杂的错误信息并获得更多功能，我们可以实现标准库 `error` 接口类型。
 
-The syntax for this would be as follows:
+`error` 接口雨打定义如下：
 
-``` go
+```go
 type error interface {
   Error() string
 }
 
 ```
 
-The [`builtin`](https://golang.org/pkg/builtin/) package defines `error` as an interface with a single `Error()` method that returns an error message as a string. By implementing this method, we can transform any type we define into an error of our own.
+[`内置`](https://golang.org/pkg/builtin/) 软件包将 `error` 定义为具有单个 `Error()` 方法的接口，该接口将错误消息字符串作为返回。通过实现此方法，我们可以将定义的任何类型转换为自己的错误。
 
-Let’s try running the following example to see an implementation of the `error` interface:
+让我们尝试运行以下示例以查看 `error` 接口的实现：
 
-``` go
+```go
 package main
 
 import (
@@ -23,13 +23,19 @@ import (
 	"os"
 )
 
+// 定义一个 MyError 的接口体
 type MyError struct{}
 
+// 实现 error 接口的 Error 方法
 func (m *MyError) Error() string {
 	return "boom"
 }
 
+// 定义 sayHello 函数
+// 函数返回类型为 string 和 error
 func sayHello() (string, error) {
+    // 由于 *MyError 实现了 error 接口
+    // 所以 &MyError{} 可以作为 error 对象返回
 	return "", &MyError{}
 }
 
@@ -44,25 +50,25 @@ func main() {
 
 ```
 
-We’ll see the following output:
+我们将看到以下输出：
 
-``` shell
+```shell
 # Output
 unexpected error: err: boom
 exit status 1
 ```
 
-Here we’ve created a new empty struct type, `MyError`, and defined the `Error()` method on it. The `Error()` method returns the string `"boom"`.
+在这里，我们创建了一个新的空结构类型 `MyError`，并在其上定义了 `Error()` 方法。`Error()` 方法返回字符串 `"Boom"`。
 
-Within `main()`, we call the function `sayHello` that returns an empty string and a new instance of `MyError`. Since `sayHello` will always return an error, the `fmt.Println` invocation within the body of the if statement in `main()` will always execute. We then use `fmt.Println` to print the short prefix string `"unexpected error:"` along with the instance of `MyError` held within the `err` variable.
+在 `main()` 中，我们调用 `sayhello` 函数，该函数返回一个空字符串和一个新 `MyError` 实例。由于 `sayhello` 将始终返回错误，因此在`main()` 中的 `if` 语句主体内的 `fmt.Println` 调用将始终执行。我们使用 `fmt.Println` 来打印短前缀字符串 `"unexpected error:"`以及在保存`MyError` 实例中的在 `err` 变量。
 
-Notice that we don’t have to directly call `Error()`, since the `fmt` package is able to automatically detect that this is an implementation of `error`. It calls `Error()` [transparently](https://en.wikipedia.org/wiki/Transparency_(human%E2%80%93computer_interaction)) to get the string `"boom"` and concatenates it with the prefix string `"unexpected error: err:"`.
+> 值得注意的是，我们不必直接调用 `Error()`，因为 `fmt` 包能够自动检测到已经实现了 `error` 接口。它 [透明](<https://en.wikipedia.org/wiki/Transparency_(human%E2%80%93computer_interaction)>) 地调用 `Error()` 来获取字符串 `"hoom"`，并将其与前缀字符串 `"unexpected error: err:"` 相连。
 
-## Collecting Detailed Information in a Custom Error
+## 自定义错误收集详细信息
 
-Sometimes a custom error is the cleanest way to capture detailed error information. For example, let’s say we want to capture the status code for errors produced by an HTTP request; run the following program to see an implementation of `error` that allows us to cleanly capture that information:
+有时，自定义错误是捕获详细错误信息的最有效的方式。例如，假设我们要捕获 HTTP 请求产生的错误的状态代码；运行以下程序以查看 `error` 的实现，使我们能够清晰捕获该信息：
 
-``` go
+```go
 package main
 
 import (
@@ -99,27 +105,27 @@ func main() {
 
 ```
 
-We will see the following output:
+我们将看到以下输出：
 
-``` shell
+```shell
 # Output
 status 503: err unavailable
 exit status 1
 ```
 
-In this example, we create a new instance of `RequestError` and provide the status code and an error using the `errors.New` function from the standard library. We then print this using `fmt.Println` as in previous examples.
+在此示例中，我们创建了创建一个错误的 `RequestError` 的新实例, 其中包含一个状态码和使用标准库提供的 `errors.New` 函数创建的 `err`。之后，如前所述，我们使用 `fmt.Println` 打印了错误信息。
 
-Within the `Error()` method of `RequestError`, we use the `fmt.Sprintf` function to construct a string using the information provided when the error was created.
+在 `RequestError` 的 `Error()` 方法中，我们使用创建 `error` 对象时提供的信息和 `fmt.Sprintf` 函数构造字符串。
 
-## Type Assertions and Custom Errors
+## 类型断言和自定义错误
 
-The `error` interface exposes only one method, but we may need to access the other methods of `error` implementations to handle an error properly. For example, we may have several custom implementations of `error` that are temporary and can be retried—denoted by the presence of a `Temporary()` method.
+`error` 接口仅公开一种方法，但是为了正确处理错误, 我们可能需要访问 `error` 实现类型的其他方法。例如，我们可能有几个暂时的自定义错误实现，可以通过 `Temporary()` 方法的存在来重述。
 
-Interfaces provide a narrow view into the wider set of methods provided by types, so we must use a _type assertion_ to change the methods that view is displaying, or to remove it entirely.
+接口为类型提供的更广泛的方法集提中供了一个狭窄的视图，因此，我们必须使用类型断言来更改视图正在显示的方法，或完全删除它。
 
-The following example augments the `RequestError` shown previously to have a `Temporary()` method which will indicate whether or not callers should retry the request:
+下面的示例增加了前面显示的 `RequestError` 具有 `Temporary()` 方法，该方法将指示调用者是否应重试请求：
 
-``` go
+```go
 package main
 
 import (
@@ -140,6 +146,7 @@ func (r *RequestError) Error() string {
 }
 
 func (r *RequestError) Temporary() bool {
+    // 如果状态码是 503 返回 true
 	return r.StatusCode == http.StatusServiceUnavailable // 503
 }
 
@@ -154,8 +161,11 @@ func main() {
 	err := doRequest()
 	if err != nil {
 		fmt.Println(err)
+        // 进行类型断言
 		re, ok := err.(*RequestError)
+        // 如果类型断言成功
 		if ok {
+            
 			if re.Temporary() {
 				fmt.Println("This request can be tried again")
 			} else {
@@ -169,24 +179,25 @@ func main() {
 }
 
 ```
-We will see the following output:
 
-``` shell
+我们将看到以下输出：
+
+```shell
 # Output
 unavailable
 This request can be tried again
 exit status 1
 ```
 
-Within `main()`, we call `doRequest()` which returns an `error` interface to us. We first print the error message returned by the `Error()` method. Next, we attempt to expose all methods from `RequestError` by using the type assertion `re, ok := err.(*RequestError)`. If the type assertion succeeded, we then use the `Temporary()` method to see if this error is a temporary error. Since the `StatusCode` set by `doRequest()` is `503`, which matches `http.StatusServiceUnavailable`, this returns `true` and causes `"This request can be tried again"` to be printed. In practice, we would instead make another request rather than printing a message.
+在 `main()` 中，我们调用 `doRequest()` 将错误接口返回给我们。我们首先打印由 `Error()` 方法返回的错误消息。接下来，我们尝试通过使用类型的断言 `re, ok := err.(*RequestError)`。如果类型断言成功，我们然后使用 `Temporary()` 方法来查看此错误是否是临时错误。由于`doRequest()` 设置的状态代码为 `503`，它匹配 `HTTP.Statusserviceunavailable`，因此将返回 `true`，并且要打印`"This request can be tried again"` 的原因。实际上，我们将提出另一个请求，而不是打印消息。
 
-## Wrapping Errors
+## 包装错误
 
-Commonly, an error will be generated from something outside of your program such as: a database, a network connection, etc. The error messages provided from these errors don’t help anyone find the origin of the error. Wrapping errors with extra information at the beginning of an error message would provide some needed context for successful debugging.
+通常，错误是从程序的外部产生(例如：数据库，网络连接等)。这些错误提供的错误消息不能够帮助任何人找到错误的根源。有必要在错误消息开始时，将错误与额外信息包装，将为成功调试提供一些必要的上下文。
 
-The following example demonstrates how we can attach some contextual information to an otherwise cryptic `error` returned from some other function:
+下面的示例说明了我们如何将一些上下文信息附加到从其他功能中返回的其他隐性错误：
 
-``` go
+```go
 package main
 
 import (
@@ -194,8 +205,11 @@ import (
 	"fmt"
 )
 
+// 定义一个错误的包装类型
 type WrappedError struct {
+    // 上下文信息
 	Context string
+    // 具体错误内容
 	Err     error
 }
 
@@ -219,19 +233,19 @@ func main() {
 
 ```
 
-We will see the following output:
+我们将看到以下输出
 
-``` shell
+```shell
 # Output
 main: boom!
 ```
 
-`WrappedError` is a struct with two fields: a context message as a `string`, and an `error` that this `WrappedError` is providing more information about. When the `Error()` method is invoked, we again use `fmt.Sprintf` to print the context message, then the `error` (`fmt.Sprintf` knows to implicitly call the `Error()` method as well).
+`WrappedError` 是一个具有两个字段的结构：字符串类型的 `context` 字段和 `error`, 这让 `WrappedError` 提供了更多信息。当调用 `Error()` 方法时，我们再次使用 `fmt.Sprintf` 打印上下文消息和 `error`(`fmt.Sprintf` 也会隐式调用 `err` 的 `Error()` 方法)。
 
-Within `main()`, we create an error using `errors.New`, and then we wrap that error using the `Wrap` function we defined. This allows us to indicate that this `error` was generated in `"main"`. Also, since our `WrappedError` is also an `error`, we could wrap other `WrappedError`s—this would allow us to see a chain to help us track down the source of the error. With a little help from the standard library, we can even embed complete stack traces in our errors.
+在 `main()` 中，我们使用 `errors.New` 创建一个错误，然后我们使用定义的 `Wrap` 函数包装该错误。这使我们可以指出此错误是在 `"main"` 中生成的。另外，由于我们的 `WrappedError` 也是一个 `error`，因此我们也可以包装其它的`WrappedError` - 这将使我们看到链条来帮助我们追踪错误源。在标准库的一点帮助下，我们甚至可以在错误中嵌入完整的堆栈跟踪。
 
-## Conclusion
+## 总结
 
-Since the `error` interface is only a single method, we’ve seen that we have great flexibility in providing different types of errors for different situations. This can encompass everything from communicating multiple pieces of information as part of an error all the way to implementing [exponential backoff](https://en.wikipedia.org/wiki/Exponential_backoff). While the error handling mechanisms in Go might on the surface seem simplistic, we can achieve quite rich handling using these custom errors to handle both common and uncommon situations.
+由于 `error` 接口只提供一种方法，我们已经看到，在为不同情况提供不同类型的错误方面，我们有很大的灵活性。这可以包含所有内容，从传达多个信息作为错误的一部分到实现 [指数退回](https://en.wikipedia.org/wiki/Exponential_backoff)。尽管表面上的错误处理机制似乎很简单，但我们可以使用这些自定义错误来处理常见和不常见情况。
 
-Go has another mechanism to communicate unexpected behavior, panics. In our next article in the error handling series, we will examine panics—what they are and how to handle them.
+GO 有另一种传达意外行为的机制，panic。在错误处理系列的下一篇文章中，我们将检查恐慌 - 它们是什么以及如何处理它们。
