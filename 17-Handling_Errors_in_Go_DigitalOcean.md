@@ -1,109 +1,297 @@
-Robust code needs to react correctly to unexpected circumstances like bad user input, faulty network connections, and failing disks. _Error handling_ is the process of identifying when your program is in an unexpected state, and taking steps to record diagnostic information for later debugging.
+健壮的代码需要对用户的不正确输入，网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试用的诊断信息的过程。
 
-Unlike other languages that require developers to handle errors with specialized syntax, errors in Go are values with the type `error` returned from functions like any other value. To handle errors in Go, we must examine these errors that functions could return, decide if an error has occurred, and take proper action to protect data and tell users or operators that the error occurred.
+相比于其他编程语言, 要求开发者使用专门的语法去处理错误, 在 Go 中将错误作为 `error`(Go 中的一个接口类型) 类型的值, 并且和其他类型的值一样作为函数返回值的一部分返回。要处理 Go 中的错误, 我们必须检查函数返回值中是否包含了错误信息, 并采取合适的措施去保护数据并告知用户或者操作人员发生错误。
 
-## Creating Errors
+## 创建错误
 
-Before we can handle errors, we need to create some first. The standard library provides two built-in functions to create errors: `errors.New` and `fmt.Errorf`. Both of these functions allow you to specify a custom error message that you can later present to your users.
+在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：`errors.New` 和 `fmt.Errorf`。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
 
-`errors.New` takes a single argument—an error message as a string that you can customize to alert your users what went wrong.
+`errors.New` 只提供了一个字符串类型的参数, 用户在使用的时候可以自定义一个错误发生时具体需要展示的错误消息.
 
-Try running the following example to see an error created by `errors.New` printed to standard output:
+尝试运行以下示例以查看由 `errors.New` 创建的错误并打印到标准输出：
 
-``` shell
-OutputSammy says: barnacles
+```go
+package main
+
+import (
+	"errors"
+	"fmt"
+)
+
+func main() {
+    // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles
+	err := errors.New("barnacles")
+
+    // 将错误直接打印到标准错误输出
+	fmt.Println("Sammy says:", err)
+}
+
 ```
 
-We used the `errors.New` function from the standard library to create a new error message with the string `"barnacles"` as the error message. We’ve followed convention here by using lowercase for the error message as the [Go Programming Language Style Guide](https://github.com/golang/go/wiki/CodeReviewComments#error-strings) suggests.
-
-Finally, we used the `fmt.Println` function to combine our error message with `"Sammy says:"`.
-
-The `fmt.Errorf` function allows you to dynamically build an error message. Its first argument is a string containing your error message with placeholder values such as `%s` for a string and `%d` for an integer. `fmt.Errorf` interpolates the arguments that follow this formatting string into those placeholders in order:
-
-``` shell
-OutputAn error happened: Error occurred at: 2019-07-11 16:52:42.532621 -0400 EDT m=+0.000137103
+```shell
+# 这里是控制台的输出
+# Output
+Sammy says: barnacles
 ```
 
-We used the `fmt.Errorf` function to build an error message that would include the current time. The formatting string we provided to `fmt.Errorf` contains the `%v` formatting directive that tells `fmt.Errorf` to use the default formatting for the first argument provided after the formatting string. That argument will be the current time, provided by the `time.Now` function from the standard library. Similarly to the earlier example, we combine our error message with a short prefix and print the result to standard output using the `fmt.Println` function.
+我们使用标准库的 `errors.New` 函数创建了具体的消息是 `"barnacles"` 的错误。这里我们遵循了 [Go 程序设计风格指南](https://github.com/golang/go/wiki/CodeReviewComments#error-strings) 使用小写了表示错误消息。
 
-## Handling Errors
+最后，我们使用 `fmt.Println` 函数将我们的错误消息与`"Sammy says:"`相结合并且输出到控制台。
 
-Typically you wouldn’t see an error created like this to be used immediately for no other purpose, as in the previous example. In practice, it’s far more common to create an error and return it from a function when something goes wrong. Callers of that function will then use an `if` statement to see if the error was present or `nil`—an uninitialized value.
+`fmt.Errorf` 函数允许用户构建动态的错误消息。它的第一个参数是一个字符串，包含包含占位符值的错误消息，例如字符串的 `%s` 和整数的`%d`。`fmt.Errorf` 将这个格式化字符串后面的参数按顺序插入到这些占位符中:
 
-This next example includes a function that always returns an error. Notice when you run the program that it produces the same output as the previous example even though a function is returning the error this time. Declaring an error in a different location does not change the error’s message.
+```go
+package main
 
-``` shell
-OutputAn error occurred: barnacles
+import (
+	"fmt"
+	"time"
+)
+
+func main() {
+	// 使用 fmt.Errorf() 来构建动态错误信息
+	// 错误内容是 error occurred at: %v
+	// 其中 %v 的具体内容由 time.Now() 的具体返回值决定
+	err := fmt.Errorf("error occurred at: %v", time.Now())
+
+	// 将具体的错误信息 结合 `An error happened:` 打印到控制台
+	fmt.Println("An error happened:", err)
+}
+
 ```
 
-Here we define a function called `boom()` that returns a single `error` that we construct using `errors.New`. We then call this function and capture the error with the line `err := boom()`. Once we assign this error, we check to see if it was present with the `if err != nil` conditional. Here the conditional will always evaluate to `true`, since we are always returning an `error` from `boom()`.
-
-This won’t always be the case, so it’s good practice to have logic handling cases where an error is not present (`nil`) and cases where the error is present. When the error is present, we use `fmt.Println` to print our error along with a prefix as we have done in earlier examples. Finally, we use a `return` statement to skip the execution of `fmt.Println("Anchors away!")`, since that should only execute when no error occurred.
-
-**Note:** The `if err != nil` construction shown in the last example is the workhorse of error handling in the Go programming language. Wherever a function could produce an error, it’s important to use an `if` statement to check whether one occurred. In this way, idiomatic Go code naturally has its [“happy path”](https://en.wikipedia.org/wiki/Happy_path) logic at the first indent level, and all the “sad path” logic at the second indent level.
-
-If statements have an optional assignment clause that can be used to help condense calling a function and handling its errors.
-
-Run the next program to see the same output as our earlier example, but this time using a compound `if` statement to reduce some boilerplate:
-
-``` shell
-OutputAn error occurred: barnacles
+```shell
+# 在控制台中输出错误信息
+# Output
+# 输出内容中的: 2019-07-11 16:52:42.532621 -0400 EDT m=+0.000137103 是由 `time.Now()` 动态生成的
+An error happened: error occurred at: 2019-07-11 16:52:42.532621 -0400 EDT m=+0.000137103
 ```
 
-As before, we have a function, `boom()`, that always returns an error. We assign the error returned from `boom()` to `err` as the first part of the `if` statement. In the second part of the `if` statement, following the semicolon, that `err` variable is then available. We check to see if the error was present and print our error with a short prefix string as we’ve done previously.
+我们使用 `fmt.Errorf` 函数来构建一个错误消息，该消息将包括当前时间。我们提供给 `fmt.Errorf` 的格式字符串包含 `％v` 格式指令，该指令告诉 `fmt.Errorf` 使用默认格式为格式化字符串后提供的第一个参数。这个参数由标准库的 `time.Now` 函数提供的当前时间。与较早的示例类似，我们将错误消息与简短前缀结合在一起，并使用 `fmt.Println` 函数将结果打印到标准输出。
 
-In this section, we learned how to handle functions that only return an error. These functions are common, but it’s also important to be able to handle errors from functions that can return multiple values.
+## 错误处理
 
-## Returning Errors Alongside Values
+一般来说, 你不会看到像上面一样直接创建错误, 然后直接打印。实际上, 在出现问题时, 错误都是由从函数中创建并且返回这种情况更加普遍。调用者使用 `if` 语句判断返回的错误是否为 `nil`(error 非初始化的值) 来判断错误是否存在。
 
-Functions that return a single error value are often those that effect some stateful change, like inserting rows to a database. It’s also common to write functions that return a value if they completed successfully along with a potential error if that function failed. Go permits functions to return more than one result, which can be used to simultaneously return a value and an error type.
+下面这个示例包含了一个总是返回错误的函数, 需要特别留意的时尽管这里的错误是由一个函数返回的, 当你在运行这个程序时, 它产生的输出总是与前面的示例相同。在其他位置声明错误不会改变错误的消息。
 
-To create a function that returns more than one value, we list the types of each returned value inside parentheses in the signature for the function. For example, a `capitalize` function that returns a `string` and an `error` would be declared using `func capitalize(name string) (string, error) {}`. The `(string, error)` part tells the Go compiler that this function will return a `string` and an `error`, in that order.
+``` go
+package main
 
-Run the following program to see the output from a function that returns both a `string` and an `error`:
+import (
+	"errors"
+	"fmt"
+)
 
-``` shell
-OutputCapitalized name: SAMMY
+// 定义一个名为: boom 的函数, 返回值总是 errors.New("barnacles")
+func boom() error {
+	return errors.New("barnacles")
+}
+
+func main() {
+	// 调用 boom() 函数, 并将返回值赋值给 err 变量
+	err := boom()
+
+	// 判断 err 是否等于  nil 
+	if err != nil {
+		// 如果 err != nil 条件成立, 输出内容, 然后返回 main.main 函数
+		fmt.Println("An error occurred:", err)
+		return
+	}
+
+	// 如果 err == nil 成立, 
+	// 将会输出下面这一句
+	fmt.Println("Anchors away!")
+}
+
 ```
 
-We define `capitalize()` as a function that takes a string (the name to be capitalized) and returns a string and an error value. In `main()`, we call `capitalize()` and assign the two values returned from the function to the `name` and `err` variables by separating them with commas on the left-hand side of the `:=` operator. After this, we perform our `if err != nil` check as in earlier examples, printing the error to standard output using `fmt.Println` if the error was present. If no error was present, we print `Capitalized name: SAMMY`.
-
-Try changing the string `"sammy"` in `name, err := capitalize("sammy")` to the empty string `("")` and you’ll receive the error `Could not capitalize: no name provided` instead.
-
-The `capitalize` function will return an error when callers of the function provide an empty string for the `name` parameter. When the `name` parameter is not the empty string, `capitalize()` uses `strings.ToTitle` to capitalize the `name` parameter and returns `nil` for the error value.
-
-There are some subtle conventions that this example follows that is typical of Go code, yet not enforced by the Go compiler. When a function returns multiple values, including an error, convention requests that we return the `error` as the last item. When returning an `error` from a function with multiple return values, idiomatic Go code also will set each non-error value to a _zero value_. Zero values are, for example, an empty string for strings, `0` for integers, an empty struct for struct types, and `nil` for interface and pointer types, to name a few. We cover zero values in more detail in our [tutorial on variables and constants](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values).
-
-### Reducing boilerplate
-
-Adhering to these conventions can become tedious in situations where there are many values to return from a function. We can use an [_anonymous function_](https://en.wikipedia.org/wiki/Anonymous_function) to help reduce the boilerplate. Anonymous functions are procedures assigned to variables. In contrast to the functions we have defined in earlier examples, they are only available within the functions where you declare them—this makes them perfect to act as short pieces of reusable helper logic.
-
-The following program modifies the last example to include the length of the name that we’re capitalizing. Since it has three values to return, handling errors could become cumbersome without an anonymous function to assist us:
-
-``` shell
-OutputCapitalized name: SAMMY, length: 5
+```shell
+# Output
+An error occurred: barnacles
 ```
 
-Within `main()`, we now capture the three returned arguments from `capitalize` as `name`, `size`, and `err`, respectively. We then check to see if `capitalize` returned an `error` by checking if the `err` variable was not equal to `nil`. This is important to do before attempting to use any of the other values returned by `capitalize`, because the anonymous function, `handle`, could set those to zero values. Since no error occurred because we provided the string `"sammy"`, we print out the capitalized name and its length.
+这里我们先定义了一个名为 `boom()` 的函数并且总是返回单个使用 `errors.New` 构造 `error` 的函数。然后, 我们通过 `err := boom()` 这行调用 `boom()` 并捕捉错误(赋值给 err 变量即为捕捉错误)。在赋值 error 之后, 我们使用 `if err != nil` 这个条件判断语句来进行判断错误是否存在。因为 `boom()` 函数总是返回有效的 `error` 所以这里的判断条件永远为 `true`。
 
-Once again, you can try changing `"sammy"` to the empty string `("")` to see the error case printed (`An error occurred: no name provided`).
+但是情况并非总是如此(值的是 `boom()` 函数总是返回有效的 `error` 变量), 所以, 最好有逻辑去处理错误不存在和错误存在这两种情况。当错误存在时, 就像上面的示例中一样, 我们使用 `fmt.Println` 和前面的前缀打印错误。最后我们使用 `return` 语句来跳过 `fmt.Println("Anchors away!")` 语句的执行, 因为这个语句只有在 `err == nil` 时才会执行。
 
-Within `capitalize`, we define the `handle` variable as an anonymous function. It takes a single error and returns identical values in the same order as the return values of `capitalize`. `handle` sets those values to zero values and forwards the `error` passed as its argument as the final return value. Using this, we can then return any errors encountered in `capitalize` by using the `return` statement in front of the call to `handle` with the `error` as its parameter.
+> **注意:** 在 Go 中主要采用上一个示例中的 `if err != nil` 来进行错误处理。函数运行到哪里都有可能发生错误, 重要的是使用 `if` 语句来判断错误是否发生。这样, Go 代码通常就具有第一个缩进级别的 [快乐路径](https://en.wikipedia.org/wiki/Happy_path) 的逻辑, 并且所有的 "悲伤的路径" 在第二个缩进。
 
-Remember that `capitalize` must return three values all the time, since that’s how we defined the function. Sometimes we don’t want to deal with all the values that a function could return. Fortunately, we have some flexibility in how we can use these values on the assignment side.
+`if` 语句有一个可选的赋值子句，可以用来帮助压缩函数调用和错误处理。
 
-## Handling Errors from Multi-Return Functions
+运行下一个程序，查看与前面示例相同的输出，但这一次使用复合 `if` 语句来减少一些重复的代码:
 
-When a function returns many values, Go requires us to assign each to a variable. In the last example, we do this by providing names for the two values returned from the `capitalize` function. These names should be separated by commas and appear on the left-hand side of the `:=` operator. The first value returned from `capitalize` will be assigned to the `name` variable, and the second value (the `error`) will be assigned to the variable `err`. Occasionally, we’re only interested in the error value. You can discard any unwanted values that functions return using the special `_` variable name.
+``` go
+package main
 
-In the following program, we’ve modified our first example involving the `capitalize` function to produce an error by passing in the empty string `("")`. Try running this program to see how we’re able to examine just the error by discarding the first returned value with the `_` variable:
+import (
+	"errors"
+	"fmt"
+)
 
-``` shell
-OutputCould not capitalize: no name provided
+func boom() error {
+	return errors.New("barnacles")
+}
+
+func main() {
+	// 将 err 变量的赋值和判断都压缩在一个语句块中执行
+	if err := boom(); err != nil {
+		fmt.Println("An error occurred:", err)
+		return
+	}
+	fmt.Println("Anchors away!")
+}
 ```
 
-Within the `main()` function this time, we assign the capitalized name (the `string` returned first) to the underscore variable (`_`). At the same time, we assign the `error` returned by `capitalize` to the `err` variable. We then check if the error was present in the `if err != nil` conditional. Since we have hard-coded an empty string as an argument to `capitalize` in the line `_, err := capitalize("")`, this conditional will always evaluate to `true`. This produces the output `"Could not capitalize: no name provided"` printed by the call to the `fmt.Println` function within the body of the `if` statement. The `return` after this will skip the `fmt.Println("Success!")`.
+```shell
+#Output
+An error occurred: barnacles
+```
 
-## Conclusion
+和之前的示例一样, 我们定义一个 `boom()` 总是返回错误的函数。我们将从 `boom()` 返回的错误赋值给 `err` 作为 `if` 语句的一部分。在 `if` 语句的第二部分语句中, `err` 变量变得可用。我们检查错误是否存在, 然后像以前一样使用一个简短的前缀字符串打印我们的错误。
 
-We’ve seen many ways to create errors using the standard library and how to build functions that return errors in an idiomatic way. In this tutorial, we’ve managed to successfully create various errors using the standard library `errors.New` and `fmt.Errorf` functions. In future tutorials, we’ll look at how to create our own custom error types to convey richer information to users.
+在本节中，我们学习了如何处理只返回错误的函数。这些函数很常见，但是能够处理可能返回多个值的函数的错误也很重要。
+
+## 同时返回错误和多个值
+
+返回单个值的函数通常是影响某些状态更改的函数。 比如将行数据插入到数据库中。通常还会编写这样的函数: 如果成功则返回一个值, 如果失败则返回一个潜在的错误。Go 允许函数返回多个结果, 可以用来同时返回一个值和一个错误类型。
+
+为了创建一个返回多个值的函数, 我们需要在函数签名的括号中列出返回值类型。例如, 一个 `capitalize` 函数返回值类型是 `string` 和 `error`, 那么我们可以这么声明 `func capitalize(name string)(string, error){}`。其中 `(string, error)` 这一块的语法是告诉 Go 的编译器, 函数会按照 `string` 和 `error` 这一顺序返回值。
+
+运行下面的程序并且查看函数返回的 `string` 和 `error`:
+
+``` go
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
+func capitalize(name string) (string, error) {
+	if name == "" {
+		return "", errors.New("no name provided")
+	}
+	return strings.ToTitle(name), nil
+}
+
+func main() {
+	name, err := capitalize("sammy")
+	if err != nil {
+		fmt.Println("Could not capitalize:", err)
+		return
+	}
+
+	fmt.Println("Capitalized name:", name)
+}
+
+```
+
+```shell
+# Output
+Capitalized name: SAMMY
+```
+
+我们定义了 `capitalize()` 函数, 这个函数需要传递一个字符串作为参数(完成将字符串的转为大写)并返回字符串和错误。在 `main()` 函数中, 我们调用 `capitalize()`, 然后在 `:=` 运算符的左边将函数的返回值赋值给 `name` 和 `err` 这两个变量。之后, 我们执行 `if err != nil` 检查错误, 如果存在错误, 使用 `fmt.Prtintln` 将错误信息打印到标准输出。如果没有错误, 输出 `Capitalized name: SAMMY`。
+
+如果将 `err := capitalize("sammy")` 中的 `"sammy"` 更改为为空字符串 `("")`，你将收到 `Could not capitalize: no name provided` 这个错误。
+
+当函数的调用者为 `name` 参数提供一个空字符串时， `capitalize` 函数将返回错误。当 `name` 参数不是空字符串时，`capledize()` 调用 `strings.ToTitle` 函数将 `name` 参数转为大写并返回为 `nil` 的错误值。
+
+这个例子遵循一些微妙的规约，这些规约是 Go 代码的典型特征，但 GO 编译器并没有强制执行。当函数返回多个值（包括错误）时，规约我们将 `error` 类型作为最后一项。具有多个返回值的函数返回错误时，通常约定 GO 代码还将每个不是 `error` 类型的值设置为零值。比如字符串的零值空字符串，整数为 0，一个用于结构类型的空结构，以及用 `nil` 表示接口和指针类型的零值。我们在有关 [变量和常数的教程](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values) 中更详细地介绍零值。
+
+### 简化重复的代码
+
+如果函数有多个返回值时，遵守这些约定可能会变得啰嗦。我们可以使用 [匿名函数](https://en.wikipedia.org/wiki/Anonymous_function) 来帮助减少重复的代码。匿名函数是分配变量的过程。与我们在较早的示例中定义的函数相反，它们仅在你声明它们的函数中可用 - 这使其非常适合用作可重复使用的 `helper` 逻辑代码片段。
+
+以下程序是修改了最后一个示例，返回值增加了一个类型, 包括大写的名称的长度。由于它具有三个值可以返回的值，因此如果没有匿名函数来帮助我们，处理错误可能会变得麻烦:
+
+``` go
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
+func capitalize(name string) (string, int, error) {
+	handle := func(err error) (string, int, error) {
+		return "", 0, err
+	}
+
+	if name == "" {
+		return handle(errors.New("no name provided"))
+	}
+
+	return strings.ToTitle(name), len(name), nil
+}
+
+func main() {
+	name, size, err := capitalize("sammy")
+	if err != nil {
+		fmt.Println("An error occurred:", err)
+	}
+
+	fmt.Printf("Capitalized name: %s, length: %d", name, size)
+}
+
+```
+
+```shell
+# Output
+Capitalized name: SAMMY, length: 5
+```
+
+在 `main()` 中，我们现在可以从 `capitalize()` 函数中获取转为大写的 `name`，`size` 和 `err` 这三个返回的参数。然后，我们检查是否通过检查错误变量不等于 `nil`。在尝试使用 `capitalize()` 返回的任何其他值之前，这一点很重要，因为匿名函数可以将它们设置为零值。由于我们提供了字符串 `"Sammy"`，因此没有发生错误，因此我们打印出转为大写之后的名称及其长度。
+
+再次，你可以尝试将 `"Sammy"` 更改为空字符串 `("")` 以查看已打印的错误情况 (`An error occurred: no name provided`)。
+
+在 `capitalize` 函数中，我们将 `handle` 变量定义为匿名函数。它需要传递要给错误类型的参数，并以与 `capitalize` 函数的返回值相同的顺序返回相同的值。`handle` 将这些值设置为零值，并将其作为最终返回值作为参数传递的错误转发。然后，使用 `err` 作为 `handle` 的参数，就可以返回在 `capitalize` 中遇到的任何错误。
+
+请记住，`capitalize` 必须一直返回三个值，因为这就是我们定义函数的方式。有时我们不想处理函数可能返回的所有值。幸运的是，我们在赋值并如何使用这些值方面具有一定的灵活性。
+
+### 处理多回报功能的错误
+
+当函数返回许多值时，Go 要求我们将每个值分配给变量。在最后一个示例中，我们通过提供从 `capitalize` 函数返回的两个值的名称来做到这一点。这些名称应通过逗号分隔，并出现在 `:=` 操作符的左侧。从 `capitalize` 返回的第一个值将分配给 `name` 变量，第二个值(`error`)将分配给 `err` 这个变量。有时，我们只对错误值感兴趣。您可以丢弃使用特殊 `_` 变量名称返回功能的任何不需要值。
+
+在以下程序中，我们修改了涉及大写功能的第一个示例，以通过传递空字符串 `("")` 来产生错误。尝试运行此程序，以查看我们如何通过使用 `_` 变量丢弃第一个返回的值来检查错误：
+
+``` go
+package main
+
+import (
+	"errors"
+	"fmt"
+	"strings"
+)
+
+func capitalize(name string) (string, error) {
+	if name == "" {
+		return "", errors.New("no name provided")
+	}
+	return strings.ToTitle(name), nil
+}
+
+func main() {
+	_, err := capitalize("")
+	if err != nil {
+		fmt.Println("Could not capitalize:", err)
+		return
+	}
+	fmt.Println("Success!")
+}
+
+```
+
+```shell
+# Output
+Could not capitalize: no name provided
+```
+
+这次在 `main()` 函数中，我们将 `capitalize` 的第一个返回值 (首先返回的字符串) 分配给下划线变量(`_`)。同时，我们分配了通过  `capitalize` 返回的 `err` 变量返回的错误。然后，我们通过 `if err != nil` 条件判断错误是否存在。由于我们已经对一个空字符串进行了硬编码，作为在行中大写的参数，`_, err := capitalize("")`，因此该条件始终将评估为 `true`。这会产生输出`"Could not capitalize: no name provided"`，该输出由 `fmt.Println` 函数在 `if` 语句的正文中打印出来。此后的返回将跳过 `fmt.Println("Success!")`。
+
+## 结论
+
+我们已经看到了许多使用标准库创建错误的方法，以及如何构建以惯用方式返回错误的函数。在本教程中，我们设法使用标准库的 `errors.New` 和 `fmt.Errorf` 函数成功地创建了各种错误。在将来的教程中，我们将研究如何创建自己的自定义错误类型，以向用户传达更丰富的信息。
