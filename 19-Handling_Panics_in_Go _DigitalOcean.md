@@ -1,20 +1,20 @@
-### Introduction
+### 介绍
 
-Errors that a program encounters fall into two broad categories: those the programmer has anticipated and those the programmer has not. The `error` interface that we have covered in our previous two articles on [error handling](https://www.digitalocean.com/community/tutorials/handling-errors-in-go) largely deal with errors that we expect as we are writing Go programs. The `error` interface even allows us to acknowledge the rare possibility of an error occurring from function calls, so we can respond appropriately in those situations.
+程序遇到的错误分为两个广泛的类别：程序员已经预料到的错误和程序员没有预料到的错误。我们在前两篇关于 [错误处理](https://www.digitalocean.com/community/tutorials/handling-errors-in-go) 的文章中介绍过的 `error` 接口主要用于处理我们在编写 Go 程序时可能遇到的错误。`error` 接口甚至允许我们去确认在调用一个函数时发生罕见性错误的可能性，因此我们可以在这些情况下进行适当的响应。
 
-Panics fall into the second category of errors, which are unanticipated by the programmer. These unforeseen errors lead a program to spontaneously terminate and exit the running Go program. Common mistakes are often responsible for creating panics. In this tutorial, we’ll examine a few ways that common operations can produce panics in Go, and we’ll also see ways to avoid those panics. We’ll also use [`defer`](https://www.digitalocean.com/community/tutorials/understanding-defer-in-go) statements along with the `recover` function to capture panics before they have a chance to unexpectedly terminate our running Go programs.
+Panics 属于第二类错误，这些错误是程序员意料之外的。这些意料之外的错误导致一个 GO 程序自发终止并退出运行。常见的错误通常是造成 panic 的原因。在本教程中，我们将研究哪些常见操作可以引起 panic ，我们还将看到避免这些 panic 的方法。我们还将使用 [`defer`](https://www.digitalocean.com/community/tutorials/understanding-defer-in-go) 语句与 `recover` 函数一起捕获 panic，以免 panic 有机会意外终止我们正在运行的 GO 程序。
 
-## Understanding Panics
+## 了解 panics
 
-There are certain operations in Go that automatically return panics and stop the program. Common operations include indexing an [array](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#arrays) beyond its capacity, performing type assertions, calling methods on nil pointers, incorrectly using mutexes, and attempting to work with closed channels. Most of these situations result from mistakes made while programming that the compiler has no ability to detect while compiling your program.
+GO 中的某些操作会自动返回 panic 并停止程序的运行。常见的操作包括索引超出 [数组](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#arrays) 的容量，执行类型的断言，空指针上的调用方法，错误地使用互斥锁以及尝试使用已经关闭的 chanel 等等。这些情况中的大多数是由于编程时犯错而导致的，再加上编译器在编译程序时没有检测到这些错误。
 
-Since panics include detail that is useful for resolving an issue, developers commonly use panics as an indication that they have made a mistake during a program’s development.
+由于 panic 包含了有助于解决问题的细节，所以开发者通常会使用 panic 来标记在开发过程中犯了一个错误。
 
-### Out of Bounds Panics
+## 由于越界引发的 panic
 
-When you attempt to access an index beyond the length of a slice or the capacity of an array, the Go runtime will generate a panic.
+当你尝试访问超出切片长度或数组容量之外的索引时，GO 运行时会产生 panic。
 
-The following example makes the common mistake of attempting to access the last element of a slice using the length of the slice returned by the `len` builtin. Try running this code to see why this might produce a panic:
+下面的示例是尝试使用内置的 `len` 函数返回的切片的长度, 然后访问切片的最后一个元素时常见错误。尝试运行此代码以了解为什么这可能会引起panic：
 
 ``` go
 package main
@@ -34,7 +34,7 @@ func main() {
 
 ```
 
-This will have the following output:
+这将会有有以下输出：
 
 ``` shell
 # Output
@@ -42,26 +42,27 @@ panic: runtime error: index out of range [3] with length 3
 
 goroutine 1 [running]:
 main.main()
+# 备注这一块信息可能会有不一样的输出
 /tmp/sandbox879828148/prog.go:13 +0x20
 ```
 
-The name of the panic’s output provides a hint: `panic: runtime error: index out of range`. We created a slice with three sea creatures. We then tried to get the last element of the slice by indexing that slice with the length of the slice using the `len` builtin function. Remember that slices and arrays are zero-based; so the first element is zero and the last element in this slice is at index `2`. Since we try to access the slice at the third index, `3`, there is no element in the slice to return because it is beyond the bounds of the slice. The runtime has no option but to terminate and exit since we have asked it to do something impossible. Go also can’t prove during compilation that this code will try to do this, so the compiler cannot catch this.
+panic 输出的名称提供了一个提示：`panic: runtime error: index out of range`。我们用三个海洋生物创建了一个切片。然后，我们尝试通过使用内置的 `len` 函数将切片的长度作为索引来获取切片的最后一个元素。请记住，切片和数组的第一个元素的下标都是 0; 因此，第一个元素的索引是 0，此切片中的最后一个元素在索引2。由于我们尝试在第三个索引，3 时，因此切片中没有元素要返回并且超出了切片的边界。运行时别无选择，只能终止和退出，因为我们要求它做一些不可能的事情。Go在编译过程中也无法证明此代码将尝试执行此操作，因此编译器无法捕获到这种操作。
 
-Notice also that the subsequent code did not run. This is because a panic is an event that completely halts the execution of your Go program. The message produced contains multiple pieces of information helpful for diagnosing the cause of the panic.
+> 还请注意，后续代码还没被执行。这是因为 panic 是一个完全阻止执行你的 GO 程序的事件。其中产生的消息中包含多个有助于诊断 panic 的原因。
 
-## Anatomy of a Panic
+## 剖析 panic
 
-Panics are composed of a message indicating the cause of the panic and a [stack trace](https://en.wikipedia.org/wiki/Stack_trace) that helps you locate where in your code the panic was produced.
+panics 由指示 panic 的原因和一个 [堆栈跟踪](https://en.wikipedia.org/wiki/Stack_trace) 信息组成，这些可帮助你在代码中找到 panic 的位置。
 
-The first part of any panic is the message. It will always begin with the string `panic:`, which will be followed with a string that varies depending on the cause of the panic. The panic from the previous exercise has the message:
+任何 panic 的第一部分都是消息。它始终将以字符串 `panic:` 开始, 紧接着是引发 panic 的具体原因的字符串。在上一个练习中有一个 panic 的消息：
 
 ``` shell
 panic: runtime error: index out of range [3] with length 3
 ```
 
-The string `runtime error:` following the `panic:` prefix tells us that the panic was generated by the language runtime. This panic is telling us that we attempted to use an index `[3]` that was out of range of the slice’s length `3`.
+紧接着 `panic:` 的是 `runtime error:` 这告诉我们这个 panic 是由语言的运行时引起的。这个 panic 告诉我们, 我们尝试使用下标 `[3]`已经超出了切片的长度 `3` 了。
 
-Following this message is the stack trace. Stack traces form a map that we can follow to locate exactly what line of code was executing when the panic was generated, and how that code was invoked by earlier code.
+消息后面的是堆栈跟踪。堆栈跟踪形成一个映射，我们可以根据映射信息，以准确地定位生成 panic 时正在执行的代码所在的行，和代码的调用链关系。
 
 ``` shell
 goroutine 1 [running]:
@@ -69,15 +70,17 @@ main.main()
 /tmp/sandbox879828148/prog.go:13 +0x20
 ```
 
-This stack trace, from the previous example, shows that our program generated the panic from the file `/tmp/sandbox879828148/prog.go` at line number 13. It also tells us that this panic was generated in the `main()` function from the `main` package.
+上一个示例的堆栈跟踪表示，我们的程序从 `/tmp/sandbox879828148/prog.go` 文件的第 13 行中生成了 panic。这些信息还告诉我们 panic 在 `main` 包中的 `main()` 函数产生。
 
-The stack trace is broken into separate blocks—one for each [goroutine](https://tour.golang.org/concurrency/1) in your program. Every Go program’s execution is accomplished by one or more goroutines that can each independently and simultaneously execute parts of your Go code. Each block begins with the header `goroutine X [state]:`. The header gives the ID number of the goroutine along with the state that it was in when the panic occurred. After the header, the stack trace shows the function that the program was executing when the panic happened, along with the filename and line number where the function executed.
+堆栈跟踪分为单独的块 - 对于你程序中的每个 [goroutine](https://tour.golang.org/concurrency/1)一个块。每个 GO 程序的执行都是通过一个或多个 goroutines 来完成的，它们可以独立并同时执行GO代码的一部分。每个块从标头 `goroutine x [state]:` (其中 x: 表示 goroutine 的 id, [state] 表示 goroutine 当前的状态)开头。标头给出了 goroutine 的 ID 号，以及发生 panic 时所处的状态。标头后，堆栈跟踪显示了发生 panic 时程序执行的函数，以及执行函数所在的文件名和行号。
 
-The panic in the previous example was generated by an out-of-bounds access to a slice. Panics can also be generated when methods are called on pointers that are unset.
+上一个示例中的 panic 是通过对切片的越界访问而产生的。当使用空指针去调用方法时，也可以生成 panic。
 
 ## Nil Receivers
 
-The Go programming language has pointers to refer to a specific instance of some type existing in the computer’s memory at runtime. Pointers can assume the value `nil` indicating that they are not pointing at anything. When we attempt to call methods on a pointer that is `nil`, the Go runtime will generate a panic. Similarly, variables that are interface types will also produce panics when methods are called on them. To see the panics generated in these cases, try the following example:
+## nil 指针调用方法
+
+GO编程语言在运行时具有指向计算机内存中存在的某种类型的特定实例的指针。指针可以是 `nil` 值, 这表明他们没有指向任何东西。当我们尝试在零指针上调用方法时，GO 运行时会产生 panic。同样，当调用方法时，是接口类型的变量也会产生 panic。要查看这些情况下产生的 panic，请尝试以下示例：
 
 ``` go
 package main
@@ -101,7 +104,10 @@ func main() {
 }
 
 ```
+
 The panics produced will look like this:
+
+由此产生的 panic 将是这样的:
 
 ``` shell
 # Output
@@ -115,19 +121,47 @@ main.main()
 /tmp/sandbox160713813/prog.go:18 +0x1a
 ```
 
-In this example, we defined a struct called `Shark`. `Shark` has one method defined on its pointer receiver called `SayHello` that will print a greeting to standard out when called. Within the body of our `main` function, we create a new instance of this `Shark` struct and request a pointer to it using the `&` operator. This pointer is assigned to the `s` variable. We then reassign the `s` variable to the value `nil` with the statement `s = nil`. Finally we attempt to call the `SayHello` method on the variable `s`. Instead of receiving a friendly message from Sammy, we receive a panic that we have attempted to access an invalid memory address. Because the `s` variable is `nil`, when the `SayHello` function is called, it tries to access the field `Name` on the `*Shark` type. Because this is a pointer receiver, and the receiver in this case is `nil`, it panics because it can’t dereference a `nil` pointer.
+在此示例中，我们定义了一个称为 `Shark` 的结构体。`Shark` 在其指针接收器上定义了一个叫做 `Sayhello` 的方法，这个方法将在被调用时在标准输出中打印出问候信息。在我们的 `main` 函数主体中，我们创建了 `Shark` 结构体的新实例，并使用 `&` 操作符取变量的指针并将指针分配给 `S` 变量。然后，我们使用语句 `s = nil` 将 `s` 变量重新赋值为 `nil`。最后，我们尝试在变量 `s` 上调用 `SayHello` 方法。我们没有收到 `Sammy` 的友好消息，而是收到 panic，因为我们试图访问无效的内存地址。因为 `s` 变量为 `nil`，所以当调用 `SayHello` 函数时，它试图访问 `*Shark` 类型上的 `Name` 字段。因为这是一个指针接收者，并且在这种情况下的接收者是 `nil` 的，所以无法解引用零值指针而引起的 panic。
 
-While we have set `s` to `nil` explicitly in this example, in practice this happens less obviously. When you see panics involving `nil pointer dereference`, be sure that you have properly assigned any pointer variables that you may have created.
+虽然我们在本例中显式地将 `s` 设置为`nil`，但实际上，这种情况却不明显。当你看到有关解引用 `nil` 指针而引发的 panic 时，请确保你已正确分配了你可能创建的任何指针变量。
+
+> 备注, 通过使用指针作为接收者时, 使用零值取调用时没有不会发生 panic 的, 真正发生 panic 的时, 解引用 `nil` 指针。
+
+``` go
+	// 这种定义时, 使用零值的 `* Shark` 对象去调用 SayHello 方法是没有问题的
+func (s *Shark) SayHello() {
+	if s == nil {
+		return 
+	}
+	fmt.Println("Hi! My name is", s.Name)
+}
+```
 
 Panics generated from nil pointers and out-of-bounds accesses are two commonly occurring panics generated by the runtime. It is also possible to manually generate a panic using a builtin function.
 
-## Using the `panic` Builtin Function
+解引用 `nil` 指针和越界访问产生的 panic 是两种在运行时产生的 panic 常见的场景。也可以使用内置函数手动产生 panic。
 
-We can also generate panics of our own using the `panic` built-in function. It takes a single string as an argument, which is the message the panic will produce. Typically this message is less verbose than rewriting our code to return an error. Furthermore, we can use this within our own packages to indicate to developers that they may have made a mistake when using our package’s code. Whenever possible, best practice is to try to return `error` values to consumers of our package.
+## 使用内置的 `panic` 函数
+
+我们还可以使用内置的 `panic` 函数来产生自己的 panic。它使用单个字符串作为参数，这是 panic 产生的信息。一般这条消息比重写 error 代码中的消息简单得多。此外，我们可以在我们自己的软件包中使用它向开发者指出，他们在使用包装代码时可能犯了一个错误。但是，最佳实践就是尝试在我们提供的软件包中将 `error` 值返回给开发者。
 
 Run this code to see a panic generated from a function called from another function:
 
-The panic output produced looks like:
+运行此代码以查看从 `main` 函数调用 `foo` 函数产生的 panic：
+
+``` go
+package main
+
+func main() {
+	foo()
+}
+
+func foo() {
+	panic("oh no!")
+}
+```
+
+产生的 panic 输出看起来像：
 
 ``` shell
 # Output
@@ -140,13 +174,13 @@ main.main()
 /tmp/sandbox494710869/prog.go:4 +0x40
 ```
 
-Here we define a function `foo` that calls the `panic` builtin with the string `"oh no!"`. This function is called by our `main` function. Notice how the output has the message `panic: oh no!` and the stack trace shows a single goroutine with two lines in the stack trace: one for the `main()` function and one for our `foo()` function.
+在这里，我们定义了一个 `foo` 函数，里面会使用 `"oh no!"` 这个字符串调用 `panic` 这个内置函数。`foo` 函数由我们的 `main` 函数调用。请注意输出如何输出 `panic: oh no!` 和堆栈跟踪, 在堆栈跟踪中展示一个 goroutine 和两行堆栈跟踪: 一行是 `main()` 函数，另一行是 `foo()` 函数。
 
-We’ve seen that panics appear to terminate our program where they are generated. This can create problems when there are open resources that need to be properly closed. Go provides a mechanism to execute some code always, even in the presence of a panic.
+我们已经看到，panic 产生时似乎终止了我们的程序的运行。当需要正确关闭的开放资源时, 这可能会产生一些问题。GO 提供了一种机制，即使在panic 的情况下，也可以始终执行一些代码。
 
-## Deferred Functions
+## derfer 函数
 
-Your program may have resources that it must clean up properly, even while a panic is being processed by the runtime. Go allows you to defer the execution of a function call until its calling function has completed execution. Deferred functions run even in the presence of a panic, and are used as a safety mechanism to guard against the chaotic nature of panics. Functions are deferred by calling them as usual, then prefixing the entire statement with the `defer` keyword, as in `defer sayHello()`. Run this example to see how a message can be printed even though a panic was produced:
+你的程序即使在运行时处理 panic 也必须能够正确清理的资源。GO 允许使用 defer 来调用延迟执行函数，直到调用它的函数完成时才会执行。延迟函数即使在出现 panic 的情况下也会运行，并被用作一种安全机制，用来防范 panic 的混乱本质。通过调用普通一样调用函数, 使用关键字 `defer` 作为调用整个函数调用语句的前缀，比如像调用 `defer sayHello()` 一样。运行此示例以查看即使产生 panic 时也可以打印消息：
 
 ``` go
 package main
@@ -164,7 +198,7 @@ func main() {
 
 ```
 
-The output produced from this example will look like:
+此示例产生的输出看起来像：
 
 ``` shell
 # Output
@@ -176,15 +210,15 @@ main.main()
 /Users/gopherguides/learn/src/github.com/gopherguides/learn//handle-panics/src/main.go:10 +0x55
 ```
 
-Within the `main` function of this example, we first `defer` a call to an anonymous function that prints the message `"hello from the deferred function!"`. The `main` function then immediately produces a panic using the `panic` function. In the output from this program, we first see that the deferred function is executed and prints its message. Following this is the panic we generated in `main`.
+在此示例的 `main()` 函数中，我们首先使用 `defer` 调用到打印消息 `"hello from the deferred function!"` 的匿名函数。然后，`main` 函数立即使用 `panic` 函数产生 panic。在此程序的输出中，我们首先看到执行递延函数并打印其消息。在此之后是，我们在 `main` 中产生 panic 消息。
 
-Deferred functions provide protection against the surprising nature of panics. Within deferred functions, Go also provides us the opportunity to stop a panic from terminating our Go program using another built-in function.
+延迟函数提供了防范 panic 的保护。在递延函数中，GO 提供另一个内置函数来阻止 panic 终止 GO 程序的机会。
 
-## Handling Panics
+## 处理 panic
 
-Panics have a single recovery mechanism—the `recover` builtin function. This function allows you to intercept a panic on its way up through the call stack and prevent it from unexpectedly terminating your program. It has strict rules for its use, but can be invaluable in a production application.
+go 内置的 `recover` 函数提供了一个恢复 panic 的机制。这个函数通过拦截函数的调用栈并且阻止程序的意外退出。它具有严格的使用规则，但是在编写应用代码时非常有用。
 
-Since it is part of the `builtin` package, `recover` can be called without importing any additional packages:
+因为 `recover` 是内置包的一部分, 所以我们可以在不导包的情况下使用这个函数:
 
 ``` go
 package main
@@ -215,7 +249,7 @@ func divide(a, b int) int {
 
 ```
 
-This example will output:
+此示例将输出：
 
 ``` shell
 # Output
@@ -223,17 +257,17 @@ This example will output:
 we survived dividing by zero!
 ```
 
-Our `main` function in this example calls a function we define, `divideByZero`. Within this function, we `defer` a call to an anonymous function responsible for dealing with any panics that may arise while executing `divideByZero`. Within this deferred anonymous function, we call the `recover` builtin function and assign the error it returns to a variable. If `divideByZero` is panicking, this `error` value will be set, otherwise it will be `nil`. By comparing the `err` variable against `nil`, we can detect if a panic occurred, and in this case we log the panic using the `log.Println` function, as though it were any other `error`.
+在此示例中，我们在 `main` 函数调用了我们定义的 `DivideByZero` 函数。在 `DivideByZero` 中，我们使用 `defer` 关键字调用匿名函数。这个匿名函数负责处理在 `divideByZero` 中出现的任何 panic。在匿名函数中, 我们调用内置的 `recover` 函数并且将错误信息赋值给 `err`, 如果 `DivideByZero`感处于 panic 状态，那么 `err` 将会被设置值，否则为 `nil`。通过将 `err` 与 `nil` 进行比较，我们可以检测到是否发生了 panic，在这种情况下，我们处理 `panic` 就像处理其他错误一样, 使用 `log.Println` 函数记录了 panic。
 
-Following this deferred anonymous function, we call another function that we defined, `divide`, and attempt to print its results using `fmt.Println`. The arguments provided will cause `divide` to perform a division by zero, which will produce a panic.
+在延迟执行匿名函数之后, 我们调用了另外一个我们定义的另一个函数, 并且尝试使用 `fmt.Println` 打印这个函数的返回值。所提供的参数将导致除法执行除数为零的操作，这将引起 panic。
 
-In the output to this example, we first see the log message from the anonymous function that recovers the panic, followed by the message `we survived dividing by zero!`. We have indeed done this, thanks to the `recover` builtin function stopping an otherwise catastrophic panic that would terminate our Go program.
+在此示例的输出中，我们首先从匿名函数中恢复 panic 的日志消息，接下来是 `we survived dividing by zero!` 的消息。我们真的做到了这一点，这要归功于内置的 `recover` 函数, 它成功阻止有可能终止 GO 程序运行的灾难性 panic。
 
-The `err` value returned from `recover()` is exactly the value that was provided to the call to `panic()`. It’s therefore critical to ensure that the `err` value is only nil when a panic has not occurred.
+从 `recover()` 函数中返回的 `err` 值正是调用 `panic` 的值。因此，在没有发生 panic 时，确保 `err` 值仅为 `nil` 至关重要。
 
-## Detecting Panics with `recover`
+## 使用 `recover` 检测 panic
 
-The `recover` function relies on the value of the error to make determinations as to whether a panic occurred or not. Since the argument to the `panic` function is an empty interface, it can be any type. The zero value for any interface type, including the empty interface, is `nil`. Care must be taken to avoid `nil` as an argument to `panic` as demonstrated by this example:
+`recover` 函数依赖于错误的值来确定是否发生了 panic。因为 `panic` 函数的参数是空接口，所以它可以是任何类型。任何接口类型 (包括空接口) 的零值为 `nil`。必须注意避免使用 `nil`作为 `panic` 的参数，如本示例所证明的：
 
 ``` go
 package main
@@ -267,17 +301,17 @@ func divide(a, b int) int {
 
 ```
 
-This will output:
+这将输出：
 
 ``` shell
 # Output
 we survived dividing by zero!
 ```
 
-This example is the same as the previous example involving `recover` with some slight modifications. The `divide` function has been altered to check if its divisor, `b`, is equal to `0`. If it is, it will generate a panic using the `panic` builtin with an argument of `nil`. The output, this time, does not include the log message showing that a panic occurred even though one was created by `divide`. This silent behavior is why it is very important to ensure that the argument to the `panic` builtin function is not `nil`.
+此示例与以前的示例相同，该示例涉及 `recover` 并进行一些小的修改。已更改了 `divide` 函数判断  `b` 是否为 `0`。如果是, 它将使用带有 `nil` 作为参数调用 `panic` 函数来产生 panic。这次的输出不包括 `defer` 调用匿名函数的日志消息，即使通过 `Divide` 创建了panic，也会出现 panic。这种沉默行为是为什么确保调用 `panic` 的参数不是 `nil` 很重要的原因。
 
 ## Conclusion
 
-We have seen a number of ways that `panic`s can be created in Go and how they can be recovered from using the `recover` builtin. While you may not necessarily use `panic` yourself, proper recovery from panics is an important step of making Go applications production-ready.
+## 总结
 
-You can also explore [our entire How To Code in Go series](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go).
+我们已经看到了多种可以在 GO 中造成 panic 的方法，以及如何使用恢复的内置的 `recover` 来恢复它们。虽然您不一定会自己使用 `panic`，但适当的 panic 的恢复机制是使 Go 代码达到生产级别应用程序的重要步骤。
