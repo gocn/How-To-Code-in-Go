@@ -2,7 +2,7 @@
 
 ## 简介
 
-在 Go 中，*构建标签* 或 *构建标签* 是添加到一段代码中的标识符，它决定了该文件在 `build` 过程中何时应被包含在一个包中。这允许你从同一源代码中构建不同版本的 Go 应用程序，并以快速和有组织的方式在它们之间进行切换。许多开发者使用构建标签来改善构建跨平台兼容的应用程序的工作流程，例如需要修改代码以考虑不同操作系统之间的差异的程序。构建标签还可用于[集成测试](https://en.wikipedia.org/wiki/Integration_testing)，允许你在集成代码和带有[Mock 服务](https://en.wikipedia.org/wiki/Mock_object)的代码之间快速切换，并用于应用程序内不同级别的功能集。
+在 Go 中，*构建标签* 或 *构建约束* 是添加到一段代码中的标识符，它决定了该文件在 `build` 过程中何时应被包含在一个包中。这允许你从同一源代码中构建不同版本的 Go 应用程序，并以快速和有组织的方式在它们之间进行切换。许多开发者使用构建标签来改善构建跨平台兼容的应用程序的工作流程，例如需要修改代码以考虑不同操作系统之间的差异的程序。构建标签还可用于[集成测试](https://en.wikipedia.org/wiki/Integration_testing)，允许你在集成代码和带有[Mock 服务](https://en.wikipedia.org/wiki/Mock_object)的代码之间快速切换，并用于应用程序内不同级别的功能集。
 
 让我们以不同的客户功能集的问题为例。在编写一些应用程序时，你可能想控制在二进制文件中包括哪些功能，例如一个提供**免费**、**专业**和**企业**级别的应用程序。当客户在这些应用程序中增加他们的订阅级别时，更多的功能将被解锁并可用。为了解决这个问题，你可以维护独立的项目，并试图通过使用 `import` 语句来保持它们的同步性。虽然这种方法可行，但随着时间的推移，它将变得乏味和容易出错。另一种方法是使用构建标签。
 
@@ -56,7 +56,7 @@ func main() {
   }
 }
 ```
-在这个文件中，我们创建了一个程序，声明了一个名为 `features` 的[切片](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#slices)，它容纳了两个[字符串](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)，代表我们 Free 应用程序的特征。应用程序中的 `main()` 函数使用一个 `for` [循环](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go#looping-through-sequential-data-types-with-rangeclause) `range` 通过  `features` 切片，并将所有可用的功能打印到屏幕上。
+在这个文件中，我们创建了一个程序，声明了一个名为 `features` 的[切片](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#slices)，它容纳了两个[字符串](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)，代表我们免费版本的应用程序的特征。应用程序中的 `main()` 函数使用一个 `for` [循环](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go#looping-through-sequential-data-types-with-rangeclause) `range` 遍历  `features` 切片，并将所有可用的功能打印到屏幕上。
 
 保存并退出该文件。现在这个文件已经保存了，在文章的其余部分，我们将不再需要编辑它。相反，我们将使用构建标签来改变我们将从中构建的二进制文件的功能特性。
 
