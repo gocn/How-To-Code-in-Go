@@ -1,31 +1,31 @@
-### Introduction
+### 介绍
 
-There will be times when your code needs additional functionality outside of your current program. In these cases, you can use packages to make your program more sophisticated. A package represents all the files in a single directory on disk. Packages can define functions, types, and interfaces that you can reference in other Go files or packages.
+有时，你的代码需要当前程序的基础上增加更多的功能。在这些情况下，您可以使用软件包来丰富你的程序。在 Go 中, 一个包表示磁盘上单个目录中的所有文件。包可以定义可以在其他 Go 文件或包中引用的函数、类型和接口。
 
-This tutorial will walk you through installing, importing, and aliasing packages.
+本教程将带你完成安装，导入和使用软件包的别名。
 
 ## Standard Library Packages
 
-The standard library that ships with Go is a set of packages. These packages contain many of the fundamental building blocks to write modern software. For instance, the [`fmt`](https://golang.org/pkg/fmt) package contains basic functions for formatting and printing strings. The [`net/http`](https://golang.org/pkg/net/http/) package contains functions that allow a developer to create web services, send and retrieve data over the `http` protocol, and more.
+## 标准库包
 
-To make use of the functions in a package, you need to access the package with an `import` statement. An `import` statement is made up of the `import` keyword along with the name of the package.
+标准库是 Go 附带的一组软件包。这些软件包包含许多用于编写现代软件的基本模块。例如， [`fmt`](https://golang.org/pkg/fmt) 软件包包含用于格式和打印字符串的基本功能。 [`net/http`](https://golang.org/pkg/net/http/) 软件包包含允许开发人员创建 Web 服务，通过`HTTP` 协议发送和检索数据的功能，等等。
 
-As an example, in the Go program file `random.go` you can import the `math/rand` package to generate random numbers in this manner:
+为了利用软件包中的功能，你需要使用 `import` 语句访问软件包。`import` 语句由 `import` 关键字以及软件包的名称组成。
 
-random.go
+例如，在 GO 程序中 `random.go` 文件。你可以导入 `math/rand` 包来生成随机数：
 
 ``` go
 import "math/rand"
 ```
 
-When we import a package, we are making it available in our current program as a separate namespace. This means that we will have to refer to the function in _dot notation_, as in `package.function`.
+当我们导入一个包时，我们把它在当前程序中作为一个单独的名称空间来使用。这意味着我们必须像 `package.function` 调用其中的函数。
 
-In practice, a function from the `math/rand` package could look like these examples:
+实际上，`math/rand` 软件包的功能看起来像这些示例：
 
-- `rand.Int()` which calls the function to return a random integer.
-- `rand.Intn()` which calls the function to return a random element from `0` up to the specified number provided.
+- `rand.Int()` 调用函数返回随机整数。
+- `rand.Int()` 调用函数将随机元素从 `0` 返回到所提供的指定数字。
 
-Let’s create a `for` loop to show how we will call a function of the `math/rand` package within our `random.go` program:
+让我们创建一个 `for` 循环，以显示我们如何在随机过程中调用 `math/rand` 软件包的函数。
 
 random.go
 
@@ -41,9 +41,9 @@ func main() {
 }
 ```
 
-This program first imports the `math/rand` package on the third line, then moves into a `for` loop which that will run 10 times. Within the loop, the program will print a random integer within the range of `0` up to `25`. The integer `25` is passed to `rand.Intn()` as its parameter.
+该程序首先在第三行中导入 `math/rand` 软件包，然后移至将运行10次的循环中。在循环中，程序将打印一个在 `0` 到 `25` 范围内的随机整数。其中, 整数 `25` 是作为其参数传递给 `rand.Intn()`。
 
-When we run the program with `go run random.go`, we’ll receive 10 random integers as output. Because these are random, you’ll likely get different integers each time you run the program. The output will look something like this:
+当我们使用 `go run random.go` 来运行程序时，我们将收到 10 个随机整数作为输出。因为这些是随机的，所以每次运行程序时，您都可能会获得不同的整数。输出看起来像这样：
 
 ``` shell
 # Output
@@ -59,9 +59,9 @@ When we run the program with `go run random.go`, we’ll receive 10 random integ
 0
 ```
 
-The integers will never go below 0 or above 24.
+整数永远不会低于 0 或 24 以上。
 
-When importing more than one package, you can use the `()` to create a block. By using a block you can avoid repeating the `import` keyword on every line. This will make your code look cleaner:
+当需要导入多个包时，你可以使用 `()` 来创建一个块。通过使用块，可以避免在每行上重复 `import` 关键字。这将使你的代码看起来更整洁
 
 random.go
 
@@ -73,7 +73,7 @@ import (
 
 ```
 
-To make use of the additional package, we can now format the output and print out the iteration that each random number was generated on during the loop:
+为了利用新增的软件包，我们现在可以格式化输出并打印出循环中每次迭代生成的随机数：
 
 random.go
 
@@ -93,7 +93,7 @@ func main() {
 
 ```
 
-Now, when we run our program, we’ll receive output that looks like this:
+现在，当我们运行程序时，我们将收到看起来像这样的输出：
 
 ``` shell
 # Output
@@ -109,51 +109,51 @@ Now, when we run our program, we’ll receive output that looks like this:
 9) 0
 ```
 
-In this section, we learned how to import packages and use them to write a more sophisticated program. So far, we have only used packages from the standard library. Next, let’s see how to install and use packages that are written by other developers.
+在本节中，我们学会了如何导入软件包并使用它们来编写更复杂的程序。到目前为止，我们只使用了标准库中的软件包。接下来，让我们看看如何安装和使用其他开发人员编写的软件包。
 
-## Installing Packages
+## 安装软件包
 
-While the standard library ships with many great and useful packages, they are intentionally designed to be _general purpose_ and not specific in nature. This allows developers to build their own packages on top of the standard library for their own specific needs.
+虽然标准库包含了许多出色且有用的软件包，但它们的设计是通用的，本质上不是特定的。这使开发开发者可以根据自己的特定需求在标准库之上构建自己的软件包。
 
-The Go tool chain ships with the `go get` command. This command allows you to install third party packages to your local development environment and use them in your program.
+GO 工具链带有 `go get` 命令。此命令使您可以将第三方软件包安装到本地开发环境中，并且将这些软件包应用到你的程序中。
 
-When using `go get` to install third party packages, it is common for a package to be referenced by its canonical path. That path can also be a path to a public project that is hosted in a code repository such as GitHub. As such, if you want to import the [`flect`](https://github.com/gobuffalo/flect) package, you would use the full canonical path:
+使用 `go get` 来安装第三方软件包时，通常可以通过其规范路径引用软件包。这个路径也可能是通往公共项目的途径，该项目托管在诸如 GitHub 之类的代码存储库中。因此，如果要导入 [`flect`](https://github.com/gobuffalo/flect) 软件包，则将使用完整的规范路径：
 
 ``` shell
 go get github.com/gobuffalo/flect
 ```
 
-The `go get` tool will find the package, on GitHub in this case, and install it into your [`$GOPATH`](https://www.digitalocean.com/community/tutorials/understanding-the-gopath).
+在这种情况下，使用 `go get` 工具将在 GitHub 上找到软件包，并将其安装到你的 [`$Gopath`](https://www.digitalocean.com/community/tutorials/understanding-the-gopath) 中。
 
-For this example the code would be installed in this directory:
+对于此示例，代码将安装在此目录中：
 
 ``` shell
 $GOPATH/src/github.com/gobuffalo/flect
 ```
 
-Packages are often being updated by the original authors to address bugs or add new features. When this happens, you may want to use the latest version of that package to take advantage of the new features or resolved bug. To update a package, you can use the `-u` flag with the `go get` command:
+原始作者通常会更新软件包，以解决  bug 或添加新功能。发生这种情况时，你可能需要使用该软件包的最新版本来利用新功能或已解决的 bug。要更新软件包，您可以使用 `go get` 命令使用 `-u` 标志：
 
 ``` shell
 go get -u github.com/gobuffalo/flect
 ```
 
-This command will also have Go install the package if it is not found locally. If it is already installed, Go will attempt to update the package to the latest version.
+如果在本地找不到该软件包，此命令也将安装该软件包。如果已经安装了它，Go 将尝试将软件包更新为最新版本。
 
-The `go get` command always retrieves the latest version of the package available. However, there may be updates to previous versions of the package that are still newer than you are using, and would be useful to update in your program. To retrieve that specific version of the package, you would need to use a **Package Management** tool, such as [Go Modules](https://github.com/golang/go/wiki/Modules).
+`go get` 命令始终检索可用的包装的最新版本。但是，可能还会对该软件包的之前的版本进行更新，这些版本仍然比你使用的更新，并且对你的程序中的更新非常有用。要检索包装的特定版本，你需要使用一个软件包管理工具，例如[Go Modules](https://github.com/golang/go/wiki/Modules)。
 
-As of Go 1.11, Go Modules are used to manage what version of the package you want imported. The topic of package management is beyond the scope of this article, but you can read more about it [on the Go Modules GitHub page](https://github.com/golang/go/wiki/Modules).
+从 GO 1.11 开始，使用 Go Modules 来管理要导入的软件包的哪个版本。软件包管理的主题超出了本文的范围，但是你可以在[on the Go Modules GitHub page](https://github.com/golang/go/wiki/Modules)上阅读有关它的更多信息。
 
-## Aliasing Imported Packages
+## 使用别名的方式导入软件包
 
-You may want to change a package name if you have a local package already named the same as a third party package you are using. When this happens, aliasing your import is the best way to handle the collision. You can modify the names of packages and their functions within Go by putting an `alias` name in front of the imported package.
+如果你的本地软件包已经命名为与你正在使用的第三方软件包相同的包名时，则可能需要更改软件包名称。当发生这种情况时，使别名导入的方式是处理软件包名冲突的最佳方法。你可以通过将 `alias` 名称放在导入的软件包的前面来修改包装及其功能的名称及其功能。
 
-The construction of this statement looks like this:
+该声明的结构看起来像这样：
 
 ``` go
 import another_name "package"
 ```
 
-In this example, modify the name of the `fmt` package in the `random.go` program file. We’ll change the package name of `fmt` to `f` in order to abbreviate it. Our modified program will look like this:
+在此示例中，在 `random.go` 程序文件中修改 `fmt` 软件包的名称。我们将 `fmt` 的包名称更改为 `f`，以缩写它。我们的修改程序看起来像这样：
 
 random.go
 
@@ -172,21 +172,23 @@ func main() {
 }
 ```
 
-Within the program, we now refer to the `Printf` function as `f.Printf` rather than `fmt.Printf`.
+在程序中，我们现在将 `Printf` 函数称为 `f.Printf`，而不是 `fmt.Printf`。
 
-While other languages favor aliasing a package for ease of use later in the program, Go does not. For instance, aliasing the `fmt` package to `f` would not be consistent with the [style guide](https://github.com/golang/go/wiki/CodeReviewComments#import-dot).
+虽然其他语言喜欢以别名的方式命名包以便于在程序中更加容易使用，但 GO 却不是。例如，与 `fmt` 软件包与 `f` 相反， [style guide](https://github.com/golang/go/wiki/CodeReviewComments#import-dot) 更加倾向于一致。
 
-When renaming imports to avoid a name collision, you should aim to rename the most local or project specific import. For instance, if you had a _local_ package called `strings`, and you also needed to import the _system_ package called `strings`, you would favor renaming your local package over the system package. Whenever possible, it’s best to avoid name collision altogether.
+在重命名导入包以避免命名冲突时，你应该重命名本地导入的软件包或特定的项目中导入的包。例如，如果你有一个名为 `Strings` 的本地软件包，并且还需要导入称为 `strings` 的系统软件包，你应该重命名本地软件包而不是系统软件包。只要有可能，最好避免完全命名冲突。
 
-In this section, we learned how we can alias an import to avoid colliding with another import in our program. It is important to remember that readability and clarity of your program is important, so you should only use aliasing to make the code more readable or when you need to avoid a naming collision.
+在本节中，我们了解了如何以别名的方式导入软件包以避免与我们计划中的其他导入冲突。重要的是要记住，程序的可读性和清晰度很重要，因此你只能使用别名使代码更可读或何时需要避免命名冲突。
 
-## Formatting Imports
+## 格式化导入
 
-By formatting imports, you can sort the packages into a specific order that will make your code more consistent. Additionally, this will prevent random commits from taking place when the only thing that changes is the sort order of the imports. Since formatting imports will prevent random commits, this will prevent unnecessary code churn and confusing code reviews.
+通过格式化导入，你可以将软件包分为特定的顺序，以使你的代码更加一致。此外，当惟一改变的是导入的排序顺序时，这将防止发生随机提交。由于格式化导入将防止随机提交，因此这将防止不必要的代码混乱和混淆代码审查。
 
 Most editors will format imports for you automatically, or will let you configure your editor to use [`goimports`](https://godoc.org/golang.org/x/tools/cmd/goimports). It is considered standard practice to use `goimports` in your editor, as trying to manually maintain the sort order of your imports can be tedious and prone to errors. Additionally, if any style changes are made, `goimports` will be updated to reflect those style changes. This ensures that you, and anyone that works on your code, will have consistent styling in your import blocks.
 
-Here is what an example import block may look like before formatting:
+大多数编辑器将自动为你格式化导入，或者让你配置编辑器以使用 [goimports](https://godoc.org/golang.org/x/tools/cmd/goimports) 工具。在编辑器中使用 `goimports` 被认为是标准实践，因为尝试手动维护导入的排序顺序可能是乏味的，而且容易出错。此外，如果进行了任何样式更改，则将更新 `goimports` 以反映这些样式更改。这样可以确保你和任何在代码上工作的人都将在你的 import 块中具有一致的样式。
+
+这是格式化之前的示例导入块可能的样子：
 
 ``` go
 import (
@@ -200,7 +202,7 @@ import (
 
 ```
 
-Running the `goimport` tool (or with most editors that have it installed, saving the file will run it for you), you will now have the following format:
+运行 `goimport` 工具(或使用已安装它的大多数编辑器，保存文件将为你运行)，现在你将具有以下格式：
 
 ``` go
 import (
@@ -215,12 +217,12 @@ import (
 )
 ```
 
-Notice that it groups all standard library packages first and then groups third party packages together with blank lines. This makes is easier to read and understand what packages are being used.
+请注意，它首先将所有标准库软件包分组，然后将第三方软件包与空白行分组。这使得更容易阅读和了解正在使用哪些软件包。
 
-In this section we learned that using `goimports` will keep all of our import blocks properly formatted, and prevent unnecessary code churn between developers working on the same files.
+在本节中，我们了解到，使用 `goimports` 将保持我们所有导入块的正确格式，并防止在处理相同文件在开发人员之间产生不必要的代码混乱。
 
-## Conclusion
+## 总结
 
-When we import packages we’re able to call functions that are not built in to Go. Some packages are part of the standard library that installs with Go, and some we will install through `go get`.
+当我们导入软件包时，我们可以调用未内置的功能。有些软件包是随着 GO 安装的标准库的一部分，有些软件包将通过 `go get` 来安装。
 
-Making use of packages allows us to make our programs more robust and powerful as we’re leveraging existing code. We can also [create our own packages](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go) for ourselves and for other programmers to use in future programs.
+使用软件包可以使我们在利用现有代码时使程序更加健壮和强大。我们还可以为自己和其他程序员 [创建自己的软件包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)，以便将来使用。
