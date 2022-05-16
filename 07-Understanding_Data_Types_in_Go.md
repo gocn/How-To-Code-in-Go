@@ -4,11 +4,11 @@
 
 数据类型是指在编写程序时特定变量存储的值的类型。数据类型还决定对数据可以执行哪些操作。
 
-在本文中，我们将介绍 Go 本身的重要数据类型。本文并不是对数据类型的详尽调查，但将帮助您熟悉 Go 中可用的选项。理解一些基本数据类型将可以让您能够编写更清晰的代码，从而更有效地执行。
+在本文中，我们将介绍 Go 本身的重要数据类型。本文并不是对数据类型的详尽调查，但将帮助你熟悉 Go 中可用的选项。理解一些基本数据类型将可以让你能够编写更清晰的代码，从而更有效地执行。
 
 ## 背景
 
-了解数据类型的一种方法是考虑我们在现实世界中使用的不同类型的数据。现实世界中数据的一个例子是数字: 例如，我们可以使用整数（0，1，2，...）、整数（... ，-1，0，1，...）和无理数（π）。
+了解数据类型的一种方法是考虑我们在现实世界中使用的不同类型的数据。现实世界中数据的一个例子是数字: 例如，我们可以使用无符号整数（0，1，2，...）、有符号整数（... ，-1，0，1，...）和无理数（π）。
 
 通常，在数学中，我们可以把不同类型的数字组合起来，来得到某个答案。例如，我们可以把 5 加到 π 上:
 
@@ -45,7 +45,6 @@ Output
 -459
 ```
 
-Or, we can declare a variable, which in this case is a symbol of the number we are using or manipulating, like so:
 或者，我们可以声明一个变量，在这个例子中是我们用来表示和操作数字的符号，如：
 
 ```go
@@ -70,10 +69,9 @@ Output
 48
 ```
 
-Integers can be used in many ways within Go programs. As you continue to learn about Go, you’ll have a lot of opportunities to work with integers and build upon your knowledge of this data type.
-如输出所示，数学算子 `-` 从 `116` 中减去整数 `68`，得到 `48`。您将在**声明变量的数据类型**部分了解有关变量声明的更多信息。
+如输出所示，数学算子 `-` 从 `116` 中减去整数 `68`，得到 `48`。你将在**声明变量的数据类型**部分了解有关变量声明的更多信息。
 
-在 Go 程序中，有多种方式可以使用整数。随着您继续学习 Go，您将有很多机会使用整数并在此数据类型的知识基础上进行构建。
+在 Go 程序中，有多种方式可以使用整数。随着你继续学习 Go，你将有很多机会使用整数并在此数据类型的知识基础上进行构建。
 
 ## 浮点数
 
@@ -120,7 +118,7 @@ Output
 
 除了整数和浮点数之间的区别之外，Go 还有两种类型的数值数据，这两种数值数据通过其大小的静态或动态特性进行区分。第一种类型是与_体系结构无关_的类型，这意味着无论代码运行在哪台机器上，以位为单位的数据的大小都不会改变。
 
-今天的大多数系统架构都是32位或64位的。例如，你可能正在一台现代的 Windows 笔记本电脑上开发，其操作系统运行在 Windows 64位架构上。然而，如果你正在为一个像健身手表这样的设备开发应用时，你可能正在使用一个32位的架构。如果您使用像 `int32` 这样独立于体系架构的类型，那么无论您为何种体系架构编译，该类型都将具有一个固定的大小。
+今天的大多数系统架构都是32位或64位的。例如，你可能正在一台现代的 Windows 笔记本电脑上开发，其操作系统运行在 Windows 64位架构上。然而，如果你正在为一个像健身手表这样的设备开发应用时，你可能正在使用一个32位的架构。如果你使用像 `int32` 这样独立于体系架构的类型，那么无论你为何种体系架构编译，该类型都将具有一个固定的大小。
 
 第二种是_实现专用_的类型。在这种类型中，位大小可以根据程序所在的体系架构的不同而变化。例如，如果我们使用 `int` 类型，当 Go 为 32 位架构编译时，数据类型的大小将为 32 位。如果程序是为 64 位架构编译的，那么变量的大小是 64 位。
 
@@ -150,7 +148,6 @@ complex64   complex numbers with float32 real and imaginary parts
 complex128  complex numbers with float64 real and imaginary parts
 ```
 
-There are also a couple of alias number types, which assign useful names to specific data types:
 还有一些数字类型的别名，通过分配有用的名称来表示特定的数据类型：
 
 ```
@@ -174,23 +171,19 @@ uintptr  unsigned integer large enough to store the uninterpreted bits of a poin
 
 ### 选择数值数据类型
 
-Now that we have looked at some of the possible ranges for numeric data types, let’s look at what will happen if we exceed those ranges in our program.
+选择正确的大小通常更多地取决于编程所针对的目标架构的性能，而不是所处理的数据的大小。但是，无需知道性能对程序的具体影响，你可以在动手前遵循一些基本指导原则。
 
-选择正确的大小通常更多地取决于编程所针对的目标架构的性能，而不是所处理的数据的大小。但是，无需知道性能对程序的具体影响，您可以在动手前遵循一些基本指导原则。
+正如本文前面所讨论的，有与架构无关的类型和特定实现的类型。对于整数数据，Go 中通常使用 `int` 或 `uint` 等实现类型，而不是 `int64` 或 `uint64`。这通常会为你的目标架构带来最快的处理速度。例如，如果使用 `int64` 并将其编译为 32 位架构上的应用，那么处理这些值所需的时间至少多花一倍，因为在该架构下移动数据需要额外的 CPU 周期。如果使用 `int`，程序会将其定义为 32 位体系结构的 32 位大小，并且处理起来会快得多。
 
-正如本文前面所讨论的，有与架构无关的类型和特定实现的类型。对于整数数据，Go 中通常使用 `int` 或 `uint` 等实现类型，而不是 `int64` 或 `uint64`。这通常会为您的目标架构带来最快的处理速度。例如，如果使用 `int64` 并将其编译为 32 位架构上的应用，那么处理这些值所需的时间至少多花一倍，因为在该架构下移动数据需要额外的 CPU 周期。如果使用 `int`，程序会将其定义为 32 位体系结构的 32 位大小，并且处理起来会快得多。
-
-如果您知道您不会超过特定的大小范围，那么选择与体系结构无关的类型既可以提高速度，又可以减少内存使用。例如，如果你知道你的数据不会超过 `100`，而且只是一个正数，那么选择 `uint8` 会使你的程序更有效率，因为它需要更少的内存。
+如果你知道你不会超过特定的大小范围，那么选择与体系结构无关的类型既可以提高速度，又可以减少内存使用。例如，如果你知道你的数据不会超过 `100`，而且只是一个正数，那么选择 `uint8` 会使你的程序更有效率，因为它需要更少的内存。
 
 既然我们已经了解了数值数据类型的一些可能范围，接下来让我们看看如果在程序中超过这些范围会发生什么。
 
 ### 溢出 vs. 折叠
 
-In the following example, we set `maxUint32` to its maximum value:
-
 当你试图存储一个比设计存储的数据类型更大的值时，Go 有可能会_溢出_和_折叠_一个数字，这取决于这个值是在编译时还是在运行时计算的。当程序在尝试构建程序时发现错误时，就会发生编译时错误。程序编译完成后，在实际执行过程中会发生的是运行时错误。
 
-在下面的例子中，我们将 `maxuint32` 设置为它的最大值:
+在下面的例子中，我们将 `maxUint32` 设置为它的最大值:
 
 ```go
 package main
@@ -239,7 +232,7 @@ func main() {
 Outputprog.go:6:36: constant 4294967296 overflows uint32
 ```
 
-理解数据的边界将帮助您避免将来程序中可能出现的错误。
+理解数据的边界将帮助你避免将来程序中可能出现的错误。
 
 现在我们已经介绍了数值类型，让我们来看看如何存储布尔值。
 
@@ -338,7 +331,6 @@ quote on either side.
 
 ### 解释字符串
 
-Interpreted string literals are character sequences between double quotes, as in `"bar"`. Within the quotes, any character may appear except newline and unescaped double quotes. To show double quotes in an interpreted string, you can use the backslash as an escape character, like so:
 解释字符串是双引号之间的字符序列，如 `"bar"` 中所示。在引号中，除了换行符和非转义双引号外，任何字符都可以出现。要在解释字符串中显示双引号，可以使用反斜杠作为转义字符，如下所示:
 
 ```go
@@ -351,7 +343,7 @@ Output
 Say "hello" to Go!
 ```
 
-您几乎总会使用解释字符串，因为它们允许在其中使用转义字符。想要了解更多关于字符串使用的信息，请查看[Go 中使用字符串的简介](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)。
+你几乎总会使用解释字符串，因为它们允许在其中使用转义字符。想要了解更多关于字符串使用的信息，请查看[Go 中使用字符串的简介](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)。
 
 ### UTF-8 字符的字符串
 
@@ -361,7 +353,7 @@ UTF-8 是一种编码方案，用于将可变宽度字符编码为一到四个�
 a := "Hello, 世界"
 ```
 
-您可以在 `for` 循环中使用 `range` 关键字来索引 Go 中的任何字符串，甚至是 UTF-8 字符串。`for` 循环和 `range` 将在本系列后面更深入地讨论; 现在，重要的是知道我们可以使用它来计算给定字符串中的字节数：
+你可以在 `for` 循环中使用 `range` 关键字来索引 Go 中的任何字符串，甚至是 UTF-8 字符串。`for` 循环和 `range` 将在本系列后面更深入地讨论; 现在，重要的是知道我们可以使用它来计算给定字符串中的字节数：
 
 ```go
 package main
@@ -402,11 +394,11 @@ length of 'Hello, 世界':  13
 
 如你所见，字符串的长度比它循环迭代的次数大。
 
-你不会总使用 UTF-8 字符串，但当使用时，你将会理解为什么他们叫做符文而不是单个 `int32`。
+你不会总使用 UTF-8 字符串，但当使用时，你将会理解为什么他们叫做 rune 而不是单个 `int32`。
 
 ## 声明变量的数据类型
 
-既然您已经了解了不同的基本数据类型，接下来我们将讨论如何在 Go 中将这些类型分配给变量。
+既然你已经了解了不同的基本数据类型，接下来我们将讨论如何在 Go 中将这些类型分配给变量。
 
 在 Go 中，我们可以使用关键字 `var` ，后面跟着变量名和所需的数据类型来定义一个变量。
 
@@ -444,10 +436,6 @@ Go 是一种_静态类型_语言。静态类型意味着在编译时检查程序
 var pi float64 = 3.14
 var week int = 7
 ```
-
-Each of these variables could be a different data type if you declared them differently.
-
-This is different from a language like PHP, where the data type is associated to the value:
 
 如果以不同的方式声明这些变量，它们中的每一个都可能是不同的数据类型。
 
@@ -565,7 +553,7 @@ map[key]value{}
 map[string]string{"name": "Sammy", "animal": "shark", "color": "blue", "location": "ocean"}
 ```
 
-您将注意到，除了大括号之外，整个 map 中还有冒号。冒号左边的字是键。键可以是 Go 中的任何_可比较的_类型。可比较的类型是一些基本类型，如 `strings`、`ints` 等。基本类型是由语言定义的，而不是通过组合任何其他类型构建的。虽然它们可以是用户定义的类型，但为了避免编程错误，保持它们简单被认为是最佳实践。上面字典中的键是: `name`、`animal`、`color` 和 `location`。
+你将注意到，除了大括号之外，整个 map 中还有冒号。冒号左边的字是键。键可以是 Go 中的任何_可比较的_类型。可比较的类型是一些基本类型，如 `strings`、`ints` 等。基本类型是由语言定义的，而不是通过组合任何其他类型构建的。虽然它们可以是用户定义的类型，但为了避免编程错误，保持它们简单被认为是最佳实践。上面字典中的键是: `name`、`animal`、`color` 和 `location`。
 
 冒号右边的单词是值。值可以由任何数据类型组成。上面字典中的值是: `Sammy`，`shark`，`blue` 和 `ocean`。
 
@@ -596,6 +584,6 @@ blue
 
 ## 结论
 
-此时，您应该对 Go 中可用的一些主要数据类型有了更好的理解。当您使用 Go 语言开发编程项目时，这些数据类型中的每一种都将变得非常重要。
+此时，你应该对 Go 中可用的一些主要数据类型有了更好的理解。当你使用 Go 语言开发编程项目时，这些数据类型中的每一种都将变得非常重要。
 
 一旦掌握了 Go 中可用的数据类型，就可以学习[如何转换数据类型](https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go)，以便根据具体情况更改数据类型。
