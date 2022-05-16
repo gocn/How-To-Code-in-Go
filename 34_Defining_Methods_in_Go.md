@@ -1,12 +1,12 @@
-# Defining Methods in Go
+# 在 Go 中定义方法
 
-## Introduction
+## 简介
 
-[Functions](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go) allow you to organize logic into repeatable procedures that can use different arguments each time they run. In the course of defining functions, you’ll often find that multiple functions might operate on the same piece of data each time. Go recognizes this pattern and allows you to define special functions, called methods, whose purpose is to operate on instances of some specific type, called a receiver. Adding methods to types allows you to communicate not only what the data is, but also how that data should be used.
+[函数](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)允许你将逻辑组织成可重复的程序，每次运行时可以使用不同的参数。在定义函数的过程中，你常常会发现，可能会有多个函数每次对同一块数据进行操作。Go 可以识别这种模式，并允许您定义特殊的函数，称为方法，其目的是对某些特定类型（称为接收器）的实例进行操作。将方法添加到类型中，不仅可以传达数据是什么，还可以传达如何使用这些数据。
 
-## Defining a Method
+## 定义一个方法
 
-The syntax for defining a method is similar to the syntax for defining a function. The only difference is the addition of an extra parameter after the `func` keyword for specifying the receiver of the method. The receiver is a declaration of the type that you wish to define the method on. The following example defines a method on a struct type:
+定义一个方法的语法与定义一个函数的语法很相似。唯一的区别是在 `func` 关键字后面增加了一个额外的参数，用于指定方法的接收器。接收器是你希望定义的方法的类型声明。下面的例子为一个结构体类型定义了一个方法。
 
 ```go
 package main
@@ -31,20 +31,20 @@ func main() {
 }
 ```
 
-If you run this code, the output will be:
+如果你运行这段代码，输出将是：
 
 ```bash
 Output
 Sammy says Hello!
 ```
 
-We created a struct called `Creature` with `string` fields for a `Name` and a `Greeting`. This `Creature` has a single method defined, `Greet`. Within the receiver declaration, we assigned the instance of `Creature` to the variable `c` so that we could refer to the fields of the `Creature` as we assemble the greeting message in `fmt.Printf`.
+我们创建了一个名为 `Creature` 的结构，包含字符串类型的 `Name` 和 `Greeting` 字段。这个 `Creature` 结构体有一个定义的方法，即 `Greet`。在接收器声明中，我们将 `Creature` 的实例分配给变量 `c`，以便我们在 `fmt.Printf` 中打印问候信息时可以引用 `Creature` 字段。
 
-In other languages, the receiver of method invocations is typically referred to by a keyword (e.g. `this` or `self`). Go considers the receiver to be a variable like any other, so you’re free to name it whatever you like. The style preferred by the community for this parameter is a lower-case version of the first character of the receiver type. In this example, we used `c` because the receiver type was `Creature`.
+在其他编程语言中，方法调用的接收器通常用一个关键字来表示（例如：`this` 或 `self`）。Go 认为接收器和其他变量一样，是一个变量，所以你可以自由地命名。社区对这个参数的首选风格是接收器类型小写版本的第一个字符。在这个例子中，我们使用了 `c`，因为接收器的类型是 `Creature`。
 
-Within the body of `main`, we created an instance of `Creature` and specified values for its `Name` and `Greeting` fields. We invoked the `Greet` method here by joining the name of the type and the name of the method with a `.` and supplying the instance of `Creature` as the first argument.
+在 `main` 方法中，我们创建了一个 `Creature` 实例，并为其 `Name` 和 `Greeting` 字段进行赋值。我们在这里调用了 `Greet` 方法，用 `.` 连接类型名和方法名，并提供 `Creature` 实例作为第一个参数。
 
-Go provides another, more convenient, way of calling methods on instances of a struct as shown in this example:
+Go 提供了另一种更简洁的方式来调用结构体实例的方法，如本例所示：
 
 ```go
 package main
@@ -69,16 +69,16 @@ func main() {
 }
 ```
 
-If you run this, the output will be the same as the previous example:
+如果你运行这个，输出将与前面的例子相同：
 
 ```bash
 Output
 Sammy says Hello!
 ```
 
-This example is identical to the previous one, but this time we have used dot notation to invoke the `Greet` method using the `Creature` stored in the `sammy` variable as the receiver. This is a shorthand notation for the function invocation in the first example. The standard library and the Go community prefers this style so much that you will rarely see the function invocation style shown earlier.
+这个例子与前一个例子相同，但这次我们使用点号来调用 `Greet` 方法，使用存储在 `sammy` 变量中的 `Creature` 作为接收器，这是对第一个例子中的方法调用的简化。标准库和 Go 社区更喜欢这种风格，以至于你很少看到前面所示的方法调用风格。
 
-The next example shows one reason why dot notation is more prevalent:
+下一个例子展示了使用点号比较普遍的一个原因：
 
 ```go
 package main
@@ -110,7 +110,7 @@ func main() {
 }
 ```
 
-If you run this code, the output looks like this:
+如果你运行这段代码，输出看起来像这样：
 
 ```go
 Output
@@ -120,15 +120,15 @@ Sammy says Hello!!
 Farewell gophers !
 ```
 
-We’ve modified the earlier examples to introduce another method called `SayGoodbye` and also changed `Greet` to return a `Creature` so that we can invoke further methods on that instance. In the body of `main` we call the methods `Greet` and `SayGoodbye` on the `sammy` variable first using dot notation and then using the functional invocation style.
+我们修改了前面的例子，引入了另一个名为 `SayGoodbye` 的方法，并将 `Greet` 改为返回一个 `Creature`，这样我们就可以对该实例调用更多的方法。在 `main` 方法中，我们首先使用点号调用 `sammy` 变量上的 `Greet` 和 `SayGoodbye` 方法，然后使用函数式调用方式。
 
-Both styles output the same results, but the example using dot notation is far more readable. The chain of dots also tells us the sequence in which methods will be invoked, where the functional style inverts this sequence. The addition of a parameter to the `SayGoodbye` call further obscures the order of method calls. The clarity of dot notation is the reason that it is the preferred style for invoking methods in Go, both in the standard library and among the third-party packages you will find throughout the Go ecosystem.
+两种风格输出的结果相同，但使用点号的例子更易读。点号调用链路还会告诉我们方法被调用的顺序，而函数式则颠倒了这个顺序。在 `SayGoodbye` 的调用中增加了一个参数，进一步模糊了方法调用的顺序。点号调用的清晰性是 Go 中调用方法的首选风格，无论是在标准库中还是在整个 Go 生态的第三方包中都是如此。
 
-Defining methods on types, as opposed to defining functions that operate on some value, have other special significance to the Go programming language. Methods are the core concept behind interfaces.
+相对于定义对某些值进行操作的方法，为类型定义方法对 Go 编程语言还有其他特殊意义，方法是接口背后的核心概念。
 
-## Interfaces
+## 接口
 
-When you define a method on any type in Go, that method is added to the type’s method set. The method set is the collection of functions associated with that type as methods and used by the Go compiler to determine whether some type can be assigned to a variable with an interface type. An interface type is a specification of methods used by the compiler to guarantee that a type provides implementations for those methods. Any type that has methods with the same name, same parameters, and same return values as those found in an interface’s definition are said to implement that interface and are allowed to be assigned to variables with that interface’s type. The following is the definition of the `fmt.Stringer` interface from the standard library:
+当你在 Go 中为任何类型定义方法时，该方法会被添加到该类型的方法集中。方法集是与该类型相关联的方法的集合，并被 Go 编译器用来确定某种类型是否可以分配给具有接口类型的变量。接口类型是一种方法的规范，被编译器用来保证一个类型会实现这些方法。任何具有与接口定义中相同名称、相同参数与相同返回值的方法类型都被称为实现了该接口，并允许被分配给具有该接口类型的变量。下面是标准库中 `fmt.Stringer` 接口的定义。
 
 ```go
 type Stringer interface {
@@ -136,7 +136,7 @@ type Stringer interface {
 }
 ```
 
-For a type to implement the `fmt.Stringer` interface, it needs to provide a `String()` method that returns a `string`. Implementing this interface will allow your type to be printed exactly as you wish (sometimes called “pretty-printed”) when you pass instances of your type to functions defined in the `fmt` package. The following example defines a type that implements this interface:
+一个类型要实现 `fmt.Stringer` 接口，需要提供一个返回 `string` 的 `String()` 方法。实现了这个接口，当你把你的类型实例传递给 `fmt` 包中定义的函数时，你的类型就可以完全按照你的意愿被打印出来（有时称为 “pretty-printed”）。下面的例子定义了一个实现了这个接口的类型：
 
 ```go
 package main
@@ -170,16 +170,16 @@ func main() {
 }
 ```
 
-When you run the code, you’ll see this output:
+当你运行该代码时，你会看到这样的输出：
 
 ```bash
 Output
 ocean contains : sea urchin, lobster, shark
 ```
 
-This example defines a new struct type called `Ocean`. `Ocean` is said to implement the `fmt.Stringer` interface because `Ocean` defines a method called `String`, which takes no parameters and returns a `string`. In `main`, we defined a new `Ocean` and passed it to a `log` function, which takes a `string` to print out first, followed by anything that implements `fmt.Stringer`. The Go compiler allows us to pass `o` here because `Ocean` implements all of the methods requested by `fmt.Stringer`. Within `log`, we use `fmt.Println`, which calls the `String` method of `Ocean` when it encounters a `fmt.Stringer` as one of its parameters.
+这个例子定义了一个名为 `Ocean` 的新结构体类型。`Ocean` 实现了 `fmt.Stringer` 接口，因为 `Ocean` 定义了一个名为 `String` 的方法，该方法不需要参数，返回一个 `string`。在 `main` 方法中，我们定义了一个新的 `Ocean`，并把它传递给一个 `log` 函数，该函数首先接收一个 `string` 来打印，然后是任何实现 `fmt.Stringer` 的参数。Go 编译器允许我们在这里传递 `o`，因为 `Ocean` 实现了 `fmt.Stringer` 所要求的所有方法。在 `log` 中，我们使用 `fmt.Println` ，当它遇到 `fmt.Stringer` 作为其参数之一时，会调用 `Ocean` 的 `String` 方法。
 
-If `Ocean` did not provide a `String()` method, Go would produce a compilation error, because the `log` method requests a `fmt.Stringer` as its argument. The error looks like this:
+如果 `Ocean` 没有实现 `String()` 方法，Go 会产生一个编译错误，因为 `log` 方法要求一个 `fmt.Stringer` 作为其参数。这个错误看起来像这样：
 
 ```bash
 Output
@@ -187,7 +187,7 @@ src/e4/main.go:24:6: cannot use o (type Ocean) as type fmt.Stringer in argument 
         Ocean does not implement fmt.Stringer (missing String method)
 ```
 
-Go will also make sure that the `String()` method provided exactly matches the one requested by the `fmt.Stringer` interface. If it does not, it will produce an error that looks like this:
+Go 还将确保提供的 `String()` 方法与 `fmt.Stringer` 接口所要求的方法完全一致。如果不匹配，就会产生一个类似这样的错误：
 
 ```bash
 Output
@@ -197,11 +197,11 @@ src/e4/main.go:26:6: cannot use o (type Ocean) as type fmt.Stringer in argument 
                 want String() string
 ```
 
-In the examples so far, we have defined methods on the value receiver. That is, if we use the functional invocation of methods, the first parameter, referring to the type the method was defined on, will be a value of that type, rather than a [pointer](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go). Consequently, any modifications we make to the instance provided to the method will be discarded when the method completes execution, because the value received is a copy of the data. It’s also possible to define methods on the pointer receiver to a type.
+在到目前为止的例子中，我们已经在值接收器上定义了方法。也就是说，如果我们使用方法的功能调用，第一个参数（指的是方法所定义的类型）将是一个该类型的值，而不是一个[指针](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go)。因此，我们对方法实例所做的任何修改都会在方法执行完毕后被丢弃，因为收到的值是数据的副本。此外，我们也可以在一个类型的指针接收器上定义方法。
 
-## Pointer Receivers
+## 指针接收器
 
-The syntax for defining methods on the pointer receiver is nearly identical to defining methods on the value receiver. The difference is prefixing the name of the type in the receiver declaration with an asterisk (`*`). The following example defines a method on the pointer receiver to a type:
+在指针接收器上定义方法的语法与在值接收器上定义方法的语法几乎相同。不同的是在接收器声明中用星号（`*`）作为类型名称的前缀。下面的例子在指针接收器上定义了一个类型的方法：
 
 ```go
 package main
@@ -238,26 +238,26 @@ func main() {
 }
 ```
 
-You’ll see the following output when you run this example:
+当你运行这个例子时，你会看到以下输出：
 
-``bash
+```bash
 Output
 The S.S. DigitalOcean has the following occupants:
 	 Sammy the Shark
 	 Larry the Lobster
 ```
 
-This example defined a `Boat` type with a `Name` and `occupants`. We want to force code in other packages to only add occupants with the `AddOccupant` method, so we’ve made the `occupants` field unexported by lowercasing the first letter of the field name. We also want to make sure that calling `AddOccupant` will cause the instance of `Boat` to be modified, which is why we defined `AddOccupant` on the pointer receiver. Pointers act as a reference to a specific instance of a type rather than a copy of that type. Knowing that `AddOccupant` will be invoked using a pointer to `Boat` guarantees that any modifications will persist.
+这个例子定义了一个包含 `Name` 和 `occupants` 的 `Boat` 类型。我们想规定其他包中的代码只用 `AddOccupant` 方法来添加乘员，所以我们通过小写字段名的第一个字母使 `occupants` 字段不被导出。我们还想确保调用 `AddOccupant` 会导致 `Boat` 实例被修改，这就是为什么我们通过指针接收器定义 `AddOccupant`。指针作为一个类型的特定实例的引用，而不是该类型的副本。`AddOccupant` 将使用 `Boat` 类型的指针调用，可以保证任何修改都是持久的。
 
-Within `main`, we define a new variable, `b`, which will hold a pointer to a `Boat` (`*Boat`). We invoke the `AddOccupant` method twice on this instance to add two passengers. The `Manifest` method is defined on the `Boat` value, because in its definition, the receiver is specified as (`b Boat`). In `main`, we are still able to call `Manifest` because Go is able to automatically dereference the pointer to obtain the `Boat` value. `b.Manifest()` here is equivalent to `(*b).Manifest()`.
+在 `main` 方法中，我们定义了一个新的变量 `b`，它将持有一个指向 `Boat`（`*Boat`）的指针。我们在这个实例上调用了两次 `AddOccupant` 方法来增加两名乘客。`Manifest` 方法是在`Boat` 值上定义的，因为在其定义中，接收器被指定为（`b Boat`）。在 `main` 方法中，我们仍然能够调用 `Manifest`，因为 Go 能够自动解引用指针以获得 `Boat` 值。`b.Manifest()`在这里等同于 `(*b).Manifest()`。
 
-Whether a method is defined on a pointer receiver or on a value receiver has important implications when trying to assign values to variables that are interface types.
+当试图为接口类型的变量赋值时，一个方法是定义在一个指针接收器上还是定义在一个值接收器上有重要的影响。
 
-## Pointer Receivers and Interfaces
+## 指针接收器和接口
 
-When you assign a value to a variable with an interface type, the Go compiler will examine the method set of the type being assigned to ensure that it has the methods the interface expects. The method sets for the pointer receiver and the value receiver are different because methods that receive a pointer can modify their receiver where those that receive a value cannot.
+当你为一个接口类型的变量赋值时，Go 编译器会检查被赋值类型的方法集，以确保它实现了所有接口方法。指针接收器和值接收器的方法集是不同的，因为接收指针的方法可以修改其接收器，而接收值的方法则不能。
 
-The following example demonstrates defining two methods: one on a type’s pointer receiver and on its value receiver. However, only the pointer receiver will be able to satisfy the interface also defined in this example:
+下面的例子演示了定义两个方法：一个在一个类型的指针接收器上，一个在它的值接收器上。然而，只有指针接收器能够满足本例中也定义的接口：
 
 ```go
 package main
@@ -302,7 +302,7 @@ func main() {
 }
 ```
 
-When you run the code, you’ll see this output:
+当你运行该代码时，你会看到这样的输出：
 
 ```bash
 Output
@@ -310,13 +310,13 @@ Sammy is on the surface
 Sammy is underwater
 ```
 
-This example defined an interface called `Submersible` that expects types having a `Dive()` method. We then defined a `Shark` type with a `Name` field and an `isUnderwater` method to keep track of the state of the `Shark`. We defined a `Dive()` method on the pointer receiver to `Shark` which modified `isUnderwater` to `true`. We also defined the `String()` method of the value receiver so that it could cleanly print the state of the `Shark` using `fmt.Println` by using the `fmt.Stringer` interface accepted by `fmt.Println` that we looked at earlier. We also used a function `submerge` that takes a `Submersible` parameter.
+这个例子定义了一个叫做 `Submersible` 的接口，它要求类型实现一个 `Dive()` 方法。然后我们定义了一个包含 `Name` 字段 和 `isUnderwater` 方法的 `Shark` 类型来跟踪 `Shark` 的状态。我们在 `Shark` 的指针接收器上定义了一个 `Dive()` 方法，将 `isUnderwater` 修改为 `true`。我们还定义了值接收器的 `String()` 方法，这样它就可以使用 `fmt.Println` 干净利落地打印出 `Shark` 的状态，方法使用我们之前看过的 `fmt.Println` 所接收的 `fmt.Stringer` 接口。我们还使用了一个函数 `submerge`，它接受一个 `Submersible` 参数。
 
-Using the `Submersible` interface rather than a `*Shark` allows the `submerge` function to depend only on the behavior provided by a type. This makes the `submerge` function more reusable because you wouldn’t have to write new `submerge` functions for a `Submarine`, a `Whale`, or any other future aquatic inhabitants we haven’t thought of yet. As long as they define a `Dive()` method, they can be used with the `submerge` function.
+使用 `Submersible` 接口而不是 `*Shark` 允许 `submerge` 方法只依赖于一个类型所提供的行为。这使得 `submerge` 方法更容易重用，因为你不必为 `Submarine`、`Whale` 或任何其他我们还没有想到的未来水生居民编写新的 `submerge` 方法。只要它们定义了一个 `Dive()` 方法，就可以和 `submerge` 方法一起使用。
 
-Within `main` we defined a variable s that is a pointer to a `Shark` and immediately printed `s` with `fmt.Println`. This shows the first part of the output, `Sammy is on the surface`. We passed `s` to `submerge` and then called `fmt.Println` again with `s` as its argument to see the second part of the output printed, `Sammy is underwater`.
+在 `main` 方法中，我们定义了一个变量 `s`，它是一个指向 `Shark` 的指针，并立即用 `fmt.Println` 打印了 `s`。这展示了输出的第一部分，`Sammy is on the surface`。我们把 `s` 传给`submerge`，然后再次调用 `fmt.Println`，以 `s` 为参数，看到输出的第二部分，`Sammy is underwater`。
 
-If we changed `s` to be a `Shark` rather than a `*Shark`, the Go compiler would produce the error:
+如果我们把 `s` 改成 `Shark`而不是 `*Shark`，Go 编译器会产生错误：
 
 ```bash
 Output
@@ -324,10 +324,10 @@ cannot use s (type Shark) as type Submersible in argument to submerge:
 	Shark does not implement Submersible (Dive method has pointer receiver)
 ```
 
-The Go compiler helpfully tells us that `Shark` does have a `Dive` method, it’s just defined on the pointer receiver. When you see this message in your own code, the fix is to pass a pointer to the interface type by using the `&` operator before the variable where the value type is assigned.
+Go 编译器很好心地告诉我们，`Shark` 确实有一个 `Dive` 方法，它只在指针接收器上定义。当你在自己的代码中看到这条信息时，解决方法是在分配值类型的变量前使用 `&` 操作符，传递一个指向接口类型的指针。
 
-## Conclusion
+## 总结
 
-Declaring methods in Go is ultimately no different than defining functions that receive different types of variables. The same rules of [working with pointers](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go) apply. Go provides some conveniences for this extremely common function definition and collects these into sets of methods that can be reasoned about by interface types. Using methods effectively will allow you to work with interfaces in your code to improve testability and leaves better organization behind for future readers of your code.
+在 Go 中声明方法与定义接收不同类型变量的函数本质上没有区别。同样，[使用指针](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go)规则也适用。Go 为这种极其常见的函数定义提供了一些便利，并将这些方法收集到可以通过接口类型进行要求的方法集中。有效地使用方法可以让你在代码中使用接口来提高可测试性，并为你的代码的未来读者留下更好的结构。
 
-If you’d like to learn more about the Go programming language in general, check out our [How To Code in Go series](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go).
+如果你想了解更多关于 Go 编程语言的一般信息，请查看我们的 [How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
