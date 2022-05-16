@@ -170,8 +170,6 @@ Output
 
 ## 使用结构体标签来控制编码
 
-You can modify the previous example to have exported fields that are properly encoded with camel-cased field names by annotating each field with a struct tag. The struct tag that `encoding/json` recognizes has a key of `json` and a value that controls the output. By placing the camel-cased version of the field names as the value to the `json` key, the encoder will use that name instead. This example fixes the previous two attempts:
-
 你可以修改前面的例子，通过给每个字段注解一个结构体标签，使导出的字段用驼峰大写的字段名进行正确编码。`encoding/json` 识别的结构体标签有一个 `json` 的键和一个控制输出的值。通过将字段名的驼峰版本作为 `json` 键的值，编码器将使用该名称代替。这个例子修正了前两次的尝试：
 
 ```go
@@ -281,7 +279,7 @@ Output
 
 ## 忽略私有字段
 
-有些字段必须从结构体中导出，以便其他包可以正确地与该类型交互。然而，这些字段的性质可能是敏感的，所以在这些情况下，我们希望 JSON 编码器能够完全忽略该字段 -- 即使它被设置了值。这可以用特殊值 `"-"` 作为 `json:` 结构体标签的值参数来实现。
+有些字段必须从结构体中导出，以便其他包可以正确地与该类型交互。然而，这些字段的性质可能是敏感的，所以在这些情况下，即使它被设置了值，我们仍希望 JSON 编码器能够完全忽略该字段。这可以用特殊值 `"-"` 作为 `json:` 结构体标签的值参数来实现。
 
 这个例子修正了暴露用户密码的问题。
 
@@ -331,7 +329,7 @@ Output
 
 这个例子与之前的例子相比，唯一的变化是密码字段。现在使用了特殊的 `"-"` 作为其 `json:` 结构体标签的值。我们看到，在这个例子的输出中，`password` 字段不再存在了。
 
-`encoding/json` 包的这些特征，`,omitempty` 和 `"-"`，并不是标准。一个包决定对结构体标签的值做什么取决于它的实现。因为 `encoding/json` 包是标准库的一部分，其他包也以同样的方式实现这些功能，这是一个惯例。然而，请阅读任何使用结构体标签的第三方软件包的文档以了解哪些是支持的，哪些是不支持的，这一点很重要。
+`encoding/json` 包的这些特征，`,omitempty` 和 `"-"`，并不是标准。一个包决定对结构体标签的值做什么取决于它的实现。因为 `encoding/json` 包是标准库的一部分，其他包也以同样的方式实现这些功能，这是一个惯例。然而，很重要的一点是阅读任何使用结构体标签的第三方软件包的文档，以了解哪些是支持的，哪些是不支持的。
 
 ## 总结
 
