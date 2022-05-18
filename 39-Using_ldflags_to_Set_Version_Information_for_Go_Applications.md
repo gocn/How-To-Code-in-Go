@@ -2,15 +2,15 @@
 - 原文作者：digitalocean
 - 本文永久链接：https://github.com/gocn/How-To-Code-in-Go/blob/main/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications.md
 - 译者：[zxmfke](https://github.com/zxmfke)
-- 校对：
+- 校对：[pseudoyu](https://github.com/pseudoyu)
 
-# 用idflags设置Go应用程序的版本信息
+# 用 ldflags 设置 Go 应用程序的版本信息
 
 ## 简介
 
-当把应用程序部署到生产环境中时，用版本信息和其他元数据构建二进制文件将改善你的监控、日志和调试过程，增加识别信息来帮助跟踪随着时间推移后，应用程序的构建信息。这种版本信息通常包括高度动态的数据，如构建时间、构建二进制文件的机器或用户、[版本控制系统（VCS）](https://www.atlassian.com/git/tutorials/what-is-version-control)的提交ID，等其他更多信息。因为这些值是不断变化的，将这些数据直接编码到源代码中，并在每次新的构建之前进行修改，是很繁琐的，而且容易出错：源文件可以移动，[变量/常量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go)在整个开发过程中可能会随着切换文件而改动，打断构建过程。
+当把应用程序部署到生产环境中时，用版本信息和其他元数据构建二进制文件将改善你的监控、日志和调试过程，增加识别信息来帮助跟踪随着时间推移后，应用程序的构建信息。这种版本信息通常包括高度动态的数据，如构建时间、构建二进制文件的机器或用户、[版本控制系统（VCS）](https://www.atlassian.com/git/tutorials/what-is-version-control)的提交 ID，等其他更多信息。因为这些值是不断变化的，将这些数据直接编码到源代码中，并在每次新的构建之前进行修改，是很繁琐的，而且容易出错：源文件可能会移动，[变量/常量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go)在整个开发过程中可能会随着切换文件而改动，打断构建过程。
 
-在Go中解决这个问题的一个方法是在使用`go build`命令时加上`-ldflags`，在构建时将动态信息插入二进制文件中，而不需要修改源代码。在这个标志中，`ld`代表[*linker*](https://en.wikipedia.org/wiki/Linker_(computing))，这个程序将编译后的源代码的不同部分连接成最终的二进制文件。`Idflags`就代表*linker的标志*。之所以这样说，是因为它向底层的Go工具链linker[`cmd/link`](https://golang.org/cmd/link)传递了一个标志，允许你在构建时从命令行中改变导入的包的值。
+在 Go 中解决这个问题的一个方法是在使用`go build`命令时加上`-ldflags`，在构建时将动态信息插入二进制文件中，而不需要修改源代码。在这个标志中，`ld`代表[*linker*](https://en.wikipedia.org/wiki/Linker_(computing))，这个程序将编译后的源代码的不同部分连接成最终的二进制文件。`ldflags`就代表*linker 的标志*。之所以这样说，是因为它向底层的 Go 工具链 linker[`cmd/link`](https://golang.org/cmd/link)传递了一个标志，允许你在构建时从命令行中改变导入的包的值。
 
 在本教程中，你将使用`-ldflags`在构建时改变变量的值，并将你自己的动态信息加入二进制，用一个将版本信息打印到屏幕上的应用程序作为示例应用程序。
 
@@ -18,7 +18,7 @@
 
 为了接下去在文章中的例子，你需要：
 
-- 按照[如何安装Go和设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置Go的workspace。
+- 按照[如何安装 Go 和设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置 Go 的 workspace。
 
 ## 构建你的范例应用程序
 
@@ -36,7 +36,7 @@ mkdir app
 cd app
 ```
 
-然后，使用你喜欢的文本编辑器，在`main.go`创建你的程序的entry point：
+然后，使用你喜欢的文本编辑器，在`main.go`创建你的程序的 entry point：
 
 ```bash
 nano main.go
@@ -58,9 +58,9 @@ func main() {
 }
 ```
 
-在`main()`函数内，你宣告了`Version`变量，然后打印[string](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)的`Version`：紧跟着tab的字符，`\t`，然后宣告的变量。
+在`main()`函数内，你宣告了`Version`变量，然后打印[string](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)类型的`Version`：紧跟着 tab 的字符，`\t`，然后是声明的变量。
 
-现在，参数`Version`被定义为`development`，将作为app的默认版本。稍后，你将会修改这个值来符合官方版本编号，根据[semantic versioning format](https://semver.org/)来定义。
+现在，参数`Version`被定义为`development`，将作为 app 的默认版本。稍后，你将会修改这个值来符合官方版本编号，根据[semantic versioning format](https://semver.org/)来定义。
 
 保存并退出该文件。完成后，构建并运行该应用程序，来确认它打印的是正确的版本：
 
@@ -72,14 +72,15 @@ go build
 你将会看到如下输出：
 
 ```bash
-OutputVersion:	 development
+Output
+Version:	 development
 ```
 
 你现在有一个打印默认版本信息的应用程序，但你还没有办法在构建时传入当前版本信息。在下一步，你将使用`-ldflags`和`go build`来解决这个问题。
 
 ## 在 `go build`中使用`ldflags`的方法
 
-在前面提到的，`Idflags`代表*linker标志*，用于向Go工具链中的底层linker传递标志。这是按以下语法进行的：
+在前面提到的，`ldflags`代表*linker 标志*，用于向 Go 工具链中的底层 linker 传递标志。这是按以下语法进行的：
 
 ```bash
 go build -ldflags="-flag"
@@ -101,7 +102,7 @@ go build -ldflags="-X 'main.Version=v1.0.0'"
 
 在这个命令中，`main`是`Version`变量的包路径，因为这个变量在`main.go`文件中。`Version`是你要写入的变量，`v1.0.0`是新的值。
 
-为了使用`ldflags`，你想改变的值必须存在，并且是一个`string`类型的包级变量。这个变量可以是对外的也可以是不对外的。变量的值不可以是`const`或者是需要通过调用函数后得到的结果赋值的。幸运的是，`Version`满足了所有的要求：它已经在`main.go`文件中被声明为一个变量，而且当前值(`development`)和期望值(`v1.0.0`)都是字符串。
+为了使用`ldflags`，你想改变的值必须存在，并且是一个`string`类型的包级变量。这个变量可以是对外导出的也可以不是。变量的值不可以是`const`或者是需要通过调用函数后得到的结果赋值的。幸运的是，`Version`满足了所有的要求：它已经在`main.go`文件中被声明为一个变量，而且当前值(`development`)和期望值(`v1.0.0`)都是字符串。
 
 一旦你的新`app`二进制文件构建起来，运行应用程序：
 
@@ -112,12 +113,13 @@ go build -ldflags="-X 'main.Version=v1.0.0'"
 你将会收到如下输出：
 
 ```bash
-OutputVersion:	 v1.0.0
+Output
+Version:	 v1.0.0
 ```
 
-通过`-Idflags`，你成功地把`Version`变量的值从`development`改成`v1.0.0`。
+通过`-ldflags`，你成功地把`Version`变量的值从`development`改成`v1.0.0`。
 
-现在你已经在一个简单的应用程序构建时修改了一个`string`变量。使用`Idflags`，你可以在二进制文件中嵌入版本细节、许可信息等，只需使用命令行就可以发布。
+现在你已经在一个简单的应用程序构建时修改了一个`string`变量。使用`ldflags`，你可以在二进制文件中嵌入版本细节、许可信息等，只需使用命令行就可以发布。
 
 在这个例子中，你改变的变量在`main`程序中，减少了确定路径名称的难度。但有时这些变量的路径寻找起来比较复杂。在下一步中，你将给子包中的变量赋值，来阐述确定更复杂的包路径的最佳方法。
 
@@ -180,7 +182,7 @@ func main() {
 
 保存文件，然后从你的文本编辑器退出。
 
-接下来，为了用`ldflags`锁定这些变量，你可以使用导入路径`app/build`，然后是`.User`或`.Time`，因为你已经知道导入的路径。 然而，为了模拟一种更复杂的情况，即不知道变量的导入路径，让我们改用Go工具链中的`nm`命令。
+接下来，为了用`ldflags`锁定这些变量，你可以使用导入路径`app/build`，然后是`.User`或`.Time`，因为你已经知道导入的路径。 然而，为了模拟一种更复杂的情况，即不知道变量的导入路径，让我们改用 Go 工具链中的`nm`命令。
 
 `go tool nm`命令将输出在给定的可执行文件、对象文件或存档中涉及的符号。在这种情况下，符号指的是代码中的一个对象，例如一个定义的或导入的变量或函数。通过使用`nm`生成一个符号表，并使用`grep`搜索一个变量，你可以快速找到其路径信息。
 
@@ -202,8 +204,9 @@ go tool nm ./app | grep app
 
 你将会收到类似如下的输出：
 
-```
-Output  55d2c0 D app/build.Time
+```text
+Output  
+  55d2c0 D app/build.Time
   55d2d0 D app/build.User
   4069a0 T runtime.appendIntStr
   462580 T strconv.appendEscapedRune
@@ -218,7 +221,7 @@ Output  55d2c0 D app/build.Time
 go build -v -ldflags="-X 'main.Version=v1.0.0' -X 'app/build.User=$(id -u -n)' -X 'app/build.Time=$(date)'"
 ```
 
-这里你传入了`id -u -n` Bash命令来列出当前用户，以及`date`命令来列出当前日期。
+这里你传入了`id -u -n` Bash 命令来列出当前用户，以及`date`命令来列出当前日期。
 
 构建好了可执行文件，运行该程序：
 
@@ -226,10 +229,11 @@ go build -v -ldflags="-X 'main.Version=v1.0.0' -X 'app/build.User=$(id -u -n)' -
 ./app
 ```
 
-该命令在Unix系统上运行时，将产生与下面类似的输出：
+该命令在 Unix 系统上运行时，将产生与下面类似的输出：
 
-```
-OutputVersion:	 v1.0.0
+```text
+Output
+Version:	 v1.0.0
 build.Time:	 Fri Oct  4 19:49:19 UTC 2019
 build.User:	 sammy
 ```
@@ -238,4 +242,4 @@ build.User:	 sammy
 
 ## 总结
 
-这个教程展示了，如果应用得当，`ldflags`可以成为一个强大的工具，在构建时向二进制文件注入有价值的信息。这样，你可以控制功能标志、环境信息、版本信息等等，而不需要对你的源代码进行修改。通过添加`ldflags`到你当前的构建工作流程中，你可以最大限度地发挥Go自成一体的二进制的发布格式的优势。
+这个教程展示了，如果应用得当，`ldflags`可以成为一个强大的工具，在构建时向二进制文件注入有价值的信息。这样，你可以控制功能标志、环境信息、版本信息等等，而不需要对你的源代码进行修改。通过添加`ldflags`到你当前的构建工作流程中，你可以最大限度地发挥 Go 自成一体的二进制的发布格式的优势。
