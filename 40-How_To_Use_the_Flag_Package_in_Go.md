@@ -4,19 +4,19 @@
 - 原文作者：digitalocean
 - 本文永久链接：[How-To-Code-in-Go/40-How_To_Use_the_Flag_Package_in_Go.md at main · gocn/How-To-Code-in-Go (github.com)](https://github.com/gocn/How-To-Code-in-Go/blob/main/40-How_To_Use_the_Flag_Package_in_Go.md)
 - 译者：[zxmfke](https://github.com/zxmfke)
-- 校对：
+- 校对：[pseudoyu](https://github.com/pseudoyu)
 
-# 在Go里面如何使用Flag包
+# 在 Go 里面如何使用 Flag 包
 
 ### 简介
 
-命令行工具很少在没有额外配置的情况下开箱即用。好的默认值固然很重要，但有用的工具需要接受用户的配置。在大多数平台上，命令行工具通过接收标志来指定命令的执行。标志是以键值分隔的字符串，加在命令的名称后面。Go让你通过使用标准库中的flag包来制作接受标志的命令行工具。
+命令行工具很少在没有额外配置的情况下开箱即用。好的默认值固然很重要，但有用的工具需要接受用户的配置。在大多数平台上，命令行工具通过接收标志来指定命令的执行。标志是以键值分隔的字符串，加在命令的名称后面。Go 让你通过使用标准库中的 flag 包来制作接受标志的命令行工具。
 
-在本教程中，你将探索使用flag包来建立不同种类的命令行工具的各种方法。你将使用一个标志来控制程序输出，引入位置参数，在这里你将混合标志和其他数据，然后实现子命令。
+在本教程中，你将探索使用 flag 包来建立不同种类的命令行工具的各种方法。你将使用一个标志来控制程序输出，引入位置参数，在这里你将混合标志和其他数据，然后实现子命令。
 
-## 用Flag来改变程序的行为
+## 用 Flag 来改变程序的行为
 
-使用flag包包括三个步骤：首先，定义变量以捕获标志值，然后定义你的Go应用程序将使用的标志，最后解析执行时提供给应用程序的标志。`flag`包内的大多数函数都与定义标志和将它们与你定义的变量绑定有关。解析阶段由`Parse()`函数处理。
+使用 flag 包包括三个步骤：首先，定义变量以捕获标志值，然后定义你的 Go 应用程序将使用的标志，最后解析执行时提供给应用程序的标志。`flag`包内的大多数函数都与定义标志和将它们与你定义的变量绑定有关。解析阶段由`Parse()`函数处理。
 
 为了阐述这一点，你将创建一个程序，定义一个 [Boolean](https://www.digitalocean.com/community/tutorials/understanding-boolean-logic-in-go)标志，改变这个标志将会把信息打印到标准输出上。如果提供一个`-color`标志，程序会用蓝色来打印消息。如果没有这个标志，则打印消息不会有颜色。
 
@@ -63,13 +63,13 @@ func main() {
 }
 ```
 
-这个例子使用[ANSI逃逸序列](https://en.wikipedia.org/wiki/ANSI_escape_code)来指示终端显示彩色输出。这些是专门的character序列，所以为它们定义一个新的类型是有意义的(L8)。在这个例子中，我们称该类型为`color`，并将该类型定义为`string`。然后我们在`const`块中定义一个调色板来使用。定义在`const`块之后的`colorize`函数接受`Color`常量其中之一和一个`string`，用于对信息进行着色。然后它指示终端改变颜色，首先打印所要求的颜色的转义序列，然后打印信息，最后要求终端通过打印特殊的颜色重置序列来重置其颜色。
+这个例子使用[ANSI 逃逸序列](https://en.wikipedia.org/wiki/ANSI_escape_code)来指示终端显示彩色输出。这些是专门的 character 序列，所以为它们定义一个新的类型是有意义的(L8)。在这个例子中，我们称该类型为`color`，并将该类型定义为`string`。然后我们定义了一个调色板，在后面的 `const` 块中使用。定义在`const`块之后的`colorize`函数接受`Color`常量其中之一和一个`string`，用于对信息进行着色。然后它指示终端改变颜色，首先打印所要求的颜色的转义序列，然后打印信息，最后要求终端通过打印特殊的颜色重置序列来重置其颜色。
 
-在`main`中，我们使用`flag.Bool`函数来定义一个名为`color`的Boolean标志。这个函数的第二个参数，`false`，在没有传入给这个标志值时，设置这个标志的默认值。与你可能有的期望相反，将其设置为`true`并不会颠倒行为，如提供一个标志会导致它变成false。因此，这个参数的值在布尔标志下几乎总是`false`。
+在`main`中，我们使用`flag.Bool`函数来定义一个名为`color`的 Boolean 标志。这个函数的第二个参数，`false`，在没有提供这个标志的情况下，设置这个标志的默认值。与你可能有的期望相反，将其设置为`true`并不会颠倒行为，如提供一个标志会导致它变成 false。因此，这个参数的值在布尔标志下几乎总是`false`。
 
-最后一个参数是一个可以作为使用信息打印出来的文档string。从这个函数返回的值是一个指向`bool`的指针。下一行的`flag.Parse`函数使用这个指针，然后根据用户传入的标志，设置`bool`变量。 然后我们就可以通过取消引用这个指针来检查这个`bool`指针的值。更多关于指针变量的信息可以在[指针教程](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go)找到。使用这个Boolean，我们就可以在设置`-color`标志时调用`colorize`，而在没有这个标志时调用`fmt.Println`变量。
+最后一个参数是一个可以作为使用信息打印出来的文档 string。从这个函数返回的值是一个指向`bool`的指针。下一行的`flag.Parse`函数使用这个指针，然后根据用户传入的标志，设置`bool`变量。 然后我们就可以通过取消引用这个指针来检查这个`bool`指针的值。更多关于指针变量的信息可以在[指针教程](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go)找到。使用这个 Boolean，我们就可以在设置`-color`标志时调用`colorize`，而在没有这个标志时调用`fmt.Println`变量。
 
-保存文件并在没有任何标志的情况下运行该程序：
+保存文件，并在未传入没有任何标志的情况下运行该程序：
 
 ```bash
 go run boolean.go
@@ -77,8 +77,9 @@ go run boolean.go
 
 你将会看到如下输出：
 
-```
-OutputHello, DigitalOcean!
+```text
+Output
+Hello, DigitalOcean!
 ```
 
 现在带上`-color`标志再跑一遍程序：
@@ -89,7 +90,7 @@ go run boolean.go -color
 
 输出文本会是一样的，只不过这时候颜色时蓝色的。
 
-标志不是传递给命令的唯一参数。你也可能发送文件名或其他数据。
+标志不是传递给命令的唯一参数。你也能发送文件名或其他数据。
 
 ## 使用位置参数
 
@@ -148,9 +149,9 @@ func main() {
 
 首先，我们定义了一个`count`变量，用来保存程序应该从文件中读取的行数。然后，我们使用`flag.IntVar`定义`-n`标志，模拟原始`head`程序的行为。 这个函数允许我们将自己的[pointer](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go)传递给一个变量，与没有`Var`后缀的标志函数相反。除了这个区别之外，`flag.IntVar`的其他参数与`flag.Int`对应的参数相同：标志名称、默认值和描述。 和前面的例子一样，我们随后调用`flag.Parse()`来处理用户的输入。
 
-下一节读取文件。我们首先定义一个`io.Reader`变量，该变量将被设置为用户请求的文件，或传递给程序的标准输入。在`if`语句中，我们使用`flag.Arg`函数来访问所有标志之后的第一个位置参数。如果用户提供了文件名，这个位置参数会被设置。否则，它将会时空string(`""`)。当文件名提供时，我们使用`os.Open`函数来打开该文件，并将我们之前定义的`io.Reader`设置为该文件。否则，我们使用`os.stdin`来读取标准输入。
+下一节读取文件。我们首先定义一个`io.Reader`变量，该变量将被设置为用户请求的文件，或传递给程序的标准输入。在`if`语句中，我们使用`flag.Arg`函数来访问所有标志之后的第一个位置参数。如果用户提供了文件名，这个位置参数会被设置。否则，它将为空 string(`""`)。当文件名提供时，我们使用`os.Open`函数来打开该文件，并将我们之前定义的`io.Reader`设置为该文件。否则，我们使用`os.stdin`来读取标准输入。
 
-最后一节使用一个用`bufio.NewScanner`创建的`*bufio.Scanner`从`io.Reader`变量`in`中读取行数据。我们使用[`for` loop](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go)遍历到count的值，如果用`buf.Scan`扫描该行结果为`false`，则调用`break`，表示行数少于用户要求的数量。
+最后一节使用一个用`bufio.NewScanner`创建的`*bufio.Scanner`从`io.Reader`变量`in`中读取行数据。我们使用[`for`loop](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go)遍历到 count 的值，如果用`buf.Scan`扫描该行结果为`false`，则调用`break`，表示行数少于用户要求的数量。
 
 运行这个程序，用`head.go`作为文件参数，显示你刚才写的文件的内容：
 
@@ -158,10 +159,11 @@ func main() {
 go run head.go -- head.go
 ```
 
-`--`分隔符是一个被`flag`包识别的特殊标志，它表示后面没有更多的flag参数。当你运行这个命令时，你会收到以下输出：
+`--`分隔符是一个被`flag`包识别的特殊标志，它表示后面没有更多的 flag 参数。当你运行这个命令时，你会收到以下输出：
 
-```
-Outputpackage main
+```text
+Output
+package main
 
 import (
         "bufio"
@@ -176,8 +178,9 @@ go run head.go -n 1 head.go
 
 这只输出包的声明：
 
-```
-Outputpackage main
+```text
+Output
+package main
 ```
 
 最后，当程序检测到没有提供位置参数时，它从标准输入中读取输入，就像`head`一样。试着运行这个命令：
@@ -188,19 +191,20 @@ echo "fish\nlobsters\nsharks\nminnows" | go run head.go -n 3
 
 你将会看到如下输出：
 
-```
-Outputfish
+```text
+Output
+fish
 lobsters
 sharks
 ```
 
 到目前为止，你所看到的`flag`函数的行为仅限于检查整个命令的调用。你并不总是想要这种行为，特别是当你在编写一个支持子命令的命令行工具时。
 
-## 用FlagSet来实现子命令
+## 用 FlagSet 来实现子命令
 
-现代的命令行应用程序经常实现 "子命令"，将一套工具捆绑在一个命令之下。使用这种模式的最著名的工具是`git`。 当检查像`git init`这样的命令时，`git`是命令，`init`是git的子命令。子命令的一个显著特点是，每个子命令可以有自己的标志集合。
+现代的命令行应用程序经常实现 "子命令"，将一套工具捆绑在一个命令之下。使用这种模式的最著名的工具是`git`。 当检查像`git init`这样的命令时，`git`是命令，`init`是 git 的子命令。子命令的一个显著特点是，每个子命令可以有自己的标志集合。
 
-Go应用程序可以使用`flag.(*FlagSet)`类型支持具有自己的标志集的子命令。为了阐述这一点，创建一个程序，使用两个具有不同标志的子命令来实现一个命令。
+Go 应用程序可以使用`flag.(*FlagSet)`类型支持具有自己的标志集的子命令。为了阐述这一点，创建一个程序，使用两个具有不同标志的子命令来实现一个命令。
 
 创建一个名为`subcommand.go`的新文件，并在该文件中添加以下内容：
 
@@ -298,8 +302,9 @@ go build subcommand.go
 
 你会看到如下输出：
 
-```
-OutputYou must pass a sub-command
+```text
+Output
+You must pass a sub-command
 ```
 
 现在用`greet`子命令运行该程序。
@@ -310,8 +315,9 @@ OutputYou must pass a sub-command
 
 这会输出如下内容：
 
-```
-OutputHello World !
+```text
+Output
+Hello World !
 ```
 
 现在使用`-name`标志和`greet`来指定一个名字：
@@ -322,11 +328,12 @@ OutputHello World !
 
 你会看到程序给出的这个输出：
 
-```
-OutputHello Sammy !
+```text
+Output
+Hello Sammy !
 ```
 
-这个例子说明了在Go中如何构建大型命令行应用程序的一些原则。 `FlagSets`的设计是为了给开发者提供更多的控制权，使其能够通过flag解析逻辑，分析`flag`的位置和处理方式。
+这个例子说明了在 Go 中如何构建大型命令行应用程序的一些原则。 `FlagSets`的设计是为了给开发者提供更多的控制权，使其能够通过 flag 解析逻辑，分析`flag`的位置和处理方式。
 
 ## 总结
 
