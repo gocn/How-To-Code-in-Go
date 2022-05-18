@@ -1,36 +1,40 @@
 
 
+- 原文地址：[Building Go Applications for Different Operating Systems and Architectures | DigitalOcean](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures)
+- 原文作者：digitalocean
+- 本文永久链接：
+- 译者：[zxmfke](https://github.com/zxmfke)
+- 校对：[pseudoyu](https://github.com/pseudoyu)
 
+# 在不同的操作系统和架构编译 Go 应用
 
-# Building Go Applications for Different Operating Systems and Architectures
+在软件开发中，重要的是要考虑你想为之编译二进制的[操作系统](https://en.wikipedia.org/wiki/Operating_system)和底层处理器[架构](https://en.wikipedia.org/wiki/Microarchitecture)。因为在不同的操作系统/架构平台上运行一个二进制文件通常很慢或不可能，所以通常的做法是为许多不同的平台编译你最终的二进制文件，以最大化你的程序的受众。然而，这通常是很困难的，当你开发软件的平台和你想要部署的平台不是同一个的时候。例如，在过去，在 Windows 上开发一个程序并将其部署到 Linux 或 macOS 机器上，需要为每一个你想要的二进制文件的环境设置构建机器。你还需要保持你的工具同步，此外还有其他考虑因素，这些因素会增加成本，使协作测试和分布式更加困难。
 
-In software development, it is important to consider the [operating system](https://en.wikipedia.org/wiki/Operating_system) and underlying processor [architecture](https://en.wikipedia.org/wiki/Microarchitecture) that you would like to compile your binary for. Since it is often slow or impossible to run a binary on a different OS/architecture platform, it is a common practice to build your final binary for many different platforms to maximize your program’s audience. However, this can be difficult when the platform you are using for development is different from the platform you want to deploy your program to. In the past, for example, developing a program on Windows and deploying it to a Linux or a macOS machine would involve setting up build machines for each of the environments you wanted binaries for. You’d also need to keep your tooling in sync, in addition to other considerations that would add cost and make collaborative testing and distribution more difficult.
+Go 通过在`go build`工具中直接建立对多平台的支持，以及 Go 工具链的其他部分解决了这个问题。通过使用[环境变量](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps)和[构建标签](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags)，你可以控制你最终的二进制文件是为哪个操作系统和架构构建的，此外还可以把一个工作流程放在一起，在不改变你的代码库的情况下快速切换对平台依赖的代码。
 
-Go solves this problem by building support for multiple platforms directly into the `go build` tool, as well as the rest of the Go toolchain. By using [environment variables](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps) and [build tags](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags), you can control which OS and architecture your final binary is built for, in addition to putting together a workflow that can quickly toggle the inclusion of platform-dependent code without changing your codebase.
+在本教程中，你将把一个将[strings](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)连接成文件路径的示例应用程序放在一起，创建并有选择地包括与平台有关的片段，并在你自己的系统上为多个操作系统和系统架构构建二进制文件，向你展示如何使用 Go 编程语言的这一强大能力。
 
-In this tutorial, you will put together a sample application that joins [strings](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go) together into a filepath, create and selectively include platform-dependent snippets, and build binaries for multiple operating systems and system architectures on your own system, showing you how to use this powerful capability of the Go programming language.
+## 前期准备
 
-## Prerequisites
+为了跟随本文的例子，你将需要：
 
-To follow the example in this article, you will need:
+- 按照[如何安装 Go 和设置本地程序环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置的 Go 的 workspace
 
-- A Go workspace set up by following [How To Install Go and Set Up a Local Programming Environment](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go).
+## `GOOS`和`GOARCH`可能支持的平台
 
-## Possible Platforms for `GOOS` and `GOARCH`
+在展示如何控制构建过程为不同的平台构建二进制文件之前，让我们先了解一下 Go 能够为哪些类型的平台进行构建，以及 Go 如何使用环境变量`GOOS`和`GOARCH`关联这些平台。
 
-Before showing how to control the build process to build binaries for different platforms, let’s first inspect what kinds of platforms Go is capable of building for, and how Go references these platforms using the environment variables `GOOS` and `GOARCH`.
+Go 工具有一个命令，可以打印出 Go 可以构建的平台的列表。这个列表会随着每一个新的 Go 版本而改变，所以这里讨论的组合在另一个版本的 Go 中可能不一样。当下写这个教程的时候，Go release 版本是 [`1.13`](https://golang.org/doc/go1.13).
 
-The Go tooling has a command that can print a list of the possible platforms that Go can build on. This list can change with each new Go release, so the combinations discussed here might not be the same on another version of Go. At the time of writing this tutorial, the current Go release is [`1.13`](https://golang.org/doc/go1.13).
-
-To find this list of possible platforms, run the following:
+为了找到适用的平台，执行如下命令：
 
 ```bash
 go tool dist list
 ```
 
-You will receive an output similar to the following:
+你将会收到如下相似的输出：
 
-```
+```text
 Outputaix/ppc64        freebsd/amd64   linux/mipsle   openbsd/386
 android/386      freebsd/arm     linux/ppc64    openbsd/amd64
 android/amd64    illumos/amd64   linux/ppc64le  openbsd/arm
@@ -44,58 +48,57 @@ dragonfly/amd64  linux/mips64    netbsd/arm     windows/amd64
 freebsd/386      linux/mips64le  netbsd/arm64   windows/arm
 ```
 
-This output is a set of key-value pairs separated by a `/`. The first part of the combination, before the `/`, is the operating system. In Go, these operating systems are possible values for the environment variable `GOOS`, pronounced “goose”, which stands for **Go Operating System**. The second part, after the `/`, is the architecture. As before, these are all possible values for an environment variable: `GOARCH`. This is pronounced “gore-ch”, and stands for **Go Architecture**.
+输出是一些以`/`分割的键值对。键值对的第一个部分，在`/`之前的是操作系统。在 Go 里面，这些操作系统会是环境变量`GOOS`的值，发音像“goose”，代表**Go Operation System**。第二部分，在`/`之后的，是架构。如前所述，这些都是环境变量`GOARCH`可能的值。这个发音"gore-ch"，代表**Go Architecture**。
 
-Let’s break down one of these combinations to understand what it means and how it works, using `linux/386` as an example. The key-value pair starts with the `GOOS`, which in this example would be `linux`, referring to the [Linux OS](https://www.digitalocean.com/community/tutorial_series/getting-started-with-linux). The `GOARCH` here would be `386`, which stands for the [Intel 80386 microprocessor](https://en.wikipedia.org/wiki/Intel_80386).
+让我们以`linux/386`为例，对其中的一个组合进行分解，了解它的含义和工作原理。键值对以`GOOS`开始，在这个例子中是`linux`，指的是[Linux 操作系统](https://www.digitalocean.com/community/tutorial_series/getting-started-with-linux)。这里的`GOARCH`应该是`386`，它代表[英特尔 80386 微处理器](https://en.wikipedia.org/wiki/Intel_80386)。
 
-There are many platforms available with the `go build` command, but a majority of the time you’ll end up using `linux` , `windows`, or `darwin` as a value for `GOOS`. These cover the big three OS platforms: [Linux](https://en.wikipedia.org/wiki/Linux), [Windows](https://en.wikipedia.org/wiki/Microsoft_Windows), and [macOS](https://en.wikipedia.org/wiki/MacOS), which is based on the [Darwin operating system](https://en.wikipedia.org/wiki/Darwin_(operating_system)) and is thus called `darwin`. However, Go can also cover less mainstream platforms like `nacl`, which represents [Google’s Native Client](https://developer.chrome.com/native-client).
+有许多平台可以使用`go build`命令，但大多数情况下，你最终会使用`linux` , `windows`或`darwin`作为 GOOS 的值。这些涵盖了三大操作系统平台： [Linux](https://en.wikipedia.org/wiki/Linux)、[Windows](https://en.wikipedia.org/wiki/Microsoft_Windows)和[macOS](https://en.wikipedia.org/wiki/MacOS)，后者是基于[Darwin Operating system](https://en.wikipedia.org/wiki/Darwin_(operating_system))的，因此被称为`darwin`。然而，Go 也可以覆盖不太主流的平台，如`nacl`，它代表了[谷歌的本地客户端](https://developer.chrome.com/native-client)。
 
-When you run a command like `go build`, Go uses the current platform’s `GOOS` and `GOARCH` to determine how to build the binary. To find out what combination your platform is, you can use the `go env` command and pass `GOOS` and `GOARCH` as arguments:
+当你运行`go build`这样的命令时，Go 使用当前平台的`GOOS`和`GOARCH`来决定如何构建二进制文件。要想知道你的平台是什么组合，你可以使用`go env`命令，并将`GOOS`和`GOARCH`作为参数：
 
 ```bash
 go env GOOS GOARCH
 ```
 
-In testing this example, we ran this command on macOS on a machine with an [AMD64 architecture](https://en.wikipedia.org/wiki/X86-64), so we will receive the following output:
+在测试这个例子时，我们在一台[AMD64 架构](https://en.wikipedia.org/wiki/X86-64)的机器上的 macOS 上运行这个命令，所以我们将收到以下输出：
 
-```
-Outputdarwin
+```text
+Output
+darwin
 amd64
 ```
 
-Here the output of the command tells us that our system has `GOOS=darwin` and `GOARCH=amd64`.
+这个命令的输出告诉我们系统的 GOOS 是 darwin，GOARCH 是 amd64。
 
-You now know what the `GOOS` and `GOARCH` are in Go, as well as their possible values. Next, you will put together a program to use as an example of how to use these environment variables and build tags to build binaries for other platforms.
+你现在知道了 Go 中的`GOOS`和`GOARCH`是什么，以及它们的可能值。接下来，你将编写一个程序，作为如何使用这些环境变量和构建标签为其他平台构建二进制文件的例子。
 
-## Write a Platform-Dependent Program with `filepath.Join()`
+## 用`filepath.Join`编写一个平台依赖的应用程序
 
-Before you start building binaries for other platforms, let’s build an example program. A good sample for this purpose is the `Join` function in the [`path/filepath`](https://godoc.org/path/filepath) package in the Go standard library. This function takes a number of strings and returns one string that is joined together with the correct filepath separator.
+在你开始构建其他平台的二进制前，让我们先构建一个范例程序。出于这个目的，一个好的例子可以用 Go 标准库中的[`path/filepath`](https://godoc.org/path/filepath)包内的`Join`函数。这个函数以多个 string 为传参，并返回一个用正确文件路径分隔符拼接的 string。
 
-This is a good example program because the operation of the program depends on which OS it is running on. On Windows, the path separator is a backslash, `\`, while Unix-based systems use a forward slash, `/`.
+这是一个很好的范例程序，因为该程序的运行取决于它在哪个操作系统上运行。在 Windows 上，路径分隔符是反斜杠，`\`，而基于 Unix 的系统使用正斜杠，`/`。
 
-Let’s start with building an application that uses `filepath.Join()`, and later, you’ll write your own implementation of the `Join()` function that customizes the code to the platform-specific binaries.
+让我们从构建一个使用`filepath.Join()`的应用程序开始，稍后，你将编写你自己的`Join()`函数的实现，将代码定制为特定平台的二进制文件。
 
-First, create a folder in your `src` directory with the name of your app:
+首先，在你的`src`目录下创建一个文件夹，用你的应用程序的名字命名：
 
 ```bash
 mkdir app
 ```
 
-Move into that directory:
+进入目录：
 
 ```bash
 cd app
 ```
 
-Next, create a new file in your text editor of choice named `main.go`. For this tutorial, we will use Nano:
+接下来，在你选择的文本编辑器中创建一个名为`main.go`的新文件。在本教程中，我们将使用 Nano。
 
 ```bash
 nano main.go
 ```
 
-Once the file is open, add the following code:
-
-src/app/main.go
+文件打开后，添加如下代码：
 
 ```go
 package main
@@ -111,37 +114,36 @@ func main() {
 }
 ```
 
-The `main()` function in this file uses `filepath.Join()` to concatenate three [strings](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go) together with the correct, platform-dependent path separator.
+在这个文件的`main()`函数用`filepath.Join()`将三个[strings](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)用正确的，平台依赖的路径分隔符连接起来。
 
-Save and exit the file, then run the program:
+保存并退出文件，然后运行程序：
 
 ```bash
 go run main.go
 ```
 
-When running this program, you will receive different output depending on which platform you are using. On Windows, you will see the strings separated by `\`:
+当运行这个程序时，你将收到不同的输出，这取决于你所使用的平台。在 Windows 上，你会看到用`\`分隔的字符串。
 
-```
+```text
 Outputa\b\c
 ```
 
-On Unix systems like macOS and Linux, you will receive the following:
+在 MacOS 和 Linux 等 Unix 系统上，你将收到以下内容。
 
+```text
+Output
+a/b/c
 ```
-Outputa/b/c
-```
 
-This shows that, because of the different filesystem protocols used on these operating systems, the program will have to build different code for the different platforms. But since it already uses a different file separator depending on the OS, we know that `filepath.Join()` already accounts for the difference in platform. This is because the Go tool chain automatically detects your machine’s `GOOS` and `GOARCH` and uses this information to use the code snippet with the right [build tags](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags) and file separator.
+这表明，由于这些操作系统使用的文件系统协议不同，程序将不得不为不同的平台构建不同的代码。但由于它已经根据操作系统使用了不同的文件分隔符，所有我们知道`filepath.Join()`已经考虑了平台的差异。这是因为 Go 工具链会自动检测你的机器的`GOOS`和`GOARCH`，并使用这些信息来使用具有正确[构建标签](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags)和文件分隔符的代码片段。
 
-Let’s consider where the `filepath.Join()` function gets its separator from. Run the following command to inspect the relevant snippet from Go’s standard library:
+让我们思考一下`filepath.Join()`函数的分隔符是从哪里来的。运行以下命令来查看 Go 标准库中的相关片段：
 
 ```bash
 less /usr/local/go/src/os/path_unix.go
 ```
 
-This will display the contents of `path_unix.go`. Look for the following part of the file:
-
-/usr/local/go/os/path_unix.go
+这将显示`path_unix.go`的内容。寻找该文件的如下部分：
 
 ```go
 . . .
@@ -156,19 +158,17 @@ const (
 . . .
 ```
 
-This section defines the `PathSeparator` for all of the varieties of Unix-like systems that Go supports. Notice all of the build tags at the top, which are each one of the possible Unix `GOOS` platforms associated with Unix. When the `GOOS` matches these terms, your program will yield the Unix-styled filepath separator.
+这一段为 Go 为支持的所有类 Unix 系统定义了 `PathSeparator`。 注意顶部的所有构建标签，它们是与 Unix 相关的每一个可能的 Unix `GOOS`平台。当`GOOS`与这些名词匹配时，你的程序将产生 Unix 风格的文件路径分隔符。
 
-Press `q` to return to the command line.
+按`q`返回到命令行。
 
-Next, open the file that defines the behavior of `filepath.Join()` when used on Windows:
+接下来，打开定义在 Windows 上使用`filepath.Join()`时的行为的文件。
 
 ```bash
 less /usr/local/go/src/os/path_windows.go
 ```
 
-You will see the following:
-
-/usr/local/go/src/os/path_windows.go
+你会看到如下内容：
 
 ```go
 . . .
@@ -181,27 +181,27 @@ const (
 . . .
 ```
 
-Although the value of `PathSeparator` is `\\` here, the code will render the single backslash (`\`) needed for Windows filepaths, since the first backslash is only needed as an escape character.
+虽然`PathSeparator`的值在这里是`\\`，但代码将呈现 Windows 文件路径所需的单一反斜杠（`\`），因为第一个反斜杠只需要作为转义字符。
 
-Notice that, unlike the Unix file, there are no build tags at the top. This is because `GOOS` and `GOARCH` can also be passed to `go build` by adding an underscore (`_`) and the environment variable value as a suffix to the filename, something we will go into more in the section [**Using GOOS and GOARCH File Name Suffixes**](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures#using-goos-and-goarch-filename-suffixes). Here, the `_windows` part of `path_windows.go` makes the file act as if it had the build tag `// +build windows` at the top of the file. Because of this, when your program is run on Windows, it will use the constants of `PathSeparator` and `PathListSeparator` from the `path_windows.go` code snippet.
+请注意，与 Unix 文件不同，它的顶部没有构建标签。这是因为`GOOS`和`GOARCH`可以通过在文件后缀加上分隔符和环境变量的值来作为参数传递给`go build`，这个我们将会在[使用 GOOS 和 GOARCH 文件后缀名](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures#using-goos-and-goarch-filename-suffixes)做更多的研究。这里，`path_windows.go`的`_windows`部分使文件的行为就像它在文件的顶部有 build 标签`//+build windows`。因为这个，但你程序在 windows 上运行时，它将使用`path_windows.go`代码片段中的`PathSeparator`和`PathListSeparator`常量。
 
 To return to the command line, quit `less` by pressing `q`.
 
-In this step, you built a program that showed how Go converts the `GOOS` and `GOARCH` automatically into build tags. With this in mind, you can now update your program and write your own implementation of `filepath.Join()`, using build tags to manually set the correct `PathSeparator` for Windows and Unix platforms.
+要返回到命令行，按`q`键退出`less`。
 
-## Implementing a Platform-Specific Function
+在这一步，你建立了一个程序，展示了 Go 如何将`GOOS`和`GOARCH`自动转换为构建标签。考虑到这一点，你现在可以更新你的程序，编写你自己的`filepath.Join()`的实现，使用构建标签为 Windows 和 Unix 平台手动设置正确的`PathSeparator`。
 
-Now that you know how Go’s standard library implements platform-specific code, you can use build tags to do this in your own `app` program. To do this, you will write your own implementation of `filepath.Join()`.
+## 实现一个平台特定函数
 
-Open up your `main.go` file:
+现在你已经知道 Go 的标准库是如何实现特定平台的代码的，你可以使用构建标签在你自己的`应用`程序中做到这一点。要做到这一点，你将编写你自己的`filepath.Join()`的实现。
+
+打开你的`main.go`文件：
 
 ```bash
 nano main.go
 ```
 
-Replace the contents of `main.go` with the following, using your own function called `Join()`:
-
-src/app/main.go
+用你自己的函数`Join()`替换`main.go`的内容，如下：
 
 ```go
 package main
@@ -221,17 +221,15 @@ func main() {
 }
 ```
 
-The `Join` function takes a number of `parts` and joins them together using the [`strings.Join()`](https://godoc.org/strings.Join) method from the [`strings` package](https://www.digitalocean.com/community/tutorials/an-introduction-to-the-strings-package-in-go) to concatenate the `parts` together using the `PathSeparator`.
+Join 函数接收若干`parts`，并使用[strings 包](https://www.digitalocean.com/community/tutorials/an-introduction-to-the-strings-package-in-go)中的[`strings.Join()`](https://godoc.org/strings.Join)方法将它们连接起来，使用`PathSeparator`将各部分连接起来。
 
-You haven’t defined the `PathSeparator` yet, so do that now in another file. Save and quit `main.go`, open your favorite editor, and create a new file named `path.go`:
+你还没有定义`PathSeparator`，所以现在在另一个文件中做。保存并退出`main.go`，打开你喜欢的编辑器，创建一个名为`path.go`的新文件。
 
-```
+```text
 nano path.go
 ```
 
-Define the `PathSeparator` and set it equal to the Unix filepath separator, `/`:
-
-src/app/path.go
+定义`PathSeparator`，并将其设置为 Unix 文件路径分隔符，`/`。
 
 ```go
 package main
@@ -239,36 +237,34 @@ package main
 const PathSeparator = "/"
 ```
 
-Compile and run the application:
+编译并运行该应用程序：
 
 ```bash
 go build
 ./app
 ```
 
-You’ll receive the following output:
+你将会收到如下输出：
 
-```
+```text
 Outputa/b/c
 ```
 
-This runs successfully to get a Unix-style filepath. But this isn’t yet what we want: the output is always `a/b/c`, regardless of what platform it runs on. To add in the functionality to create Windows-style filepaths, you will need to add a Windows version of the `PathSeparator` and tell the `go build` command which version to use. In the next section, you will use [build tags](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags) to accomplish this.
+这样运行成功，得到一个 Unix 风格的文件路径。但这还不是我们想要的：无论在什么平台上运行，输出总是 a/b/c。为了添加创建 Windows 风格文件路径的功能，你需要添加一个 Windows 版本的`PathSeparator`，并告诉`go build`命令使用哪个版本。在下一节中，你将使用[构建标签](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags)来完成这个任务。
 
-## Using `GOOS` or `GOARCH` Build Tags
+## 使用`GOOS`或`GOARCH`构建标签
 
-To account for Windows platforms, you will now create an alternate file to `path.go` and use build tags to make sure the code snippets only run when `GOOS` and `GOARCH` are the appropriate platform.
+为了考虑到 Windows 平台，你现在将创建一个替代文件到`path.go`，并使用构建标签来确保代码片段只在`GOOS`和`GOARCH`是合适的平台时运行。
 
-But first, add a build tag to `path.go` to tell it to build for everything except for Windows. Open up the file:
+但首先，在`path.go`中添加一个构建标签，告诉它除 Windows 之外的所有东西都可以进行构建。打开该文件：
 
 ```bash
 nano path.go
 ```
 
-Add the following highlighted build tag to the file:
+加入如下高亮构建标签到文件：
 
-src/app/path.go
-
-```
+```go
 // +build !windows
 
 package main
@@ -276,27 +272,25 @@ package main
 const PathSeparator = "/"
 ```
 
-Go build tags allow for inverting, meaning that you can instruct Go to build this file for any platform except for Windows. To invert a build tag, place a `!` before the tag.
+Go 构建标签允许反转，也就是说，你可以指示 Go 为除 Windows 之外的任何平台构建此文件。 要反转一个构建标签，请在标签前加上一个`!`。
 
-Save and exit the file.
+保存并退出文件。
 
-Now, if you were to run this program on Windows, you would get the following error:
+现在，如果你要在 Windows 上运行这个程序，你会得到以下错误：
 
-```
+```text
 Output./main.go:9:29: undefined: PathSeparator
 ```
 
-In this case, Go would not be able to include `path.go` to define the variable `PathSeparator`.
-
-Now that you have ensured that `path.go` will not run when `GOOS` is Windows, add a new file, `windows.go`:
+在这种情况下，Go 将无法通过引入`path.go`来定义变量`PathSeparator`。
+ 
+现在你已经确保当`GOOS`是 Windows 时，`path.go`不会运行，添加一个新的文件，`windows.go`：
 
 ```bash
 nano windows.go
 ```
 
-In `windows.go`, define the Windows `PathSeparator`, as well as a build tag to let the `go build` command know it is the Windows implementation:
-
-src/app/windows.go
+在`windows.go`中，定义 Windows 的`PathSeparator`，以及一个构建标签让`go build`命令知道它是 Windows 的实现：
 
 ```go
 // +build windows
@@ -306,88 +300,86 @@ package main
 const PathSeparator = "\\"
 ```
 
-Save the file and exit from the text editor. The application can now compile one way for Windows and another for all other platforms.
+保存文件并从文本编辑器中退出。该应用程序现在可以以一种方式为 Windows 编译，另一种方式为所有其他平台编译。
 
-While the binaries will now build correctly for their platforms, there are further changes you must make in order to compile for a platform that you do not have access to. To do this, you will alter your local `GOOS` and `GOARCH` environment variables in the next step.
+虽然现在二进制文件可以在其他平台正确编译，但你必须做进一步的修改，以便为你无法访问的平台进行编译。要做到这一点，你将在下一步改变你的本地`GOOS`和`GOARCH`环境变量。
 
-## Using Your Local `GOOS` and `GOARCH` Environment Variables
+## 使用你本地`GOOS`和`GOARCH`环境变量
 
-Earlier, you ran the `go env GOOS GOARCH` command to find out what OS and architecture you were working on. When you ran the `go env` command, it looked for the two environment variables `GOOS` and `GOARCH`; if found, their values would be used, but if not found, then Go would set them with the information for the current platform. This means that you can change `GOOS` or `GOARCH` so that they do not default to your local OS and architecture.
+在前面，你通过执行`go env GOOS GOACH`指令来找到你正在工作的平台是哪个操作系统和架构。当你执行`go env`指令时，它会去找 2 个环境变量`GOOS`和`GOARCH`；如果找到，他们就会使用环境变量，如果找不到，Go 就会用当前平台的信息来设置它们。这意味着你可以改变`GOOS`或`GOARCH`，所以它们不是根据你的操作系统和架构默认设置的。
 
-The `go build` command behaves in a similar manner to the `go env` command. You can set either the `GOOS` or `GOARCH` environment variables to build for a different platform using `go build`.
+`go build`命令的行为方式与`go env`命令类似。你可以设置`GOOS`或`GOARCH`的环境变量，用`go build`为不同的平台进行编译。
 
-If you are not using a Windows system, build a `windows` binary of `app` by setting the `GOOS` environment variable to `windows` when running the `go build` command:
+如果你没有使用`Windows`系统，可以在运行`go build`命令时将`GOOS`环境变量设置为`window`s，从而构建`应用程序`windows 下的二进制版本：
 
 ```bash
 GOOS=windows go build
 ```
 
-Now list the files in your current directory:
+现在列出你当前目录中的文件：
 
 ```bash
 ls
 ```
 
-The output of listing the directory shows there is now an `app.exe` Windows executable in the project directory:
+列出目录文件的输出项显示在项目目录中现在有一个`app.exe`的 Windows 可执行文件：
 
-```
+```text
 Outputapp  app.exe  main.go  path.go  windows.go
 ```
 
-Using the `file` command, you can get more information about this file, confirming its build:
+使用`file`命令，你可以得到关于这个文件的更多信息，确认它的构建构建信息：
 
 ```bash
 file app.exe
 ```
 
-You will receive:
+你将会看到如下信息：
 
-```
+```text
 Outputapp.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows
 ```
 
-You can also set one, or both environment variables at build time. Run the following:
+你也可以在构建时设置一个，或两个环境变量。运行如下命令：
 
 ```bash
 GOOS=linux GOARCH=ppc64 go build
 ```
 
-Your `app` executable will now be replaced by a file for a different architecture. Run the `file` command on this binary:
+你的`应用程序`的可执行文件现在将被一个不同架构的文件所取代。在这个二进制文件上运行`file`命令：
 
 ```bash
 file app
 ```
 
-You will receive output like the following:
+你将会收到类似如下的信息：
 
-```
+```text
 app: ELF 64-bit MSB executable, 64-bit PowerPC or cisco 7500, version 1 (SYSV), statically linked, not stripped
 ```
 
-By setting your local `GOOS` and `GOARCH` environment variables, you can now build binaries for any of Go’s compatible platforms without a complicated configuration or setup. Next, you will use filename conventions to keep your files neatly organized and build for specific platforms automatically wihout build tags.
+通过设置本地的 `GOOS` 和 `GOARCH` 环境变量，你将可以为任何兼容 Go 的平台构建二进制文件，而无需复杂的配置或设置。接下来，你将使用文件名的约定来保持你的文件整齐，并自动为特定平台构建，而不需要构建标签。
 
-## Using `GOOS` and `GOARCH` Filename Suffixes
+## 使用`GOOS`和`GOARCH`文件名后缀
 
-As you saw earlier, the Go standard library makes heavy use of build tags to simplify code by separating out different platform implementations into different files. When you opened the `os/path_unix.go` file, there was a build tag that listed all of the possible combinations that are considered Unix-like platforms. The `os/path_windows.go` file, however, contained no build tags, because the suffix on the filename sufficed to tell Go which platform the file was meant for.
+正如你之前看到的，Go 标准库大量使用构建标签，通过将不同的平台实现分离到不同的文件中来简化代码。当你打开`os/path_unix.go`文件时，有一个构建标签，列出了所有被认为是类 Unix 平台的可能组合。然而，`os/path_windows.go`文件不包含任何构建标签，因为文件名的后缀就足以告诉 Go 该文件是为哪个平台准备的。
 
-Let’s look at the syntax of this feature. When naming a `.go` file, you can add `GOOS` and `GOARCH` as suffixes to the file’s name in that order, separating the values by underscores (`_`). If you had a Go file named `filename.go`, you could specify the OS and architecture by changing the filename to `filename_GOOS_GOARCH.go`. For example, if you wished to compile it for Windows with 64-bit [ARM architecture](https://en.wikipedia.org/wiki/ARM_architecture), you would make the name of the file `filename_windows_arm64.go`. This naming convention helps keep code neatly organized.
+让我们来看看这个功能的语法。命名`.go`文件时，可以在文件名中按顺序添加`GOOS`和`GOARCH`作为后缀，用下划线(`_`)来分开这两个值。如果你有一个名为`filename.go`的 Go 文件，你可以通过将文件名改为 `filename_GOOS_GOARCH.go`来指定操作系统和架构。举个例子，如果你希望将其编译为 64 位[ARM 架构](https://en.wikipedia.org/wiki/ARM_architecture)的 Windows，你会将文件名定为`filename_windows_arm64.go`。这种命名方式有助于保持代码的整齐性。
 
-Update your program to use the filename suffixes instead of build tags. First, rename the `path.go` and `windows.go` file to use the convention used in the `os` package:
+使用文件名后缀而非构建标签来更新你的程序。首先，重新命名`path.go`和`windows.go`文件，使用`os`包中使用的惯例：
 
 ```bash
 mv path.go path_unix.go
 mv windows.go path_windows.go
 ```
 
-With the two filenames changed, you can remove the build tag you added to `path_windows.go`:
+改变了这两个文件名后，你可以删除你添加到`path_windows.go`的构建标签：
 
 ```bash
 nano path_windows.go
 ```
 
-Remove `// +build windows` so that your file looks like this:
-
-path_windows.go
+移除`// +build windows`，所以你的文件会看起来像这样：
 
 ```go
 package main
@@ -395,14 +387,12 @@ package main
 const PathSeparator = "\\"
 ```
 
-Save and exit from the file.
+保存并退出文件。
 
-Because `unix` is not a valid `GOOS`, the `_unix.go` suffix has no meaning to the Go compiler. It does, however, convey the intended purpose of the file. Like the `os/path_unix.go` file, your `path_unix.go` file still needs to use build tags, so keep that file unchanged.
+因为`unix`不是一个有效的`GOOS`，`_unix.go`后缀对 Go 编译器没有任何意义。然而，它确实传达了文件的预期目的。 和`os/path_unix.go`文件一样，你的`path_unix.go`文件仍然需要使用构建标签，所以保持该文件不变。
 
-By using filename conventions, you removed uneeded build tags from your source code and made the filesystem cleaner and clearer.
+通过使用文件名惯例，你从你的源代码中删除了不需要的构建标签，并使文件系统更干净、更清晰。
 
-## Conclusion
+## 总结
 
-The ability to generate binaries for multiple platforms that require no dependencies is a powerful feature of the Go toolchain. In this tutorial, you used this capability by adding build tags and filename suffixes to mark certain code snippets to only compile for certain architectures. You created your own platorm-dependent program, then manipulated the `GOOS` and `GOARCH` environment variables to generate binaries for platforms beyond your current platform. This is a valuable skill, because it is a common practice to have a continuous integration process that automatically runs through these environment variables to build binaries for all platforms.
-
-For further study on `go build`, check out our [Customizing Go Binaries with Build Tags](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags) tutorial. If you’d like to learn more about the Go programming language in general, check out the entire [How To Code in Go series](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go).
+为多个平台生成不需要依赖的二进制文件的能力是 Go 工具链的一个强大功能。在本教程中，你通过添加构建标签和文件名后缀来使用这种能力，以标记某些代码片段，使其只针对某些架构进行编译。你创建了你自己的平台依赖的程序，然后操纵`GOOS`和`GOARCH`环境变量，为你当前平台以外的平台生成二进制文件。这是一项有价值的技能，因为有一个持续集成过程，自动运行这些环境变量，为所有平台构建二进制文件，这是一个常见的做法。
