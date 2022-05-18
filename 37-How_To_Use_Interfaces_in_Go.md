@@ -95,7 +95,8 @@ fmt.Println(a.String())
 随后运行程序，你会发现如下输出：
 
 ```text
-OutputThe "Understanding Interfaces in Go" article was written by Sammy Shark.
+Output
+The "Understanding Interfaces in Go" article was written by Sammy Shark.
 ```
 
 至此，我们还没有使用 interface，但是我们创建了一个具备一个行为的类型。这个行为匹配`fmt.Stringer`接口。随后，让我们看看如何利用这种行为来使我们的代码更容易重复使用。
@@ -233,7 +234,8 @@ func Print(s Stringer) {
 现在，我们添加了第二个类型叫`Book`。它同样也有定义`String`方法。这表示它也满足`Stringer`接口。因此，我们也可以传递它到`Print`函数：
 
 ```text
-OutputThe "Understanding Interfaces in Go" article was written by Sammy Shark.
+Output
+The "Understanding Interfaces in Go" article was written by Sammy Shark.
 The "All About Go" book was written by Jenny Dolphin. It has 25 pages.
 ```
 
@@ -316,7 +318,8 @@ func Less(s1, s2 Sizer) Sizer {
 最后，我们打印出哪一个是最小的面积：
 
 ```text
-Output{Width:5 Height:10} is the smallest
+Output
+{Width:5 Height:10} is the smallest
 ```
 
 接着，让我们给每个类型添加另一个行为。这次我们添加`String()`方法，返回一个 string。这个满足`fmt.Stringer`interface:
@@ -412,7 +415,8 @@ func PrintArea(s Shaper) {
 如果我们运行程序，将会收到如下输出：
 
 ```text
-Outputarea of Circle {Radius: 10.00} is 314.16
+Output
+area of Circle {Radius: 10.00} is 314.16
 area of Square {Width: 5.00, Height: 10.00} is 50.00
 Square {Width: 5.00, Height: 10.00} is the smallest
 ```
