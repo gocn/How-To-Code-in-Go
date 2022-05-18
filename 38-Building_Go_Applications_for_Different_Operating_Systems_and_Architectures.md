@@ -35,7 +35,8 @@ go tool dist list
 你将会收到如下相似的输出：
 
 ```text
-Outputaix/ppc64        freebsd/amd64   linux/mipsle   openbsd/386
+Output
+aix/ppc64        freebsd/amd64   linux/mipsle   openbsd/386
 android/386      freebsd/arm     linux/ppc64    openbsd/amd64
 android/amd64    illumos/amd64   linux/ppc64le  openbsd/arm
 android/arm      js/wasm         linux/s390x    openbsd/arm64
@@ -125,7 +126,8 @@ go run main.go
 当运行这个程序时，你将收到不同的输出，这取决于你所使用的平台。在 Windows 上，你会看到用`\`分隔的字符串。
 
 ```text
-Outputa\b\c
+Output
+a\b\c
 ```
 
 在 MacOS 和 Linux 等 Unix 系统上，你将收到以下内容。
@@ -247,7 +249,8 @@ go build
 你将会收到如下输出：
 
 ```text
-Outputa/b/c
+Output
+a/b/c
 ```
 
 这样运行成功，得到一个 Unix 风格的文件路径。但这还不是我们想要的：无论在什么平台上运行，输出总是 a/b/c。为了添加创建 Windows 风格文件路径的功能，你需要添加一个 Windows 版本的`PathSeparator`，并告诉`go build`命令使用哪个版本。在下一节中，你将使用[构建标签](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags)来完成这个任务。
@@ -279,7 +282,8 @@ Go 构建标签允许反转，也就是说，你可以指示 Go 为除 Windows �
 现在，如果你要在 Windows 上运行这个程序，你会得到以下错误：
 
 ```text
-Output./main.go:9:29: undefined: PathSeparator
+Output
+./main.go:9:29: undefined: PathSeparator
 ```
 
 在这种情况下，Go 将无法通过引入`path.go`来定义变量`PathSeparator`。
@@ -325,7 +329,8 @@ ls
 列出目录文件的输出项显示在项目目录中现在有一个`app.exe`的 Windows 可执行文件：
 
 ```text
-Outputapp  app.exe  main.go  path.go  windows.go
+Output
+app  app.exe  main.go  path.go  windows.go
 ```
 
 使用`file`命令，你可以得到关于这个文件的更多信息，确认它的构建构建信息：
@@ -337,7 +342,8 @@ file app.exe
 你将会看到如下信息：
 
 ```text
-Outputapp.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows
+Output
+app.exe: PE32+ executable (console) x86-64 (stripped to external PDB), for MS Windows
 ```
 
 你也可以在构建时设置一个，或两个环境变量。运行如下命令：
