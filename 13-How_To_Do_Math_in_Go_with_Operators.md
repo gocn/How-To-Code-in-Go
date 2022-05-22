@@ -1,49 +1,49 @@
-# How To Do Math in Go with Operators
+# 如何用运算符在 Go 中做数学计算
 
-## Introduction
+## 介绍
 
-Numbers are common in programming. They are used to represent things such as: screen-size dimensions, geographic locations, money and points, the amount of time that passes in a video, positions of game avatars, colors through assigning numeric codes, and so on.
+数字在编程中很常见。它们被用来表示一些东西，如：屏幕大小的尺寸、地理位置、金钱和积分、视频中经过的时间、游戏头像的位置、通过分配数字代码表示的颜色等等。
 
-Effectively performing mathematical operations in programming is an important skill to develop because of how frequently you’ll work with numbers. Though a high-level understanding of mathematics can certainly help you become a better programmer, it is not a prerequisite. If you don’t have a background in mathematics, try to think of math as a tool to accomplish what you would like to achieve, and as a way to improve your logical thinking.
+在编程中进行数学运算是一项重要的技能，因为你会经常与数字打交道。尽管对数学的理解肯定能帮助你成为一个更好的程序员，但它不是一个先决条件。如果你没有数学背景，试着把数学看作是完成你想实现的目标的工具，并作为提高你的逻辑思维能力的一种方式。
 
-We’ll be working with two of Go’s most used numeric [data types](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go), _integers_ and _floats_:
+我们将使用 Go 中最常用的两种数字[数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go)，整数和浮点数。
 
-*   [Integers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers) are whole numbers that can be positive, negative, or 0 (…, `-1`, `0`, `1`, …).
-*   [Floats](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers) are real numbers that contain a decimal point, like `9.0` or `-2.25`…
+* [整数](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers)是可以是正数、负数或 0 的整数（...，`-1`，`0`，`1`，...）。
+* [浮点数](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers)是包含小数点的实数，如 `9.0` 或 `2.25` ...
 
-This tutorial will review operators that we can use with number data types in Go.
+本教程将回顾我们在 Go 中对数字数据类型可以使用的运算符。
 
-## Operators
+## 运算符
 
-An _operator_ is a symbol or function that indicates an operation. For example, in math the plus sign or `+` is the operator that indicates addition.
+运算符是一个表示运算的符号或函数。例如，在数学中，加号或 `+` 是表示加法的运算符。
 
-In Go, we will see some familiar operators that are brought over from math. However, other operators we will use are specific to computer programming.
+在 Go 中，我们将看到一些熟悉的运算符，这些运算符是从数学中带来的。然而，我们将使用的其他运算符是计算机编程中特有的。
 
-Here is a quick reference table of math-related operators in Go. We’ll be covering all of the following operations in this tutorial.
+下面是 Go 中与数学有关的运算符的快速参考表。在本教程中，我们将涵盖以下所有的运算。
 
-Operation What it returns  
+预算符的返回  
 
-`x + y` Sum of `x` and `y`  
+`x + y` 是 `x` 和 `y` 的总和  
 
-`x - y` Difference of `x` and `y`  
+`x - y` 是 `x` 和 `y` 之差  
 
-`-x` Changed sign of `x`  
+`-x` 表示 `x` 为负数特性  
 
-`+x` Identity of `x`  
+`+x' 表示 `x' 为正数特性
 
-`x * y` Product of `x` and `y`  
+`x * y` 是 `x` 和 `y` 的积  
 
-`x / y` Quotient of `x` and `y`  
+`x / y` 是 `x` 和 `y` 的商  
 
-`x % y` Remainder of `x` / `y`  
+`x % y` 是 `x` / `y` 的余 
 
-We’ll also be covering compound assignment operators, including `+=` and `*=`, that combine an arithmetic operator with the `=` operator.
+我们还将讨论复合赋值运算符，包括 `+=` 和 `*=`，它们将算术运算符和 `=` 运算符结合起来。
 
-## Addition and Subtraction
+## 加法和减法
 
-In Go, addition and subtraction operators perform just as they do in mathematics. In fact, you can use the Go programming language as a calculator.
+在 Go 中，加法和减法运算符的表现与数学中一样。事实上，你可以把 Go 编程语言当作计算器来使用。
 
-Let’s look at some examples, starting with integers:
+让我们看看一些例子，从整数开始：
 
 ```go
 fmt.Println(1 + 5)
@@ -54,7 +54,7 @@ Output
 6
 ```
     
-Instead of passing integers directly into the `fmt.Println` statement, we can initialize variables to stand for integer values by using syntax like the following:
+我们可以通过使用下面的语法来初始化变量以代表整数值，而不是直接将整数传入`fmt.Println` 语句：
 
 ```go
 a := 88
@@ -68,7 +68,7 @@ Output
 191
 ```
 
-Because integers can be both positive and negative numbers (and 0 too), we can add a negative number with a positive number:
+因为整数既可以是正数也可以是负数（也可以是 0），所以我们可以将一个负数与一个正数相加：
 
 ```go
 c := -36
@@ -82,7 +82,7 @@ Output
 -11
 ```
 
-Addition will behave similarly with floats:
+浮点数的加法也类似：
 
 ```go
 e := 5.5
@@ -96,7 +96,7 @@ Output
 8
 ```
 
-Because we added two floats together, Go returned a float value with a decimal place. However, since the decimal place is zero in this case, `fmt.Println` dropped the decimal formatting. To properly format the output, we can use `fmt.Printf` and the verb `%.2f`, which will format to two decimal places, like this example:
+因为我们把两个浮点数加在一起，Go 返回了一个带有小数位的浮点数。然而，由于在这种情况下，小数位是零，`fmt.Println` 放弃了小数位的格式化。为了正确格式化输出，我们可以使用 `fmt.Printf` 和谓词 `%.2f`，它将格式化为两个小数位，就像这个例子：
 
 ```go
 fmt.Printf("%.2f", e + f)
@@ -107,7 +107,7 @@ Output
 8.00
 ``` 
 
-The syntax for subtraction is the same as for addition, except we change our operator from the plus sign (`+`) to the minus sign (`-`):
+减法的语法与加法相同，只是我们将运算符从加号（`+`）改为减号（`-`）：
 
 ```go
 g := 75.67
@@ -121,7 +121,7 @@ Output
 43.67
 ``` 
 
-In Go, we can only use operators on the same _data types_. We can’t add an `int` and a [`float64`](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types):
+在 Go 中，我们只能对相同的数据类型使用运算符。我们不能把一个 `int` 和一个 [`float64`](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types) 加在一起：
 
 ```go
 i := 7
@@ -134,13 +134,13 @@ Output
 i + j (mismatched types int and float64)
 ```
 
-Trying to use operators on data types that are not the same will result in a compiler error.
+试图在不相同的数据类型上使用运算符将导致编译器错误。
 
-## Unary Arithmetic Operations
+## 单项算术运算
 
-A unary mathematical expression consists of only one component or element. In Go we can use the plus and minus signs as a single element paired with a value to: return the value’s identity (`+`), or change the sign of the value (`-`).
+一个单数的数学表达式只由一个成员或元素组成。在 Go 中，我们可以使用加号和减号作为与一个值配对的单一元素：返回值的特性（`+`），或改变值的符号（`-`）。
 
-Though not commonly used, the plus sign indicates the identity of the value. We can use the plus sign with positive values:
+虽然不常用，但加号表示值的特性。我们可以对正值使用加号：
 
 ```go
 i := 3.3
@@ -152,7 +152,7 @@ Output
 3.3
 ```
 
-When we use the plus sign with a negative value, it will also return the identity of that value, and in this case it would be a negative value:
+当我们使用加号与一个负值时，它也将返回该值的特性，在这种情况下它将是一个负值：
 
 ```go
 j := -19
@@ -164,9 +164,9 @@ Output
 -19
 ```
 
-With a negative value the plus sign returns the same negative value.
+对于一个负值，加号会返回同样的负值。
 
-The minus sign, however, changes the sign of a value. So, when we pass a positive value we’ll find that the minus sign before the value will return a negative value:
+然而，减号会改变一个数值的符号。因此，当我们传递一个正值时，我们会发现值前的减号会返回一个负值：
 
 ```go
 k := 3.3
@@ -178,7 +178,7 @@ Output
 -3.3
 ```
 
-Alternatively, when we use the minus sign unary operator with a negative value, a positive value will be returned:
+另外，当我们使用负值的减号单选运算符时，将返回一个正值：
 
 ```go
 j := -19
@@ -190,13 +190,13 @@ Output
 19
 ```
 
-The unary arithmetic operations indicated by the plus sign and minus sign will return either the value’s identity in the case of `+i`, or the opposite sign of the value as in `-i`.
+由加号和减号表示的单项算术运算，在 `+i` 的情况下会返回值的同一性，或者像 `-i` 那样返回值的相反符号。
 
-## Multiplication and Division
+## 乘法和除法
 
-Like addition and subtraction, multiplication and division will look very similar to how they do in mathematics. The sign we’ll use in Go for multiplication is `*` and the sign we’ll use for division is `/`.
+像加法和减法一样，乘法和除法看起来与数学中的情况非常相似。我们在 Go 中用于乘法的符号是 `*`，用于除法的符号是 `/`。
 
-Here’s an example of doing multiplication in Go with two float values:
+下面是一个在 Go 中对两个浮点数进行乘法的例子：
 
 ```go
 k := 100.2
@@ -210,11 +210,11 @@ Output
 1022.04
 ```
 
-In Go, division has different characteristics depending on the numeric type we’re dividing.
+在 Go 中，除法有不同的特点，这取决于我们要除的数字类型。
 
-If we’re dividing integers, Go’s `/` operator performs floor division, where for the quotient **x** the number returned is the largest integer less than or equal to **x**.
+如果我们要除以整数，Go 的 `/` 运算符会执行地板除法，对于商 **x**，返回的数字是小于或等于 **x** 的最大整数。
 
-If you run the following example of dividing `80 / 6`, you’ll receive `13` as the output and the data type will be `int`:
+如果你运行下面这个除法`80 / 6` 的例子，你会收到 `13` 作为输出，数据类型是`int`：
 
 ```go
 package main
@@ -236,9 +236,9 @@ Output
 13
 ``` 
 
-If the desired output is a float, you have to explicitly convert the values before dividing.
+如果想要的输出是浮点数，你必须在除法之前明确地转换这些数值。
 
-You can do this by wrapping your desired float type of `float32()` or `float64()` around your values:
+你可以用 `float32()` 或 `float64()` 包裹你想要的浮点数类型来实现：
 
 ```go
 package main
@@ -260,11 +260,11 @@ Output
 13.333333333333334
 ```    
 
-## Modulo
+## 取模
 
-The `%` operator is the _modulo_, which returns the remainder rather than the quotient after division. This is useful for finding numbers that are multiples of the same number.
+`%` 运算符是取模，它返回除法后的余数而不是商。这对于寻找同一数字的倍数是很有用的。
 
-Let’s look at an example of the modulo:
+让我们看一个取模的例子:
 
 ```go
 o := 85
@@ -278,9 +278,9 @@ Output
 10
 ```
 
-To break this down, `85` divided by `15` returns the quotient of `5` with a remainder of `10`. Our program returns the value `10` here, because the modulo operator returns the remainder of a division expression.
+分开来看，`85` 除以 `15` 会返回 `5` 的商和 `10` 的余数。我们的程序在这里返回值 `10`，因为模运算符返回除法表达式的剩余部分。
 
-To do modulus math with `float64` data types, you’ll use the `Mod` function from the `math` package:
+要对 `float64` 数据类型进行模数计算，你将使用 `math` 包中的 `Mod` 函数：
 
 ```go
 package main
@@ -304,26 +304,26 @@ Output
 4
 ```    
 
-## Operator Precedence
+## 运算符优先级
 
-In Go, as in mathematics, we need to keep in mind that operators will be evaluated in order of precedence, not from left to right or right to left.
+在 Go 中，就像在数学中一样，我们需要牢记，运算符将按照优先顺序进行评估，而不是从左到右或从右到左。
 
-If we look at the following mathematical expression:
+如果我们看一下下面这个数学表达式：
 
 ```go
 u = 10 + 10 * 5
 ```
 
-We may read it left to right, but multiplication will be done first, so if we were to print `u`, we would receive the following value:
+我们可以从左往右读，但是乘法会先进行，所以如果我们要打印 `u'，我们会收到以下数值：
 
 ```go
 Output
 60
 ```
 
-This is because `10 * 5` evaluates to `50`, and then we add `10` to return `60` as the final result.
+这是因为 `10 * 5` 被计算为 `50`，然后我们加上 `10`，返回 `60` 作为最终结果。
 
-If instead we would like to add the value `10` to `10`, then multiply that sum by `5`, we use parentheses in Go just like we would in math:
+如果我们想把`10`加到`10`上，然后把这个和乘以 `5`，我们在 Go 中使用括号，就像在数学中那样：
 
 ```go
 u := (10 + 10) * 5
@@ -335,30 +335,29 @@ Output
 100
 ```    
 
-One way to remember the order of operation is through the acronym **PEMDAS**:
+记住操作顺序的一个方法是通过缩写 **PEMDAS**：
 
-Order Letter Stands for  
+字母顺序代表的是  
 
-1 P Parentheses
+1 P Parentheses 括号
 
-2 E Exponent
+2 E Exponent 指数
 
-3 M Multiplication
+3 M Multiplication 乘法
 
-4 D Division
+4 D Division 除法
 
-5 A Addition
+5 A Addition 加法
 
-6 S Subtraction
+6 S Subtraction 减法
 
-You may be familiar with another acronym for the order of operations, such as **BEDMAS** or **BODMAS**. Whatever acronym works best for you, try to keep it in mind when performing math operations in Go so that the results that you expect are returned.
+你可能熟悉另一个关于运算顺序的缩写，如 **BEDMAS** 或 **BODMAS**。无论哪种缩写对你来说都是有效的，在 Go 中进行数学运算时，尽量记住它，以便返回你所期望的结果。
 
-## Assignment Operators
+## 赋值运算符
 
-The most common assignment operator is one you have already used: the equals sign `=`. The `=` assignment operator assigns the value on the right to a variable on the left. For example, `v = 23` assigns the value of the integer `23` to the variable `v`.
+最常见的赋值运算符是你已经使用过的：等号 `=`。`=` 赋值运算符将右边的值分配给左边的变量。例如，`v = 23` 将整数 `23` 的值分配给变量 `v`。
 
-When programming, it is common to use compound assignment operators that perform an operation on a variable’s value and then assign the resulting new value to that variable. These compound operators combine an arithmetic operator with the `=` operator. Therefore, for addition we’ll combine `+` with `=` to get the compound operator `+=`. Let’s see what that looks like:
-
+在编程时，通常使用复合赋值运算符，对一个变量的值进行运算，然后将得到的新值赋给该变量。这些复合运算符将一个算术运算符和 `=` 运算符结合起来。因此，对于加法，我们将 `+` 和 `=` 结合起来，得到复合运算符 `+=`。让我们看看这看起来像什么：
 
 ```go
 w := 5
@@ -371,9 +370,9 @@ Output
 6
 ```
 
-First, we set the variable `w` equal to the value of `5`, then we use the `+=` compound assignment operator to add the right number to the value of the left variable, and then assign the result to `w`.
+首先，我们设置变量 `w` 等于 `5` 的值，然后我们使用 `+=` 复合赋值运算符将右边的数字加到左边变量的值上，然后将结果赋给 `w`。
 
-Compound assignment operators are used frequently in the case of `for` loops, which you’ll use when you want to repeat a process several times:
+复合赋值运算符在 `for` 循环的情况下经常使用，当你想重复一个过程几次时，就会用到它：
 
 ```go
 package main
@@ -405,42 +404,42 @@ Output0
 12
 ```
 
-By using a `for` loop to iterate over the slice called `values`, you were able to automate the process of the `*=` operator that multiplied the variable `w` by the number `2` and then assigned the result back into the variable `w`.
+通过使用 `for` 循环遍历名为 `values` 的切片，你能够自动完成 `*=` 运算符的过程，该运算符将变量 `w` 乘以数字 `2`，然后将结果分配回变量 `w`。
 
-Go has a compound assignment operator for each of the arithmetic operators discussed in this tutorial.
+Go对本教程中讨论的每个算术运算符都有一个复合赋值运算符。
 
-To add then assign the value:
+要添加然后赋值：
 
 ```go
 y += 1
 ```
 
-To subtract then assign the value:
+做减法，然后赋值：
 
 ```go
 y -= 1
 ```    
 
-To multiply then assign then value:
+做乘法，然后再赋值：
 
 ```go
 y *= 2
 ```
 
-To divide then assign the value:
+做除法，然后再赋值：
 
 ```go
 y /= 3
 ```
 
-To return the remainder then assign the value:
+取余，然后再赋值：
 
 ```go
 y %= 3
 ```
 
-Compound assignment operators can be useful when things need to be incrementally increased or decreased, or when you need to automate certain processes in your program.
+当需要逐步增加或减少时，或者当你需要将程序中的某些过程自动化时，复合赋值运算符就很有用。
 
-## Conclusion
+## 总结
 
-This tutorial covered many of the operators you’ll use with the integer and float numeric data types. You can learn more about different data types in [Understanding Data Types in Go](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go) and [How To Convert Data Types](https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go).
+本教程涵盖了许多你将在整数和浮点数数据类型中使用的运算符。你可以在[了解 Go 中的数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go)和[如何转换数据类型](https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go)中了解更多关于不同的数据类型。
