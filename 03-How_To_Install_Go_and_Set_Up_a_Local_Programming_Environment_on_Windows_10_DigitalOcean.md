@@ -39,7 +39,7 @@ cd ~
 -   **RemoteSigned** 将允许你运行由受信任的发布者签名的从 Internet 下载的脚本和配置文件，如果这些受信任的脚本实际上是恶意的，则再次使你的计算机暴露在漏洞面前。.
 -   **Unrestricted** 将运行从 Internet 下载的所有脚本和配置文件，只要你确认你知晓该文件是从 Internet 下载的。 在这种情况下，不需要数字签名，因此你可能会让你计算机面临运行从 Internet 下载的未签名和潜在恶意脚本的风险。
 
-在本教程中，你将使用 `RemoteSigned` 执行策略来设置当前用户的权限。 这将允许 PowerShell 接受受信任的脚本，而不会使权限像 `无限制` 权限那样广泛。 在 PowerShell 中输入以下内容：
+在本教程中，你将使用 `RemoteSigned` 执行策略来设置当前用户的权限。 这将允许 PowerShell 接受受信任的脚本，而不会使权限像 `Unrestricted` 权限那样广泛。 在 PowerShell 中输入以下内容：
 
 ```shell
 Set-ExecutionPolicy -Scope CurrentUser
