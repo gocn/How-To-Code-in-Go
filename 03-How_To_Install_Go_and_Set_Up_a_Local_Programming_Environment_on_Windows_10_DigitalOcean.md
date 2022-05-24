@@ -1,50 +1,67 @@
-# How To Install Go and Set Up a Local Programming Environment on Windows 10
+# 如何在 Windows 10 上安装 Go 和设置本地编程环境
 
-## Introduction
+## Go 语言简介
 
-[Go](https://golang.org/) is a programming language that was born out of frustration at Google. Developers continually had to pick a language that executed efficiently but took a long time to compile, or to pick a language that was easy to program but ran inefficiently in production. Go was designed to have all three available at the same time: fast compilation, ease of programming, and efficient execution in production.
+[Go](https://golang.org/) 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两门语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
 
-While Go is a versatile programming language that can be used for many different programming projects, it’s particularly well suited for networking/distributed systems programs, and has earned a reputation as “the language of the cloud”. It focuses on helping the modern programmer do more with a strong set of tooling, removing debates over formatting by making the format part of the language specification, as well as making deployment easy by compiling to a single binary. Go is easy to learn, with a very small set of keywords, which makes it a great choice for beginners and experienced developers alike.
+虽然 Go 是一门通用的编程语言，可用于许多不同类型的编程项目。但它特别适合网络/分布式系统项目，赢得了“云语言”的美誉。Go  语言专注于通过一组强大的工具来帮助现代程序员完成更多的工作，通过使格式成为语言规范的一部分来消除对格式的争论，以及通过编译为单个二进制文件来简化部署。 Go 易于学习，关键字非常少，这使其成为不论是初学者还是经验丰富的开发人员的不二之选。
 
-This tutorial will guide you through installing Go on your local Windows 10 machine and setting up a programming environment via the command line.
+本教程将指导你通过命令行来安装 Go 和配置 Go 编程环境。本教程特别针对 Ubuntu 18.04 的安装过程，但是对于其他 Debian Linux 发行版也同样适用。
 
-## Prerequisites
+## 安装前提
 
-You will need a Windows 10 machine with administrative access that is connected to the internet.
+你需要一台拥有管理员权限并且能够连接上网的  Windows 10 的电脑。
 
-## Step 1 — Opening and Configuring PowerShell
+## 第一步 — 打开并配置 PowerShell
 
-You’ll be completing most of the installation and setup on a command-line interface, which is a non-graphical way to interact with your computer. That is, instead of clicking on buttons, you’ll be typing in text and receiving feedback from your computer through text as well. The command line, also known as a _shell_, can help you modify and automate many of the tasks you do on a computer every day, and is an essential tool for software developers.
+我们将会在终端上完成我们大部分的安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。命令行，也就是我们熟知的 _shell_ 或者 _终端_ ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。
 
-[PowerShell](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/powershell) is a program from Microsoft that provides a command-line shell interface. Administrative tasks are performed by running _cmdlets_, pronounced _command-lets_, which are specialized classes of the [.NET](https://dotnet.microsoft.com/) software framework that can carry out operations. Open-sourced in August 2016, PowerShell is now available across platforms, for both Windows and UNIX systems (including Mac and Linux).
+[PowerShell](https://docs.microsoft.com/en-us/windows-server/administration/windows-commands/powershell) 是微软提供的一个命令行 shell 界面的程序。通过 `cmdlets` （发音为 `command-lets` ）来执行管理任务，它们是 [.NET](https://dotnet.microsoft.com/) 软件框架可以执行操作的专用类。PowerShell 于 2016 年 8 月开源，现在可跨平台使用，适用于 Windows 和 UNIX 系统（包括 Mac 和 Linux）。
 
-To find Windows PowerShell, you can right-click on the **Start** menu icon on the lower left-hand corner of your screen. When the menu pops up, click on **Search**, and then type `PowerShell` into the search bar. When you are presented with options, right-click on **Windows PowerShell** from the Desktop app. For the purposes of this tutorial, select **Run as Administrator**. When you are prompted with a dialog box that asks **Do you want to allow this app to make changes to your PC?** click on **Yes**.
+如何找到 Windows PowerShell 呢，你可以右击屏幕左下角的**开始**按钮，弹出菜单后，点击**搜索**，然后在搜索栏中输入 `PowerShell` 。当你看到选项时，右击桌面应用程序中的 **Windows PowerShell**。 出于本教程的目的，选择**以管理员身份运行**。 当系统提示你出现一个对话框，询问**是否允许此应用程序对您的 PC 进行更改？** 单击**是**。
 
-Once you do this, you’ll see a text-based interface that has a string of words that looks like this:
+完成此操作后，你将看到一个基于文本的界面，其中包含如下所示的字符串：
 
 ![Windows 10 PowerShell](https://assets.digitalocean.com/articles/eng_python/Win10SetUp/Win10SetUp.png)
 
-Switch out of the system folder by typing the following command:
+输入以下命令退出系统文件夹：
 
-You’ll then be in a home directory such as `PS C:\Users\sammy`.
+```shell
+cd ~
+```
 
-To continue with the installation process, you must first set up permissions through PowerShell. Configured to run in the most secure mode by default, there are a few levels of permissions that you can set up as an administrator:
+然后你会进入到主目录中，比如 `PS C:\Users\sammy`
 
--   **Restricted** is the default execution policy. Under this mode you will not be able to run scripts, and PowerShell will work only as an interactive shell.
--   **AllSigned** will enable you to run all scripts and configuration files that are signed by a trusted publisher, meaning that you could potentially open your machine up to the risk of running malicious scripts that happen to be signed by a trusted publisher.
--   **RemoteSigned** will let you run scripts and configuration files downloaded from the internet signed by trusted publishers, again opening your machine up to vulnerabilities if these trusted scripts are actually malicious.
--   **Unrestricted** will run all scripts and configuration files downloaded from the internet as soon as you confirm that you understand that the file was downloaded from the internet. In this case no digital signature is required, so you could be opening your machine up to the risk of running unsigned and potentially malicious scripts downloaded from the internet.
+要继续安装过程，你必须通过 PowerShell 设置权限。默认情况下以最安全的模式运行，作为管理员你可以设置以下几个级别的权限：
 
-In this tutorial you will use the `RemoteSigned` execution policy to set the permissions for the current user. This will allow the PowerShell to accept trusted scripts without making the permissions as broad as they would be with an `Unrestricted` permission. Enter the following in PowerShell:
+-   **Restricted** 是默认执行策略。 在这种模式下，你将无法运行脚本，并且 PowerShell 只能作为交互式 shell 工作。
+-   **AllSigned** 将使你能够运行由受信任的发布者签名的所有脚本和配置文件，这意味着可能让计算机面临着运行恶意脚本的风险，这脚本碰巧由受信任发布者签名。
+-   **RemoteSigned** 将允许你运行由受信任的发布者签名的从 Internet 下载的脚本和配置文件，如果这些受信任的脚本实际上是恶意的，则再次使你的计算机暴露在漏洞面前。.
+-   **Unrestricted** 将运行从 Internet 下载的所有脚本和配置文件，只要你确认你知晓该文件是从 Internet 下载的。 在这种情况下，不需要数字签名，因此你可能会让你计算机面临运行从 Internet 下载的未签名和潜在恶意脚本的风险。
 
-PowerShell will then prompt you to provide an execution policy. Enter the following to use `RemoteSigned`:
+在本教程中，你将使用 `RemoteSigned` 执行策略来设置当前用户的权限。 这将允许 PowerShell 接受受信任的脚本，而不会使权限像 `Unrestricted` 权限那样广泛。 在 PowerShell 中输入以下内容：
 
-Once you press `ENTER`, you’ll be asked to confirm the change to the execution policy. Type the letter `y` to allow the changes to take effect. You can confirm that this worked by asking for the current permissions across the machine:
+```shell
+Set-ExecutionPolicy -Scope CurrentUser
+```
 
-You should receive output that looks something like this:
+然后 PowerShell 将提示你为你提供一个可执行策略。 输入以下内容来使用`RemoteSigned` 策略：
 
 ```
-Output        Scope ExecutionPolicy
+RemoteSigned
+```
+
+ 一旦你按了回车键，系统会要求你确认对执行政策的更改。 输入字母 `y` 以使更改生效。 你可以通过询问机器上的当前权限来确认这是否生效：
+
+```
+Get-ExecutionPolicy -List
+```
+
+你应该会收到如下所示的输出：
+
+```shell
+Output        
+        Scope ExecutionPolicy
         ----- ---------------
 MachinePolicy       Undefined
    UserPolicy       Undefined
@@ -53,23 +70,31 @@ MachinePolicy       Undefined
  LocalMachine       Undefined
 ```
 
-This confirms that the current user can run trusted scripts downloaded from the internet. You can now move on to downloading the files we will need to set up our Go programming environment.
+这表明当前用户可以运行从 Internet 下载的受信任脚本。 你现在可以继续下载设置 Go 编程环境所需的文件。
 
-## Step 2 — Installing the Package Manager Chocolatey
+## 第二步 — 安装包管理器 Chocolatey
 
-A _package manager_ is a collection of software tools that work to automate installation processes. This includes the initial installation, upgrading and configuring of software, and removing software as needed. They keep software installations in a central location and can maintain all software packages on the system in formats that are commonly used.
+所谓包管理器就是一组软件工具的集合，这些工具使得安装过程自动化。这包括软件的初始安装、升级和配置，以及根据需要删除软件。 他们将软件安装保存在一个中央位置，并且可以以常用格式维护系统上的所有软件包。
 
-[Chocolatey](https://chocolatey.org/) is a command-line package manager built for Windows that works like `apt-get` does on Linux. Available in an open-source version, Chocolatey will help you quickly install applications and tools. You will be using it to download what you need for your development environment.
+[Chocolatey](https://chocolatey.org/) 是一个为 Windows 构建的命令行包管理器，其工作方式与 Linux 上的 `apt-get` 类似。 Chocolatey 提供开源版本，可帮助你快速安装应用程序和工具。 你可以用它来下载开发环境所需的内容。
 
-Before installing the script, read it to confirm that you are happy with the changes it will make to your machine. To do this, use the .NET scripting framework to download and display the Chocolatey script within the terminal window.
+在安装脚本之前，请阅读一下脚本并确认它对你的机器所做的更改是否令你感到满意。 为此，请使用 .NET 脚本框架下载 Chocolatey 脚本并将其显示在终端窗口中。
 
-Start by creating a WebClient object called `$script` that shares internet connection settings with Internet Explorer:
+首先创建一个名为 `$script` 的 WebClient 对象，该对象与 Internet Explorer 共享 Internet 连接设置：
 
-Take a look at the available options by piping the `$script` object with `|` to the `Get-Member` class:
-
-This will return all members (properties and methods) of this WebClient object:
-
+```shell
+$script = New-Object Net.WebClient
 ```
+
+通过将带有 `|` 的 `$script` 对象传递给 `Get-Member` 类来查看可用选项：
+
+```shell
+$script | Get-Member
+```
+
+这将返回此 WebClient 对象的所有成员（属性和方法）：
+
+```shell
  . . .
 [secondary_label Snippet of Output]
 DownloadFileAsync         Method     void DownloadFileAsync(uri address, string fileName), void DownloadFileAsync(ur...
@@ -80,38 +105,59 @@ DownloadStringTaskAsync   Method     System.Threading.Tasks.Task[string] Downloa
  . . .
 ```
 
-Looking over the output, you can identify the `DownloadString` method used to display the script and signature in the PowerShell window. Use this method to inspect the script:
+查看输出内容，你可以识别出用于在 PowerShell 窗口中显示脚本和签名的 `DownloadString` 方法。 使用此方法检查脚本：
 
-After inspecting the script, install Chocolatey by typing the following into PowerShell:
-
-The cmdlet `iwr`, or `Invoke-WebRequest`, allows you to extract data from the web. This will pass the script to `iex`, or the `Invoke-Expression` cmdlet, which will execute the contents of the script and run the installation for the Chocolatey package manager.
-
-Allow PowerShell to install Chocolatey. Once it is fully installed, you can begin installing additional tools with the `choco` command.
-
-If you need to upgrade Chocolatey at any time in the future, run the following command:
-
-With the package manager installed, you can install the rest of what you need for the Go programming environment.
-
-## Step 3 — Installing the Text Editor Nano (Optional)
-
-In this step, you are going to install _nano_, a text editor that uses a command-line interface. You can use nano to write programs directly within PowerShell. This is not a compulsory step, as you can also use a text editor with a graphical user interface such as Notepad. This tutorial recommends using nano, as it will help accustom you to using PowerShell.
-
-Use Chocolatey to install nano:
-
-The `-y` flag automatically confirms that you want to run the script without being prompted for confirmation.
-
-Once nano is installed, you can use the `nano` command to create new text files. You will use it later in this tutorial to write your first Go program.
-
-## Step 4 — Installing Go
-
-Just like you did with nano in the previous step, you will use Chocolatey to install Go:
-
-**Note:** Because **go** is such a small word, it has become common to use `golang` as a term for installing packages and when searching the internet for Go-related articles. The term _Golang_ was born from the domain for Go, which is `golang.org`.
-
-PowerShell will now install Go, generating output within PowerShell during that process. Once the install is completed, you should see the following output:
-
+```shell
+$script.DownloadString("https://chocolatey.org/install.ps1")
 ```
-OutputEnvironment Vars (like PATH) have changed. Close/reopen your shell to
+
+检查脚本后，通过在 PowerShell 中输入以下内容来安装 Chocolatey：
+
+```shell
+iwr https://chocolatey.org/install.ps1 -UseBasicParsing | iex
+```
+
+cmdlet `iwr` 或 `Invoke-WebRequest` 允许你从 Web 中提取数据。 然后将脚本传递给 `iex` 或 `Invoke-Expression` cmdlet，后者将执行脚本的内容并开始 Chocolatey 包管理器的安装。
+
+允许 PowerShell 安装 Chocolatey。 等到安装完成后，你可以使用 `choco` 命令开始安装其他工具。
+
+如果你以后需要随时升级 Chocolatey，请运行以下命令：
+
+```shell
+choco upgrade chocolatey
+```
+
+安装包管理器后，你可以安装 Go 编程环境所需的其余部分。
+
+## 第三步 — 安装文本编辑器 Nano (可选)
+
+在这一步中，你将安装 _nano_，这是一个使用命令行界面的文本编辑器。 你可以使用 nano 直接在 PowerShell 中编写程序。 这不是强制性步骤，因为你也可以使用带有图形用户界面的文本编辑器，例如 Notepad 。 本教程推荐使用 nano，因为它将帮助你习惯使用 PowerShell。
+
+使用 Chocolatey 安装 nano：
+
+```shell
+choco install -y nano
+```
+
+`-y` 标志会自动确认你要运行脚本，而不会提示你确认。
+
+安装 nano 后，你可以使用 `nano` 命令创建新的文本文件。 你将在本教程后面使用它来编写你的第一个 Go 程序。
+
+## 第四步 — 安装 Go
+
+就像你在上一步中安装 nano 一样，你将使用 Chocolatey 安装 Go：
+
+```shell
+choco install -y golang
+```
+
+**注意：** 因为 `go` 是一个很小的词，所以使用 `golang` 作为安装包的术语， 这也是在互联网上搜索 Go 相关文章时的常见做法。 `Golang`  一词源于 Go 的域，即 `golang.org`
+
+PowerShell 安装 Go 的过程中，会在 PowerShell 中生成输出内容。 安装完成后，你应该会看到以下输出：
+
+```powershell
+Output
+Environment Vars (like PATH) have changed. Close/reopen your shell to
 see the changes (or in powershell/cmd.exe just type `refreshenv`).
 The install of golang was successful.
  Software installed as 'msi', install location is likely default.
@@ -120,30 +166,35 @@ Chocolatey installed 1/1 packages.
 See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
 ```
 
-With the installation finished, you’ll now confirm that Go is installed. To see the changes, close and re-open PowerShell as an Administrator, then check the version of Go available on your local machine:
-
-You’ll receive output similar to the following:
+安装完成后，你可以确认下 Go 是否已安装。 要查看更改，请以管理员身份关闭并重新打开 PowerShell，然后检查本地计算机上可用的 Go 版本：
 
 ```
-Outputgo version go1.12.1 windows/amd643.7.0
+go version
 ```
 
-Once Go is installed, you can set up a workspace for your development projects.
-
-## Step 5 — Creating Your Go Workspace
-
-Now that you have Chocolatey, nano, and Go installed, you can create your programming workspace.
-
-The Go workspace will contain two directories at its root:
-
--   `src`: The directory that contains Go source files. A source file is a file that you write using the Go programming language. Source files are used by the Go compiler to create an executable binary file.
--   `bin`: The directory that contains executables built and installed by the Go tools. Executables are binary files that run on your system and execute tasks. These are typically the programs compiled by your source code or another downloaded Go source code.
-
-The `src` subdirectory may contain multiple version control repositories (such as [Git](https://git-scm.com/), [Mercurial](https://www.mercurial-scm.org/), and [Bazaar](http://bazaar.canonical.com/)). You will see directories like `github.com` or `golang.org` when your program imports third party libraries. If you are using a code repository like `github.com`, you will also put your projects and source files under that directory. This allows for a canonical import of code in your project. _Canonical_ imports are imports that reference a fully qualified package, such as `github.com/digitalocean/godo`.
-
-Here is what a typical workspace may look like:
+你将得到类似以下内容的输出：
 
 ```
+Output
+go version go1.12.1 windows/amd643.7.0
+```
+
+安装 Go 后，你可以为开发项目设置工作区。
+
+## 第五步 — 创建你的 Go 工作区
+
+现在你已经安装了 Chocolatey、nano 和 Go，可以接着创建你的编程工作区。
+
+Go 语言的工作区在其根目录下包含两个目录：
+
+-   `src`: 该目录包含 Go 的源文件。所谓源文件就是你用 Go 编程语言写的文件。源文件被 Go 编译器构建成可执行的二进制文件。
+-   `bin`: 该目录包含了 Go 工具构建和安装的可执行文件。可执行文件就是运行在你系统上并执行任务的二进制文件。通常是你的源码或者是其他下载的 Go 源代码编译的程序。
+
+`src` 子目录可能包含多个版本控制仓库（例如 [Git](https://git-scm.com/), [Mercurial](https://www.mercurial-scm.org/) 和 [Bazaar](http://bazaar.canonical.com/)）。当你引入第三方库的时候，你可以看到类似  `github.com`, `golang.org` 或其他目录，如果你使用的是 `github.com` 之类的代码仓库，你还将把项目和源文件放在该目录下。 我们将在此步骤的后面部分探讨这个概念。这允许你在你的项目中规范导入代码。 规范导入就是引用完全限定包的导入，例如 `github.com/digitalocean/godo` 。
+
+下面是典型的工作区目录结构：
+
+```shell
 .
 ├── bin
 │   ├── buffalo                                      # command executable
@@ -164,13 +215,21 @@ Here is what a typical workspace may look like:
                     └── droplet_test.go
 ```
 
-The default directory for the Go workspace as of 1.8 is your user’s home directory with a `go` subdirectory, or `$HOME/go`. If you are using an earlier version of Go than 1.8, it is still considered best practice to use the `$HOME/go` location for your workspace
+从 1.8 开始，Go 工作区的默认目录是用户的 home 目录，并带有 `go` 子目录，或者是 `$HOME/go` 目录。 如果你使用的是早于 1.8 的 Go 版本，目前认为最佳做法是为你的工作区使用 `$HOME/go` 位置。
 
-Issue the following command to navigate to the `$HOME` directory:
+使用下面命令导航到 `$HOME` 目录：
 
-Next, create the directory structure for your Go workspace:
+```
+cd $HOME
+```
 
-This will ensure the following directory structure is now in place:
+接下来，为你的 Go 工作区创建目录结构：
+
+```
+mkdir go/bin, go/src
+```
+
+以上命令将确保下面的目录结构各就各位：
 
 ```
 └── $HOME
@@ -179,44 +238,60 @@ This will ensure the following directory structure is now in place:
         └── src
 ```
 
-Prior to Go 1.8, it was required to set a local environment variable called `$GOPATH`. While it is no longer explicitly required to do so, it is still considered a good practice as many third party tools still depend on this variable being set.
+在 Go 1.8 之前，需要设置一个名为 `$GOPATH` 的本地环境变量。 `$GOPATH` 告诉编译器在哪里可以找到导入的第三方源代码，同样包括任何你写的本地源代码。 虽然不再明确要求它，但它仍然被认为是一种很好的做法，因为许多第三方工具仍然依赖于设置的这个变量。
 
-Since you used Chocolatey for the installation, this environment variable should already be set. You can verify this with the following command:
+由于你使用 Chocolatey 进行安装，因此应该已经设置了此环境变量。 你可以使用以下命令验证这一点：
 
-You should see the following output, with your username in place of `sammy`:
-
-```
-OutputC:\Users\sammy\go
+```shell
+$env:GOPATH
 ```
 
-When Go compiles and installs tools, it will put them in the `$GOPATH/bin` directory. For convenience, it’s common to add the workspace’s `bin` subdirectory to your `$PATH`. You can do this using the `setx` command in PowerShell:
+你应该会看到以下输出，其中  `sammy` 代替了你的用户名：
 
-This will now allow you to run any programs you compile or download via the Go tools anywhere on your system.
+```
+Output
+C:\Users\sammy\go
+```
 
-Now that you have the root of the workspace created and your `$GOPATH` environment variable set, you will create your future projects with the following directory structure. This example assumes you are using [github.com](https://www.github.com/) as your repository:
+当 Go 编译和安装工具时，会将他们放在  `$GOPATH/bin`  目录。为方便起见，通常将工作区的 `/bin` 子目录添加到 `~/.profile` 中的 `PATH` 中。你可以使用 PowerShell 中的 `setx` 命令执行此操作：
+
+```shell
+setx PATH "$($env:path);$GOPATH\bin"
+```
+
+这将允许你在系统上的任何位置运行通过 Go 工具编译或下载的任何程序。
+
+现在你已经创建了工作区的根目录并设置了 `$GOPATH` 环境变量，你可以根据以下目录结构创建你未来的项目。 此示例假设你使用 `github.com` 作为仓库：
 
 ```
 $GOPATH/src/github.com/username/project
 ```
 
-If you were working on the [https://github.com/digitalocean/godo](https://github.com/digitalocean/godo) project, you would put it in the following directory:
+例如，如果你正在开发  [`https://github.com/digitalocean/godo`](https://github.com/digitalocean/godo)  项目，它将存储在以下目录中：
 
 ```
 $GOPATH/src/github.com/digitalocean/godo
 ```
 
-Structuring your projects in this manner will make projects available with the `go get` tool. It will also help readability later.
-
-You can verify this by using the `go get` command to fetch the `godo` library:
-
-**Note:** If you don’t have `git` installed, Windows will open a dialog box asking if you want to install it. Click **Yes** to continue and follow the installation instructions.
-
-You can see it successfully downloaded the `godo` package by listing the directory:
-
-You will receive output similar to this:
+该项目结构使项目可以通过 `go get` 工具使用。它也有助于以后的可读性。 你可以通过使用 `go get` 命令并获取 `godo` 库来验证这一点：
 
 ```
-Output    Directory: C:\Users\sammy\go\src\github.com\digitalocean\godo
+go get github.com/digitalocean/godo
+```
+
+**注意：** 如果你没有安装 `git`，Windows 会打开一个对话框询问你是否要安装它。 单击 **Yes** 继续并按照安装说明进行操作。
+
+你可以通过列出目录来检查下看看是否成功下载了 `godo`包：
+
+```
+ls $env:GOPATH/src/github.com/digitalocean/godo
+```
+
+你应该看到类似下面这样的输出：
+
+```
+Output    
+    Directory: C:\Users\sammy\go\src\github.com\digitalocean\godo
 
 
 Mode                LastWriteTime         Length Name
@@ -235,32 +310,50 @@ d-----        4/10/2019   2:59 PM                util
 -a----        4/10/2019   2:59 PM           4309 vpcs_test.go
 ```
 
-In this step, you created a Go workspace and configured the necessary environment variables. In the next step you will test the workspace with some code.
+在这一步中，你创建了一个 Go 工作区并且配置了必要的环境变量。下一步你将使用一些代码来测试下工作区。
 
-## Step 6 — Creating a Simple Program
+## 第六步 — 创建一个简单的程序
 
-Now that you have the Go workspace set up, create a simple “Hello, World!” program. This will make sure that your workspace is configured properly, and also gives you the opportunity to become more familiar with Go. Because you are creating a single Go source file, and not an actual project, you don’t need to be in your workspace to do this.
+现在你已经设置了工作区，来创建一个  “Hello, World!” 程序吧。这可以检验工作区配置是否正确，并且给你一个更加熟悉 Go 的机会。因为我们创建的是单个 Go 源文件，而不是实际项目，所以我们不需要在工作区中执行此操作。
 
-From your home directory, open up a command-line text editor, such as nano, and create a new file:
+在你的 home 目录，打开一个命令行文本编辑器，例如 `nano`，然后创建一个新文件：
 
-Once the text file opens up in nano, type out your program:
+```
+nano hello.go
+```
 
+在 nano 中打开文本文件后，输入你的程序代码：
+
+```go
 hello.go
+package main
 
-Exit `nano` by pressing the `CTRL` and `X` keys. When prompted to save the file, press `Y` and then `ENTER`.
+import "fmt"
 
-This code will use the `fmt` package and call the `Println` function with `Hello, World!` as the argument. This will cause the phrase `Hello, World!` to print out to the terminal when the program is run.
-
-Once you exit out of `nano` and return to your shell, run the program:
-
-The hello.go program that you just created should cause PowerShell to produce the following output:
-
-```
-OutputHello, World!
+func main() {
+	fmt.Println("Hello, World!")
+}
 ```
 
-In this step, you used a basic program to verify that your Go workspace is properly configured.
+按 `CTRL` 和 `X` 键退出 `nano`。 当提示保存文件时，按 `Y`，然后按 `ENTER` 退出。
 
-## Conclusion
+该代码使用了  `fmt` 包并且使用  `Hello, World!`  作为参数调用了  `Println` 函数。这将导致短语 `Hello, World!` 在程序运行时打印到终端上。
 
-Congratulations! At this point you have a Go programming workspace set up on your local Windows machine and can begin a coding project!
+退出 `nano` 返回 shell 之后，运行程序：
+
+```
+go run hello.go
+```
+
+你刚刚创建的 hello.go 程序应该会在 PowerShell 产生以下输出：
+
+```
+Output
+Hello, World!
+```
+
+在此步骤中，你使用了一个简单小程序来验证是否正确配置了 Go 工作区。
+
+## 总结
+
+恭喜！至此，你已经在 Ubuntu 机器上设置了 Go 编程工作区，可以开始写项目了！
