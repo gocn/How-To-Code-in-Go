@@ -1,24 +1,24 @@
-# How To Convert Data Types in Go
+# 如何在 Go 中转换数据类型
 
-### Introduction
+### 介绍
 
-In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values. User-generated data is often automatically assigned the string data type, even if it consists of numbers; in order to perform mathematical operations in this input, you would have to convert the string to a numeric data type.
+在 Go 中，数据类型用于对一种特定类型的数据进行分类，确定可以分配给该类型的值以及可以对其执行的操作。 在编程时，有时你需要在类型之间转换值以便以不同的方式操作值。 例如，你可能需要将数值与字符串连接起来，或者在初始化为整数值的数字中表示小数位。 用户生成的数据通常会自动分配为字符串数据类型，即使它由数字组成； 为了在此输入中执行数学运算，你必须将字符串转换为数字数据类型。
 
-Since Go is a statically typed language, [data types are bound to variables](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#declaring-data-types-for-variables) rather than values. This means that, if you define a variable as an `int`, it can only be an `int`; you can’t assign a `string` to it without converting the data type of the variable. The static nature of data types in Go places even more importance on learning the ways to convert them.
+由于 Go 是一种静态类型语言，[数据类型绑定到变量](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#declaring-data-types-for-variables ) 而不是值。 这意味着，如果你将变量定义为 `int`，它只能是 `int`； 如果不转换变量的数据类型，就无法将一个 `字符串` 赋值给它。 Go 中数据类型的静态特性使得学习转换它们的方法更加重要。
 
-This tutorial will guide you through converting numbers and strings, as well as provide examples to help familiarize yourself with different use cases.
+本教程将指导你完成数字和字符串的转换，并提供示例以帮助你熟悉不同的用例。
 
-## Converting Number Types
+## 数字类型转换
 
-Go has several numeric types to choose from. Primarily they break out into two general types: [integers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers) and [floating-point numbers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers).
+Go 有多种数字类型可供选择。 它们主要分为两种类型：[integers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers) 和 [floating-point numbers](https:// /www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers)。
 
-There are many situations in which you may want to convert between numeric types. Converting between [different sizes of numeric types](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types) can help optimize performance for specific kinds of system architecture. If you have an integer from another part of your code and want to do division on it, you may want to convert the integer to a float to preserve the precision of the operation. Additionally, working with time durations usually involves integer conversion. To address these situations, Go has built-in *type conversions* for most numeric types.
+在许多情况下，你可能希望在数字类型之间进行转换。 在 [不同大小的数字类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types) 之间进行转换有助于优化特定场景下的性能。 如果你有来自代码另一部分的整数并想要对其进行除法，你可能需要将整数转换为浮点数以保持操作的精度。 此外，时间相关的操作通常涉及整数转换。 为了解决这些情况，Go 为大多数数字类型提供了内置的*类型转换*。
 
-### Converting Between Integer Types
+### 整数类型之间的转换
 
-Go has many integer data types to pick from. When to use one over the other is typically more about [performance](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#picking-numeric-data-types); however, there will be times when you will need to convert from one integer type to another. For example, Go sometimes automatically generates numeric values as `int`, which may not match your input value. If your input value were `int64`, you would not be able to use the `int` and the `int64` numbers in the same mathematical expression until you converted their data types to match.
+Go 有许多整数数据类型可供选择。 何时使用另一种通常更多要考虑的是[性能](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#picking-numeric-data-types)； 但是，有时你需要从一种整数类型转换为另一种整数类型。 例如，Go 有时会自动生成数值为 `int`，这可能与你的输入值不匹配。 如果你的输入值为 `int64`，则在将它们的数据类型转换为匹配之前，你将无法在同一数学表达式中使用 `int` 和 `int64` 。
 
-Assume that you have an `int8` and you need to convert it to an `int32`. You can do this by wrapping it in the `int32()` type conversion:
+假设你有一个 `int8` 并且需要将其转换为 `int32`。 你可以通过 `int32()` 类型转换来做到这一点：
 
 ```go
 var index int8 = 15
@@ -35,9 +35,9 @@ Output
 15
 ```
 
-This code block defines `index` as an `int8` data type and `bigIndex` as an `int32` data type. To store the value of `index` in `bigIndex`, it converts the data type to an `int32`. This is done by wrapping the `int32()` conversion around the `index` variable.
+此代码块将 `index` 定义为 `int8` 数据类型，将 `bigIndex` 定义为 `int32` 数据类型。 要将 `index` 的值存储在 `bigIndex` 中，它将数据类型转换为 `int32`。 这是通过 `int32()` 包装 `index` 变量来完成的。
 
-To verify your data types, you could use the `fmt.Printf` statement and the `%T` verb with the following syntax:
+要验证你的数据类型，你可以使用 `fmt.Printf` 语句和 `%T` ，语法如下：
 
 ```go
 fmt.Printf("index data type:    %T\n", index)
@@ -50,9 +50,9 @@ index data type:    int8
 bigIndex data type: int32
 ```
 
-Since this uses the `%T` verb, the print statement outputs the type for the variable, and not the actual value of the variable. This way, you can confirm the converted data type.
+由于使用了 `%T` ，打印语句会输出变量的类型，而不是变量的实际值。 这样，你可以确认转换后的数据类型。
 
-You can also convert from a larger bit-size integer to a smaller bit-size integer:
+你还可以从较大整数类型转换为较小整数类型：
 
 ```go
 var big int64 = 64
@@ -69,7 +69,7 @@ Output
 64
 ```
 
-Keep in mind that when converting integers you could potentially exceed the maximum value of the data type and [*wraparound*](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#overflow-vs-wraparound):
+Keep in mind that when converting integers you could potentially exceed the maximum value of the data type and [*wraparound*](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#overflow-vs-wraparound):请记住，在转换整数时，你可能会超过数据类型的最大值和 [*wraparound*](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#overflow-vs-wraparound)：
 
 ```go
 var big int64 = 129
@@ -82,11 +82,11 @@ Output
 -127
 ```
 
-A wraparound happens when the value is converted to a data type that is too small to hold it. In the preceding example, the 8-bit data type `int8` did not have enough space to hold the 64-bit variable `big`. Care should always be taken when converting from a larger number data type to a smaller number data type so that you do not truncate the data by accident.
+当值转换为太小而无法容纳它的数据类型时，就会发生出。 在前面的示例中，8 位的数据类型 `int8` 没有足够的空间来容纳 64 位的变量 `big` 。 从较大数据类型转换为较小数据类型时应始终小心，以免意外截断数据。
 
-### Converting Integers to Floats
+### 将整数转换为浮点数
 
-Converting integers to floats in Go is similar to converting one integer type to another. You can use the built-in type conversions by wrapping `float64()` or `float32()` around the integer you are converting:
+在 Go 中将整数转换为浮点数类似于将一种整数类型转换为另一种。 你可以通过给要转换的整数包装 `float64()` 或 `float32()` 来使用内置类型转换：
 
 ```go
 var x int64 = 57
@@ -101,21 +101,21 @@ Output
 57.00
 ```
 
-This code declares a variable `x` of type `int64` and initializes its value to `57`.
+这段代码声明了一个类型为 `int64` 的变量 `x` 并将其值初始化为 `57` 。
 
 ```go
 var x int64 = 57
 ```
 
-Wrapping the `float64()` conversion around `x` will convert the value of `57` to a float value of `57.00`.
+对 `x` 使用 `float64()` 会将 `57` 转换为 `57.00` 的浮点值。
 
 ```go
 var y float64 = float64(x)
 ```
 
-The `%.2f` print verb tells `fmt.Printf` to format the float with two decimals.
+`%.2f` 告诉 `fmt.Printf` 用两位小数格式化浮点数。
 
-You can also use this process on a variable. The following code declares `f` as equal to `57`, and then prints out the new float:
+你也可以对变量这么操作。 以下代码将 `f` 声明为 `57`，然后打印出新的浮点数：
 
 ```go
 var f float64 = 57
@@ -127,13 +127,13 @@ Output
 57.00
 ```
 
-By using either `float32()` or `float64()`, you can convert integers to floats. Next, you will learn how to convert floats to integers.
+通过使用 `float32()` 或 `float64()`，你可以将整数转换为浮点数。 接下来，你将学习如何将浮点数转换为整数。
 
-### Converting Floats to Integers
+### 将浮点数转换为整数
 
-Go can convert floats to integers, but the program will lose the precision of the float.
+Go 可以将浮点数转换为整数，但程序会丢失浮点数的精度。
 
-Wrapping floats in `int()`, or one of its architecture-independent data types, works similarly to when you used it to convert from one integer type to another. You can add a floating-point number inside of the parentheses to convert it to an integer:
+使用 `int()` 或其他非浮点数据类型包装浮点数，其工作方式与整数类型转换类似。 你可以在括号内添加一个浮点数以将其转换为整数：
 
 ```go
 var f float64 = 390.8
@@ -149,9 +149,9 @@ f = 390.80
 i = 390
 ```
 
-This syntax would convert the float `390.8` to the integer `390`, dropping the decimal place.
+此语法会将浮点数 `390.8` 转换为整数 `390`，去掉小数位。
 
-You can also use this with variables. The following code declares `b` as equal to `125.0` and `c` as equal to `390.8`, then prints them out as integers. Short variable declaration (`:=`) shortens up the syntax:
+你也可以将其与变量一起使用。 以下代码声明 `b` 等于 `125.0` 和 `c` 等于 `390.8`，然后将它们打印为整数。 短变量声明（`:=`）缩短了语法：
 
 ```go
 b := 125.0
@@ -162,15 +162,16 @@ fmt.Println(int(c))
 ```
 
 ```go
-Output125
+Output
+125
 390
 ```
 
-When converting floats to integers with the `int()` type, Go cuts off the decimal and remaining numbers of a float to create an integer. Note that, even though you may want to round 390.8 up to 391, Go will not do this through the `int()` type. Instead, it will drop the decimal.
+当使用 `int()` 类型将浮点数转换为整数时，Go 会截断浮点数的小数并保留剩余数字部分来创建整数。 请注意，即使你可能希望将 390.8 向上取整到 391，Go 也不会通过 `int()` 类型执行此操作。 相反，它会去掉小数点。
 
-### Numbers Converted Through Division
+### 除法中的类型转换
 
-When dividing integer types in Go the result will also be an integer type, with the *modulus*, or remainder, dropped:
+在 Go 中除以整数类型时，结果也将是整数类型，去掉了 *模数* 或余数：
 
 ```go
 a := 5 / 2
@@ -182,7 +183,7 @@ Output
 2
 ```
 
-If, when dividing, any of the number types are a float, then all of the types will automatically be declared as a float:
+在做除法操作时，如果有数字类型是浮点数的话，那么所有类型都将自动声明为浮点数：
 
 ```go
 	a := 5.0 / 2
@@ -194,19 +195,19 @@ Output
 2.5
 ```
 
-This divides the float `5.0` by the integer `2`, and the answer `2.5` is a float that retains the decimal precision.
+上例将浮点数 `5.0` 除以整数 `2` ，答案 `2.5` 是一个保留小数精度的浮点数。
 
-In this section, you have converted between different number data types, including differing sizes of integers and floating-point numbers. Next, you will learn how to convert between numbers and strings.
+在本节中，你已经在不同的数字数据类型之间进行了转换，包括不同大小的整数和浮点数。 接下来，你将学习如何在数字和字符串之间进行转换。
 
-## Converting with Strings
+## 字符串转换
 
-A *string* is a sequence of one or more characters (letters, numbers, or symbols). Strings are a common form of data in computer programs, and you may need to convert strings to numbers or numbers to strings fairly often, especially when you are taking in user-generated data.
+*字符串* 是一个或多个字符（字母、数字或符号）组成的序列。 字符串是计算机程序中一种常见的数据形式，你可能需要经常将字符串转换为数字或将数字转换为字符串，尤其是在你接收用户生成的数据时。
 
-### Converting Numbers to Strings
+### 将数字转换为字符串
 
-You can convert numbers to strings by using the `strconv.Itoa` method from the `strconv` package in the Go standard libary. If you pass either a number or a variable into the parentheses of the method, that numeric value will be converted into a string value.
+你可以使用 Go 标准库中 `strconv` 包中的 `strconv.Itoa` 方法将数字转换为字符串。 如果将数字或变量传递给该方法，则该数字值将被转换为字符串。
 
-First, let’s look at converting integers. To convert the integer `12` to a string value, you can pass `12` into the `strconv.Itoa` method:
+首先，让我们看看转换整数。 要将整数 `12` 转换为字符串，可以将 `12` 传递给 `strconv.Itoa` 方法：
 
 ```go
 package main
@@ -222,18 +223,18 @@ func main() {
 }
 ```
 
-When running this program, you’ll receive the following output:
+运行此程序时，你将收到以下输出：
 
 ```go
 Output
 "12"
 ```
 
-The quotes around the number 12 signify that the number is no longer an integer but is now a string value.
+数字 `12` 周围的引号表示该数字不再是整数，而是字符串。
 
-You used the `:=` assignment operator to both declare a new variable with the name of `a` and assign the value returned from the `strconv.Itoa()` function. In this case, you assigned the value `12` to your variable. You also used the `%q` verb in the `fmt.Printf` function, which tells the function to quote the string provided.
+你使用 `:=` 赋值运算符来声明一个名为 `a` 的新变量，并将 `strconv.Itoa()` 函数返回的值赋值给它。 此时值 `12` 被分配给了变量。 你通过在 `fmt.Printf` 函数中使用 `%q` 来告诉函数引用提供的字符串参数。
 
-With variables you can begin to see how practical it can be to convert integers to strings. Say you want to keep track of a user’s daily programming progress and are inputting how many lines of code they write at a time. You would like to show this feedback to the user and will be printing out string and integer values at the same time:
+通过使用变量，你更能了解将整数转换为字符串的实际情况。 假设你想跟踪用户的日常编程进度，并输入他们一次编写的代码行数。 你希望将此反馈显示给用户，并将同时打印出字符串和整数值：
 
 ```go
 package main
@@ -250,14 +251,14 @@ func main() {
 }
 ```
 
-When you run this code, you’ll receive the following error:
+运行此代码时，你将收到以下错误：
 
 ```go
 Output
 invalid operation: ("Congratulations, " + user + "! You just wrote ") + lines (mismatched types string and int)
 ```
 
-You’re not able to concatenate strings and integers in Go, so you’ll have to convert the variable `lines` to be a string value:
+你不能在 Go 中拼接字符串和整数，所以你必须将变量 `lines` 转换为字符串：
 
 ```
 package main
@@ -275,14 +276,14 @@ func main() {
 }
 ```
 
-Now, when you run the code, you’ll receive the following output that congratulates your user on their progress:
+现在，当你运行代码时，你将收到以下输出，祝贺你的用户取得了进展：
 
 ```go
 Output
 Congratulations, Sammy! You just wrote 50 lines of code.
 ```
 
-If you are looking to convert a float to a string rather than an integer to a string, you follow similar steps and format. When you pass a float into the `fmt.Sprint` method, from the `fmt` package in the Go standard library, a string value of the float will be returned. You can use either the float value itself or a variable:
+如果你希望将浮点数转换为字符串而不是将整数转换为字符串，请遵循类似的步骤和格式。 当你将浮点数传递给 `fmt.Sprint` 方法时，从 Go 标准库中的 `fmt` 包中，将返回浮点数的字符串值。 你可以使用浮点值本身或变量：
 
 ```go
 package main
@@ -305,7 +306,7 @@ Output
 5524.53
 ```
 
-You can test to make sure it’s right by concatenating with a string:
+你可以通过拼接字符串来测试以确保它是正确的：
 
 ```go
 package main
@@ -325,15 +326,15 @@ Output
 Sammy has 5524.53 points.
 ```
 
-You can be sure your float was properly converted to a string because the concatenation was performed without error.
+你可以确定你的浮点数已正确转换为字符串，因为拼接执行时没有报错。
 
-### Converting Strings to Numbers
+### 将字符串转换为数字
 
-Strings can be converted to numbers by using the `strconv` package in the Go standard library. The `strconv` package has functions for converting both integer and float number types. This is a very common operation when accepting input from the user. For example, if you had a program that asked for a person’s age, when they type the response in, it is captured as a `string`. You would then need to convert it to an `int` to do any math with it.
+可以使用 Go 标准库中的 `strconv` 包将字符串转换为数字。 `strconv` 包具有转换整数和浮点数类型的功能。 这是接受用户输入时非常常见的操作。 例如，如果你有一个程序询问一个人的年龄，当他们输入值时，它会被捕获为 `字符串` 。 然后，你需要将其转换为 `int` 以对其进行任何数学运算。
 
-If your string does not have decimal places, you’ll most likely want to convert it to an integer by using the `strconv.Atoi` function. If you know you will use the number as a float, you would use `strconv.ParseFloat`.
+如果你的字符串没有小数位，你很可能希望使用 strconv.Atoi 函数将其转换为整数。 如果你知道你将使用数字作为浮点数，你会使用`strconv.ParseFloat`。
 
-Let’s use the example of the user Sammy keeping track of lines of code written each day. You may want to manipulate those values with math to provide more interesting feedback for the user, but those values are currently stored in strings:
+让我们使用用户 Sammy 跟踪每天编写的代码行的示例。 你可能希望使用运算符来操作这些值，以便为用户提供更有趣的反馈，但这些值当前存储在字符串中：
 
 ```go
 package main
@@ -357,9 +358,9 @@ Output
 invalid operation: lines_today - lines_yesterday (operator - not defined on string)
 ```
 
-Because the two numeric values were stored in strings, you received an error. The operand `-` for subtraction is not a valid operand for two string values.
+因为这两个数值存储在字符串中，所以你收到报错。 减法运算符 `-` 不能对两个字符串执行。
 
-Modify the code to include the `strconv.Atoi()` method that will convert the strings to integers, which will allow you to do math with values that were originally strings. Because there is a potential to fail when converting a string to an integer, you have to check for any errors. You can use an `if` statement to check if your conversion was successful.
+修改代码来增加 `strconv.Atoi()` 方法，该方法能将字符串转换为整数，这将允许你对最初是字符串的值进行数学运算。 因为在将字符串转换为整数时可能会失败，所以你必须检查是否有任何报错。 你可以使用 `if` 语句来检查你的转换是否成功。
 
 ```
 package main
@@ -389,16 +390,16 @@ func main() {
 }
 ```
 
-Because it is possible for a string to not be a number, the `strconv.Atoi()` method will return both the converted type, as well as a potential error. When converting from `lines_yesterday` with the `strconv.Atoi` function, you have to check the `err` return value to ensure that the value was converted. If the `err` is not `nil`, it means that `strconv.Atoi` was unable to successfully convert the string value to an integer. In this example, you used an `if` statement to check for the error, and if an error was returned, you used `log.Fatal` to log the error and exit the program.
+因为字符串可能不是数字，所以 strconv.Atoi() 方法将返回转换后的类型以及潜在的错误。 当使用 `strconv.Atoi` 函数从 `lines_yesterday` 转换时，你必须检查 `err` 返回值以确保该值已被转换。 如果 `err` 不是 `nil`，则意味着 `strconv.Atoi` 无法成功将字符串值转换为整数。 在这个例子中，你使用了一个 `if` 语句来检查错误，如果返回了一个错误，你使用了 `log.Fatal` 来记录错误并退出程序。
 
-When you run the preceding code, you will get:
+当你运行前面的代码时，你会得到：
 
 ```go
 Output
 58
 ```
 
-Now try to convert a string that is not a number:
+现在尝试转换一个不是数字的字符串：
 
 ```go
 package main
@@ -416,7 +417,7 @@ func main() {
 }
 ```
 
-You will get the following error:
+你将收到以下报错：
 
 ```go
 Output
@@ -424,11 +425,11 @@ Output
 strconv.Atoi: parsing "not a number": invalid syntax
 ```
 
-Because `b` was declared, but `strconv.Atoi` failed to make a conversion, a value was never assigned to `b`. Notice that `b` has the value of `0`. This is because Go has default values, referred to as zero values in Go. `strconv.Atoi` provides an error describing why it failed to convert the string as well.
+因为声明了 `b`，但 `strconv.Atoi` 未能进行转换，所以 `b` 没能被赋值。 请注意，`b` 的值为 `0` 。 这是因为 Go 有默认值，在 Go 中称为零值。 `strconv.Atoi` 返回了一个错误，描述了为什么它无法转换字符串。
 
-### Converting Strings and Bytes
+### 转换字符串和字节
 
-Strings in Go are stored as a slice of bytes. In Go, you can convert between a slice of bytes and a string by wrapping it in the corresponding conversions of `[]byte()` and `string()`:
+Go 中的字符串存储为字节切片。 在 Go 中，你可以通过将其包装在 `[]byte()` 和 `string()` 的相应转换中来在字节切片和字符串之间进行转换：
 
 ```go
 package main
@@ -452,7 +453,7 @@ func main() {
 }
 ```
 
-Here you have stored a string value in `a`, then converted it to a slice of bytes `b`, then converted the slice of bytes back to a string as `c`. You then print `a`, `b`, and `c` to the screen:
+在这里，你将字符串存储在 `a` 中，然后将其转换为字节切片`b`，然后将字节切片转换回字符串并赋值给`c`。 然后将 `a`、`b` 和 `c` 打印到屏幕上：
 
 ```go
 Output
@@ -461,10 +462,10 @@ my string
 my string
 ```
 
-The first line of output is the original string `my string`. The second line printed out is the byte slice that makes up the original string. The third line shows that the byte slice can be safely converted back into a string and printed back out.
+输出的第一行是原始字符串 `my string`。 打印出来的第二行是组成原始字符串的字节切片。 第三行显示字节切片可以安全地转换回字符串并打印出来。
 
-## Conclusion
+## 结论
 
-This Go tutorial demonstrated how to convert several of the important native data types to other data types, primarily through built-in methods. Being able to convert data types in Go will allow you to do things like accept user input and do math across different number types. Later on, when you are using Go to write programs that accept data from many different sources like databases and APIs, you will use these conversion methods to ensure you can act on your data. You will also be able to optimize storage by converting data to smaller data types.
+本 Go 教程主要演示了如何通过内置方法将几种重要的数据类型转换为其他数据类型。 能够在 Go 中转换数据类型将允许你执行诸如接受用户输入和跨不同数字类型进行数学运算之类的事情。 稍后，当你使用 Go 编写接受来自许多不同来源（如数据库和 API）的数据的程序时，你将使用这些转换方法来确保你可以对数据进行操作。 你还可以通过将数据转换为更小的数据类型来优化存储。
 
-If you would like a deeper analysis of data types in Go, check out our [Understanding Data Types in Go](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go) article.
+如果你想深入分析 Go 中的数据类型，请查看我们的 [了解 Go 中的数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go) 文章。
