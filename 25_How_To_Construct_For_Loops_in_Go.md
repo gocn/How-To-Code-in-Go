@@ -7,9 +7,9 @@
 
 在本教程中，您将了解 Go 中 `for` 循环是如何工作的，包括其使用的三个主要变体。我们将首先展示如何创建不同类型的 `for` 循环，然后介绍如何[在 Go 中遍历顺序数据类型](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go)。最后，我们将解释如何使用嵌套循环。
 
-## 声明 ForClause 和 条件循环
+## 声明 ForClause 和 Condition 循环
 
-为了适应各种用例，在 Go 中创建 `for` 循环有三种不同的方法，每种方法都有自己的功能。这些是使用**Condition**、**ForClause**或**RangeClause** 创建 `for` 循环。在本节中，我们将解释如何声明和使用 ForClause 和 Condition 变体。
+为了适应各种用例，在 Go 中创建 `for` 循环有三种不同的方法，每种方法都有自己的功能。这些是使用 **Condition**、**ForClause** 或 **RangeClause** 创建 `for` 循环。在本节中，我们将解释如何声明和使用 ForClause 和 Condition 变体。
 
 让我们先看看如何在 ForClause 中使用 `for` 循环。
 
@@ -72,11 +72,11 @@ Output
 4
 ```
 
-循环运行了 5 次。最初，设置 `i` 为 `0`，然后检查是否 `i` 小于`5`。由于 `i` 的值小于 `5` ，因此执行了循环并执行了 `fmt.Println(i)` 的动作。循环结束时， 调用 `i++` 语句，使`i` 的值加 1。
+循环运行了 5 次。最初，设置 `i` 为 `0`，然后检查是否 `i` 小于`5`。由于 `i` 的值小于 `5` ，因此执行了循环并执行了 `fmt.Println(i)` 的动作。循环结束时， 调用 `i++` 语句，使 `i` 的值加 1。
 
 **注意：** 请记住，在编程中我们倾向于从索引 0 开始，这就是为什么虽然打印了 5 个数字，但它们的范围是 0-4。
 
-我们不限于从 0 开始或以指定值结束。我们可以为我们的初始语句分配任何值，也可以在我们的后置语句中赋予任何值。这允许我们创建任何所需的范围来循环：
+我们不会限制必须从 0 开始或者以某个特定值结束。我们可以为我们的初始语句分配任何值，也可以在我们的后置语句中赋予任何值。这允许我们创建任何所需的范围来循环：
 
 ```go
 for i := 20; i < 25; i++ {
@@ -139,7 +139,7 @@ Output
 10
 ```
 
-您也可以从语法中不使用初始语句和后置语句，而只使用条件。这就是所谓的 _条件循环_：
+您也可以从语法中不使用初始语句和后置语句，而只使用条件。这就是所谓的 _Condition循环_：
 
 ```go
 i := 0
@@ -191,9 +191,9 @@ func main() {
 }
 ```
 
-在代码中，`buf :=bytes.NewBufferString("one\ntwo\nthree\nfour\n")` 声明了一个包含一些数据的缓冲区。因为我们不知道缓冲区何时会完成读取，所以我们创建了一个没有子句的 `for` 循环。在 `for` 循环内部，我们使用 `line, err := buf.ReadString('\n')` 从缓冲区读取一行并检查从缓冲区读取是否有错误。如果有，我们解决错误，并[使用 `break` 关键字退出 for 循环](https://www.digitalocean.com/community/tutorials/using-break-and-continue-statements-when-working-with-loops-in-go)。有了`break`，您就不需要使用停止循环的条件。
+在前面的代码中，`buf :=bytes.NewBufferString("one\ntwo\nthree\nfour\n")` 声明了一个包含一些数据的缓冲区。因为我们不知道缓冲区何时会完成读取，所以我们创建了一个没有子句的 `for` 循环。在 `for` 循环内部，我们使用 `line, err := buf.ReadString('\n')` 从缓冲区读取一行并检查从缓冲区读取是否有错误。如果有，我们解决错误，并[使用 `break` 关键字退出 for 循环](https://www.digitalocean.com/community/tutorials/using-break-and-continue-statements-when-working-with-loops-in-go)。有了`break`，您就不需要使用停止循环的条件。
 
-在本节中，我们学习了如何声明 ForClause 循环并使用它来迭代已知范围的值。我们还学习了如何使用条件循环进行迭代，直到满足特定条件。接下来，我们将了解 RangeClause 如何用于迭代顺序数据类型。
+在本节中，我们学习了如何声明 ForClause 循环并使用它来迭代已知范围的值。我们还学习了如何使用 Condition循环进行迭代，直到满足特定条件。接下来，我们将了解 RangeClause 如何用于迭代顺序数据类型。
 
 ## 使用 RangeClause 循环遍历顺序数据类型
 
@@ -256,7 +256,7 @@ Output
 5 requiem
 ```
 
-在切片上使用 `range` 时，它将始终返回两个值。第一个值将是当前迭代所在的索引，第二个是该索引处的值。在这种情况下，对于第一次迭代，索引是 `0`，值是 `hammerhead`。
+在切片上使用 `range` 时，它将始终返回两个值。第一个值将是当前迭代所在的索引，第二个是该索引处的值。在这个示例中，对于第一次迭代，索引是 `0`，值是 `hammerhead`。
 
 有时，我们只想要切片元素内的值，而不是索引。但是，如果我们将前面的代码更改为仅打印值，我们将收到编译时错误：
 

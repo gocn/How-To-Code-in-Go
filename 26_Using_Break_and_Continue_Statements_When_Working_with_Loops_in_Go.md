@@ -28,7 +28,7 @@ func main() {
 }
 ```
 
-这个小程序创建了一个 `for`循环，该循环在当 `i` 小于 `10` 时迭代。
+这个小程序创建了一个 `for`循环，该循环在当 `i` 小于 `10` 时进行迭代。
 
 在 `for` 循环中，有一个`if`语句。该 `if`语句会检查 `i` 的值是否小于 `5`。如果 `i` 的值不等于 `5`，则循环继续并打印出 `i` 的值。如果 `i` 的值等于 `5`，则循环将执行 `break` 语句，打印 `Breaking out of loop`，并停止循环。在程序结束时，我们打印出 `Exiting program` 表示我们已经退出了循环。
 
@@ -49,7 +49,7 @@ Exiting program
 
 ### 嵌套循环
 
-要记住，`break` 语句只会停止调用它的最内层循环的执行。如果您有一组嵌套循环，如果需要，您将需要为每个循环设置break。
+要记住，`break` 语句只会停止调用它的最内层循环的执行。如果您有一组嵌套循环，如果需要的话，您将需要为每个循环设置break。
 
 ```go
 package main
@@ -103,11 +103,11 @@ Exiting program
 
 ## Continue 语句
 
-当您想要跳过循环的剩余部分并返回循环顶部继续新的迭代时，使用 `continue` 语句。
+当您想要跳过循环的剩余部分并返回循环顶部继续新的迭代时，可以使用 `continue` 语句。
 
 与 `break` 语句一样，`continue` 语句通常与  `if`  条件语句一起使用。
 
-使用与前面的[Break 语句](https://www.digitalocean.com/community/tutorials/how-to-use-break-and-continue-statements-when-working-with-loops-in-go#break-statement)部分相同的 `for` 循环程序，我们将使用 `continue` 语句而不是 `break` 语句：
+使用与前面的[Break 语句](https://www.digitalocean.com/community/tutorials/how-to-use-break-and-continue-statements-when-working-with-loops-in-go#break-statement)部分相同的 `for` 循环程序，这里我们将使用 `continue` 语句而不是 `break` 语句：
 
 ```go
 package main
@@ -126,7 +126,7 @@ func main() {
 }
 ```
 
-使用 `continue` 语句而不是 `break` 语句的区别在于，当变量 `i` 等于 `5` 时，尽管中断了，我们的代码仍将继续执行。让我们看看我们的输出：
+使用 `continue` 语句而不是 `break` 语句的区别在于，当变量 `i` 等于 `5` 时，尽管出现中断，我们的代码仍将继续执行。让我们看看我们的输出：
 
 ```shell
 Output
