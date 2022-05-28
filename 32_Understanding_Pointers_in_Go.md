@@ -1,28 +1,28 @@
-# Understanding Pointers in Go
+# 了解 Go 中的指针
 
-### Introduction
+### 简介
 
-When you write software in Go you’ll be writing functions and methods. You pass data to these functions as *arguments*. Sometimes, the function needs a local copy of the data, and you want the original to remain unchanged. For example, if you’re a bank, and you have a function that shows the user the changes to their balance depending on the savings plan they choose, you don’t want to change the customer’s actual balance before they choose a plan; you just want to use it in calculations. This is called *passing by value*, because you’re sending the value of the variable to the function, but not the variable itself.
+当你用 Go 编写软件时，你会编写函数和方法。你将数据作为 *参数* 传递给这些函数。有时，函数会需要一个数据的本地拷贝，你希望原始数据保持不变。例如，如果你是一家银行，你有一个函数可以根据用户选择的储蓄计划来显示他们的余额变化，你不想在客户选择计划之前改变他们的实际余额，而只想用它来做计算。这被称为 *按值传递*，因为你是在向函数发送变量的值，而不是变量本身。
 
-Other times, you may want the function to be able to alter the data in the original variable. For instance, when the bank customer makes a deposit to their account, you want the deposit function to be able to access the actual balance, not a copy. In this case, you don’t need to send the actual data to the function; you just need to tell the function where the data is located in memory. A data type called a *pointer* holds the memory address of the data, but not the data itself. The memory address tells the function where to find the data, but not the value of the data. You can pass the pointer to the function instead of the data, and the function can then alter the original variable in place. This is called *passing by reference*, because the value of the variable isn’t passed to the function, just its location.
+其他时候，你可能希望函数能够改变原始变量中的数据。例如，当银行客户向其账户存款时，你希望存款函数能够访问实际的余额，而不是一个副本。在这种情况下，你不需要向函数发送实际数据， 而只需要告诉函数数据在内存中的位置。一个叫做 *指针* 的数据类型持有数据的内存地址，但不是数据本身。内存地址告诉函数在哪里可以找到数据，而不是数据的值。你可以把指针传给函数而不是实际的数据，然后函数就可以在原地改变原始变量的值。这被称为 *通过引用传递*，因为变量的值并没有传递给函数，而是传递了它指向的位置。
 
-In this article, you will create and use pointers to share access to the memory space for a variable.
+在这篇文章中，你将创建并使用指针来分享对一个变量的内存空间的访问。
 
-## Defining and Using Pointers
+## 定义和使用指针
 
-When you use a pointer to a variable, there are a couple of different syntax elements that you need to understand. The first one is the use of the ampersand (`&`). If you place an ampersand in front of a variable name, you are stating that you want to get the *address*, or a pointer to that variable. The second syntax element is the use of the asterisk (`*`) or *dereferencing* operator. When you declare a pointer variable, you follow the variable name with the type of the variable that the pointer points to, prefixed with an `*`, like this:
+当你使用一个指向变量的指针时，有几个不同的语法元素你需要了解。第一个是与号（`&`）的使用。如果你在一个变量名称前面加一个与号，你就说明你想获得 *地址*，或者说是该变量的一个指针。第二个语法元素是使用星号（`*`）或 *引用* 操作符。当你声明一个指针变量时，你在变量名后面加上指针指向的变量类型，前面加一个`*`，像这样：
 
-```plain
+```go
 var myPointer *int32 = &someint
 ```
 
-This creates `myPointer` as a pointer to an `int32` variable, and initializes the pointer with the address of `someint`. The pointer doesn’t actually contain an `int32`, just the address of one.
+这将创建 `myPointer` 作为一个指向 `int32` 变量的指针，并以 `someint` 的地址初始化该指针。指针实际上并不包含一个 `int32`，而只是一个地址。
 
-Let’s take a look at a pointer to a `string`. The following code declares both a value of a string, and a pointer to a string:
+让我们来看看一个指向 `string` 的指针。下面的代码既声明了一个字符串的值，又声明了一个指向字符串的指针：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -38,28 +38,26 @@ func main() {
 ```
 
 
-Run the program with the following command:
+用以下命令运行该程序：
 
-```plain
+```shell
 go run main.go
 ```
 
-When you run the program, it will print out the value of the variable, as well as the address of where the variable is stored (the pointer address). The memory address is a hexadecimal number, and not meant to be human-readable. In practice, you’ll probably never output a memory address to look at it. We’re showing you for illustrative purposes. Because each program is created in its own memory space when it is run, the value of the pointer will be different each time you run it, and will be different than the output shown here:
+当你运行程序时，它将打印出变量的值，以及该变量的存储地址（指针地址）。内存地址是一个十六进制的数字，并不是为了让人看懂。在实践中，你可能永远不会输出内存地址来查看它。我们给你看是为了说明问题。因为每个程序运行时都是在自己的内存空间中创建的，所以每次运行时指针的值都会不同，也会与下面显示的输出不同：
 
-```plain
-Output
+```shell
 creature = shark
 pointer = 0xc0000721e0
 ```
-The first variable we defined we named `creature`, and set it equal to a `string` with the value of `shark`. We then created another variable named `pointer`. This time, we set the value of the `pointer` variable to the address of the `creature` variable. We store the address of a value in a variable by using the ampersand (`&`) symbol. This means that the `pointer` variable is storing the **address** of the `creature` variable, not the actual value.
-This is why when we printed out the value of `pointer`, we received the value of `0xc0000721e0`, which is the address of where the `creature` variable is currently stored in computer memory.
+我们定义的第一个变量名为 `creature`，并将其设置为一个 `string`，其值为 `shark` 。然后我们创建了另一个名为 `pointer` 的变量。这一次，我们将 `pointer` 变量的值设置为 `creature` 变量的地址。我们通过使用与号（`&`）符号将一个值的地址存储在一个变量中。这意味着 `pointer` 变量存储的是 `creature` 变量的 **地址** ，而不是实际值。
+这就是为什么当我们打印出 `pointer` 的值时，我们收到的值是 `0xc0000721e0` ，这是 `creature` 变量目前在计算机内存中的地址。
 
-If you want to print out the value of the variable being pointed at from the `pointer` variable, you need to *dereference* that variable. The following code uses the `*` operator to dereference the `pointer` variable and retrieve its value:
+如果你想打印出 `pointer` 变量所指向的变量的值，你需要 *解引用* 该变量。下面的代码使用 `*` 操作符来解除对 `pointer` 变量的引用并检索其值。
 
-main.go
+<center>main.go</center>
 
-```plain
-
+```go
 package main
 
 import "fmt"
@@ -75,20 +73,19 @@ func main() {
 }
 ```
 
-If you run this code, you’ll see the following output:
+如果你运行这段代码，你会看到以下输出：
 
-```plain
-Output
+```shell
 creature = shark
 pointer = 0xc000010200
 *pointer = shark
 ```
-The last line we added now dereferences the `pointer` variable, and prints out the value that is stored at that address.
-If you want to modify the value stored at the `pointer` variable’s location, you can use the dereference operator as well:
+我们添加的最后一行现在解除了对 `pointer` 变量的引用，并打印出了存储在该地址的值。
+如果你想修改存储在 `pointer` 变量位置的值，你也可以使用解除引用操作：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -108,22 +105,20 @@ func main() {
 
 ```
 
+运行这段代码可以看到输出：
 
-Run this code to see the output:
-
-```plain
-Output
+```shell
 creature = shark
 pointer = 0xc000094040
 *pointer = shark
 *pointer = jellyfish
 ```
-We set the value the `pointer` variable refers to by using the asterisk (`*`) in front of the variable name, and then providing a new value of `jellyfish`. As you can see, when we print the dereferenced value, it is now set to `jellyfish`.
-You may not have realized it, but we actually changed the value of the `creature` variable as well. This is because the `pointer` variable is actually pointing at the `creature` variable’s address. This means that if we change the value pointed at from the `pointer` variable, we also change the value of the `creature` variable.
+我们通过在变量名称前使用星号（`*`）来设置 `pointer` 变量所指的值，然后提供一个 `jellyfish` 的新值。正如你所看到的，当我们打印解引用的值时，它现在被设置为 `jellyfish` 。
+你可能没有意识到，但实际上我们也改变了 `creature` 变量的值。这是因为 `pointer` 变量实际上是指向 `creature` 变量的地址。这意味着如果我们改变了 `pointer` 变量所指向的值，同时我们也会改变 `creature` 变量的值。
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -144,30 +139,29 @@ func main() {
 }
 ```
 
-The output looks like this:
+输出看起来像这样：
 
-```plain
-Output
+```shell
 creature = shark
 pointer = 0xc000010200
 *pointer = shark
 *pointer = jellyfish
 creature = jellyfish
 ```
-Although this code illustrates how a pointer works, this is not the typical way in which you would use pointers in Go. It is more common to use them when defining function arguments and return values, or using them when defining methods on custom types. Let’s look at how you would use pointers with functions to share access to a variable.
-Again, keep in mind that we are printing the value of `pointer` to illustrate that it is a pointer. In practice, you wouldn’t use the value of a pointer, other than to reference the underlying value to retrieve or update that value.
+虽然这段代码说明了指针的工作原理，但这并不是你在 Go 中使用指针的典型方式。更常见的是在定义函数参数和返回值时使用它们，或者在定义自定义类型的方法时使用它们。让我们看看如何在函数中使用指针来共享对一个变量的访问。
+同样，请记住，我们正在打印 `pointer` 的值，是为了说明它是一个指针。在实践中，你不会使用指针的值，除了引用底层的值来检索或更新该值之外。
 
-## Function Pointer Receivers
+## 函数指针接收器
 
-When you write a function, you can define arguments to be passed ether by *value*, or by *reference*. Passing by *value* means that a copy of that value is sent to the function, and any changes to that argument within that function *only* effect that variable within that function, and not where it was passed from. However, if you pass by *reference*, meaning you pass a pointer to that argument, you can change the value from within the function, and also change the value of the original variable that was passed in. You can read more about how to define functions in our [How To Define and Call Functions in Go](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go).
+当你写一个函数时，你可以定义参数，以 *值* 或 *引用* 的方式传递。通过 *值* 传递意味着该值的副本被发送到函数中，并且在该函数中对该参数的任何改变 *只* 在该函数中影响该变量，而不是从哪里传递。然而，如果你通过 *引用* 传递，意味着你传递了一个指向该参数的指针，你可以在函数中改变该值，也可以改变传递进来的原始变量的值。你可以在我们的[如何在 Go 中定义和调用函数](https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go)中阅读更多关于如何定义函数的信息。
 
-Deciding when to pass a pointer as opposed when to send a value is all about knowing if you want the value to change or not. If you don’t want the value to change, send it as a value. If you want the function you are passing your variable to be able to change it, then you would pass it as a pointer.
+什么时候传递一个指针，什么时候发送一个值，都取决于你是否希望这个值发生变化。如果你不希望数值改变，就把它作为一个值来发送。如果你希望你传递给你的变量的函数能够改变它，那么你就把它作为一个指针传递。
 
-To see the difference, let’s first look at a function that is passing in an argument by `value`:
+为了看到区别，让我们先看看一个通过 `值` 传递参数的函数：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -191,27 +185,25 @@ func changeCreature(creature Creature) {
 
 ```
 
+输出看起来像这样：
 
-The output looks like this:
-
-```plain
-Output
+```shell
 1) {Species:shark}
 2) {Species:jellyfish}
 3) {Species:shark}
 ```
-First we created a custom type named `Creature`. It has one field named `Species`, which is a string. In the `main` function, we created an instance of our new type named `creature` and set the `Species` field to `shark`. We then printed out the variable to show the current value stored within the `creature` variable.
-Next, we call `changeCreature` and pass in a copy of the `creature` variable.
+首先我们创建了一个名为 `Creature` 的自定义类型。它有一个名为 `Species` 的字段，它是一个字符串。在 `main` 函数中，我们创建了一个名为`Creature` 的新类型实例，并将`Species` 字段设置为`shark` 。然后我们打印出变量，以显示存储在 `creature` 变量中的当前值。
+接下来，我们调用 `changeCreature`，并传入 `creature` 变量的副本。
 
-The function `changeCreature` is defined as taking one argument named `creature`, and it is of type `Creature` that we defined earlier. We then change the value of the `Species` field to `jellyfish` and print it out. Notice that within the `changeCreature` function, the value of `Species` is now `jellyfish`, and it prints out `2) {Species:jellyfish}`. This is because we are allowed to change the value within our function scope.
+`changeCreature` 被定义为接受一个名为 `creature` 的参数，并且它是我们之前定义的 `Creature` 类型的函数。然后我们将`Species` 字段的值改为 `jellyfish` 并打印出来。注意在 `changeCreature` 函数中，`Species` 的值现在是 `jellyfish`，并且打印出 `2) {Species:jellyfish}`。这是因为我们被允许在我们的函数范围内改变这个值。
 
-However, when the last line of the `main` function prints the value of `creature`, the value of `Species` is still `shark`. The reason that the value didn’t change is because we passed the variable by *value*. This means that a copy of the value was created in memory, and passed to the `changeCreature` function. This allows us to have a function that can make changes to any arguments passed in as needed, but will not affect any of those variables outside of the function.
+然而，当 `main` 函数的最后一行打印出 `creature` 的值时，`Species` 的值仍然是 `shark` 。值没有变化的原因是我们通过 *值* 传递变量。这意味着在内存中创建了一个值的副本，并传递给 `changeCreature` 函数。这允许我们有一个函数，可以根据需要对传入的任何参数进行修改，但不会影响函数之外的任何变量。
 
-Next, let’s change the `changeCreature` function to take an argument by *reference*. We can do this by changing the type from `creature` to a pointer by using the asterisk (`*`) operator. Instead of passing a `creature`, we’re now passing a pointer to a `creature`, or a `*creature`. In the previous example, `creature` is a `struct` that has a `Species` value of `shark`. `*creature` is a pointer, not a struct, so its value is a memory location, and that’s what we pass to `changeCreature()`.
+接下来，让我们改变 `changeCreature` 函数，使其通过 *引用* 接受一个参数。我们可以通过使用星号（`*`）操作符将类型从 `Creature` 改为指针来做到这一点。我们现在传递的不是一个 `Creature`，而是一个指向 `Creature` 的指针，或者是一个 `*Creature`。在前面的例子中，`creature` 是一个 `struct`，它的 `Species` 值为 `shark`。`*creature` 是一个指针，不是一个结构体，所以它的值是一个内存位置，这就是我们传递给 `changeCreature()` 真正的东西。
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -234,28 +226,27 @@ func changeCreature(creature *Creature) {
 }
 ```
 
-Run this code to see the following output:
+运行这段代码可以看到以下输出：
 
-```plain
-Output
+```shell
 1) {Species:shark}
 2) &{Species:jellyfish}
 3) {Species:jellyfish}
 ```
-Notice that now when we change the value of `Species` to `jellyfish` in the `changeCreature` function, it changes the original value defined in the `main` function as well. This is because we passed the `creature` variable by *reference*, which allows access to the original value and can change it as needed.
-Therefore, if you want a function to be able to change a value, you need to pass it by reference. To pass by reference, you pass the pointer to the variable, and not the variable itself.
+注意，现在当我们在 `changeCreature` 函数中把 `Species` 的值改为 `jellyfish` 时，它也改变了 `main` 函数中定义的原始值。这是因为我们通过 *引用* 传递了 `creature` 变量，它允许访问内存里的原始值并可以根据需要改变它。
+因此，如果你想让一个函数能够改变一个值，你需要通过引用来传递它。要通过引用传递，你就需要传递变量的指针，而不是变量本身。
 
-However, sometimes you may not have an actual value defined for a pointer. In those cases, it is possible to have a [panic](https://www.digitalocean.com/community/tutorials/handling-panics-in-go) in the program. Let’s look at how that happens and how to plan for that potential problem.
+然而，有时你可能没有为一个指针定义一个实际的值。在这些情况下，有可能在程序中出现[恐慌](https://www.digitalocean.com/community/tutorials/handling-panics-in-go)。让我们来看看这种情况是如何发生的，以及如何对这种潜在的问题进行规划。
 
-## Nil Pointers
+## 空指针
 
-All variables in Go have a [zero value](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values). This is true even for a pointer. If you declare a pointer to a type, but assign no value, the zero value will be `nil`. `nil` is a way to say that “nothing has been initialized” for the variable.
+Go 中的所有变量都有一个[零值](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values)。即使对指针来说也是如此。如果你声明了一个类型的指针，但是没有赋值，那么零值将是 `nil`。`nil` 是一种表示变量 "没有被初始化" 的方式。
 
-In the following program, we are defining a pointer to a `Creature` type, but we are never instantiating that actual instance of a `Creature` and assigning the address of it to the `creature` pointer variable. The value will be `nil` and we can’t reference any of the fields or methods that would be defined on the `Creature` type:
+在下面的程序中，我们定义了一个指向 `Creature` 类型的指针，但是我们从来没有实例化过 `Creature` 的实际实例，也没有将它的地址分配给 `creature` 指针变量。该值将是 `nil`，因此我们不能引用任何定义在 `Creature` 类型上的字段或方法：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -278,10 +269,9 @@ func changeCreature(creature *Creature) {
 }
 ```
 
-The output looks like this:
+输出看起来像这样：
 
-```plain
-Output
+```shell
 1) <nil>
 panic: runtime error: invalid memory address or nil pointer dereference
 [signal SIGSEGV: segmentation violation code=0x1 addr=0x8 pc=0x109ac86]
@@ -293,22 +283,22 @@ main.changeCreature(0x0)
 	        /Users/corylanou/projects/learn/src/github.com/gopherguides/learn/_training/digital-ocean/pointers/src/nil.go:13 +0x98
 		exit status 2
 ```
-When we run the program, it printed out the value of the `creature` variable, and the value is `<nil>`. We then call the `changeCreature` function, and when that function tries to set the value of the `Species` field, it *panics*. This is because there is no instance of the variable actually created. Because of this, the program has no where to actually store the value, so the program panics.
-It is common in Go that if you are receiving an argument as a pointer, you check to see if it was nil or not before performing any operations on it to prevent the program from panicking.
+当我们运行程序时，它打印出了 `creature` 变量的值，该值是 `<nil>`。然后我们调用 `changeCreature` 函数，当该函数试图设置 `Species` 字段的值时，它 *panics*(恐慌) 了。这是因为实际上没有创建 `creature` 变量的实例。正因为如此，程序没有地方可以实际存储这个值，所以程序就恐慌了。
+在 Go 中很常见的是，如果你以指针的形式接收一个参数，在对它进行任何操作之前，你要检查它是否为 `nil`，以防止程序恐慌。
 
-This is a common approach for checking for `nil`:
+这是检查 `nil` 的一种常见方法：
 
-```plain
+```go
 if someVariable == nil {
 	// print an error or return from the method or fuction
 }
 ```
 
-Effectively you want to make sure you don’t have a `nil` pointer that was passed into your function or method. If you do, you’ll likely just want to return, or return an error to show that an invalid argument was passed to the function or method. The following code demonstrates checking for `nil`:
+实际上，你想确保你没有一个 `nil` 指针被传入你的函数或方法。如果有的话，你可能只想返回，或者返回一个错误，以表明一个无效的参数被传递到函数或方法中。下面的代码演示了对 `nil` 的检查：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -336,20 +326,19 @@ func changeCreature(creature *Creature) {
 }
 ```
 
-We added a check in the `changeCreature` to see if the value of the `creature` argument was `nil`. If it was, we print out “creature is nil”, and return out of the function. Otherwise, we continue and change the value of the `Species` field. If we run the program, we will now get the following output:
+我们在 `changeCreature` 中添加了一个检查，看 `creature` 参数的值是否为 `nil`。如果是，我们打印出 "creature is nil"，并返回函数。否则，我们继续并改变 `Species` 字段的值。如果我们运行该程序，我们现在将得到以下输出：
 
-```plain
-Output
+```shell
 1) <nil>
 creature is nil
 3) <nil>
 ```
-Notice that while we still had a `nil` value for the `creature` variable, we are no longer panicking because we are checking for that scenario.
-Finally, if we create an instance of the `Creature` type and assign it to the `creature` variable, the program will now change the value as expected:
+请注意，虽然我们仍然为 `creature` 变量设置了 `nil` 值，但我们不再恐慌，因为我们正在检查这种情况。
+最后，如果我们创建一个 `Creature` 类型的实例，并将其赋值给 `creature` 变量，程序现在将按照预期改变值：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -378,22 +367,21 @@ func changeCreature(creature *Creature) {
 }
 ```
 
-Now that we have an instance of the `Creature` type, the program will run and we will get the following expected output:
+现在我们有了一个 `Creature` 类型的实例，程序将运行，我们将得到以下预期输出：
 
-```plain
-Output
+```shell
 1) &{Species:shark}
 2) &{Species:jellyfish}
 3) &{Species:jellyfish}
 ```
-When you are working with pointers, there is a potential for the program to panic. To avoid panicking, you should check to see if a pointer value is `nil` prior to trying to access any of the fields or methods defined on it.
-Next, let’s look at how using pointers and values affects defining methods on a type.
+当你在使用指针时，程序有可能会出现恐慌。为了避免恐慌，你应该在试图访问任何字段或定义在其上的方法之前，检查一个指针值是否为 `nil`。
+接下来，让我们看看使用指针和值是如何影响在一个类型上定义方法的。
 
-## Method Pointer Receivers
+## 方法指针接收器
 
-A *receiver* in go is the argument that is defined in a method declaration. Take a look at the following code:
+Go 中的 *接收器* 是指在方法声明中定义的参数。看一下下面的代码：
 
-```plain
+```go
 type Creature struct {
 	Species string
 }
@@ -403,17 +391,17 @@ func (c Creature) String() string {
 }
 ```
 
-The receiver in this method is `c Creature`. It is stating that the instance of `c` is of type `Creature` and you will reference that type via that instance variable.
+这个方法的接收器是 `c Creature`。它说明 `c` 的实例属于 `Creature` 类型，你将通过该实例变量引用该类型。
 
-Just like the behavior of functions is different based on whether you send in an argument as a pointer or a value, methods also have different behavior. The big difference is that if you define a method with a value receiver, you are not able to make changes to the instance of that type that the method was defined on.
+方法跟函数一样，也是根据你送入的参数是指针还是值而有不同的行为。最大的区别是，如果你用一个值接收器定义一个方法，你就不能对该方法所定义的那个类型的实例进行修改。
 
-There will be times that you would like your method to be able to update the instance of the variable that you are using. To allow for this, you would want to make the receiver a pointer.
+有的时候，你希望你的方法能够更新你所使用的变量的实例。为了实现这一点，你会想让接收器成为一个指针。
 
-Let’s add a `Reset` method to our `Creature` type that will set the `Species` field to an empty string:
+让我们给我们的 `Creature` 类型添加一个 `Reset` 方法，将 `Species`字段设置为一个空字符串：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -435,19 +423,18 @@ func main() {
 }
 ```
 
-If we run the program, we will get the following output:
+如果我们运行该程序，我们将得到以下输出：
 
-```plain
-Output
+```shell
 1) {Species:shark}
 2) {Species:shark}
 ```
-Notice that even though in the `Reset` method we set the value of `Species` to an empty string, that when we print out the value of our `creature` variable in the `main` function, the value is still set to `shark`. This is because we defined the `Reset` method has having a `value` receiver. This means that the method will only have access to a *copy* of the `creature` variable.
-If we want to be able to modify the instance of the `creature` variable in the methods, we need to define them as having a `pointer` receiver:
+注意到即使在 `Reset` 方法中我们将 `Species` 的值设置为空字符串，当我们在 `main` 函数中打印出 `creature` 变量的值时，该值仍然被设置为 `shark` 。这是因为我们定义的 `Reset` 方法有一个 `值` 接收器。这意味着该方法只能访问 `creature` 变量的 *副本*。
+如果我们想在方法中修改 `creature` 变量的实例，我们需要将它们定义为有一个 `指针` 接收器：
 
-main.go
+<center>main.go</center>
 
-```plain
+```go
 package main
 
 import "fmt"
@@ -469,17 +456,16 @@ func main() {
 }
 ```
 
-Notice that we now added an asterisk (`*`) in front of the `Creature` type in when we defined the `Reset` method. This means that the instance of `Creature` that is passed to the `Reset` method is now a pointer, and as such when we make changes it will affect the original instance of that variables.
+注意，我们现在在定义 `Reset` 方法时，在 `Creature` 类型前面添加了一个星号（`*`）。这意味着传递给 `Reset` 方法的 `Creature` 实例现在是一个指针，因此当我们进行修改时，将影响到该变量的原始实例。
 
-```plain
-Output
+```shell
 1) {Species:shark}
 2) {Species:}
 ```
-The `Reset` method has now changed the value of the `Species` field.
-## Conclusion
+现在 `Reset` 方法已经改变了 `Species` 字段的值。
+## 总结
 
-Defining a function or method as a pass by *value* or pass by *reference* will affect what parts of your program are able to make changes to other parts. Controlling when that variable can be changed will allow you to write more robust and predictable software. Now that you have learned about pointers, you can see how they are used in interfaces as well.
+将一个函数或方法定义为通过 *值* 或通过 *引用*，将影响你的程序的哪些部分能够对其他部分进行修改。控制该变量何时能被改变，将使你能写出更健壮和可预测的软件。现在你已经了解了指针，你也可以看到它们是如何在接口中使用的。
 
  
 
