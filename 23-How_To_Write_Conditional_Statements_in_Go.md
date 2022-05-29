@@ -1,28 +1,26 @@
-# How To Write Conditional Statements in Go
+# 如何在Go中编写条件语句
 
-### Introduction
+### 介绍
 
-Conditional statements are part of every programming language. With conditional statements, we can have code that sometimes runs and at other times does not run, depending on the conditions of the program at that time.
+条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。
 
-When we fully execute each statement of a program, we are not asking the program to evaluate specific conditions. By using conditional statements, programs can determine whether certain conditions are being met and then be told what to do next.
+当我们完全执行程序的每个语句时，我们并没有要求程序评估特定的条件。通过使用条件语句，程序可以确定某些条件是否被满足，然后被告知下一步该做什么。
 
-Let’s look at some examples where we would use conditional statements:
+让我们来看看一些使用条件语句的例子。
 
-- If the student receives over 65% on her test, report that her grade passes; if not, report that her grade fails.
-- If he has money in his account, calculate interest; if he doesn’t, charge a penalty fee.
-- If they buy 10 oranges or more, calculate a discount of 5%; if they buy fewer, then don’t.
+- 如果学生的考试成绩超过65%，报告她的成绩通过；如果没有，报告她的成绩不合格。
+- 如果他的账户里有钱，就计算利息；如果没有，就收取罚款。
+- 如果他们买了10个或更多的橙子，计算5%的折扣；如果他们买的少，就不买。
 
-Through evaluating conditions and assigning code to run based on whether or not those conditions are met, we are writing conditional code.
+通过评估条件，并根据是否满足这些条件来分配代码运行，我们就是在写条件代码。
 
-This tutorial will take you through writing conditional statements in the Go programming language.
+本教程将带你了解在Go编程语言中编写条件语句。
 
-## If Statements
+## If 语句
 
-We will start with the `if` statement, which will evaluate whether a statement is true or false, and run code only in the case that the statement is true.
+我们将从 `if` 语句开始，它将评估一个语句是真的还是假的，并且只在该语句为真的情况下运行代码。
 
-In a plain text editor, open a file and write the following code:
-
-grade.go
+在一个纯文本编辑器中，打开一个文件，写入以下代码：
 
 ```go
 package main
@@ -38,20 +36,17 @@ func main() {
 }
 ```
 
+在这段代码中，我们有一个变量`grade`，并给它一个整数值`70`。然后我们使用`if`语句来评估变量`grade`是否大于或等于（`>=`）`65`。如果它确实满足这个条件，我们告诉程序打印出[字符串](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go) `Passing grade`。
 
-With this code, we have the variable `grade` and are giving it the integer value of `70`. We are then using the `if` statement to evaluate whether or not the variable grade is greater than or equal ( `>=` ) to `65`. If it does meet this condition, we are telling the program to print out the [string](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go) `Passing grade`.
+将程序保存为`grade.go`，并在[终端窗口](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)中用`go run grade.go`命令运行它。
 
-Save the program as `grade.go` and run it in a [local programming environment from a terminal window](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go) with the command `go run grade.go`.
+在这种情况下，70分的成绩*符合大于或等于65分的条件，因此，一旦你运行该程序，你将收到以下输出：
 
-In this case, the grade of 70 *does* meet the condition of being greater than or equal to 65, so you will receive the following output once you run the program:
-
+```Output
+Passing grade
 ```
-OutputPassing grade
-```
 
-Let’s now change the result of this program by changing the value of the `grade` variable to `60`:
-
-grade.go
+现在让我们改变这个程序的结果，把`grade`变量的值改为`60`：
 
 ```go
 package main
@@ -67,12 +62,9 @@ func main() {
 }
 ```
 
+当我们保存并运行*这个*代码时，我们不会收到任何输出，因为条件*没有得到满足，我们也没有告诉程序执行另一条语句。
 
-When we save and run *this* code, we will receive no output because the condition was *not* met and we did not tell the program to execute another statement.
-
-To give one more example, let us calculate whether a bank account balance is below 0. Let’s create a file called `account.go` and write the following program:
-
-account.go
+再举一个例子，让我们计算一个银行账户余额是否低于0。让我们创建一个名为`account.go`的文件，并编写以下程序：
 
 ```go
 package main
@@ -88,22 +80,18 @@ func main() {
 }
 ```
 
+当我们用`go run account.go`运行该程序时，我们会收到以下输出：
 
-When we run the program with `go run account.go`, we’ll receive the following output:
-
+```Output
+Balance is below 0, add funds now or you will be charged a penalty.
 ```
-OutputBalance is below 0, add funds now or you will be charged a penalty.
-```
 
-In the program we initialized the variable `balance` with the value of `-5`, which is less than 0. Since the balance met the condition of the `if` statement (`balance < 0`), once we save and run the code, we will receive the string output. Again, if we change the balance to 0 or a positive number, we will receive no output.
+在程序中，我们将变量`balance`初始化为`5`，即小于0。由于`balance`符合`if`语句的条件（`balance<0`），一旦我们保存并运行代码，我们将收到字符串的输出。同样，如果我们把余额改为0或一个正数，我们将不会收到任何输出。
+## Else 语句
 
-## Else Statements
+我们很可能希望程序在 `if`语句评估为假时也能有所作为。在我们的成绩例子中，我们希望输出成绩是合格还是不合格。
 
-It is likely that we will want the program to do something even when an `if` statement evaluates to false. In our grade example, we will want output whether the grade is passing or failing.
-
-To do this, we will add an `else` statement to the grade condition above that is constructed like this:
-
-grade.go
+要做到这一点，我们将在上面的成绩条件中添加一个 `else` 语句，其结构如下：
 
 ```go
 package main
@@ -121,20 +109,17 @@ func main() {
 }
 ```
 
+由于成绩变量的值是`60`，`if`语句评估为假，所以程序不会打印出`Passing grade`。接下来的 `else` 语句告诉程序无论如何都要做一些事情。
 
-Since the grade variable has the value of `60`, the `if` statement evaluates as false, so the program will not print out `Passing grade`. The `else` statement that follows tells the program to do something anyway.
+当我们保存并运行该程序时，我们将收到以下输出：
 
-When we save and run the program, we’ll receive the following output:
-
+```Output
+Failing grade
 ```
-OutputFailing grade
-```
 
-If we then rewrite the program to give the grade a value of `65` or higher, we will instead receive the output `Passing grade`.
+如果我们重写程序，给成绩一个`65`或更高的值，我们将收到`Passing grade`的输出。
 
-To add an `else` statement to the bank account example, we rewrite the code like this:
-
-account.go
+为了给银行账户的例子增加一个 `else` 语句，我们这样改写代码:
 
 ```go
 package main
@@ -152,28 +137,25 @@ func main() {
 }
 ```
 
-
+```Output
+Your balance is 0 or above.
 ```
-OutputYour balance is 0 or above.
-```
 
-Here, we changed the `balance` variable value to a positive number so that the `else` statement will print. To get the first `if` statement to print, we can rewrite the value to a negative number.
+在这里，我们把`balance`变量的值改为正数，这样`else`语句就会打印出来。为了让第一个`if`语句打印出来，我们可以把这个值改写成一个负数。
 
-By combining an `if` statement with an `else` statement, you are constructing a two-part conditional statement that will tell the computer to execute certain code whether or not the `if` condition is met.
+通过将`if`语句和`else`语句结合起来，你就构建了一个由两部分组成的条件语句，无论`if`条件是否满足，都会告诉计算机执行某些代码。
 
-## Else if Statements
+## Else if 语句
 
-So far, we have presented a [Boolean](https://www.digitalocean.com/community/tutorials/understanding-boolean-logic-in-go) option for conditional statements, with each `if` statement evaluating to either true or false. In many cases, we will want a program that evaluates more than two possible outcomes. For this, we will use an **else if** statement, which is written in Go as `else if`. The `else if` or else if statement looks like the `if` statement and will evaluate another condition.
+到目前为止，我们已经为条件语句提出了一个[布尔](https://www.digitalocean.com/community/tutorials/understanding-boolean-logic-in-go)选项，每个`if`语句的评估结果为真或假。在许多情况下，我们会希望一个程序能评估出两个以上的可能结果。为此，我们将使用**else if**语句，在Go中写成`else if`。`else if`或else if语句看起来和`if`语句一样，将评估另一个条件。
 
-In the bank account program, we may want to have three discrete outputs for three different situations:
+在银行账户程序中，我们可能希望在三种不同的情况下有三个离散的输出。
 
-- The balance is below 0
-- The balance is equal to 0
-- The balance is above 0
+- 余额低于0
+- 余额等于0
+- 余额高于0
 
-The `else if` statement will be placed between the `if` statement and the `else` statement as follows:
-
-account.go
+`else if`语句将被放在 `if` 语句和 `else` 语句之间，如下所示：
 
 ```go
 package main
@@ -193,28 +175,25 @@ func main() {
 }
 ```
 
+现在，一旦我们运行该程序，有三种可能的输出：
 
-Now, there are three possible outputs that can occur once we run the program:
+- 如果变量`余额`等于`0`，我们将收到`else if`语句的输出（`余额等于0，尽快添加资金。）
+- 如果变量`balance`被设置为一个正数，我们将收到`else`语句的输出（`你的余额为0或以上`）。
+- 如果变量`balance`被设置为一个负数，输出将是`if`语句的字符串（`余额低于0，现在添加资金，否则将被收取罚款`）。
 
-- If the variable `balance` is equal to `0` we will receive the output from the `else if` statement (`Balance is equal to 0, add funds soon.`)
-- If the variable `balance` is set to a positive number, we will receive the output from the `else` statement (`Your balance is 0 or above.`).
-- If the variable `balance` is set to a negative number, the output will be the string from the `if` statement (`Balance is below 0, add funds now or you will be charged a penalty`).
+如果我们想有三个以上的可能性呢？我们可以通过在代码中写一个以上的`else if`语句来实现。
 
-What if we want to have more than three possibilities, though? We can do this by writing more than one `else if` statement into our code.
+在`grade.go`程序中，让我们重写代码，以便有几个字母等级对应于数字等级的范围。
 
-In the `grade.go` program, let’s rewrite the code so that there are a few letter grades corresponding to ranges of numerical grades:
+- 90分或以上相当于A级
+- 80-89相当于B级
+- 70-79相当于C级
+- 65-69相当于D级
+- 64分或以下相当于F级
 
-- 90 or above is equivalent to an A grade
-- 80-89 is equivalent to a B grade
-- 70-79 is equivalent to a C grade
-- 65-69 is equivalent to a D grade
-- 64 or below is equivalent to an F grade
+要运行这段代码，我们将需要一个`if`语句，三个`else if`语句，以及一个处理所有失败情况的`else`语句。
 
-To run this code, we will need one `if` statement, three `else if` statements, and an `else` statement that will handle all failing cases.
-
-Let’s rewrite the code from the preceding example to have strings that print out each of the letter grades. We can keep our `else` statement the same.
-
-grade.go
+让我们重写前面的例子中的代码，让字符串打印出每个字母等级。我们可以保持我们的`else`语句不变。
 
 ```go
 package main
@@ -238,18 +217,17 @@ func main() {
 }
 ```
 
+由于`else if`语句将按顺序评估，我们可以保持我们的语句相当基本。这个程序正在完成以下步骤。
 
-Since `else if` statements will evaluate in order, we can keep our statements pretty basic. This program is completing the following steps:
+1. 如果成绩大于90，程序将打印 "A级"，如果成绩小于90，程序将继续下一个语句...。
+2. 如果成绩大于或等于80，程序将打印 "B级"，如果成绩在79或以下，程序将继续下一个语句......
+3. 如果成绩大于或等于70，程序将打印 "C级"，如果成绩是69或更少，程序将继续下一个语句......
+4. 如果成绩大于或等于65，程序将打印 "D级"，如果成绩是64或更少，程序将继续下一个语句......
+5. 程序将打印 "成绩不合格"，因为上述所有的条件都没有满足。
 
-1. If the grade is greater than 90, the program will print `A grade`, if the grade is less than 90, the program will continue to the next statement…
-2. If the grade is greater than or equal to 80, the program will print `B grade`, if the grade is 79 or less, the program will continue to the next statement…
-3. If the grade is greater than or equal to 70, the program will print `C grade`, if the grade is 69 or less, the program will continue to the next statement…
-4. If the grade is greater than or equal to 65, the program will print `D grade`, if the grade is 64 or less, the program will continue to the next statement…
-5. The program will print `Failing grade` because all of the above conditions were not met.
+## 嵌套的If语句
 
-## Nested If Statements
-
-Once you are feeling comfortable with the `if`, `else if`, and `else` statements, you can move on to nested conditional statements. We can use nested `if` statements for situations where we want to check for a secondary condition if the first condition executes as true. For this, we can have an if-else statement inside of another if-else statement. Let’s look at the syntax of a nested `if` statement:
+一旦你对 `if`, `else if`, 和 `else`语句感到满意，你就可以转到嵌套条件语句。我们可以使用嵌套的`if`语句来处理这样的情况：如果第一个条件执行为真，我们想检查第二个条件。为此，我们可以在另一个if-else 语句中设置一个if-else 语句。让我们来看看嵌套的`if`语句的语法。
 
 ```go
 if statement1 { // outer if statement
@@ -266,30 +244,29 @@ if statement1 { // outer if statement
 }
 ```
 
+这段代码可以产生一些可能的输出。
 
-A few possible outputs can result from this code:
+- 如果`statement1`评估为真，程序将评估`nested_statement`是否也评估为真。如果这两种情况都是真的，那么输出将是：
 
-- If `statement1` evaluates to true, the program will then evaluate whether the `nested_statement` also evaluates to true. If both cases are true, the output will be:
-
-> ```
-> Outputtrue
+> ```Output
+> true
 > yes
 > ```
 
-- If, however, `statement1` evaluates to true, but `nested_statement` evaluates to false, then the output will be:
+- 然而，如果`statement1`评估为真，但`nested_statement`评估为假，那么输出将是：
 
-> ```
-> Outputtrue
+> ```Output
+> true
 > no
 > ```
 
-- And if `statement1` evaluates to false, the nested if-else statement will not run, so the `else` statement will run alone, and the output will be:
+- 而如果`statement1`评估为false，嵌套的if-else语句将不会运行，所以`else`语句将单独运行，输出结果为：
 
-> ```
-> Outputfalse
+> ```Output
+> false
 > ```
 
-We can also have multiple `if` statements nested throughout our code:
+我们也可以在代码中嵌套多个`if`语句：
 
 ```go
 if statement1 { // outer if
@@ -321,12 +298,9 @@ if statement1 { // outer if
 }
 ```
 
+在这段代码中，除了 `else if` 语句外，每个 `if` 语句内都有一个嵌套的 `if` 语句。这将使每个条件内有更多的选项。
 
-In this code, there is a nested `if` statement inside each `if` statement in addition to the `else if` statement. This will allow for more options within each condition.
-
-Let’s look at an example of nested `if` statements with our `grade.go` program. We can check for whether a grade is passing first (greater than or equal to 65%), then evaluate which letter grade the numerical grade should be equivalent to. If the grade is not passing, though, we do not need to run through the letter grades, and instead can have the program report that the grade is failing. Our modified code with the nested `if` statement will look like this:
-
-grade.go
+让我们用`grade.go`程序来看一个嵌套`if`语句的例子。可以首先检查一个成绩是否合格（大于或等于65%），然后评估数字成绩应该相当于哪个字母等级。如果成绩不合格，我们就不需要运行字母等级，而可以让程序报告该成绩不合格。修改后的代码和嵌套的 `if` 语句看起来是这样的：
 
 ```go
 package main
@@ -357,14 +331,11 @@ func main() {
 }
 ```
 
+如果我们在运行代码时将变量`grade`设置为整数值`92`，那么第一个条件就得到了满足，程序将打印出`Passing grade of:`。接下来，它将检查成绩是否大于或等于90，由于这个条件也被满足，它将打印出`A`。
 
-If we run the code with the variable `grade` set to the integer value `92`, the first condition is met, and the program will print out `Passing grade of: `. Next, it will check to see if the grade is greater than or equal to 90, and since this condition is also met, it will print out `A`.
+如果我们在运行代码时将`grade`变量设置为`60`，那么第一个条件就没有得到满足，所以程序将跳过嵌套的`if`语句，向下移动到`else`语句，程序将打印出`Failing grade`。
 
-If we run the code with the `grade` variable set to `60`, then the first condition is not met, so the program will skip the nested `if` statements and move down to the `else` statement, with the program printing out `Failing grade`.
-
-We can of course add even more options to this, and use a second layer of nested if statements. Perhaps we will want to evaluate for grades of A+, A and A- separately. We can do so by first checking if the grade is passing, then checking to see if the grade is 90 or above, then checking to see if the grade is over 96 for an A+:
-
-grade.go
+当然，我们可以在此基础上增加更多的选项，并使用第二层嵌套的if语句。也许我们想对A+、A和A-的成绩分别进行评估。我们可以这样做，首先检查成绩是否合格，然后检查成绩是否在90分或以上，然后检查成绩是否在96分以上为A+：
 
 ```go
 ...
@@ -384,27 +355,26 @@ if grade >= 65 {
 ...
 ```
 
+在这段代码中，对于设置为96的 `grade` 变量，程序将运行以下程序。
 
-In this code, for a `grade` variable set to `96`, the program will run the following:
+1. 检查该等级是否大于或等于65（真）。
+2. 打印出 `Passing grade of:`
+3. 检查成绩是否大于或等于90（真）。
+4. 检查成绩是否大于96（假）。
+5. 检查等级是否大于93，同时小于或等于96（真）。
+6. 打印 "A"。
+7. 离开这些嵌套的条件语句，继续执行剩余的代码
 
-1. Check if the grade is greater than or equal to 65 (true)
-2. Print out `Passing grade of:`
-3. Check if the grade is greater than or equal to 90 (true)
-4. Check if the grade is greater than 96 (false)
-5. Check if the grade is greater than 93 and also less than or equal to 96 (true)
-6. Print `A`
-7. Leave these nested conditional statements and continue with remaining code
+因此，成绩为96的程序的输出看起来是这样的：
 
-The output of the program for a grade of 96 therefore looks like this:
-
+```Output
+Passing grade of: A
 ```
-OutputPassing grade of: A
-```
 
-Nested `if` statements can provide the opportunity to add several specific levels of conditions to your code.
+嵌套的`if`语句可以提供机会，在你的代码中添加几个特定级别的条件。
 
-## Conclusion
+## 总结
 
-By using conditional statements like the `if` statement, you will have greater control over what your program executes. Conditional statements tell the program to evaluate whether a certain condition is being met. If the condition is met it will execute specific code, but if it is not met the program will continue to move down to other code.
+通过使用像 `if` 语句这样的条件语句，你将对你的程序执行内容有更大的控制。条件性语句告诉程序要评估是否满足某个条件。如果满足条件，它将执行特定的代码，但如果不满足条件，程序将继续执行其他代码。
 
-To continue practicing conditional statements, try using different [operators](https://www.digitalocean.com/community/tutorials/how-to-do-math-in-go-with-operators) to gain more familiarity with conditional statements.
+要继续练习条件语句，请尝试使用不同的[运算符](https://www.digitalocean.com/community/tutorials/how-to-do-math-in-go-with-operators)来获得对条件语句的更多熟悉。
