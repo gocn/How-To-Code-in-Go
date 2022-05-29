@@ -121,7 +121,7 @@ func main() {
 go run main.go
 ```
 
-完成后，您将收到以下输出：
+完成后，你将收到以下输出：
 
 ```Output
 Hello, World!
