@@ -1,8 +1,8 @@
-# Go 中的 Strings 包简介
+# 介绍 Go 中的 Strings 包
 
 ### 介绍
 
-Go 的 [`strings`](https://golang.org/pkg/strings/) 包有几个函数可用于 [string 数据类型](https://www.digitalocean.com/community/tutorials/an -introduction-to-working-with-strings-in-go)。 这些函数让我们可以轻松地修改和操作字符串。 我们可以将函数视为我们对代码元素执行的操作。 内置函数是那些在 Go 编程语言中定义并且可供我们随时使用的函数。
+Go 的 [`strings`](https://golang.org/pkg/strings/) 包有几个函数可用于 [string 数据类型](https://www.digitalocean.com/community/tutorials/an -introduction-to-working-with-strings-in-go)。这些函数可以轻松地修改和操作字符串。我们可以将函数视为对代码元素执行的操作。内置函数是那些在 Go 编程语言中定义并且可供我们随时使用的函数。
 
 在本教程中，我们将回顾几个可用于在 Go 中处理字符串的不同函数。
 
