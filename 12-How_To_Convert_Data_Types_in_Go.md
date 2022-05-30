@@ -10,7 +10,7 @@
 
 ## 数字类型转换
 
-Go 有多种数字类型可供选择。 它们主要分为两种类型：[integers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers) 和 [floating-point numbers](https:// /www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers)。
+Go 有多种数字类型可供选择。 它们主要分为两种类型：[integers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers) 和 [floating-point numbers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers)。
 
 在许多情况下，你可能希望在数字类型之间进行转换。 在 [不同大小的数字类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types) 之间进行转换有助于优化特定场景下的性能。 如果你有来自代码另一部分的整数并想要对其进行除法，你可能需要将整数转换为浮点数以保持操作的精度。 此外，时间相关的操作通常涉及整数转换。 为了解决这些情况，Go 为大多数数字类型提供了内置的*类型转换*。
 
