@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How To Do Math in Go with Operators #  Introduction #  Numbers are common in programming. They are used to represent things such as: screen-size dimensions, geographic locations, money and points, the amount of time that passes in a video, positions of game avatars, colors through assigning numeric codes, and so on.
+Effectively performing mathematical operations in programming is an important skill to develop because of how frequently you’ll work with numbers.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="How To Do Math in Go with Operators #  Introduction #  Numbers are common in programming. They are used to represent things such as: screen-size dimensions, geographic locations, money and points, the amount of time that passes in a video, positions of game avatars, colors through assigning numeric codes, and so on.
+Effectively performing mathematical operations in programming is an important skill to develop because of how frequently you’ll work with numbers." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/13-How_To_Do_Math_in_Go_with_Operators/" /><meta property="article:section" content="docs" />
+
+
+
+<title>13 How to Do Math in Go With Operators | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/"class=active>How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>13 How to Do Math in Go With Operators</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#operators">Operators</a></li>
+    <li><a href="#addition-and-subtraction">Addition and Subtraction</a></li>
+    <li><a href="#unary-arithmetic-operations">Unary Arithmetic Operations</a></li>
+    <li><a href="#multiplication-and-division">Multiplication and Division</a></li>
+    <li><a href="#modulo">Modulo</a></li>
+    <li><a href="#operator-precedence">Operator Precedence</a></li>
+    <li><a href="#assignment-operators">Assignment Operators</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="how-to-do-math-in-go-with-operators">
+  How To Do Math in Go with Operators
+  <a class="anchor" href="#how-to-do-math-in-go-with-operators">#</a>
+</h1>
+<h2 id="introduction">
+  Introduction
+  <a class="anchor" href="#introduction">#</a>
+</h2>
+<p>Numbers are common in programming. They are used to represent things such as: screen-size dimensions, geographic locations, money and points, the amount of time that passes in a video, positions of game avatars, colors through assigning numeric codes, and so on.</p>
+<p>Effectively performing mathematical operations in programming is an important skill to develop because of how frequently you’ll work with numbers. Though a high-level understanding of mathematics can certainly help you become a better programmer, it is not a prerequisite. If you don’t have a background in mathematics, try to think of math as a tool to accomplish what you would like to achieve, and as a way to improve your logical thinking.</p>
+<p>We’ll be working with two of Go’s most used numeric <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go">data types</a>, <em>integers</em> and <em>floats</em>:</p>
+<ul>
+<li><a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers">Integers</a> are whole numbers that can be positive, negative, or 0 (…, <code>-1</code>, <code>0</code>, <code>1</code>, …).</li>
+<li><a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers">Floats</a> are real numbers that contain a decimal point, like <code>9.0</code> or <code>-2.25</code>…</li>
+</ul>
+<p>This tutorial will review operators that we can use with number data types in Go.</p>
+<h2 id="operators">
+  Operators
+  <a class="anchor" href="#operators">#</a>
+</h2>
+<p>An <em>operator</em> is a symbol or function that indicates an operation. For example, in math the plus sign or <code>+</code> is the operator that indicates addition.</p>
+<p>In Go, we will see some familiar operators that are brought over from math. However, other operators we will use are specific to computer programming.</p>
+<p>Here is a quick reference table of math-related operators in Go. We’ll be covering all of the following operations in this tutorial.</p>
+<p>Operation What it returns</p>
+<p><code>x + y</code> Sum of <code>x</code> and <code>y</code></p>
+<p><code>x - y</code> Difference of <code>x</code> and <code>y</code></p>
+<p><code>-x</code> Changed sign of <code>x</code></p>
+<p><code>+x</code> Identity of <code>x</code></p>
+<p><code>x * y</code> Product of <code>x</code> and <code>y</code></p>
+<p><code>x / y</code> Quotient of <code>x</code> and <code>y</code></p>
+<p><code>x % y</code> Remainder of <code>x</code> / <code>y</code></p>
+<p>We’ll also be covering compound assignment operators, including <code>+=</code> and <code>*=</code>, that combine an arithmetic operator with the <code>=</code> operator.</p>
+<h2 id="addition-and-subtraction">
+  Addition and Subtraction
+  <a class="anchor" href="#addition-and-subtraction">#</a>
+</h2>
+<p>In Go, addition and subtraction operators perform just as they do in mathematics. In fact, you can use the Go programming language as a calculator.</p>
+<p>Let’s look at some examples, starting with integers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#ae81ff">1</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">5</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>
+</span></span></code></pre></div><p>Instead of passing integers directly into the <code>fmt.Println</code> statement, we can initialize variables to stand for integer values by using syntax like the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">88</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">103</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">b</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">191</span>
+</span></span></code></pre></div><p>Because integers can be both positive and negative numbers (and 0 too), we can add a negative number with a positive number:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">36</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">d</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">25</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">c</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">d</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">11</span>
+</span></span></code></pre></div><p>Addition will behave similarly with floats:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">e</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5.5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">2.5</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">e</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">f</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8</span>
+</span></span></code></pre></div><p>Because we added two floats together, Go returned a float value with a decimal place. However, since the decimal place is zero in this case, <code>fmt.Println</code> dropped the decimal formatting. To properly format the output, we can use <code>fmt.Printf</code> and the verb <code>%.2f</code>, which will format to two decimal places, like this example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%.2f&#34;</span>, <span style="color:#a6e22e">e</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">f</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8.00</span>
+</span></span></code></pre></div><p>The syntax for subtraction is the same as for addition, except we change our operator from the plus sign (<code>+</code>) to the minus sign (<code>-</code>):</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">g</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">75.67</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">h</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">32.0</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">g</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">h</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">43.67</span>
+</span></span></code></pre></div><p>In Go, we can only use operators on the same <em>data types</em>. We can’t add an <code>int</code> and a <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types"><code>float64</code></a>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">7.0</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">j</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">j</span> (<span style="color:#a6e22e">mismatched</span> <span style="color:#a6e22e">types</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">and</span> <span style="color:#66d9ef">float64</span>)
+</span></span></code></pre></div><p>Trying to use operators on data types that are not the same will result in a compiler error.</p>
+<h2 id="unary-arithmetic-operations">
+  Unary Arithmetic Operations
+  <a class="anchor" href="#unary-arithmetic-operations">#</a>
+</h2>
+<p>A unary mathematical expression consists of only one component or element. In Go we can use the plus and minus signs as a single element paired with a value to: return the value’s identity (<code>+</code>), or change the sign of the value (<code>-</code>).</p>
+<p>Though not commonly used, the plus sign indicates the identity of the value. We can use the plus sign with positive values:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">3.3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">+</span><span style="color:#a6e22e">i</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">3.3</span>
+</span></span></code></pre></div><p>When we use the plus sign with a negative value, it will also return the identity of that value, and in this case it would be a negative value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">19</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">+</span><span style="color:#a6e22e">j</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">19</span>
+</span></span></code></pre></div><p>With a negative value the plus sign returns the same negative value.</p>
+<p>The minus sign, however, changes the sign of a value. So, when we pass a positive value we’ll find that the minus sign before the value will return a negative value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">k</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">3.3</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">-</span><span style="color:#a6e22e">k</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">3.3</span>
+</span></span></code></pre></div><p>Alternatively, when we use the minus sign unary operator with a negative value, a positive value will be returned:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">j</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">19</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#f92672">-</span><span style="color:#a6e22e">j</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">19</span>
+</span></span></code></pre></div><p>The unary arithmetic operations indicated by the plus sign and minus sign will return either the value’s identity in the case of <code>+i</code>, or the opposite sign of the value as in <code>-i</code>.</p>
+<h2 id="multiplication-and-division">
+  Multiplication and Division
+  <a class="anchor" href="#multiplication-and-division">#</a>
+</h2>
+<p>Like addition and subtraction, multiplication and division will look very similar to how they do in mathematics. The sign we’ll use in Go for multiplication is <code>*</code> and the sign we’ll use for division is <code>/</code>.</p>
+<p>Here’s an example of doing multiplication in Go with two float values:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">k</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">100.2</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">10.2</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">k</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">l</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1022.04</span>
+</span></span></code></pre></div><p>In Go, division has different characteristics depending on the numeric type we’re dividing.</p>
+<p>If we’re dividing integers, Go’s <code>/</code> operator performs floor division, where for the quotient <strong>x</strong> the number returned is the largest integer less than or equal to <strong>x</strong>.</p>
+<p>If you run the following example of dividing <code>80 / 6</code>, you’ll receive <code>13</code> as the output and the data type will be <code>int</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">m</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">m</span> <span style="color:#f92672">/</span> <span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">13</span>
+</span></span></code></pre></div><p>If the desired output is a float, you have to explicitly convert the values before dividing.</p>
+<p>You can do this by wrapping your desired float type of <code>float32()</code> or <code>float64()</code> around your values:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">80</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> float64(<span style="color:#a6e22e">s</span>) <span style="color:#f92672">/</span> float64(<span style="color:#a6e22e">t</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">r</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">13.333333333333334</span>
+</span></span></code></pre></div><h2 id="modulo">
+  Modulo
+  <a class="anchor" href="#modulo">#</a>
+</h2>
+<p>The <code>%</code> operator is the <em>modulo</em>, which returns the remainder rather than the quotient after division. This is useful for finding numbers that are multiples of the same number.</p>
+<p>Let’s look at an example of the modulo:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">o</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">85</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">p</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">15</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">o</span> <span style="color:#f92672">%</span> <span style="color:#a6e22e">p</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span>
+</span></span></code></pre></div><p>To break this down, <code>85</code> divided by <code>15</code> returns the quotient of <code>5</code> with a remainder of <code>10</code>. Our program returns the value <code>10</code> here, because the modulo operator returns the remainder of a division expression.</p>
+<p>To do modulus math with <code>float64</code> data types, you’ll use the <code>Mod</code> function from the <code>math</code> package:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;math&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">q</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">36.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">r</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">8.0</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Mod</span>(<span style="color:#a6e22e">q</span>, <span style="color:#a6e22e">r</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><h2 id="operator-precedence">
+  Operator Precedence
+  <a class="anchor" href="#operator-precedence">#</a>
+</h2>
+<p>In Go, as in mathematics, we need to keep in mind that operators will be evaluated in order of precedence, not from left to right or right to left.</p>
+<p>If we look at the following mathematical expression:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">u</span> = <span style="color:#ae81ff">10</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span> <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><p>We may read it left to right, but multiplication will be done first, so if we were to print <code>u</code>, we would receive the following value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">60</span>
+</span></span></code></pre></div><p>This is because <code>10 * 5</code> evaluates to <code>50</code>, and then we add <code>10</code> to return <code>60</code> as the final result.</p>
+<p>If instead we would like to add the value <code>10</code> to <code>10</code>, then multiply that sum by <code>5</code>, we use parentheses in Go just like we would in math:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">u</span> <span style="color:#f92672">:=</span> (<span style="color:#ae81ff">10</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">10</span>) <span style="color:#f92672">*</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">u</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">100</span>
+</span></span></code></pre></div><p>One way to remember the order of operation is through the acronym <strong>PEMDAS</strong>:</p>
+<p>Order Letter Stands for</p>
+<p>1 P Parentheses</p>
+<p>2 E Exponent</p>
+<p>3 M Multiplication</p>
+<p>4 D Division</p>
+<p>5 A Addition</p>
+<p>6 S Subtraction</p>
+<p>You may be familiar with another acronym for the order of operations, such as <strong>BEDMAS</strong> or <strong>BODMAS</strong>. Whatever acronym works best for you, try to keep it in mind when performing math operations in Go so that the results that you expect are returned.</p>
+<h2 id="assignment-operators">
+  Assignment Operators
+  <a class="anchor" href="#assignment-operators">#</a>
+</h2>
+<p>The most common assignment operator is one you have already used: the equals sign <code>=</code>. The <code>=</code> assignment operator assigns the value on the right to a variable on the left. For example, <code>v = 23</code> assigns the value of the integer <code>23</code> to the variable <code>v</code>.</p>
+<p>When programming, it is common to use compound assignment operators that perform an operation on a variable’s value and then assign the resulting new value to that variable. These compound operators combine an arithmetic operator with the <code>=</code> operator. Therefore, for addition we’ll combine <code>+</code> with <code>=</code> to get the compound operator <code>+=</code>. Let’s see what that looks like:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">w</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">w</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">w</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>
+</span></span></code></pre></div><p>First, we set the variable <code>w</code> equal to the value of <code>5</code>, then we use the <code>+=</code> compound assignment operator to add the right number to the value of the left variable, and then assign the result to <code>w</code>.</p>
+<p>Compound assignment operators are used frequently in the case of <code>for</code> loops, which you’ll use when you want to repeat a process several times:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">values</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">int</span>{<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">2</span>, <span style="color:#ae81ff">3</span>, <span style="color:#ae81ff">4</span>, <span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">6</span>}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">values</span> {
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">w</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">w</span> <span style="color:#f92672">*=</span> <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">w</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span> }
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output0</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">12</span>
+</span></span></code></pre></div><p>By using a <code>for</code> loop to iterate over the slice called <code>values</code>, you were able to automate the process of the <code>*=</code> operator that multiplied the variable <code>w</code> by the number <code>2</code> and then assigned the result back into the variable <code>w</code>.</p>
+<p>Go has a compound assignment operator for each of the arithmetic operators discussed in this tutorial.</p>
+<p>To add then assign the value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">y</span> <span style="color:#f92672">+=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>To subtract then assign the value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">y</span> <span style="color:#f92672">-=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>To multiply then assign then value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">y</span> <span style="color:#f92672">*=</span> <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>To divide then assign the value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">y</span> <span style="color:#f92672">/=</span> <span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><p>To return the remainder then assign the value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">y</span> <span style="color:#f92672">%=</span> <span style="color:#ae81ff">3</span>
+</span></span></code></pre></div><p>Compound assignment operators can be useful when things need to be incrementally increased or decreased, or when you need to automate certain processes in your program.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="anchor" href="#conclusion">#</a>
+</h2>
+<p>This tutorial covered many of the operators you’ll use with the integer and float numeric data types. You can learn more about different data types in <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go">Understanding Data Types in Go</a> and <a href="https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go">How To Convert Data Types</a>.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#introduction">Introduction</a></li>
+    <li><a href="#operators">Operators</a></li>
+    <li><a href="#addition-and-subtraction">Addition and Subtraction</a></li>
+    <li><a href="#unary-arithmetic-operations">Unary Arithmetic Operations</a></li>
+    <li><a href="#multiplication-and-division">Multiplication and Division</a></li>
+    <li><a href="#modulo">Modulo</a></li>
+    <li><a href="#operator-precedence">Operator Precedence</a></li>
+    <li><a href="#assignment-operators">Assignment Operators</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

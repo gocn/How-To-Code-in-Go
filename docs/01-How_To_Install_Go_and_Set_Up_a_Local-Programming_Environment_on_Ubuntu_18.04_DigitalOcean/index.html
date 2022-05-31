@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 #  Go 语言简介 #  Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两种语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
+虽然 Go 是一门通用的编程语言，可用于许多不同类型的编程项目。但它特别适合网络/分布式系统项目，赢得了“云语言”的美誉。Go 语言专注于通过一组强大的工具来帮助现代程序员完成更多的工作，通过使格式成为语言规范的一部分来消除对格式的争论，以及通过编译为单个二进制文件来简化部署。 Go 易于学习，关键字非常少，这使其成为不论是初学者还是经验丰富的开发人员的不二之选。
+本教程将指导你通过命令行来安装 Go 和配置 Go 编程环境。本教程特别针对 Ubuntu 18.04 的安装过程，但是对于其他 Debian Linux 发行版也同样适用。
+安装前提 #  你需要一台安装了 Ubuntu 18.04 的电脑或者虚拟机，并且有对该计算机的管理员访问权限和网络连接。 您可以通过 Ubuntu 18.04 版本页面 下载此操作系统。
+第一步 — 安装 Go #  在这一步，你通过 Go 官方下载页面下载最新版本来安装 Go。
+为此，你需要找到最新二进制版本压缩包的 URL 。你还要注意旁边列出的 SHA256 哈希值，因为你将用它来验证下载的文件。
+你将通过命令行来完成安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。
+命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。尽管有很多终端命令需要学习，但是这些命令可以让你做更强大的事情。有关命令行的更多信息，请查看 Linux 终端简介 教程。">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 #  Go 语言简介 #  Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两种语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
+虽然 Go 是一门通用的编程语言，可用于许多不同类型的编程项目。但它特别适合网络/分布式系统项目，赢得了“云语言”的美誉。Go 语言专注于通过一组强大的工具来帮助现代程序员完成更多的工作，通过使格式成为语言规范的一部分来消除对格式的争论，以及通过编译为单个二进制文件来简化部署。 Go 易于学习，关键字非常少，这使其成为不论是初学者还是经验丰富的开发人员的不二之选。
+本教程将指导你通过命令行来安装 Go 和配置 Go 编程环境。本教程特别针对 Ubuntu 18.04 的安装过程，但是对于其他 Debian Linux 发行版也同样适用。
+安装前提 #  你需要一台安装了 Ubuntu 18.04 的电脑或者虚拟机，并且有对该计算机的管理员访问权限和网络连接。 您可以通过 Ubuntu 18.04 版本页面 下载此操作系统。
+第一步 — 安装 Go #  在这一步，你通过 Go 官方下载页面下载最新版本来安装 Go。
+为此，你需要找到最新二进制版本压缩包的 URL 。你还要注意旁边列出的 SHA256 哈希值，因为你将用它来验证下载的文件。
+你将通过命令行来完成安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。
+命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。尽管有很多终端命令需要学习，但是这些命令可以让你做更强大的事情。有关命令行的更多信息，请查看 Linux 终端简介 教程。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/" /><meta property="article:section" content="docs" />
+
+
+
+<title>01 How to Install Go and Set Up a Local Programming Environment on Ubuntu 18.04 Digital Ocean | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/"class=active>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>01 How to Install Go and Set Up a Local Programming Environment on Ubuntu 18.04 Digital Ocean</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#go-语言简介">Go 语言简介</a></li>
+    <li><a href="#安装前提">安装前提</a></li>
+    <li><a href="#第一步--安装-go">第一步 — 安装 Go</a></li>
+    <li><a href="#第二步--创建你的-go-工作区">第二步 — 创建你的 Go 工作区</a></li>
+    <li><a href="#第三步--创建一个简单的程序">第三步 — 创建一个简单的程序</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="如何在-ubuntu-1804-上安装-go-和设置本地编程环境">
+  如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境
+  <a class="anchor" href="#%e5%a6%82%e4%bd%95%e5%9c%a8-ubuntu-1804-%e4%b8%8a%e5%ae%89%e8%a3%85-go-%e5%92%8c%e8%ae%be%e7%bd%ae%e6%9c%ac%e5%9c%b0%e7%bc%96%e7%a8%8b%e7%8e%af%e5%a2%83">#</a>
+</h1>
+<h2 id="go-语言简介">
+  Go 语言简介
+  <a class="anchor" href="#go-%e8%af%ad%e8%a8%80%e7%ae%80%e4%bb%8b">#</a>
+</h2>
+<p><a href="https://golang.org/">Go</a> 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两种语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。</p>
+<p>虽然 Go 是一门通用的编程语言，可用于许多不同类型的编程项目。但它特别适合网络/分布式系统项目，赢得了“云语言”的美誉。Go  语言专注于通过一组强大的工具来帮助现代程序员完成更多的工作，通过使格式成为语言规范的一部分来消除对格式的争论，以及通过编译为单个二进制文件来简化部署。 Go 易于学习，关键字非常少，这使其成为不论是初学者还是经验丰富的开发人员的不二之选。</p>
+<p>本教程将指导你通过命令行来安装 Go 和配置 Go 编程环境。本教程特别针对 Ubuntu 18.04 的安装过程，但是对于其他 Debian Linux 发行版也同样适用。</p>
+<h2 id="安装前提">
+  安装前提
+  <a class="anchor" href="#%e5%ae%89%e8%a3%85%e5%89%8d%e6%8f%90">#</a>
+</h2>
+<p>你需要一台安装了  Ubuntu 18.04 的电脑或者虚拟机，并且有对该计算机的管理员访问权限和网络连接。 您可以通过 <a href="http://releases.ubuntu.com/releases/18.04/">Ubuntu 18.04 版本页面</a> 下载此操作系统。</p>
+<h2 id="第一步--安装-go">
+  第一步 — 安装 Go
+  <a class="anchor" href="#%e7%ac%ac%e4%b8%80%e6%ad%a5--%e5%ae%89%e8%a3%85-go">#</a>
+</h2>
+<p>在这一步，你通过 <a href="https://golang.org/dl/">Go 官方下载页面</a>下载最新版本来安装 Go。</p>
+<p>为此，你需要找到最新二进制版本压缩包的 URL 。你还要注意旁边列出的 SHA256 哈希值，因为你将用它来<a href="https://www.digitalocean.com/community/tutorials/how-to-verify-downloaded-files">验证下载的文件</a>。</p>
+<p>你将通过命令行来完成安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。</p>
+<p>命令行，也就是我们熟知的 <em>shell</em> 或者 <em>终端</em> ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。尽管有很多终端命令需要学习，但是这些命令可以让你做更强大的事情。有关命令行的更多信息，请查看 <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-the-linux-terminal">Linux 终端简介</a> 教程。</p>
+<p>在  Ubuntu 18.04 上，你可以通过点击屏幕左上角的 Ubuntu 图标并在搜索栏中输入<code>terminal</code>来找到终端程序。点击终端程序图标来打开终端。或者你可以在键盘上同时按住的“CTRL”、“ALT”和“T”键来自动打开终端程序。</p>
+<p><img src="https://assets.digitalocean.com/articles/eng_python/UbuntuDebianSetUp/UbuntuSetUp.png" alt="Ubuntu Terminal" /></p>
+<p>终端打开之后，你可以手动安装 Go 二进制。虽然可以通过包管理工具，比如 <code>apt-get</code>，但是通过手动安装可以帮助你理解一个有效的 Go 工作区系统里面任何必要的配置信息的修改。</p>
+<p>下载 Go 之前，确保你在  home (<code>~</code>) 目录：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd ~
+</span></span></code></pre></div><p>根据从官方 Go 下载页面复制的压缩包 URL，使用 <code>curl</code> 命令拉取下载：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>curl -LO https://dl.google.com/go/go1.12.1.linux-amd64.tar.gz
+</span></span></code></pre></div><p>接下来，使用 <code>sha256sum</code> 命令来校验压缩包：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sha256sum go1.12.1.linux-amd64.tar.gz
+</span></span></code></pre></div><p>运行上面命令显示的哈希值应该和下载页面的哈希值一致，如果不一致的话，那么这个压缩包就不是一个有效文件，需要重新下载。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>2a3fdabf665496a0db5f41ec6af7a9b15a49fbe71a85a50ca38b1f13a103aeec  go1.12.1.linux-amd64.tar.gz
+</span></span></code></pre></div><p>接下来，解压下载的文件并将其安装到系统所需位置。一般都是放在 <code>/usr/local</code> 目录下面：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo tar -xvf go1.12.1.linux-amd64.tar.gz -C /usr/local
+</span></span></code></pre></div><p>那么在 <code>/usr/local</code> 目录下面有一个  <code>go</code> 目录。</p>
+<p><strong>注意</strong>：尽管  <code>/usr/local/go</code>  是官方推荐的位置，但有些用户可能更喜欢或需要不同的路径。</p>
+<p>在这一步中，你在  Ubuntu 18.04 机器上下载并安装了 Go 。接下来你将配置 Go 的工作区。</p>
+<h2 id="第二步--创建你的-go-工作区">
+  第二步 — 创建你的 Go 工作区
+  <a class="anchor" href="#%e7%ac%ac%e4%ba%8c%e6%ad%a5--%e5%88%9b%e5%bb%ba%e4%bd%a0%e7%9a%84-go-%e5%b7%a5%e4%bd%9c%e5%8c%ba">#</a>
+</h2>
+<p>安装完 Go 之后，你可以创建你的编码工作区。Go 语言的工作区在其根目录下包含两个目录：</p>
+<ul>
+<li><code>src</code>: 该目录包含 Go 的源文件。所谓源文件就是你用 Go 编程语言写的文件。源文件被 Go 编译器构建成可执行的二进制文件。</li>
+<li><code>bin</code>: 该目录包含了 Go 工具构建和安装的可执行文件。可执行文件就是运行在你系统上并执行任务的二进制文件。通常是你的源码或者是其他下载的 Go 源代码编译的程序。</li>
+</ul>
+<p><code>src</code> 子目录可能包含多个版本控制仓库（例如 <a href="https://git-scm.com/">Git</a>, <a href="https://www.mercurial-scm.org/">Mercurial</a> 和 <a href="http://bazaar.canonical.com/">Bazaar</a>）。这允许你在你的项目中规范导入代码。 规范导入就是引用完全限定包的导入，例如 <code>github.com/digitalocean/godo</code> 。</p>
+<p>当你引入第三方库的时候，你可以看到类似  <code>github.com</code>, <code>golang.org</code> 或其他目录，如果你使用的是 <code>github.com</code> 之类的代码仓库，你还将把项目和源文件放在该目录下。 我们将在此步骤的后面部分探讨这个概念。</p>
+<p>下面是典型的工作区目录结构：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>├── bin
+</span></span><span style="display:flex;"><span>│   ├── buffalo                                      <span style="color:#75715e"># command executable</span>
+</span></span><span style="display:flex;"><span>│   ├── dlv                                          <span style="color:#75715e"># command executable</span>
+</span></span><span style="display:flex;"><span>│   └── packr                                        <span style="color:#75715e"># command executable</span>
+</span></span><span style="display:flex;"><span>└── src
+</span></span><span style="display:flex;"><span>    └── github.com
+</span></span><span style="display:flex;"><span>        └── digitalocean
+</span></span><span style="display:flex;"><span>            └── godo
+</span></span><span style="display:flex;"><span>                ├── .git                            <span style="color:#75715e"># Git repository metadata</span>
+</span></span><span style="display:flex;"><span>                ├── account.go                      <span style="color:#75715e"># package source</span>
+</span></span><span style="display:flex;"><span>                ├── account_test.go                 <span style="color:#75715e"># test source</span>
+</span></span><span style="display:flex;"><span>                ├── ...
+</span></span><span style="display:flex;"><span>                ├── timestamp.go
+</span></span><span style="display:flex;"><span>                ├── timestamp_test.go
+</span></span><span style="display:flex;"><span>                └── util
+</span></span><span style="display:flex;"><span>                    ├── droplet.go
+</span></span><span style="display:flex;"><span>                    └── droplet_test.go
+</span></span></code></pre></div><p>从 1.8 开始，Go 工作区的默认目录是用户的 home 目录，并带有 <code>go</code> 子目录，或者是 <code>$HOME/go</code> 目录。 如果你使用的是早于 1.8 的 Go 版本，目前认为最佳做法是为你的工作区使用 <code>$HOME/go</code> 位置。</p>
+<p>使用下面命令为你的 Go 工作区创建目录结构：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>mkdir -p $HOME/go/<span style="color:#f92672">{</span>bin,src<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p><code>-p</code>  选项是告诉  <code>mkdir</code>  在目录中创建所有的上级目录，尽管他们可能不存在。使用 <code>{bin,src}</code> 为 <code>mkdir</code> 创建一组参数，并告诉它创建 <code>bin</code> 目录和 <code>src</code> 目录。</p>
+<p>以上命令将确保下面的目录结构各就各位：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>└── $HOME
+</span></span><span style="display:flex;"><span>    └── go
+</span></span><span style="display:flex;"><span>        ├── bin
+</span></span><span style="display:flex;"><span>        └── src
+</span></span></code></pre></div><p>在 Go 1.8 之前，需要设置一个名为 <code>$GOPATH</code> 的本地环境变量。 <code>$GOPATH</code> 告诉编译器在哪里可以找到导入的第三方源代码，同样包括任何你写的本地源代码。 虽然不再明确要求它，但它仍然被认为是一种很好的做法，因为许多第三方工具仍然依赖于设置的这个变量。</p>
+<p>你可以通过将全局变量添加到你的 <code>~/.profile</code> 中来设置你的 <code>$GOPATH</code>。 你可能想根据你的 shell 配置将其添加到 <code>.zshrc</code> 或 <code>.bashrc</code> 文件中。</p>
+<p>首先，使用 <code>nano</code> 或你喜欢的文本编辑器打开 <code>~/.profile</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nano ~/.profile
+</span></span></code></pre></div><p>通过下面的命令设置你的  <code>$GOPATH</code> ：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>~/.profile
+</span></span><span style="display:flex;"><span>export GOPATH<span style="color:#f92672">=</span>$HOME/go
+</span></span></code></pre></div><p>当 Go 编译和安装工具时，会将他们放在  <code>$GOPATH/bin</code>  目录。为方便起见，通常将工作区的 <code>/bin</code> 子目录添加到 <code>~/.profile</code> 中的 <code>PATH</code> 中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>~/.profile
+</span></span><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>$PATH:$GOPATH/bin
+</span></span></code></pre></div><p>这将允许你在系统上的任何位置运行通过 Go 工具编译或下载的任何程序。</p>
+<p>最后，你需要将 <code>go</code> 二进制文件添加到 <code>PATH</code> 中。 你可以通过在行尾添加 <code>/usr/local/go/bin</code> 来实现：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>~/.profile
+</span></span><span style="display:flex;"><span>export PATH<span style="color:#f92672">=</span>$PATH:$GOPATH/bin:/usr/local/go/bin
+</span></span></code></pre></div><p>将 <code>/usr/local/go/bin</code> 添加到 <code>$PATH</code> 中，可以使所有 Go 工具都可以在系统上的任何位置使用。</p>
+<p>为了更新你的 shell 配置，请使用下面的命令来加载全局变量:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>. ~/.profile
+</span></span></code></pre></div><p>您可以通过使用 <code>echo</code> 命令并检查其输出，来验证你的 <code>$PATH</code> 是否已更新：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>echo $PATH
+</span></span></code></pre></div><p>你将看到你的  <code>$GOPATH/bin</code> 显示在你的主目录中。如果你以  <code>root</code> 身份登录，你将在路径中看到 <code>/root/go/bin</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/go/bin:/usr/local/go/bin
+</span></span></code></pre></div><p>你还会看到  <code>/usr/local/go/bin</code> 的 Go 工具的路径：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/root/go/bin:/usr/local/go/bin
+</span></span></code></pre></div><p>通过检查 Go 的当前版本来验证安装：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>go version
+</span></span></code></pre></div><p>我们应该得到类似下面的输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>go version go1.12.1 linux/amd64
+</span></span></code></pre></div><p>现在你已经创建了工作区的根目录并设置了 <code>$GOPATH</code> 环境变量，你可以根据以下目录结构创建你未来的项目。 此示例假设你使用 <code>github.com</code> 作为仓库：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$GOPATH/src/github.com/username/project
+</span></span></code></pre></div><p>例如，如果你正在开发  <a href="https://github.com/digitalocean/godo"><code>https://github.com/digitalocean/godo</code></a>  项目，它将存储在以下目录中：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$GOPATH/src/github.com/digitalocean/godo
+</span></span></code></pre></div><p>该项目结构使项目可以通过 <code>go get</code> 工具使用。它也有助于以后的可读性。 你可以通过使用 <code>go get</code> 命令并获取 <code>godo</code> 库来验证这一点：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>go get github.com/digitalocean/godo
+</span></span></code></pre></div><p>这将下载 <code>godo</code> 库的内容并在你的计算机上创建 <code>$GOPATH/src/github.com/digitalocean/godo</code> 目录。
+你可以通过列出目录来检查下看看是否成功下载了 <code>godo</code>包：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>ll $GOPATH/src/github.com/digitalocean/godo
+</span></span></code></pre></div><p>你应该看到类似下面这样的输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>&gt;&gt;&gt;&gt;&gt;&gt;&gt; main
+</span></span><span style="display:flex;"><span>Outputdrwxr-xr-x <span style="color:#ae81ff">4</span> root root  <span style="color:#ae81ff">4096</span> Apr  <span style="color:#ae81ff">5</span> 00:43 ./
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">3</span> root root  <span style="color:#ae81ff">4096</span> Apr  <span style="color:#ae81ff">5</span> 00:43 ../
+</span></span><span style="display:flex;"><span>drwxr-xr-x <span style="color:#ae81ff">8</span> root root  <span style="color:#ae81ff">4096</span> Apr  <span style="color:#ae81ff">5</span> 00:43 .git/
+</span></span><span style="display:flex;"><span>-rwxr-xr-x <span style="color:#ae81ff">1</span> root root     <span style="color:#ae81ff">8</span> Apr  <span style="color:#ae81ff">5</span> 00:43 .gitignore*
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root    <span style="color:#ae81ff">61</span> Apr  <span style="color:#ae81ff">5</span> 00:43 .travis.yml
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">2808</span> Apr  <span style="color:#ae81ff">5</span> 00:43 CHANGELOG.md
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">1851</span> Apr  <span style="color:#ae81ff">5</span> 00:43 CONTRIBUTING.md
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>.
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">4893</span> Apr  <span style="color:#ae81ff">5</span> 00:43 vpcs.go
+</span></span><span style="display:flex;"><span>-rw-r--r-- <span style="color:#ae81ff">1</span> root root  <span style="color:#ae81ff">4091</span> Apr  <span style="color:#ae81ff">5</span> 00:43 vpcs_test.go
+</span></span></code></pre></div><p>在这一步中，你创建了一个 Go 工作区并且配置了必要的环境变量。下一步你将使用一些代码来测试下工作区。</p>
+<h2 id="第三步--创建一个简单的程序">
+  第三步 — 创建一个简单的程序
+  <a class="anchor" href="#%e7%ac%ac%e4%b8%89%e6%ad%a5--%e5%88%9b%e5%bb%ba%e4%b8%80%e4%b8%aa%e7%ae%80%e5%8d%95%e7%9a%84%e7%a8%8b%e5%ba%8f">#</a>
+</h2>
+<p>现在你已经设置了工作区，来创建一个  “Hello, World!” 程序吧。这可以检验工作区配置是否正确，并且给你一个更加熟悉 Go 的机会。因为我们创建的是单个 Go 源文件，而不是实际项目，所以我们不需要在工作区中执行此操作。</p>
+<p>在你的 home 目录，打开一个命令行文本编辑器，例如 <code>nano</code>，然后创建一个新文件：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nano hello.go
+</span></span></code></pre></div><p>在新文件里写下你的程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello, World!&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>该代码使用了  <code>fmt</code> 包并且使用  <code>Hello, World!</code>  作为参数调用了  <code>Println</code> 函数。这将导致短语 <code>Hello, World!</code> 在程序运行时打印到终端上。</p>
+<p>按 <code>CTRL</code> 和 <code>X</code> 键退出 <code>nano</code>。 当提示保存文件时，按 <code>Y</code>，然后按 <code>ENTER</code> 退出。</p>
+<p>退出 <code>nano</code> 返回 shell 之后，运行程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>go run hello.go
+</span></span></code></pre></div><p><code>hello.go</code> 程序会使终端产生以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>Hello, World!
+</span></span></code></pre></div><p>在此步骤中，你使用了一个简单小程序来验证是否正确配置了 Go 工作区。</p>
+<h2 id="总结">
+  总结
+  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
+</h2>
+<p>恭喜！至此，你已经在 Ubuntu 机器上设置了 Go 编程工作区，可以开始写项目了！</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#go-语言简介">Go 语言简介</a></li>
+    <li><a href="#安装前提">安装前提</a></li>
+    <li><a href="#第一步--安装-go">第一步 — 安装 Go</a></li>
+    <li><a href="#第二步--创建你的-go-工作区">第二步 — 创建你的 Go 工作区</a></li>
+    <li><a href="#第三步--创建一个简单的程序">第三步 — 创建一个简单的程序</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

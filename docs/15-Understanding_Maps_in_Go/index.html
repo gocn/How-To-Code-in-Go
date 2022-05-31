@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Understanding Maps in Go #  Most modern programming languages have the concept of a dictionary or a hash type. These types are commonly used to store data in pairs with a key that maps to a value.
+In Go, the map data type is what most programmers would think of as the dictionary type. It maps keys to values, making key-value pairs that are a useful way to store data in Go.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="Understanding Maps in Go #  Most modern programming languages have the concept of a dictionary or a hash type. These types are commonly used to store data in pairs with a key that maps to a value.
+In Go, the map data type is what most programmers would think of as the dictionary type. It maps keys to values, making key-value pairs that are a useful way to store data in Go." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/15-Understanding_Maps_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>15 Understanding Maps in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/"class=active>Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>15 Understanding Maps in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#accessing-map-items">Accessing Map Items</a></li>
+    <li><a href="#keys-and-values">Keys and Values</a></li>
+    <li><a href="#checking-existence">Checking Existence</a></li>
+    <li><a href="#modifying-maps">Modifying Maps</a>
+      <ul>
+        <li><a href="#adding-and-changing-map-items">Adding and Changing Map Items</a></li>
+        <li><a href="#deleting-map-items">Deleting Map Items</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="understanding-maps-in-go">
+  Understanding Maps in Go
+  <a class="anchor" href="#understanding-maps-in-go">#</a>
+</h1>
+<p>Most modern programming languages have the concept of a <em>dictionary</em> or a <em>hash</em> type. These types are commonly used to store data in pairs with a <strong>key</strong> that maps to a <strong>value</strong>.</p>
+<p>In Go, the <em>map</em> data type is what most programmers would think of as the <em>dictionary</em> type. It maps keys to values, making key-value pairs that are a useful way to store data in Go. A map is constructed by using the keyword <code>map</code> followed by the key data type in square brackets <code>[ ]</code>, followed by the value data type. The key-value pairs are then placed inside curly braces on either side { }:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">key</span>]<span style="color:#a6e22e">value</span>{}
+</span></span></code></pre></div><p>You typically use maps in Go to hold related data, such as the information contained in an ID. A map with data looks like this:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;animal&#34;</span>: <span style="color:#e6db74">&#34;shark&#34;</span>, <span style="color:#e6db74">&#34;color&#34;</span>: <span style="color:#e6db74">&#34;blue&#34;</span>, <span style="color:#e6db74">&#34;location&#34;</span>: <span style="color:#e6db74">&#34;ocean&#34;</span>}
+</span></span></code></pre></div><p>In addition to the curly braces, there are also colons throughout the map that connect the key-value pairs. The words to the left of the colons are the keys. Keys can be any <em>comparable</em> type in Go, like <code>strings</code>, <code>ints</code>, and so on.</p>
+<p>The keys in the example map are:</p>
+<ul>
+<li><code>&quot;name&quot;</code></li>
+<li><code>&quot;animal&quot;</code></li>
+<li><code>&quot;color&quot;</code></li>
+<li><code>&quot;location&quot;</code></li>
+</ul>
+<p>The words to the right of the colons are the values. Values can be any data type. The values in the example map are:</p>
+<ul>
+<li><code>&quot;Sammy&quot;</code></li>
+<li><code>&quot;shark&quot;</code></li>
+<li><code>&quot;blue&quot;</code></li>
+<li><code>&quot;ocean&quot;</code></li>
+</ul>
+<p>Like the other data types, you can store the map inside a variable, and print it out:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">sammy</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;animal&#34;</span>: <span style="color:#e6db74">&#34;shark&#34;</span>, <span style="color:#e6db74">&#34;color&#34;</span>: <span style="color:#e6db74">&#34;blue&#34;</span>, <span style="color:#e6db74">&#34;location&#34;</span>: <span style="color:#e6db74">&#34;ocean&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sammy</span>)
+</span></span></code></pre></div><p>This would be your output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">animal</span>:<span style="color:#a6e22e">shark</span> <span style="color:#a6e22e">color</span>:<span style="color:#a6e22e">blue</span> <span style="color:#a6e22e">location</span>:<span style="color:#a6e22e">ocean</span> <span style="color:#a6e22e">name</span>:<span style="color:#a6e22e">Sammy</span>]
+</span></span></code></pre></div><p>The order of the key-value pairs may have shifted. In Go, the map data type is unordered. Regardless of the order, the key-value pairs will remain intact, enabling you to access data based on their relational meaning.</p>
+<h2 id="accessing-map-items">
+  Accessing Map Items
+  <a class="anchor" href="#accessing-map-items">#</a>
+</h2>
+<p>You can call the values of a map by referencing the related keys. Since maps offer key-value pairs for storing data, they can be important and useful items in your Go program.</p>
+<p>If you want to isolate Sammy’s username, you can do so by calling <code>sammy[&quot;name&quot;]</code>; the variable holding your map and the related key. Let’s print that out:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sammy</span>[<span style="color:#e6db74">&#34;name&#34;</span>])
+</span></span></code></pre></div><p>And receive the value as output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span>
+</span></span></code></pre></div><p>Maps behave like a database; instead of calling an integer to get a particular index value as you would with a slice, you assign a value to a key and call that key to get its related value.</p>
+<p>By invoking the key <code>&quot;name&quot;</code> you receive the value of that key, which is <code>&quot;Sammy&quot;</code>.</p>
+<p>Similarly you can call the remaining values in the <code>sammy</code> map using the same format:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sammy</span>[<span style="color:#e6db74">&#34;animal&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// returns shark
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sammy</span>[<span style="color:#e6db74">&#34;color&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// returns blue
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">sammy</span>[<span style="color:#e6db74">&#34;location&#34;</span>])
+</span></span><span style="display:flex;"><span><span style="color:#75715e">// returns ocean
+</span></span></span></code></pre></div><p>By making use of the key-value pairs in map data types, you can reference keys to retrieve values.</p>
+<h2 id="keys-and-values">
+  Keys and Values
+  <a class="anchor" href="#keys-and-values">#</a>
+</h2>
+<p>Unlike some programming languages, Go does not have any <em>convenience</em> functions to list out the keys or values of a map. An example of this would be Python’s <code>.keys()</code> method for dictionaries. It does, however, allow for iteration by using the <code>range</code> operator:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">value</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">sammy</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q is the key for the value %q\n&#34;</span>, <span style="color:#a6e22e">key</span>, <span style="color:#a6e22e">value</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When ranging through a map in Go, it’ll return two values. The first value will be the key, and the second value will be the value. Go will create these variables with the correct data type. In this case, the map key was a <code>string</code> so <code>key</code> will also be a string. The <code>value</code> is also a string:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">animal</span><span style="color:#e6db74">&#34; is the key for the value &#34;</span><span style="color:#a6e22e">shark</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span><span style="color:#a6e22e">color</span><span style="color:#e6db74">&#34; is the key for the value &#34;</span><span style="color:#a6e22e">blue</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span><span style="color:#a6e22e">location</span><span style="color:#e6db74">&#34; is the key for the value &#34;</span><span style="color:#a6e22e">ocean</span><span style="color:#e6db74">&#34;
+</span></span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;</span><span style="color:#a6e22e">name</span><span style="color:#e6db74">&#34; is the key for the value &#34;</span><span style="color:#a6e22e">Sammy</span><span style="color:#960050;background-color:#1e0010">&#34;</span>
+</span></span></code></pre></div><p>To get a list of just the keys, you can use the range operator again. You can declare just one variable to only access the keys:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">keys</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">key</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">sammy</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">keys</span> = append(<span style="color:#a6e22e">keys</span>, <span style="color:#a6e22e">key</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q&#34;</span>, <span style="color:#a6e22e">keys</span>)
+</span></span></code></pre></div><p>The program begins by declaring a slice to store your keys in.</p>
+<p>The output will show only the keys of your map:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#e6db74">&#34;color&#34;</span> <span style="color:#e6db74">&#34;location&#34;</span> <span style="color:#e6db74">&#34;name&#34;</span> <span style="color:#e6db74">&#34;animal&#34;</span>]
+</span></span></code></pre></div><p>Again, the keys are not sorted. If you want to sort them, you use the <code>sort.Strings</code> function from the <a href="https://golang.org/pkg/sort"><code>sort</code></a> package:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">sort</span>.<span style="color:#a6e22e">Strings</span>(<span style="color:#a6e22e">keys</span>)
+</span></span></code></pre></div><p>With this function, you’ll receive the following output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#e6db74">&#34;animal&#34;</span> <span style="color:#e6db74">&#34;color&#34;</span> <span style="color:#e6db74">&#34;location&#34;</span> <span style="color:#e6db74">&#34;name&#34;</span>]
+</span></span></code></pre></div><p>You can use the same pattern to retrieve just the values in a map. In the next example, you pre-allocate the slice to avoid allocations, thus making the program more efficient:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">sammy</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;animal&#34;</span>: <span style="color:#e6db74">&#34;shark&#34;</span>, <span style="color:#e6db74">&#34;color&#34;</span>: <span style="color:#e6db74">&#34;blue&#34;</span>, <span style="color:#e6db74">&#34;location&#34;</span>: <span style="color:#e6db74">&#34;ocean&#34;</span>}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">items</span> <span style="color:#f92672">:=</span> make([]<span style="color:#66d9ef">string</span>, len(<span style="color:#a6e22e">sammy</span>))
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">sammy</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">items</span>[<span style="color:#a6e22e">i</span>] = <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q&#34;</span>, <span style="color:#a6e22e">items</span>)
+</span></span></code></pre></div><p>First you declare a slice to store your keys in; since you know how many items you need, you can avoid potential memory allocations by defining the slice at the exact same size. You then declare your index variable. As you don’t want the key, you use the <code>_</code> operator, when starting your loop, to ignore the key’s value. Your output would be the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#e6db74">&#34;ocean&#34;</span> <span style="color:#e6db74">&#34;Sammy&#34;</span> <span style="color:#e6db74">&#34;shark&#34;</span> <span style="color:#e6db74">&#34;blue&#34;</span>]
+</span></span></code></pre></div><p>To determine the number of items in a map, you can use the built-in <code>len</code> function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">sammy</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;name&#34;</span>: <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;animal&#34;</span>: <span style="color:#e6db74">&#34;shark&#34;</span>, <span style="color:#e6db74">&#34;color&#34;</span>: <span style="color:#e6db74">&#34;blue&#34;</span>, <span style="color:#e6db74">&#34;location&#34;</span>: <span style="color:#e6db74">&#34;ocean&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(len(<span style="color:#a6e22e">sammy</span>))
+</span></span></code></pre></div><p>The output displays the number of items in your map:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">4</span>
+</span></span></code></pre></div><p>Even though Go doesn’t ship with convenience functions to get keys and values, it only takes a few lines of code to retrieve the keys and values when needed.</p>
+<h2 id="checking-existence">
+  Checking Existence
+  <a class="anchor" href="#checking-existence">#</a>
+</h2>
+<p>Maps in Go will return the zero value for the value type of the map when the requested key is missing. Because of this, you need an alternative way to differentiate a stored zero, versus a missing key.</p>
+<p>Let’s look up a value in a map that you know doesn’t exist and look at the value returned:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">counts</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int</span>{}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">counts</span>[<span style="color:#e6db74">&#34;sammy&#34;</span>])
+</span></span></code></pre></div><p>You’ll see the following output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>Even though the key <code>sammy</code> was not in the map, Go still returned the value of <code>0</code>. This is because the value data type is an <code>int</code>, and because Go has a zero value for all variables, it returns the zero value of <code>0</code>.</p>
+<p>In many cases, this is undesirable and would lead to a bug in your program. When looking up the value in a map, Go can return a second, <em>optional</em> value. This second value is a <code>bool</code> and will be <code>true</code> if the key was found, or <code>false</code> if the key was not found. In Go, this is referred to as the <code>ok</code> idiom. Even though you could name the variable that captures the second argument anything you want, in Go, you always name it <code>ok</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">count</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">counts</span>[<span style="color:#e6db74">&#34;sammy&#34;</span>]
+</span></span></code></pre></div><p>If the key <code>sammy</code> exists in the <code>counts</code> map, then <code>ok</code> will be <code>true</code>. Otherwise <code>ok</code> will be false.</p>
+<p>You can use the <code>ok</code> variable to decide what to do in your program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Sammy has a count of %d\n&#34;</span>, <span style="color:#a6e22e">count</span>)
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sammy was not found&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This would result in the following output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#a6e22e">was</span> <span style="color:#a6e22e">not</span> <span style="color:#a6e22e">found</span>
+</span></span></code></pre></div><p>In Go, you can combine variable declaration and conditional checking with an if/else block. This allows you to use a single statement for this check:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">count</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">counts</span>[<span style="color:#e6db74">&#34;sammy&#34;</span>]; <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Sammy has a count of %d\n&#34;</span>, <span style="color:#a6e22e">count</span>)
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sammy was not found&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>When retrieving a value from a map in Go, it’s always good practice to check for its existence as well to avoid bugs in your program.</p>
+<h2 id="modifying-maps">
+  Modifying Maps
+  <a class="anchor" href="#modifying-maps">#</a>
+</h2>
+<p>Maps are a mutable data structure, so you can modify them. Let’s look at adding and deleting map items in this section.</p>
+<h3 id="adding-and-changing-map-items">
+  Adding and Changing Map Items
+  <a class="anchor" href="#adding-and-changing-map-items">#</a>
+</h3>
+<p>Without using a method or function, you can add key-value pairs to maps. You do this using the maps variable name, followed by the key value in square brackets <code>[ ]</code>, and using the equal <code>=</code> operator to set a new value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">key</span>] = <span style="color:#a6e22e">value</span>
+</span></span></code></pre></div><p>In practice, you can see this work by adding a key-value pair to a map called <code>usernames</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">usernames</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>: <span style="color:#e6db74">&#34;sammy-shark&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>: <span style="color:#e6db74">&#34;mantisshrimp54&#34;</span>}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">usernames</span>[<span style="color:#e6db74">&#34;Drew&#34;</span>] = <span style="color:#e6db74">&#34;squidly&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">usernames</span>)
+</span></span></code></pre></div><p>The output will display the new <code>Drew:squidly</code> key-value pair in the map:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">Drew</span>:<span style="color:#a6e22e">squidly</span> <span style="color:#a6e22e">Jamie</span>:<span style="color:#a6e22e">mantisshrimp54</span> <span style="color:#a6e22e">Sammy</span>:<span style="color:#a6e22e">sammy</span><span style="color:#f92672">-</span><span style="color:#a6e22e">shark</span>]
+</span></span></code></pre></div><p>Because maps are returned unordered, this pair may occur anywhere in the map output. If you use the <code>usernames</code> map later in your program file, it will include the additional key-value pair.</p>
+<p>You can also use this syntax for modifying the value assigned to a key. In this case, you reference an existing key and pass a different value to it.</p>
+<p>Consider a map called <code>followers</code> that tracks followers of users on a given network. The user <code>&quot;drew&quot;</code> had a bump in followers today, so you need to update the integer value passed to the <code>&quot;drew&quot;</code> key. You’ll use the <code>Println()</code> function to check that the map was modified:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">followers</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">int</span>{<span style="color:#e6db74">&#34;drew&#34;</span>: <span style="color:#ae81ff">305</span>, <span style="color:#e6db74">&#34;mary&#34;</span>: <span style="color:#ae81ff">428</span>, <span style="color:#e6db74">&#34;cindy&#34;</span>: <span style="color:#ae81ff">918</span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">followers</span>[<span style="color:#e6db74">&#34;drew&#34;</span>] = <span style="color:#ae81ff">342</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">followers</span>)
+</span></span></code></pre></div><p>Your output will show the updated value for <code>drew</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[<span style="color:#a6e22e">cindy</span>:<span style="color:#ae81ff">918</span> <span style="color:#a6e22e">drew</span>:<span style="color:#ae81ff">342</span> <span style="color:#a6e22e">mary</span>:<span style="color:#ae81ff">428</span>]
+</span></span></code></pre></div><p>You see that the number of followers jumped from the integer value of <code>305</code> to <code>342</code>.</p>
+<p>You can use this method for adding key-value pairs to maps with user input. Let’s write a quick program called <code>usernames.go</code> that runs on the command line and allows input from the user to add more names and associated usernames:</p>
+<p>usernames.go</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#e6db74">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">usernames</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>: <span style="color:#e6db74">&#34;sammy-shark&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>: <span style="color:#e6db74">&#34;mantisshrimp54&#34;</span>}
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">for</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Enter a name:&#34;</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">name</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">name</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimSpace</span>(<span style="color:#a6e22e">name</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">ok</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">usernames</span>[<span style="color:#a6e22e">name</span>]; <span style="color:#a6e22e">ok</span> {
+</span></span><span style="display:flex;"><span>            <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q is the username of %q\n&#34;</span>, <span style="color:#a6e22e">u</span>, <span style="color:#a6e22e">name</span>)
+</span></span><span style="display:flex;"><span>            <span style="color:#66d9ef">continue</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;I don&#39;t have %v&#39;s username, what is it?\n&#34;</span>, <span style="color:#a6e22e">name</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">var</span> <span style="color:#a6e22e">username</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">username</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>            panic(<span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">username</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimSpace</span>(<span style="color:#a6e22e">username</span>)
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">usernames</span>[<span style="color:#a6e22e">name</span>] = <span style="color:#a6e22e">username</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Data updated.&#34;</span>)
+</span></span><span style="display:flex;"><span>    }
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>In <code>usernames.go</code> you first define the original map. You then set up a loop to iterate over the names. You request your user to enter a name and declare a variable to store it in. Next, you check to see if you had an error; if so, the program will exit with a <em>panic</em>. Because <code>Scanln</code> captures the entire input, including the carriage return, you need to remove any space from the input; you do this with the <code>strings.TrimSpace</code> function.</p>
+<p>The <code>if</code> block checks whether the name is present in the map and prints feedback. If the name is present it then continues back to the top of the loop. If the name is not in the map, it provides feedback to the user and then will ask for a new username for the associated name. The program checks again to see if there is an error. With no error, it trims off the carriage return, assigns the username value to the name key, and then prints feedback that the data was updated.</p>
+<p>Let’s run the program on the command line:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">go</span> <span style="color:#a6e22e">run</span> <span style="color:#a6e22e">usernames</span>.<span style="color:#66d9ef">go</span>
+</span></span></code></pre></div><p>You’ll see the following output:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Enter</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">name</span>:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span>
+</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;sammy-shark&#34;</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">the</span> <span style="color:#a6e22e">username</span> <span style="color:#a6e22e">of</span> <span style="color:#e6db74">&#34;Sammy&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Enter</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">name</span>:
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Jesse</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">I</span> <span style="color:#a6e22e">don</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">t</span> <span style="color:#a6e22e">have</span> <span style="color:#a6e22e">Jesse</span><span style="color:#960050;background-color:#1e0010">&#39;</span><span style="color:#a6e22e">s</span> <span style="color:#a6e22e">username</span>, <span style="color:#a6e22e">what</span> <span style="color:#a6e22e">is</span> <span style="color:#a6e22e">it</span><span style="color:#960050;background-color:#1e0010">?</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">JOctopus</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Data</span> <span style="color:#a6e22e">updated</span>.
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Enter</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">name</span>:
+</span></span></code></pre></div><p>When you’re done testing, press <code>CTRL + C</code> to escape the program.</p>
+<p>This shows how you can modify maps interactively. With this particular program, as soon as you exit the program with <code>CTRL + C</code> you’ll lose all your data unless you implement a way to handle reading and writing files.</p>
+<p>To summarize, you can add items to maps or modify values with the <code>map[key] = value</code> syntax.</p>
+<h3 id="deleting-map-items">
+  Deleting Map Items
+  <a class="anchor" href="#deleting-map-items">#</a>
+</h3>
+<p>Just as you can add key-value pairs and change values within the map data type, you can also delete items within a map.</p>
+<p>To remove a key-value pair from a map, you can use the built-in function <code>delete()</code>. The first argument is the map you are deleting from. The second argument is the key you are deleting:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>delete(<span style="color:#66d9ef">map</span>, <span style="color:#a6e22e">key</span>)
+</span></span></code></pre></div><p>Let’s define a map of permissions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">permissions</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>]<span style="color:#66d9ef">string</span>{<span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;read&#34;</span>, <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;write&#34;</span>, <span style="color:#ae81ff">4</span>: <span style="color:#e6db74">&#34;delete&#34;</span>, <span style="color:#ae81ff">8</span>: <span style="color:#e6db74">&#34;create&#34;</span>, <span style="color:#ae81ff">16</span>:<span style="color:#e6db74">&#34;modify&#34;</span>}
+</span></span></code></pre></div><p>You no longer need the <code>modify</code> permission, so you’ll remove it from your map. Then you’ll print out the map to confirm it was removed:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">permissions</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>]<span style="color:#66d9ef">string</span>{<span style="color:#ae81ff">1</span>: <span style="color:#e6db74">&#34;read&#34;</span>, <span style="color:#ae81ff">2</span>: <span style="color:#e6db74">&#34;write&#34;</span>, <span style="color:#ae81ff">4</span>: <span style="color:#e6db74">&#34;delete&#34;</span>, <span style="color:#ae81ff">8</span>: <span style="color:#e6db74">&#34;create&#34;</span>, <span style="color:#ae81ff">16</span>: <span style="color:#e6db74">&#34;modify&#34;</span>}
+</span></span><span style="display:flex;"><span>delete(<span style="color:#a6e22e">permissions</span>, <span style="color:#ae81ff">16</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">permissions</span>)
+</span></span></code></pre></div><p>The output will confirm the deletion:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[<span style="color:#ae81ff">1</span>:<span style="color:#a6e22e">read</span> <span style="color:#ae81ff">2</span>:<span style="color:#a6e22e">write</span> <span style="color:#ae81ff">4</span>:<span style="color:#a6e22e">delete</span> <span style="color:#ae81ff">8</span>:<span style="color:#a6e22e">create</span>]
+</span></span></code></pre></div><p>The line <code>delete(permissions, 16)</code> removes the key-value pair <code>16:&quot;modify&quot;</code> from the <code>permissions</code> map.</p>
+<p>If you would like to clear a map of all of its values, you can do so by setting it equal to an empty map of the same type. This will create a new empty map to use, and the old map will be cleared from memory by the garbage collector.</p>
+<p>Let’s remove all the items within the <code>permissions</code> map:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">permissions</span> = <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">int</span>]<span style="color:#66d9ef">string</span>{}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">permissions</span>)
+</span></span></code></pre></div><p>The output shows that you now have an empty map devoid of key-value pairs:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">map</span>[]
+</span></span></code></pre></div><p>Because maps are mutable data types, they can be added to, modified, and have items removed and cleared.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="anchor" href="#conclusion">#</a>
+</h2>
+<p>This tutorial explored the map data structure in Go. Maps are made up of key-value pairs and provide a way to store data without relying on indexing. This allows us to retrieve values based on their meaning and relation to other data types.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#accessing-map-items">Accessing Map Items</a></li>
+    <li><a href="#keys-and-values">Keys and Values</a></li>
+    <li><a href="#checking-existence">Checking Existence</a></li>
+    <li><a href="#modifying-maps">Modifying Maps</a>
+      <ul>
+        <li><a href="#adding-and-changing-map-items">Adding and Changing Map Items</a></li>
+        <li><a href="#deleting-map-items">Deleting Map Items</a></li>
+      </ul>
+    </li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

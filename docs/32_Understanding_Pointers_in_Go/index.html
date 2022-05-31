@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="了解 Go 中的指针 #  简介 #  当你用 Go 编写软件时，你会编写函数和方法。你将数据作为 参数 传递给这些函数。有时，函数会需要一个数据的本地拷贝，你希望原始数据保持不变。例如，如果你是一家银行，你有一个函数可以根据用户选择的储蓄计划来显示他们的余额变化，你不想在客户选择计划之前改变他们的实际余额，而只想用它来做计算。这被称为 按值传递，因为你是在向函数发送变量的值，而不是变量本身。
+其他时候，你可能希望函数能够改变原始变量中的数据。例如，当银行客户向其账户存款时，你希望存款函数能够访问实际的余额，而不是一个副本。在这种情况下，你不需要向函数发送实际数据， 而只需要告诉函数数据在内存中的位置。一个叫做 指针 的数据类型持有数据的内存地址，但不是数据本身。内存地址告诉函数在哪里可以找到数据，而不是数据的值。你可以把指针传给函数而不是实际的数据，然后函数就可以在原地改变原始变量的值。这被称为 通过引用传递，因为变量的值并没有传递给函数，而是传递了它指向的位置。
+在这篇文章中，你将创建并使用指针来分享对一个变量的内存空间的访问。
+定义和使用指针 #  当你使用一个指向变量的指针时，有几个不同的语法元素你需要了解。第一个是与号（&amp;）的使用。如果你在一个变量名称前面加一个与号，你就说明你想获得 地址，或者说是该变量的一个指针。第二个语法元素是使用星号（*）或 引用 操作符。当你声明一个指针变量时，你在变量名后面加上指针指向的变量类型，前面加一个*，像这样：
+var myPointer *int32 = &amp;someint 这将创建 myPointer 作为一个指向 int32 变量的指针，并以 someint 的地址初始化该指针。指针实际上并不包含一个 int32，而只是一个地址。
+让我们来看看一个指向 string 的指针。下面的代码既声明了一个字符串的值，又声明了一个指向字符串的指针：
+package main  import &#34;fmt&#34;  func main() { 	var creature string = &#34;shark&#34; 	var pointer *string = &amp;creature  	fmt.Println(&#34;creature =&#34;, creature) 	fmt.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="了解 Go 中的指针 #  简介 #  当你用 Go 编写软件时，你会编写函数和方法。你将数据作为 参数 传递给这些函数。有时，函数会需要一个数据的本地拷贝，你希望原始数据保持不变。例如，如果你是一家银行，你有一个函数可以根据用户选择的储蓄计划来显示他们的余额变化，你不想在客户选择计划之前改变他们的实际余额，而只想用它来做计算。这被称为 按值传递，因为你是在向函数发送变量的值，而不是变量本身。
+其他时候，你可能希望函数能够改变原始变量中的数据。例如，当银行客户向其账户存款时，你希望存款函数能够访问实际的余额，而不是一个副本。在这种情况下，你不需要向函数发送实际数据， 而只需要告诉函数数据在内存中的位置。一个叫做 指针 的数据类型持有数据的内存地址，但不是数据本身。内存地址告诉函数在哪里可以找到数据，而不是数据的值。你可以把指针传给函数而不是实际的数据，然后函数就可以在原地改变原始变量的值。这被称为 通过引用传递，因为变量的值并没有传递给函数，而是传递了它指向的位置。
+在这篇文章中，你将创建并使用指针来分享对一个变量的内存空间的访问。
+定义和使用指针 #  当你使用一个指向变量的指针时，有几个不同的语法元素你需要了解。第一个是与号（&amp;）的使用。如果你在一个变量名称前面加一个与号，你就说明你想获得 地址，或者说是该变量的一个指针。第二个语法元素是使用星号（*）或 引用 操作符。当你声明一个指针变量时，你在变量名后面加上指针指向的变量类型，前面加一个*，像这样：
+var myPointer *int32 = &amp;someint 这将创建 myPointer 作为一个指向 int32 变量的指针，并以 someint 的地址初始化该指针。指针实际上并不包含一个 int32，而只是一个地址。
+让我们来看看一个指向 string 的指针。下面的代码既声明了一个字符串的值，又声明了一个指向字符串的指针：
+package main  import &#34;fmt&#34;  func main() { 	var creature string = &#34;shark&#34; 	var pointer *string = &amp;creature  	fmt.Println(&#34;creature =&#34;, creature) 	fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/32_Understanding_Pointers_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>32 Understanding Pointers in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/"class=active>了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>32 Understanding Pointers in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+      </ul>
+    </li>
+    <li><a href="#定义和使用指针">定义和使用指针</a></li>
+    <li><a href="#函数指针接收器">函数指针接收器</a></li>
+    <li><a href="#空指针">空指针</a></li>
+    <li><a href="#方法指针接收器">方法指针接收器</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="了解-go-中的指针">
+  了解 Go 中的指针
+  <a class="anchor" href="#%e4%ba%86%e8%a7%a3-go-%e4%b8%ad%e7%9a%84%e6%8c%87%e9%92%88">#</a>
+</h1>
+<h3 id="简介">
+  简介
+  <a class="anchor" href="#%e7%ae%80%e4%bb%8b">#</a>
+</h3>
+<p>当你用 Go 编写软件时，你会编写函数和方法。你将数据作为 <em>参数</em> 传递给这些函数。有时，函数会需要一个数据的本地拷贝，你希望原始数据保持不变。例如，如果你是一家银行，你有一个函数可以根据用户选择的储蓄计划来显示他们的余额变化，你不想在客户选择计划之前改变他们的实际余额，而只想用它来做计算。这被称为 <em>按值传递</em>，因为你是在向函数发送变量的值，而不是变量本身。</p>
+<p>其他时候，你可能希望函数能够改变原始变量中的数据。例如，当银行客户向其账户存款时，你希望存款函数能够访问实际的余额，而不是一个副本。在这种情况下，你不需要向函数发送实际数据， 而只需要告诉函数数据在内存中的位置。一个叫做 <em>指针</em> 的数据类型持有数据的内存地址，但不是数据本身。内存地址告诉函数在哪里可以找到数据，而不是数据的值。你可以把指针传给函数而不是实际的数据，然后函数就可以在原地改变原始变量的值。这被称为 <em>通过引用传递</em>，因为变量的值并没有传递给函数，而是传递了它指向的位置。</p>
+<p>在这篇文章中，你将创建并使用指针来分享对一个变量的内存空间的访问。</p>
+<h2 id="定义和使用指针">
+  定义和使用指针
+  <a class="anchor" href="#%e5%ae%9a%e4%b9%89%e5%92%8c%e4%bd%bf%e7%94%a8%e6%8c%87%e9%92%88">#</a>
+</h2>
+<p>当你使用一个指向变量的指针时，有几个不同的语法元素你需要了解。第一个是与号（<code>&amp;</code>）的使用。如果你在一个变量名称前面加一个与号，你就说明你想获得 <em>地址</em>，或者说是该变量的一个指针。第二个语法元素是使用星号（<code>*</code>）或 <em>引用</em> 操作符。当你声明一个指针变量时，你在变量名后面加上指针指向的变量类型，前面加一个<code>*</code>，像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">myPointer</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">int32</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">someint</span>
+</span></span></code></pre></div><p>这将创建 <code>myPointer</code> 作为一个指向 <code>int32</code> 变量的指针，并以 <code>someint</code> 的地址初始化该指针。指针实际上并不包含一个 <code>int32</code>，而只是一个地址。</p>
+<p>让我们来看看一个指向 <code>string</code> 的指针。下面的代码既声明了一个字符串的值，又声明了一个指向字符串的指针：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;shark&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pointer</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">creature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;creature =&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;pointer =&#34;</span>, <span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>用以下命令运行该程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>go run main.go
+</span></span></code></pre></div><p>当你运行程序时，它将打印出变量的值，以及该变量的存储地址（指针地址）。内存地址是一个十六进制的数字，并不是为了让人看懂。在实践中，你可能永远不会输出内存地址来查看它。我们给你看是为了说明问题。因为每个程序运行时都是在自己的内存空间中创建的，所以每次运行时指针的值都会不同，也会与下面显示的输出不同：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>creature <span style="color:#f92672">=</span> shark
+</span></span><span style="display:flex;"><span>pointer <span style="color:#f92672">=</span> 0xc0000721e0
+</span></span></code></pre></div><p>我们定义的第一个变量名为 <code>creature</code>，并将其设置为一个 <code>string</code>，其值为 <code>shark</code> 。然后我们创建了另一个名为 <code>pointer</code> 的变量。这一次，我们将 <code>pointer</code> 变量的值设置为 <code>creature</code> 变量的地址。我们通过使用与号（<code>&amp;</code>）符号将一个值的地址存储在一个变量中。这意味着 <code>pointer</code> 变量存储的是 <code>creature</code> 变量的 <strong>地址</strong> ，而不是实际值。
+这就是为什么当我们打印出 <code>pointer</code> 的值时，我们收到的值是 <code>0xc0000721e0</code> ，这是 <code>creature</code> 变量目前在计算机内存中的地址。</p>
+<p>如果你想打印出 <code>pointer</code> 变量所指向的变量的值，你需要 <em>解引用</em> 该变量。下面的代码使用 <code>*</code> 操作符来解除对 <code>pointer</code> 变量的引用并检索其值。</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;shark&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pointer</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">creature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;creature =&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;pointer =&#34;</span>, <span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;*pointer =&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果你运行这段代码，你会看到以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>creature <span style="color:#f92672">=</span> shark
+</span></span><span style="display:flex;"><span>pointer <span style="color:#f92672">=</span> 0xc000010200
+</span></span><span style="display:flex;"><span>*pointer <span style="color:#f92672">=</span> shark
+</span></span></code></pre></div><p>我们添加的最后一行现在解除了对 <code>pointer</code> 变量的引用，并打印出了存储在该地址的值。
+如果你想修改存储在 <code>pointer</code> 变量位置的值，你也可以使用解除引用操作：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;shark&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pointer</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">creature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;creature =&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;pointer =&#34;</span>, <span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;*pointer =&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">*</span><span style="color:#a6e22e">pointer</span> = <span style="color:#e6db74">&#34;jellyfish&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;*pointer =&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行这段代码可以看到输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>creature <span style="color:#f92672">=</span> shark
+</span></span><span style="display:flex;"><span>pointer <span style="color:#f92672">=</span> 0xc000094040
+</span></span><span style="display:flex;"><span>*pointer <span style="color:#f92672">=</span> shark
+</span></span><span style="display:flex;"><span>*pointer <span style="color:#f92672">=</span> jellyfish
+</span></span></code></pre></div><p>我们通过在变量名称前使用星号（<code>*</code>）来设置 <code>pointer</code> 变量所指的值，然后提供一个 <code>jellyfish</code> 的新值。正如你所看到的，当我们打印解引用的值时，它现在被设置为 <code>jellyfish</code> 。
+你可能没有意识到，但实际上我们也改变了 <code>creature</code> 变量的值。这是因为 <code>pointer</code> 变量实际上是指向 <code>creature</code> 变量的地址。这意味着如果我们改变了 <code>pointer</code> 变量所指向的值，同时我们也会改变 <code>creature</code> 变量的值。</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;shark&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">pointer</span> <span style="color:#f92672">*</span><span style="color:#66d9ef">string</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">creature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;creature =&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;pointer =&#34;</span>, <span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;*pointer =&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#f92672">*</span><span style="color:#a6e22e">pointer</span> = <span style="color:#e6db74">&#34;jellyfish&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;*pointer =&#34;</span>, <span style="color:#f92672">*</span><span style="color:#a6e22e">pointer</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;creature =&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出看起来像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>creature <span style="color:#f92672">=</span> shark
+</span></span><span style="display:flex;"><span>pointer <span style="color:#f92672">=</span> 0xc000010200
+</span></span><span style="display:flex;"><span>*pointer <span style="color:#f92672">=</span> shark
+</span></span><span style="display:flex;"><span>*pointer <span style="color:#f92672">=</span> jellyfish
+</span></span><span style="display:flex;"><span>creature <span style="color:#f92672">=</span> jellyfish
+</span></span></code></pre></div><p>虽然这段代码说明了指针的工作原理，但这并不是你在 Go 中使用指针的典型方式。更常见的是在定义函数参数和返回值时使用它们，或者在定义自定义类型的方法时使用它们。让我们看看如何在函数中使用指针来共享对一个变量的访问。
+同样，请记住，我们正在打印 <code>pointer</code> 的值，是为了说明它是一个指针。在实践中，你不会使用指针的值，除了引用底层的值来检索或更新该值之外。</p>
+<h2 id="函数指针接收器">
+  函数指针接收器
+  <a class="anchor" href="#%e5%87%bd%e6%95%b0%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8">#</a>
+</h2>
+<p>当你写一个函数时，你可以定义参数，以 <em>值</em> 或 <em>引用</em> 的方式传递。通过 <em>值</em> 传递意味着该值的副本被发送到函数中，并且在该函数中对该参数的任何改变 <em>只</em> 在该函数中影响该变量，而不是从哪里传递。然而，如果你通过 <em>引用</em> 传递，意味着你传递了一个指向该参数的指针，你可以在函数中改变该值，也可以改变传递进来的原始变量的值。你可以在我们的<a href="https://www.digitalocean.com/community/conceptual_articles/understanding-pointers-in-go">如何在 Go 中定义和调用函数</a>中阅读更多关于如何定义函数的信息。</p>
+<p>什么时候传递一个指针，什么时候发送一个值，都取决于你是否希望这个值发生变化。如果你不希望数值改变，就把它作为一个值来发送。如果你希望你传递给你的变量的函数能够改变它，那么你就把它作为一个指针传递。</p>
+<p>为了看到区别，让我们先看看一个通过 <code>值</code> 传递参数的函数：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#a6e22e">Creature</span> = <span style="color:#a6e22e">Creature</span>{<span style="color:#a6e22e">Species</span>: <span style="color:#e6db74">&#34;shark&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;1) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;3) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span> <span style="color:#a6e22e">Creature</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span>.<span style="color:#a6e22e">Species</span> = <span style="color:#e6db74">&#34;jellyfish&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;2) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出看起来像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:shark<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:jellyfish<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:shark<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>首先我们创建了一个名为 <code>Creature</code> 的自定义类型。它有一个名为 <code>Species</code> 的字段，它是一个字符串。在 <code>main</code> 函数中，我们创建了一个名为<code>Creature</code> 的新类型实例，并将<code>Species</code> 字段设置为<code>shark</code> 。然后我们打印出变量，以显示存储在 <code>creature</code> 变量中的当前值。
+接下来，我们调用 <code>changeCreature</code>，并传入 <code>creature</code> 变量的副本。</p>
+<p><code>changeCreature</code> 被定义为接受一个名为 <code>creature</code> 的参数，并且它是我们之前定义的 <code>Creature</code> 类型的函数。然后我们将<code>Species</code> 字段的值改为 <code>jellyfish</code> 并打印出来。注意在 <code>changeCreature</code> 函数中，<code>Species</code> 的值现在是 <code>jellyfish</code>，并且打印出 <code>2) {Species:jellyfish}</code>。这是因为我们被允许在我们的函数范围内改变这个值。</p>
+<p>然而，当 <code>main</code> 函数的最后一行打印出 <code>creature</code> 的值时，<code>Species</code> 的值仍然是 <code>shark</code> 。值没有变化的原因是我们通过 <em>值</em> 传递变量。这意味着在内存中创建了一个值的副本，并传递给 <code>changeCreature</code> 函数。这允许我们有一个函数，可以根据需要对传入的任何参数进行修改，但不会影响函数之外的任何变量。</p>
+<p>接下来，让我们改变 <code>changeCreature</code> 函数，使其通过 <em>引用</em> 接受一个参数。我们可以通过使用星号（<code>*</code>）操作符将类型从 <code>Creature</code> 改为指针来做到这一点。我们现在传递的不是一个 <code>Creature</code>，而是一个指向 <code>Creature</code> 的指针，或者是一个 <code>*Creature</code>。在前面的例子中，<code>creature</code> 是一个 <code>struct</code>，它的 <code>Species</code> 值为 <code>shark</code>。<code>*creature</code> 是一个指针，不是一个结构体，所以它的值是一个内存位置，这就是我们传递给 <code>changeCreature()</code> 真正的东西。</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#a6e22e">Creature</span> = <span style="color:#a6e22e">Creature</span>{<span style="color:#a6e22e">Species</span>: <span style="color:#e6db74">&#34;shark&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;1) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">changeCreature</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;3) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span>.<span style="color:#a6e22e">Species</span> = <span style="color:#e6db74">&#34;jellyfish&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;2) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>运行这段代码可以看到以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:shark<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">)</span> &amp;<span style="color:#f92672">{</span>Species:jellyfish<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:jellyfish<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>注意，现在当我们在 <code>changeCreature</code> 函数中把 <code>Species</code> 的值改为 <code>jellyfish</code> 时，它也改变了 <code>main</code> 函数中定义的原始值。这是因为我们通过 <em>引用</em> 传递了 <code>creature</code> 变量，它允许访问内存里的原始值并可以根据需要改变它。
+因此，如果你想让一个函数能够改变一个值，你需要通过引用来传递它。要通过引用传递，你就需要传递变量的指针，而不是变量本身。</p>
+<p>然而，有时你可能没有为一个指针定义一个实际的值。在这些情况下，有可能在程序中出现<a href="https://www.digitalocean.com/community/tutorials/handling-panics-in-go">恐慌</a>。让我们来看看这种情况是如何发生的，以及如何对这种潜在的问题进行规划。</p>
+<h2 id="空指针">
+  空指针
+  <a class="anchor" href="#%e7%a9%ba%e6%8c%87%e9%92%88">#</a>
+</h2>
+<p>Go 中的所有变量都有一个<a href="https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values">零值</a>。即使对指针来说也是如此。如果你声明了一个类型的指针，但是没有赋值，那么零值将是 <code>nil</code>。<code>nil</code> 是一种表示变量 &ldquo;没有被初始化&rdquo; 的方式。</p>
+<p>在下面的程序中，我们定义了一个指向 <code>Creature</code> 类型的指针，但是我们从来没有实例化过 <code>Creature</code> 的实际实例，也没有将它的地址分配给 <code>creature</code> 指针变量。该值将是 <code>nil</code>，因此我们不能引用任何定义在 <code>Creature</code> 类型上的字段或方法：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;1) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;3) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span>.<span style="color:#a6e22e">Species</span> = <span style="color:#e6db74">&#34;jellyfish&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;2) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>输出看起来像这样：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1<span style="color:#f92672">)</span> &lt;nil&gt;
+</span></span><span style="display:flex;"><span>panic: runtime error: invalid memory address or nil pointer dereference
+</span></span><span style="display:flex;"><span><span style="color:#f92672">[</span>signal SIGSEGV: segmentation violation code<span style="color:#f92672">=</span>0x1 addr<span style="color:#f92672">=</span>0x8 pc<span style="color:#f92672">=</span>0x109ac86<span style="color:#f92672">]</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>goroutine <span style="color:#ae81ff">1</span> <span style="color:#f92672">[</span>running<span style="color:#f92672">]</span>:
+</span></span><span style="display:flex;"><span>main.changeCreature<span style="color:#f92672">(</span>0x0<span style="color:#f92672">)</span>
+</span></span><span style="display:flex;"><span>        /Users/corylanou/projects/learn/src/github.com/gopherguides/learn/_training/digital-ocean/pointers/src/nil.go:18 +0x26
+</span></span><span style="display:flex;"><span>	main.main<span style="color:#f92672">()</span>
+</span></span><span style="display:flex;"><span>	        /Users/corylanou/projects/learn/src/github.com/gopherguides/learn/_training/digital-ocean/pointers/src/nil.go:13 +0x98
+</span></span><span style="display:flex;"><span>		exit status <span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p>当我们运行程序时，它打印出了 <code>creature</code> 变量的值，该值是 <code>&lt;nil&gt;</code>。然后我们调用 <code>changeCreature</code> 函数，当该函数试图设置 <code>Species</code> 字段的值时，它 <em>panics</em>(恐慌) 了。这是因为实际上没有创建 <code>creature</code> 变量的实例。正因为如此，程序没有地方可以实际存储这个值，所以程序就恐慌了。
+在 Go 中很常见的是，如果你以指针的形式接收一个参数，在对它进行任何操作之前，你要检查它是否为 <code>nil</code>，以防止程序恐慌。</p>
+<p>这是检查 <code>nil</code> 的一种常见方法：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">someVariable</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// print an error or return from the method or fuction
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>实际上，你想确保你没有一个 <code>nil</code> 指针被传入你的函数或方法。如果有的话，你可能只想返回，或者返回一个错误，以表明一个无效的参数被传递到函数或方法中。下面的代码演示了对 <code>nil</code> 的检查：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;1) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;3) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">creature</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;creature is nil&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span>.<span style="color:#a6e22e">Species</span> = <span style="color:#e6db74">&#34;jellyfish&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;2) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们在 <code>changeCreature</code> 中添加了一个检查，看 <code>creature</code> 参数的值是否为 <code>nil</code>。如果是，我们打印出 &ldquo;creature is nil&rdquo;，并返回函数。否则，我们继续并改变 <code>Species</code> 字段的值。如果我们运行该程序，我们现在将得到以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1<span style="color:#f92672">)</span> &lt;nil&gt;
+</span></span><span style="display:flex;"><span>creature is nil
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">)</span> &lt;nil&gt;
+</span></span></code></pre></div><p>请注意，虽然我们仍然为 <code>creature</code> 变量设置了 <code>nil</code> 值，但我们不再恐慌，因为我们正在检查这种情况。
+最后，如果我们创建一个 <code>Creature</code> 类型的实例，并将其赋值给 <code>creature</code> 变量，程序现在将按照预期改变值：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span> = <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Creature</span>{<span style="color:#a6e22e">Species</span>: <span style="color:#e6db74">&#34;shark&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;1) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;3) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">changeCreature</span>(<span style="color:#a6e22e">creature</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">creature</span> <span style="color:#f92672">==</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;creature is nil&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span>.<span style="color:#a6e22e">Species</span> = <span style="color:#e6db74">&#34;jellyfish&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;2) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在我们有了一个 <code>Creature</code> 类型的实例，程序将运行，我们将得到以下预期输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1<span style="color:#f92672">)</span> &amp;<span style="color:#f92672">{</span>Species:shark<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">)</span> &amp;<span style="color:#f92672">{</span>Species:jellyfish<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>3<span style="color:#f92672">)</span> &amp;<span style="color:#f92672">{</span>Species:jellyfish<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>当你在使用指针时，程序有可能会出现恐慌。为了避免恐慌，你应该在试图访问任何字段或定义在其上的方法之前，检查一个指针值是否为 <code>nil</code>。
+接下来，让我们看看使用指针和值是如何影响在一个类型上定义方法的。</p>
+<h2 id="方法指针接收器">
+  方法指针接收器
+  <a class="anchor" href="#%e6%96%b9%e6%b3%95%e6%8c%87%e9%92%88%e6%8e%a5%e6%94%b6%e5%99%a8">#</a>
+</h2>
+<p>Go 中的 <em>接收器</em> 是指在方法声明中定义的参数。看一下下面的代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#a6e22e">Creature</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Species</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这个方法的接收器是 <code>c Creature</code>。它说明 <code>c</code> 的实例属于 <code>Creature</code> 类型，你将通过该实例变量引用该类型。</p>
+<p>方法跟函数一样，也是根据你送入的参数是指针还是值而有不同的行为。最大的区别是，如果你用一个值接收器定义一个方法，你就不能对该方法所定义的那个类型的实例进行修改。</p>
+<p>有的时候，你希望你的方法能够更新你所使用的变量的实例。为了实现这一点，你会想让接收器成为一个指针。</p>
+<p>让我们给我们的 <code>Creature</code> 类型添加一个 <code>Reset</code> 方法，将 <code>Species</code>字段设置为一个空字符串：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#a6e22e">Creature</span>) <span style="color:#a6e22e">Reset</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Species</span> = <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#a6e22e">Creature</span> = <span style="color:#a6e22e">Creature</span>{<span style="color:#a6e22e">Species</span>: <span style="color:#e6db74">&#34;shark&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;1) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span>.<span style="color:#a6e22e">Reset</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;2) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们运行该程序，我们将得到以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:shark<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:shark<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>注意到即使在 <code>Reset</code> 方法中我们将 <code>Species</code> 的值设置为空字符串，当我们在 <code>main</code> 函数中打印出 <code>creature</code> 变量的值时，该值仍然被设置为 <code>shark</code> 。这是因为我们定义的 <code>Reset</code> 方法有一个 <code>值</code> 接收器。这意味着该方法只能访问 <code>creature</code> 变量的 <em>副本</em>。
+如果我们想在方法中修改 <code>creature</code> 变量的实例，我们需要将它们定义为有一个 <code>指针</code> 接收器：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Creature</span> <span style="color:#66d9ef">struct</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Species</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Creature</span>) <span style="color:#a6e22e">Reset</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Species</span> = <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">creature</span> <span style="color:#a6e22e">Creature</span> = <span style="color:#a6e22e">Creature</span>{<span style="color:#a6e22e">Species</span>: <span style="color:#e6db74">&#34;shark&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;1) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">creature</span>.<span style="color:#a6e22e">Reset</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;2) %+v\n&#34;</span>, <span style="color:#a6e22e">creature</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>注意，我们现在在定义 <code>Reset</code> 方法时，在 <code>Creature</code> 类型前面添加了一个星号（<code>*</code>）。这意味着传递给 <code>Reset</code> 方法的 <code>Creature</code> 实例现在是一个指针，因此当我们进行修改时，将影响到该变量的原始实例。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>1<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:shark<span style="color:#f92672">}</span>
+</span></span><span style="display:flex;"><span>2<span style="color:#f92672">)</span> <span style="color:#f92672">{</span>Species:<span style="color:#f92672">}</span>
+</span></span></code></pre></div><p>现在 <code>Reset</code> 方法已经改变了 <code>Species</code> 字段的值。</p>
+<h2 id="总结">
+  总结
+  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
+</h2>
+<p>将一个函数或方法定义为通过 <em>值</em> 或通过 <em>引用</em>，将影响你的程序的哪些部分能够对其他部分进行修改。控制该变量何时能被改变，将使你能写出更健壮和可预测的软件。现在你已经了解了指针，你也可以看到它们是如何在接口中使用的。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#简介">简介</a></li>
+      </ul>
+    </li>
+    <li><a href="#定义和使用指针">定义和使用指针</a></li>
+    <li><a href="#函数指针接收器">函数指针接收器</a></li>
+    <li><a href="#空指针">空指针</a></li>
+    <li><a href="#方法指针接收器">方法指针接收器</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

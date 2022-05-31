@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="How To Use Variables and Constants in Go #  Variables are an important programming concept to master. They are symbols that stand in for a value you’re using in a program.
+This tutorial will cover some variable basics and best practices for using them within the Go programs you create.
+Understanding Variables #  In technical terms, a variable is assigning a storage location to a value that is tied to a symbolic name or identifier.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="How To Use Variables and Constants in Go #  Variables are an important programming concept to master. They are symbols that stand in for a value you’re using in a program.
+This tutorial will cover some variable basics and best practices for using them within the Go programs you create.
+Understanding Variables #  In technical terms, a variable is assigning a storage location to a value that is tied to a symbolic name or identifier." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/11-How_To_Use_Variables_and_Constants_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>11 How to Use Variables and Constants in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/"class=active>How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>11 How to Use Variables and Constants in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#understanding-variables">Understanding Variables</a></li>
+    <li><a href="#declaring-variables">Declaring Variables</a></li>
+    <li><a href="#zero-values">Zero Values</a></li>
+    <li><a href="#naming-variables-rules-and-style">Naming Variables: Rules and Style</a></li>
+    <li><a href="#reassigning-variables">Reassigning Variables</a></li>
+    <li><a href="#multiple-assignment">Multiple Assignment</a></li>
+    <li><a href="#global-and-local-variables">Global and Local Variables</a></li>
+    <li><a href="#constants">Constants</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="how-to-use-variables-and-constants-in-go">
+  How To Use Variables and Constants in Go
+  <a class="anchor" href="#how-to-use-variables-and-constants-in-go">#</a>
+</h1>
+<p><em>Variables</em> are an important programming concept to master. They are symbols that stand in for a value you’re using in a program.</p>
+<p>This tutorial will cover some variable basics and best practices for using them within the Go programs you create.</p>
+<h2 id="understanding-variables">
+  Understanding Variables
+  <a class="anchor" href="#understanding-variables">#</a>
+</h2>
+<p>In technical terms, a variable is assigning a storage location to a value that is tied to a symbolic name or identifier. We use the variable name to reference that stored value within a computer program.</p>
+<p>We can think of a variable as a label that has a name on it, which you tie onto a value.</p>
+<p><img src="https://assets.digitalocean.com/articles/go_variables/variable1.png" alt="Variables in Go" /></p>
+<p>Let’s say we have an integer, <code>1032049348</code>, and we want to store it in a variable rather than continuously retype the long number over and over again. To achieve this, we can use a name that’s easy to remember, like the variable <code>i</code>. To store a value in a variable, we use the following syntax:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1032049348</span>
+</span></span></code></pre></div><p>We can think of this variable like a label that is tied to the value.</p>
+<p><img src="https://assets.digitalocean.com/articles/go_variables/variable2.png" alt="Go Variable Example" /></p>
+<p>The label has the variable name <code>i</code> written on it, and is tied to the integer value <code>1032049348</code>.</p>
+<p>The phrase <code>i := 1032049348</code> is a declaration and assignment statement that consists of a few parts:</p>
+<ul>
+<li>the variable name (<code>i</code>)</li>
+<li>the short variable declaration assignment (<code>:=</code>)</li>
+<li>the value that is being tied to the variable name (<code>1032049348</code>)</li>
+<li>the data type inferred by Go (<code>int</code>)</li>
+</ul>
+<p>We’ll see later how to explicitly set the type in the next section.</p>
+<p>Together, these parts make up the statement that sets the variable <code>i</code> equal to the value of the integer <code>1032049348</code>.</p>
+<p>As soon as we set a variable equal to a value, we <em>initialize</em> or create that variable. Once we have done that, we are ready to use the variable instead of the value.</p>
+<p>Once we’ve set <code>i</code> equal to the value of <code>1032049348</code>, we can use <code>i</code> in the place of the integer, so let’s print it out:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1032049348</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1032049348</span>
+</span></span></code></pre></div><p>We can also quickly and easily do math by using variables. With <code>i := 1032049348</code>, we can subtract the integer value <code>813</code> with the following syntax:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span> <span style="color:#f92672">-</span> <span style="color:#ae81ff">813</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">1032048535</span>
+</span></span></code></pre></div><p>In this example, Go does the math for us, subtracting 813 from the variable <code>i</code> to return the sum <code>1032048535</code>.</p>
+<p>Speaking of math, variables can be set equal to the result of a math equation. You can also add two numbers together and store the value of the sum into the variable <code>x</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">76</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">145</span>
+</span></span></code></pre></div><p>You may have noticed that this example looks similar to algebra. In the same way that we use letters and other symbols to represent numbers and quantities within formulas and equations, variables are symbolic names that represent the value of a data type. For correct Go syntax, you’ll need to make sure that your variable is on the left side of any equations.</p>
+<p>Let’s go ahead and print <code>x</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">76</span> <span style="color:#f92672">+</span> <span style="color:#ae81ff">145</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">x</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">221</span>
+</span></span></code></pre></div><p>Go returned the value <code>221</code> because the variable <code>x</code> was set equal to the sum of <code>76</code> and <code>145</code>.</p>
+<p>Variables can represent any data type, not just integers:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Hello, World!&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">45.06</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5</span> &gt; <span style="color:#ae81ff">9</span> <span style="color:#75715e">// A Boolean value will return either true or false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">array</span> <span style="color:#f92672">:=</span> [<span style="color:#ae81ff">4</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;item_1&#34;</span>, <span style="color:#e6db74">&#34;item_2&#34;</span>, <span style="color:#e6db74">&#34;item_3&#34;</span>, <span style="color:#e6db74">&#34;item_4&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">slice</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;one&#34;</span>, <span style="color:#e6db74">&#34;two&#34;</span>, <span style="color:#e6db74">&#34;three&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">m</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">map</span>[<span style="color:#66d9ef">string</span>]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;letter&#34;</span>: <span style="color:#e6db74">&#34;g&#34;</span>, <span style="color:#e6db74">&#34;number&#34;</span>: <span style="color:#e6db74">&#34;seven&#34;</span>, <span style="color:#e6db74">&#34;symbol&#34;</span>: <span style="color:#e6db74">&#34;&amp;&#34;</span>}
+</span></span></code></pre></div><p>If you print any of these variables, Go will return what that variable is equivalent to. Let’s work with the assignment statement for the string <code>slice</code> data type:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">slice</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;one&#34;</span>, <span style="color:#e6db74">&#34;two&#34;</span>, <span style="color:#e6db74">&#34;three&#34;</span>}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">slice</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">one</span> <span style="color:#a6e22e">two</span> <span style="color:#a6e22e">three</span>]
+</span></span></code></pre></div><p>We assigned the slice value of <code>[]string{&quot;one&quot;, &quot;two&quot;, &quot;three&quot;}</code> to the variable <code>slice</code>, and then used the <code>fmt.Println</code> function to print out that value by calling <code>slice</code>.</p>
+<p>Variables work by carving out a little area of memory within your computer that accepts specified values that are then associated with that space.</p>
+<h2 id="declaring-variables">
+  Declaring Variables
+  <a class="anchor" href="#declaring-variables">#</a>
+</h2>
+<p>In Go, there are several ways to declare a variable, and in some cases, more than one way to declare the exact same variable and value.</p>
+<p>We can declare a variable called <code>i</code> of data type <code>int</code> without initialization. This means we will declare a space to put a value, but not give it an initial value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span>
+</span></span></code></pre></div><p>This creates a variable declared as <code>i</code> of data type <code>int</code>.</p>
+<p>We can initialize the value by using the equal (<code>=</code>) operator, like in the following example:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span> = <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>In Go, both of these forms of declaration are called <em>long variable declarations</em>.</p>
+<p>We can also use <em>short variable declaration</em>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>In this case, we have a variable called <code>i</code>, and a data type of <code>int</code>. When we don’t specify a data type, Go will infer the data type.</p>
+<p>With the three ways to declare variables, the Go community has adopted the following idioms:</p>
+<ul>
+<li>Only use long form, <code>var i int</code>, when you’re not initializing the variable.</li>
+<li>Use short form, <code>i := 1</code>, when declaring and initializing.</li>
+<li>If you did not desire Go to infer your data type, but you still want to use short variable declaration, you can wrap your value in your desired type, with the following syntax:</li>
+</ul>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> int64(<span style="color:#ae81ff">1</span>)
+</span></span></code></pre></div><p>It’s not considered idiomatic in Go to use the long variable declaration form when we’re initializing the value:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span> = <span style="color:#ae81ff">1</span>
+</span></span></code></pre></div><p>It’s good practice to follow how the Go community typically declares variables so that others can seamlessly read your programs.</p>
+<h2 id="zero-values">
+  Zero Values
+  <a class="anchor" href="#zero-values">#</a>
+</h2>
+<p>All built-in types have a zero value. Any allocated variable is usable even if it never has a value assigned. We can see the zero values for the following types:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">b</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">float64</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">d</span> <span style="color:#66d9ef">bool</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;var a %T = %+v\n&#34;</span>, <span style="color:#a6e22e">a</span>, <span style="color:#a6e22e">a</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;var b %T = %q\n&#34;</span>, <span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">b</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;var c %T = %+v\n&#34;</span>, <span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">c</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;var d %T = %+v\n\n&#34;</span>, <span style="color:#a6e22e">d</span>, <span style="color:#a6e22e">d</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">a</span> <span style="color:#66d9ef">int</span> =  <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">b</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">c</span> <span style="color:#66d9ef">float64</span> = <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">d</span> <span style="color:#66d9ef">bool</span> = <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>We used the <code>%T</code> verb in the <code>fmt.Printf</code> statement. This tells the function to print the <code>data type</code> for the variable.</p>
+<p>In Go, because all values have a <code>zero</code> value, we can’t have <code>undefined</code> values like some other languages. For instance, a <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#booleans"><code>boolean</code></a> in some languages could be <code>undefined</code>, <code>true</code>, or <code>false</code>, which allows for <code>three</code> states to the variable. In Go, we can’t have more than <code>two</code> states for a boolean value.</p>
+<h2 id="naming-variables-rules-and-style">
+  Naming Variables: Rules and Style
+  <a class="anchor" href="#naming-variables-rules-and-style">#</a>
+</h2>
+<p>The naming of variables is quite flexible, but there are some rules to keep in mind:</p>
+<ul>
+<li>Variable names must only be one word (as in no spaces).</li>
+<li>Variable names must be made up of only letters, numbers, and underscores (<code>_</code>).</li>
+<li>Variable names cannot begin with a number.</li>
+</ul>
+<p>Following these rules, let’s look at both valid and invalid variable names:</p>
+<table>
+<thead>
+<tr>
+<th>Valid</th>
+<th>Invalid</th>
+<th>Why Invalid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userName</code></td>
+<td><code>user-name</code></td>
+<td>Hyphens are not permitted</td>
+</tr>
+<tr>
+<td><code>name4</code></td>
+<td><code>4name</code></td>
+<td>Cannot begin with a number</td>
+</tr>
+<tr>
+<td><code>user</code></td>
+<td><code>$user</code></td>
+<td>Cannot use symbols</td>
+</tr>
+<tr>
+<td><code>userName</code></td>
+<td><code>user name</code></td>
+<td>Cannot be more than one word</td>
+</tr>
+</tbody>
+</table>
+<p>Furthermore, keep in mind when naming variables that they are case sensitive. These names <code>userName</code>, <code>USERNAME</code>, <code>UserName</code>, and <code>uSERnAME</code> are all completely different variables. It’s best practice to avoid using similar variable names within a program to ensure that both you and your collaborators—current and future—can keep your variables straight.</p>
+<p>While variables are case sensitive, the case of the first letter of a variable has special meaning in Go. If a variable starts with an uppercase letter, then that variable is accessible outside the package it was declared in (or <code>exported</code>). If a variable starts with a lowercase letter, then it is only available within the package it is declared in.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Email</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">password</span> <span style="color:#66d9ef">string</span>
+</span></span></code></pre></div><p><code>Email</code> starts with an uppercase letter and can be accessed by other packages. <code>password</code> starts with a lowercase letter, and is only accessible inside the package it is declared in.</p>
+<p>It is common in Go to use very terse (or short) variable names. Given the choice between using <code>userName</code> and <code>user</code> for a variable, it would be idiomatic to choose <code>user</code>.</p>
+<p>Scope also plays a role in the terseness of the variable name. The rule is that the smaller the scope the variable exists in, the smaller the variable name:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">names</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Mary&#34;</span>, <span style="color:#e6db74">&#34;John&#34;</span>, <span style="color:#e6db74">&#34;Bob&#34;</span>, <span style="color:#e6db74">&#34;Anna&#34;</span>}
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">names</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;index: %d = %q\n&#34;</span>, <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>We use the variable <code>names</code> in a larger scope, so it would be common to give it a more meaningful name to help remember what it means in the program. However, we use the <code>i</code> and <code>n</code> variables immediately in the next line of code, and then do not use them again… Because of this, it won’t confuse someone reading the code about where the variables are used, or what they mean.</p>
+<p>Next, let’s cover some notes about variable style. The style is to use <code>MixedCaps</code> or <code>mixedCaps</code> rather than underscores for multi-word names.</p>
+<table>
+<thead>
+<tr>
+<th>Conventional Style</th>
+<th>Unconventional Style</th>
+<th>Why Unconventional</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>userName</code></td>
+<td><code>user_name</code></td>
+<td>Underscores are not conventional</td>
+</tr>
+<tr>
+<td><code>i</code></td>
+<td><code>index</code></td>
+<td>prefer <code>i</code> over <code>index</code> as it is shorter</td>
+</tr>
+<tr>
+<td><code>serveHTTP</code></td>
+<td><code>serveHttp</code></td>
+<td>acronyms should be capitalized</td>
+</tr>
+</tbody>
+</table>
+<p>The most important thing about style is to be consistent, and that the team you work on agrees to the style.</p>
+<h2 id="reassigning-variables">
+  Reassigning Variables
+  <a class="anchor" href="#reassigning-variables">#</a>
+</h2>
+<p>As the word “variable” implies, we can change Go variables readily. This means that we can connect a different value with a previously assigned variable through reassignment. Being able to reassign is useful because throughout the course of a program we may need to accept user-generated values into already initialized variables. We may also need to change the assignment to something previously defined.</p>
+<p>Knowing that we can readily reassign a variable can be useful when working on a large program that someone else wrote, and it isn’t clear what variables are already defined.</p>
+<p>Let’s assign the value of <code>76</code> to a variable called <code>i</code> of type <code>int</code>, then assign it a new value of <code>42</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">76</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">i</span> = <span style="color:#ae81ff">42</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">76</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">42</span>
+</span></span></code></pre></div><p>This example shows that we can first assign the variable <code>i</code> with the value of an integer, and then reassign the variable <code>i</code> assigning it this time with the value of <code>42</code>.</p>
+<p><strong>Note:</strong> When you declare <strong>and</strong> initialize a variable, you can use <code>:=</code>, however, when you want to simply change the value of an already declared variable, you only need to use the equal operator (<code>=</code>).</p>
+<p>Because Go is a <code>typed</code> language, we can’t assign one type to another. For instance, we can’t assign the value <code>&quot;Sammy&quot;</code> to a variable of type <code>int</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">72</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i</span> = <span style="color:#e6db74">&#34;Sammy&#34;</span>
+</span></span></code></pre></div><p>Trying to assign different types to each other will result in a compile-time error:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cannot</span> <span style="color:#a6e22e">use</span> <span style="color:#e6db74">&#34;Sammy&#34;</span> (<span style="color:#66d9ef">type</span> <span style="color:#66d9ef">string</span>) <span style="color:#a6e22e">as</span> <span style="color:#66d9ef">type</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">assignment</span>
+</span></span></code></pre></div><p>Go will not allow us to use a variable name more than once:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#a6e22e">redeclared</span> <span style="color:#a6e22e">in</span> <span style="color:#a6e22e">this</span> <span style="color:#a6e22e">block</span>
+</span></span></code></pre></div><p>If we try to use short variable declaration more than once for the same variable name we’ll also receive a compilation error. This can happen by mistake, so understanding what the error message means is helpful:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">10</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">no</span> <span style="color:#a6e22e">new</span> <span style="color:#a6e22e">variables</span> <span style="color:#a6e22e">on</span> <span style="color:#a6e22e">left</span> <span style="color:#a6e22e">side</span> <span style="color:#a6e22e">of</span> <span style="color:#f92672">:=</span>
+</span></span></code></pre></div><p>Similarly to variable declaration, giving consideration to the naming of your variables will improve the readability of your program for you, and others, when you revisit it in the future.</p>
+<h2 id="multiple-assignment">
+  Multiple Assignment
+  <a class="anchor" href="#multiple-assignment">#</a>
+</h2>
+<p>Go also allows us to assign several values to several variables within the same line. Each of these values can be of a different data type:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">j</span>, <span style="color:#a6e22e">k</span>, <span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;shark&#34;</span>, <span style="color:#ae81ff">2.05</span>, <span style="color:#ae81ff">15</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">j</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">k</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">l</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">shark</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2.05</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">15</span>
+</span></span></code></pre></div><p>In this example, the variable <code>j</code> was assigned to the string <code>&quot;shark&quot;</code>, the variable <code>k</code> was assigned to the float <code>2.05</code>, and the variable <code>l</code> was assigned to the integer <code>15</code>.</p>
+<p>This approach to assigning multiple variables to multiple values in one line can keep the number of lines in your code down. However, it’s important to not compromise readability for fewer lines of code.</p>
+<h2 id="global-and-local-variables">
+  Global and Local Variables
+  <a class="anchor" href="#global-and-local-variables">#</a>
+</h2>
+<p>When using variables within a program, it is important to keep <em>variable scope</em> in mind. A variable’s scope refers to the particular places it is accessible from within the code of a given program. This is to say that not all variables are accessible from all parts of a given program—some variables will be global and some will be local.</p>
+<p>Global variables exist outside of functions. Local variables exist within functions.</p>
+<p>Let’s take a look at global and local variables in action:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">g</span> = <span style="color:#e6db74">&#34;global&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printLocal</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;local&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">l</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printLocal</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">local</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">global</span>
+</span></span></code></pre></div><p>Here we use <code>var g = &quot;global&quot;</code> to create a global variable outside of the function. Then we define the function <code>printLocal()</code>. Inside of the function a local variable called <code>l</code> is assigned and then printed out. The program ends by calling <code>printLocal()</code> and then printing the global variable <code>g</code>.</p>
+<p>Because <code>g</code> is a global variable, we can refer to it in <code>printLocal()</code>. Let’s modify the previous program to do that:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">g</span> = <span style="color:#e6db74">&#34;global&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printLocal</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;local&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">l</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printLocal</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">g</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">local</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">global</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">global</span>
+</span></span></code></pre></div><p>We start by declaring a global variable <code>g</code>, <code>var g = &quot;global&quot;</code>. In the <code>main</code> function, we call the function <code>printLocal</code>, which declares a local variable <code>l</code> and prints it out, <code>fmt.Println(l)</code>. Then, <code>printLocal</code> prints out the global variable <code>g</code>, <code>fmt.Println(g)</code>. Even though <code>g</code> wasn’t defined within <code>printLocal</code>, it could still be accessed because it was declared in a global scope. Finally, the <code>main</code> function prints out <code>g</code> as well.</p>
+<p>Now let’s try to call the local variable outside of the function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">g</span> = <span style="color:#e6db74">&#34;global&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printLocal</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;local&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">l</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">l</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">undefined</span>: <span style="color:#a6e22e">l</span>
+</span></span></code></pre></div><p>We can’t use a local variable outside of the function it is assigned in. If you try to do so, you’ll receive a <code>undefined</code> error when you compile.</p>
+<p>Let’s look at another example where we use the same variable name for a global variable and a local variable:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">num1</span> = <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">printNumbers</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">num1</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">num2</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">7</span>  
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">num1</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">num2</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">printNumbers</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">num1</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">10</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5</span>
+</span></span></code></pre></div><p>In this program, we declared the <code>num1</code> variable twice. First, we declared <code>num1</code> at the global scope, <code>var num1 = 5</code>, and again within the local scope of the <code>printNumbers</code> function, <code>num1 := 10</code>. When we print <code>num1</code> from the <code>main</code> program, we see the value of <code>5</code> printed out. This is because <code>main</code> only sees the global variable declaration. However, when we print out <code>num1</code> from the <code>printNumbers</code> function, it sees the local declaration, and will print out the value of <code>10</code>. Even though <code>printNumbers</code> creates a new variable called <code>num1</code> and assigned it a value of <code>10</code>, it does not affect the global instance of <code>num1</code> with the value of <code>5</code>.</p>
+<p>When working with variables, you also need to consider what parts of your program will need access to each variables; adopting a global or local variable accordingly. Across Go programs, you’ll find that local variables are typically more common.</p>
+<h2 id="constants">
+  Constants
+  <a class="anchor" href="#constants">#</a>
+</h2>
+<p>Constants are like variables, except they can’t be modified once they have been declared. Constants are useful for defining a value that will be used more than once in your program, but shouldn’t be able to change.</p>
+<p>For instance, if we wanted to declare the tax rate for a shopping cart system, we could use a constant and then calculate tax in different areas of our program. At some point in the future, if the tax rate changes, we only have to change that value in one spot in our program. If we used a variable, it is possible that we might accidentally change the value somewhere in our program, which would result in an improper calculation.</p>
+<p>To declare a constant, we can use the following syntax:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">shark</span> = <span style="color:#e6db74">&#34;Sammy&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">shark</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span>
+</span></span></code></pre></div><p>If we try to modify a constant after it was declared, we’ll get a compile-time error:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">cannot</span> <span style="color:#a6e22e">assign</span> <span style="color:#a6e22e">to</span> <span style="color:#a6e22e">shark</span>
+</span></span></code></pre></div><p>Constants can be <code>untyped</code>. This can be useful when working with numbers such as integer-type data. If the constant is <code>untyped</code>, it is explicitly converted, where <code>typed</code> constants are not. Let’s see how we can use constants:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">year</span>     = <span style="color:#ae81ff">365</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">leapYear</span> = int32(<span style="color:#ae81ff">366</span>)
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">hours</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">24</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">minutes</span> <span style="color:#f92672">:=</span> int32(<span style="color:#ae81ff">60</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">hours</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">year</span>)    
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">minutes</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">year</span>)   
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">minutes</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">leapYear</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">8760</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">21900</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">21960</span>
+</span></span></code></pre></div><p>If you declare a constant with a type, it will be that exact type. Here when we declare the constant <code>leapYear</code>, we define it as data type <code>int32</code>. Therefore it is a <code>typed</code> constant, which means it can only operate with <code>int32</code> data types. The <code>year</code> constant we declare with no type, so it is considered <code>untyped</code>. Because of this, you can use it with any integer data type.</p>
+<p>When <code>hours</code> was defined, it <em>inferred</em> that it was of type <code>int</code> because we did not explicitly give it a type, <code>hours := 24</code>. When we declared <code>minutes</code>, we explicitly declared it as an <code>int32</code>, <code>minutes := int32(60)</code>.</p>
+<p>Now let’s walk through each calculation and why it works:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">hours</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">year</span>
+</span></span></code></pre></div><p>In this case, <code>hours</code> is an <code>int</code>, and <code>years</code> is <em>untyped</em>. When the program compiles, it explicitly converts <code>years</code> to an <code>int</code>, which allows the multiplication operation to succeed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">minutes</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">year</span>
+</span></span></code></pre></div><p>In this case, <code>minutes</code> is an <code>int32</code>, and <code>year</code> is <em>untyped</em>. When the program compiles, it explicitly converts <code>years</code> to an <code>int32</code>, which allows the multiplication operation to succeed.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">minutes</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">leapYear</span>
+</span></span></code></pre></div><p>In this case, <code>minutes</code> is an <code>int32</code>, and <code>leapYear</code> is a <em>typed</em> constant of <code>int32</code>. There is nothing for the compiler to do this time as both variables are already of the same type.</p>
+<p>If we try to multiply two types that are <code>typed</code> and not compatible, the program will not compile:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">hours</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">leapYear</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid</span> <span style="color:#a6e22e">operation</span>: <span style="color:#a6e22e">hours</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">leapYear</span> (<span style="color:#a6e22e">mismatched</span> <span style="color:#a6e22e">types</span> <span style="color:#66d9ef">int</span> <span style="color:#a6e22e">and</span> <span style="color:#66d9ef">int32</span>)
+</span></span></code></pre></div><p>In this case, <code>hours</code> was inferred as an <code>int</code>, and <code>leapYear</code> was explicitly declared as an <code>int32</code>. Because Go is a typed language, an <code>int</code> and an <code>int32</code> are not compatible for mathematical operations. To multiply them, you would need <a href="https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go#converting-number-types">to convert one to a <code>int32</code> or an <code>int</code></a>.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="anchor" href="#conclusion">#</a>
+</h2>
+<p>In this tutorial we reviewed some of the common use cases of variables within Go. Variables are an important building block of programming, serving as symbols that stand in for the value of a data type we use in a program.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#understanding-variables">Understanding Variables</a></li>
+    <li><a href="#declaring-variables">Declaring Variables</a></li>
+    <li><a href="#zero-values">Zero Values</a></li>
+    <li><a href="#naming-variables-rules-and-style">Naming Variables: Rules and Style</a></li>
+    <li><a href="#reassigning-variables">Reassigning Variables</a></li>
+    <li><a href="#multiple-assignment">Multiple Assignment</a></li>
+    <li><a href="#global-and-local-variables">Global and Local Variables</a></li>
+    <li><a href="#constants">Constants</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

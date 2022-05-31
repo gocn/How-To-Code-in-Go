@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="在循环中使用 Break 和 Continue #  介绍 #  在 Go 中使用 for 循环可以让您以有效的方式自动化重复任务。
+学习如何控制循环的操作和流程将允许在您的程序中自定义逻辑。您可以使用 break 和 continue 语句控制循环
+Break 语句 #  在 Go 中， break 语句终止当前循环的执行。break几乎总是与条件if语句配对。
+让我们看一个在循环中使用break语句的示例：
+package main  import &#34;fmt&#34;  func main() { 	for i := 0; i &lt; 10; i&#43;&#43; { 	if i == 5 { 	fmt.Println(&#34;Breaking out of loop&#34;) 	break // break here 	} 	fmt.Println(&#34;The value of i is&#34;, i) 	} 	fmt.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="在循环中使用 Break 和 Continue #  介绍 #  在 Go 中使用 for 循环可以让您以有效的方式自动化重复任务。
+学习如何控制循环的操作和流程将允许在您的程序中自定义逻辑。您可以使用 break 和 continue 语句控制循环
+Break 语句 #  在 Go 中， break 语句终止当前循环的执行。break几乎总是与条件if语句配对。
+让我们看一个在循环中使用break语句的示例：
+package main  import &#34;fmt&#34;  func main() { 	for i := 0; i &lt; 10; i&#43;&#43; { 	if i == 5 { 	fmt.Println(&#34;Breaking out of loop&#34;) 	break // break here 	} 	fmt.Println(&#34;The value of i is&#34;, i) 	} 	fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>26 Using Break and Continue Statements When Working With Loops in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/"class=active>在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>26 Using Break and Continue Statements When Working With Loops in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#break-语句">Break 语句</a>
+      <ul>
+        <li><a href="#嵌套循环">嵌套循环</a></li>
+      </ul>
+    </li>
+    <li><a href="#continue-语句">Continue 语句</a></li>
+    <li><a href="#结论">结论</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="在循环中使用-break-和-continue">
+  在循环中使用 Break 和 Continue
+  <a class="anchor" href="#%e5%9c%a8%e5%be%aa%e7%8e%af%e4%b8%ad%e4%bd%bf%e7%94%a8-break-%e5%92%8c-continue">#</a>
+</h1>
+<h3 id="介绍">
+  介绍
+  <a class="anchor" href="#%e4%bb%8b%e7%bb%8d">#</a>
+</h3>
+<p>在 Go 中使用 <strong>for 循环</strong>可以让您以有效的方式自动化重复任务。</p>
+<p>学习如何控制循环的操作和流程将允许在您的程序中自定义逻辑。您可以使用 <code>break</code> 和 <code>continue</code> 语句控制循环</p>
+<h2 id="break-语句">
+  Break 语句
+  <a class="anchor" href="#break-%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p>在 Go 中， <code>break</code> 语句终止当前循环的执行。<code>break</code>几乎总是与<a href="https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go">条件<code>if</code>语句</a>配对。</p>
+<p>让我们看一个在循环中使用<code>break</code>语句的示例：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Breaking out of loop&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span> <span style="color:#75715e">// break here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The value of i is&#34;</span>, <span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Exiting program&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这个小程序创建了一个 <code>for</code>循环，该循环在当 <code>i</code> 小于 <code>10</code> 时进行迭代。</p>
+<p>在 <code>for</code> 循环中，有一个<code>if</code>语句。该 <code>if</code>语句会检查 <code>i</code> 的值是否小于 <code>5</code>。如果 <code>i</code> 的值不等于 <code>5</code>，则循环继续并打印出 <code>i</code> 的值。如果 <code>i</code> 的值等于 <code>5</code>，则循环将执行 <code>break</code> 语句，打印 <code>Breaking out of loop</code>，并停止循环。在程序结束时，我们打印出 <code>Exiting program</code> 表示我们已经退出了循环。</p>
+<p>当我们运行此代码时，输出将如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>Breaking out of loop
+</span></span><span style="display:flex;"><span>Exiting program
+</span></span></code></pre></div><p>这表明，一旦整数 <code>i</code> 被检查为等于 5，循环就会中断，因为程序使用 <code>break</code> 语句来这样做。</p>
+<h3 id="嵌套循环">
+  嵌套循环
+  <a class="anchor" href="#%e5%b5%8c%e5%a5%97%e5%be%aa%e7%8e%af">#</a>
+</h3>
+<p>要记住，<code>break</code> 语句只会停止调用它的最内层循环的执行。如果您有一组嵌套循环，如果需要的话，您将需要为每个循环设置break。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">outer</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">outer</span> &lt; <span style="color:#ae81ff">5</span>; <span style="color:#a6e22e">outer</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">outer</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">3</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Breaking out of outer loop&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">break</span> <span style="color:#75715e">// break here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The value of outer is&#34;</span>, <span style="color:#a6e22e">outer</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">inner</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">inner</span> &lt; <span style="color:#ae81ff">5</span>; <span style="color:#a6e22e">inner</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">inner</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">2</span> {
+</span></span><span style="display:flex;"><span>				<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Breaking out of inner loop&#34;</span>)
+</span></span><span style="display:flex;"><span>				<span style="color:#66d9ef">break</span> <span style="color:#75715e">// break here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			}
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The value of inner is&#34;</span>, <span style="color:#a6e22e">inner</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Exiting program&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这个程序中，我们有两个循环。虽然两个循环都迭代 5 次，但每个循环都有一个带有 <code>break</code> 语句的 <code>if</code> 条件语句。<code>outer</code> 如果等于 <code>3</code>，外部循环将中断。如果 <code>inner</code> 值为 <code>2</code> ，内部循环将中断。</p>
+<p>如果我们运行程序，可以看到输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>The value of outer is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>The value of inner is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>The value of inner is <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Breaking out of inner loop
+</span></span><span style="display:flex;"><span>The value of outer is <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>The value of inner is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>The value of inner is <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Breaking out of inner loop
+</span></span><span style="display:flex;"><span>The value of outer is <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>The value of inner is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>The value of inner is <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>Breaking out of inner loop
+</span></span><span style="display:flex;"><span>Breaking out of outer loop
+</span></span><span style="display:flex;"><span>Exiting program
+</span></span></code></pre></div><p>请注意，每次内循环中断时，外循环都不会中断。这是因为<code>break</code> 只会中断调用它的最内层循环。</p>
+<p>我们已经看到 <code>break</code> 是如何停止循环的。接下来，让我们看看 <code>continue</code> 如何继续循环的。</p>
+<h2 id="continue-语句">
+  Continue 语句
+  <a class="anchor" href="#continue-%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p>当您想要跳过循环的剩余部分并返回循环顶部继续新的迭代时，可以使用 <code>continue</code> 语句。</p>
+<p>与 <code>break</code> 语句一样，<code>continue</code> 语句通常与  <code>if</code>  条件语句一起使用。</p>
+<p>使用与前面的<a href="https://www.digitalocean.com/community/tutorials/how-to-use-break-and-continue-statements-when-working-with-loops-in-go#break-statement">Break 语句</a>部分相同的 <code>for</code> 循环程序，这里我们将使用 <code>continue</code> 语句而不是 <code>break</code> 语句：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">0</span>; <span style="color:#a6e22e">i</span> &lt; <span style="color:#ae81ff">10</span>; <span style="color:#a6e22e">i</span><span style="color:#f92672">++</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">5</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Continuing loop&#34;</span>)
+</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span> <span style="color:#75715e">// break here
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		}
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;The value of i is&#34;</span>, <span style="color:#a6e22e">i</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Exiting program&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>使用 <code>continue</code> 语句而不是 <code>break</code> 语句的区别在于，当变量 <code>i</code> 等于 <code>5</code> 时，尽管出现中断，我们的代码仍将继续执行。让我们看看我们的输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">0</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">2</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">3</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">4</span>
+</span></span><span style="display:flex;"><span>Continuing loop
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">6</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">7</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>The value of i is <span style="color:#ae81ff">9</span>
+</span></span><span style="display:flex;"><span>Exiting program
+</span></span></code></pre></div><p>在这里，我们看到 <code>The value of i is 5</code> 没有出现在输出中，但循环在该点之后继续打印数字 6-10 的行，然后结束循环。</p>
+<p>您可以使用 <code>continue</code> 语句来避免深度嵌套的条件代码，或者通过消除您想要拒绝的一些频繁发生的情况来优化循环。</p>
+<p><code>continue</code> 语句能够让程序跳过循环中出现的某些情况，然后继续循环的其余部分。</p>
+<h2 id="结论">
+  结论
+  <a class="anchor" href="#%e7%bb%93%e8%ae%ba">#</a>
+</h2>
+<p>Go 中的 <code>break</code> and <code>continue</code> 语句将允许您在代码中更高效地使用 <code>for</code> 循环。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#break-语句">Break 语句</a>
+      <ul>
+        <li><a href="#嵌套循环">嵌套循环</a></li>
+      </ul>
+    </li>
+    <li><a href="#continue-语句">Continue 语句</a></li>
+    <li><a href="#结论">结论</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

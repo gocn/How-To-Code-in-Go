@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="了解 Go 中的 defer #  简介 #  Go 有许多其他编程语言中常见的控制流关键字，如 if、switch、for 等。有一个关键词在大多数其他编程语言中都没有，那就是 defer ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。
+defer 语句的主要用途之一是清理资源，如打开的文件、网络连接和数据库句柄。当你的程序使用完这些资源后，关闭它们很重要，以避免耗尽程序的限制，并允许其他程序访问这些资源。defer 通过保持关闭文件/资源的调用与打开调用保持一致，使我们的代码更加简洁，不易出错。
+在这篇文章中，我们将学习如何正确使用 defer 语句来清理资源，以及使用 defer 时常犯的几个错误。
+什么是 defer 语句 #  defer 语句将 defer 关键字后面的函数调用添加到一个栈中。当该语句所在的函数返回时，将执行堆栈中所有的函数调用。由于这些调用位于堆栈上，因此将按照后进先出的顺序进行调用。
+让我们看看 defer 是如何工作的，打印出一些文本：
+package main  import &#34;fmt&#34;  func main() {  defer fmt.Println(&#34;Bye&#34;)  fmt.Println(&#34;Hi&#34;) } 在 main 函数中，我们有两条语句。第一条语句以 defer 关键字开始，后面是 print 语句，打印出 Bye。下一行打印出 Hi。
+如果我们运行该程序，我们将看到以下输出：
+Hi Bye 请注意，Hi 被首先打印出来。这是因为以 defer 为前缀的语句直到该函数结束前，都不会被调用。
+让我们再看看这个程序，这次我们将添加一些注释来帮助说明正在发生的事情：
+package main  import &#34;fmt&#34;  func main() {  // defer statement is executed, and places  // fmt.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="了解 Go 中的 defer #  简介 #  Go 有许多其他编程语言中常见的控制流关键字，如 if、switch、for 等。有一个关键词在大多数其他编程语言中都没有，那就是 defer ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。
+defer 语句的主要用途之一是清理资源，如打开的文件、网络连接和数据库句柄。当你的程序使用完这些资源后，关闭它们很重要，以避免耗尽程序的限制，并允许其他程序访问这些资源。defer 通过保持关闭文件/资源的调用与打开调用保持一致，使我们的代码更加简洁，不易出错。
+在这篇文章中，我们将学习如何正确使用 defer 语句来清理资源，以及使用 defer 时常犯的几个错误。
+什么是 defer 语句 #  defer 语句将 defer 关键字后面的函数调用添加到一个栈中。当该语句所在的函数返回时，将执行堆栈中所有的函数调用。由于这些调用位于堆栈上，因此将按照后进先出的顺序进行调用。
+让我们看看 defer 是如何工作的，打印出一些文本：
+package main  import &#34;fmt&#34;  func main() {  defer fmt.Println(&#34;Bye&#34;)  fmt.Println(&#34;Hi&#34;) } 在 main 函数中，我们有两条语句。第一条语句以 defer 关键字开始，后面是 print 语句，打印出 Bye。下一行打印出 Hi。
+如果我们运行该程序，我们将看到以下输出：
+Hi Bye 请注意，Hi 被首先打印出来。这是因为以 defer 为前缀的语句直到该函数结束前，都不会被调用。
+让我们再看看这个程序，这次我们将添加一些注释来帮助说明正在发生的事情：
+package main  import &#34;fmt&#34;  func main() {  // defer statement is executed, and places  // fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/29-Understanding_defer_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>29 Understanding Defer in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/"class=active>了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>29 Understanding Defer in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#什么是-defer-语句">什么是 <code>defer</code> 语句</a></li>
+    <li><a href="#使用-defer-来清理资源">使用 <code>defer</code> 来清理资源</a></li>
+    <li><a href="#多个-defer-语句">多个 <code>defer</code> 语句</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="了解-go-中的-defer">
+  了解 Go 中的 defer
+  <a class="anchor" href="#%e4%ba%86%e8%a7%a3-go-%e4%b8%ad%e7%9a%84-defer">#</a>
+</h1>
+<h2 id="简介">
+  简介
+  <a class="anchor" href="#%e7%ae%80%e4%bb%8b">#</a>
+</h2>
+<p>Go 有许多其他编程语言中常见的控制流关键字，如 <code>if</code>、<code>switch</code>、<code>for</code> 等。有一个关键词在大多数其他编程语言中都没有，那就是  <code>defer</code> ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。</p>
+<p><code>defer</code> 语句的主要用途之一是清理资源，如打开的文件、网络连接和<a href="https://en.wikipedia.org/wiki/Handle_%28computing%29">数据库句柄</a>。当你的程序使用完这些资源后，关闭它们很重要，以避免耗尽程序的限制，并允许其他程序访问这些资源。<code>defer</code> 通过保持关闭文件/资源的调用与打开调用保持一致，使我们的代码更加简洁，不易出错。</p>
+<p>在这篇文章中，我们将学习如何正确使用 <code>defer</code> 语句来清理资源，以及使用 <code>defer</code> 时常犯的几个错误。</p>
+<h2 id="什么是-defer-语句">
+  什么是 <code>defer</code> 语句
+  <a class="anchor" href="#%e4%bb%80%e4%b9%88%e6%98%af-defer-%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p><code>defer</code> 语句将 <code>defer</code> 关键字后面的<a href="https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go">函数</a>调用添加到一个栈中。当该语句所在的函数返回时，将执行堆栈中所有的函数调用。由于这些调用位于堆栈上，因此将按照后进先出的顺序进行调用。</p>
+<p>让我们看看 <code>defer</code> 是如何工作的，打印出一些文本：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Bye&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hi&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在 <code>main</code> 函数中，我们有两条语句。第一条语句以 <code>defer</code> 关键字开始，后面是 <code>print</code> 语句，打印出 <code>Bye</code>。下一行打印出 <code>Hi</code>。</p>
+<p>如果我们运行该程序，我们将看到以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Hi
+</span></span><span style="display:flex;"><span>Bye
+</span></span></code></pre></div><p>请注意，<code>Hi</code> 被首先打印出来。这是因为以 <code>defer</code> 为前缀的语句直到该函数结束前，都不会被调用。</p>
+<p>让我们再看看这个程序，这次我们将添加一些注释来帮助说明正在发生的事情：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// defer statement is executed, and places
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#75715e">// fmt.Println(&#34;Bye&#34;) on a list to be executed prior to the function returning
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Bye&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// The next line is executed immediately
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hi&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#75715e">// fmt.Println*(&#34;Bye&#34;) is now invoked, as we are at the end of the function scope
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>}
+</span></span></code></pre></div><p>理解 <code>defer</code> 的关键是，当 <code>defer</code> 语句被执行时，延迟函数的参数被立即评估。当 <code>defer</code> 执行时，它把后面的语句放在一个列表中，在函数返回之前被调用。</p>
+<p>虽然这段代码说明了 <code>defer</code> 的运行顺序，但这并不是编写 Go 程序时的典型使用方式。我们更可能使用 <code>defer</code> 来清理资源，例如文件句柄。接下来让我们看看如何做到这一点。</p>
+<h2 id="使用-defer-来清理资源">
+  使用 <code>defer</code> 来清理资源
+  <a class="anchor" href="#%e4%bd%bf%e7%94%a8-defer-%e6%9d%a5%e6%b8%85%e7%90%86%e8%b5%84%e6%ba%90">#</a>
+</h2>
+<p>使用 <code>defer</code> 来清理资源在 Go 中是非常常见的。让我们先看看一个将字符串写入文件的程序，但没有使用 <code>defer</code> 来处理资源清理的问题：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">write</span>(<span style="color:#e6db74">&#34;readme.txt&#34;</span>, <span style="color:#e6db74">&#34;This is a readme file&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;failed to write file:&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这个程序中，有一个叫做 <code>write</code> 的函数，它将首先尝试创建一个文件。如果它有错误，它将返回错误并退出函数。接下来，它试图将字符串 <code>This is a readme file</code> 写到指定文件中。如果它收到一个错误，它将返回错误并退出该函数。然后，该函数将尝试关闭该文件并将资源释放回系统。最后，该函数返回 <code>nil</code> 以表示该函数的执行没有错误。</p>
+<p>虽然这段代码可以工作，但有一个细微的错误。如果对 <code>io.WriteString</code> 的调用失败，该函数将在没有关闭文件并将资源释放回系统的情况下返回。</p>
+<p>我们可以通过添加另一个 <code>file.Close()</code> 语句来解决这个问题，在没有 <code>defer</code> 的语言中，你可能会这样解决：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">write</span>(<span style="color:#e6db74">&#34;readme.txt&#34;</span>, <span style="color:#e6db74">&#34;This is a readme file&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;failed to write file:&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在，即使调用 <code>io.WriteString</code> 失败了，我们仍然会关闭该文件。虽然这是一个相对容易发现和修复的错误，但对于一个更复杂的函数来说，它可能会被遗漏。</p>
+<p>我们可以使用 <code>defer</code> 语句来确保在执行过程中无论采取何种分支，我们都会调用 <code>Close()</code> ，而不是增加对 <code>file.Close()</code> 的第二次调用。</p>
+<p>下面是使用 <code>defer</code> 关键字的版本：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">write</span>(<span style="color:#e6db74">&#34;readme.txt&#34;</span>, <span style="color:#e6db74">&#34;This is a readme file&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;failed to write file:&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#66d9ef">nil</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这一次我们添加了这行代码，<code>defer file.Close()</code>。这告诉编译器，它应该在退出函数 <code>write</code> 之前执行 <code>file.Close</code>。</p>
+<p>现在我们已经确保，即使我们在未来添加更多的代码并创建另一个退出该函数的分支，我们也会一直清理并关闭该文件。</p>
+<p>然而，我们通过添加 <code>defer</code> 引入了另一个错误。我们不再检查可能从 <code>Close</code> 方法返回的潜在错误。这是因为当我们使用 <code>defer</code> 时，没有办法将任何返回值传回给我们的函数。</p>
+<p>在 Go 中，在不影响程序行为的情况下多次调用 <code>Close()</code> 被认为是一种安全和公认的做法。如果 <code>Close()</code> 要返回一个错误，它将在第一次被调用时返回。这使得我们可以在函数的成功执行路径中明确地调用它。</p>
+<p>让我们看看我们如何既能 <code>defer</code> 对 <code>Close</code> 的调用，又能在遇到错误时报告错误。</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">write</span>(<span style="color:#e6db74">&#34;readme.txt&#34;</span>, <span style="color:#e6db74">&#34;This is a readme file&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;failed to write file:&#34;</span>, <span style="color:#a6e22e">err</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这个程序中唯一的变化是最后一行，我们返回 <code>file.Close()</code>。如果对 <code>Close</code> 的调用导致错误，现在将按照预期返回给调用函数。请记住，我们的 <code>defer file.Close()</code> 语句也将在 <code>return </code>语句之后运行。这意味着 <code>file.Close()</code> 有可能被调用两次。虽然这并不理想，但这是可以接受的做法，因为它不应该对你的程序产生任何副作用。</p>
+<p>然而，如果我们在函数的早期收到一个错误，例如当我们调用 <code>WriteString</code> 时，函数将返回该错误，并且也将尝试调用 <code>file.Close</code>，因为它被推迟了。尽管 <code>file.Close</code> 也可能（而且很可能）返回一个错误，但这不再是我们关心的事情，因为我们收到的错误更有可能告诉我们一开始就出了什么问题。</p>
+<p>到目前为止，我们已经看到我们如何使用一个 <code>defer</code> 来确保我们正确地清理我们的资源。接下来我们将看到如何使用多个 <code>defer</code> 语句来清理多个资源。</p>
+<h2 id="多个-defer-语句">
+  多个 <code>defer</code> 语句
+  <a class="anchor" href="#%e5%a4%9a%e4%b8%aa-defer-%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p>在一个函数中拥有多个 <code>defer</code> 语句是很正常的。让我们创建一个只有 <code>defer</code> 语句的程序，看看当我们引入多个 <code>defer</code> 时，会发生什么情况：</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;one&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;two&#34;</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;three&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们运行该程序，我们将收到以下输出结果：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>three
+</span></span><span style="display:flex;"><span>two
+</span></span><span style="display:flex;"><span>one
+</span></span></code></pre></div><p>注意，顺序与我们调用 <code>defer</code> 语句的顺序相反。这是因为每个被调用的延迟语句都是堆叠在前一个语句之上的，然后在函数退出范围时反向调用（<em>后进先出</em>）。</p>
+<p>在一个函数中，你可以根据需要有尽可能多的 <code>defer</code> 调用，但重要的是要记住它们都将以相反的顺序被调用。</p>
+<p>现在我们了解了多个延迟的执行顺序，让我们看看如何使用多个延迟来清理多个资源。我们将创建一个程序，打开一个文件，向其写入内容，然后再次打开，将内容复制到另一个文件。</p>
+<!-- raw HTML omitted -->
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;io&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;log&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#e6db74">&#34;os&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">write</span>(<span style="color:#e6db74">&#34;sample.txt&#34;</span>, <span style="color:#e6db74">&#34;This file contains some sample text.&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;failed to create file&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fileCopy</span>(<span style="color:#e6db74">&#34;sample.txt&#34;</span>, <span style="color:#e6db74">&#34;sample-copy.txt&#34;</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#a6e22e">log</span>.<span style="color:#a6e22e">Fatal</span>(<span style="color:#e6db74">&#34;failed to copy file: %s&#34;</span>)
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">fileName</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">text</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">fileName</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">WriteString</span>(<span style="color:#a6e22e">file</span>, <span style="color:#a6e22e">text</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">file</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">fileCopy</span>(<span style="color:#a6e22e">source</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">destination</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">error</span> {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">src</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Open</span>(<span style="color:#a6e22e">source</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">dst</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">os</span>.<span style="color:#a6e22e">Create</span>(<span style="color:#a6e22e">destination</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">dst</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">io</span>.<span style="color:#a6e22e">Copy</span>(<span style="color:#a6e22e">dst</span>, <span style="color:#a6e22e">src</span>)
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Copied %d bytes from %s to %s\n&#34;</span>, <span style="color:#a6e22e">n</span>, <span style="color:#a6e22e">source</span>, <span style="color:#a6e22e">destination</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">src</span>.<span style="color:#a6e22e">Close</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
+</span></span><span style="display:flex;"><span>                <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">err</span>
+</span></span><span style="display:flex;"><span>        }
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">return</span> <span style="color:#a6e22e">dst</span>.<span style="color:#a6e22e">Close</span>()
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们添加了一个新的函数，叫做 <code>fileCopy</code>。在这个函数中，我们首先打开我们要复制的源文件。我们检查我们是否收到了一个打开文件的错误。如果是的话，我们 <code>return</code> 错误并退出该函数。否则，我们 <code>defer</code> 关闭我们刚刚打开的源文件。</p>
+<p>接下来我们创建目标文件。再次，我们检查我们是否收到了创建文件的错误。如果是的话，我们 <code>return</code> 该错误并退出该函数。否则，我们也 <code>defer</code> 目标文件的 <code>Close()</code>。我们现在有两个 <code>defer</code> 函数，当函数退出其作用域时将被调用。</p>
+<p>现在我们已经打开了两个文件，我们将<code>Copy()</code> 数据从源文件到目标文件。如果成功的话，我们将尝试关闭两个文件。如果我们在试图关闭任何一个文件时收到错误，我们将 <code>return</code> 错误并退出函数作用域。</p>
+<p>注意，我们为每个文件明确地调用 <code>Close()</code>，尽管 <code>defer</code> 也将调用 <code>Close()</code>。这是为了确保如果关闭文件时出现错误，我们会报告这个错误。这也确保了如果因为任何原因函数提前退出，例如我们在两个文件之间复制失败，每个文件仍将尝试从延迟调用中正确关闭。</p>
+<h2 id="总结">
+  总结
+  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
+</h2>
+<p>在这篇文章中，我们了解了 <code>defer</code> 语句，以及如何使用它来确保我们在程序中正确清理系统资源。正确地清理系统资源将使你的程序使用更少的内存，表现更好。要了解更多关于 <code>defer</code> 的使用，请阅读处理恐慌的文章，或者探索我们整个<a href="https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go">如何在 Go 中编码系列</a>。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#简介">简介</a></li>
+    <li><a href="#什么是-defer-语句">什么是 <code>defer</code> 语句</a></li>
+    <li><a href="#使用-defer-来清理资源">使用 <code>defer</code> 来清理资源</a></li>
+    <li><a href="#多个-defer-语句">多个 <code>defer</code> 语句</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

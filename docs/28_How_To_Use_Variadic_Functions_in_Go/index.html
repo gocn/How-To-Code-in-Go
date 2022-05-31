@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="如何在 Go 中使用可变参数函数 #  介绍 #  可变参数函数 是可以接受零个、一个或多个值作为单个参数的函数。虽然可变参数函数并不常见，但它们能够使您的代码更清晰、更具可读性。
+可变参数函数其实很常见。最常见的是fmt包中的 Println。
+func Println(a ...interface{}) (n int, err error) 参数前面带有一组省略号 ( ... )的函数被视为可变参数函数。省略号表示提供的参数可以是零个、一个或多个。对于fmt.Println包，它声明参数a是可变参数。
+让我们创建一个使用 fmt.Println 函数并传入零个、一个或多个值的程序：
+package main  import &#34;fmt&#34;  func main() { 	fmt.Println() 	fmt.Println(&#34;one&#34;) 	fmt.Println(&#34;one&#34;, &#34;two&#34;) 	fmt.Println(&#34;one&#34;, &#34;two&#34;, &#34;three&#34;) } 第一次调用 fmt.Println 时，我们不传递任何参数。第二次调用时，我们只传入一个参数，值为 one。 然后我们传递 one 和 two，最后是 one，two 和 three 三个值。
+让我们使用以下命令运行程序：
+$ go run print.go 我们将看到以下输出：
+Output one one two one two three 输出的第一行为空。这是因为我们在第一次调用 fmt.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="如何在 Go 中使用可变参数函数 #  介绍 #  可变参数函数 是可以接受零个、一个或多个值作为单个参数的函数。虽然可变参数函数并不常见，但它们能够使您的代码更清晰、更具可读性。
+可变参数函数其实很常见。最常见的是fmt包中的 Println。
+func Println(a ...interface{}) (n int, err error) 参数前面带有一组省略号 ( ... )的函数被视为可变参数函数。省略号表示提供的参数可以是零个、一个或多个。对于fmt.Println包，它声明参数a是可变参数。
+让我们创建一个使用 fmt.Println 函数并传入零个、一个或多个值的程序：
+package main  import &#34;fmt&#34;  func main() { 	fmt.Println() 	fmt.Println(&#34;one&#34;) 	fmt.Println(&#34;one&#34;, &#34;two&#34;) 	fmt.Println(&#34;one&#34;, &#34;two&#34;, &#34;three&#34;) } 第一次调用 fmt.Println 时，我们不传递任何参数。第二次调用时，我们只传入一个参数，值为 one。 然后我们传递 one 和 two，最后是 one，two 和 three 三个值。
+让我们使用以下命令运行程序：
+$ go run print.go 我们将看到以下输出：
+Output one one two one two three 输出的第一行为空。这是因为我们在第一次调用 fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/28_How_To_Use_Variadic_Functions_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>28 How to Use Variadic Functions in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/"class=active>如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>28 How to Use Variadic Functions in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#定义可变参数函数">定义可变参数函数</a></li>
+    <li><a href="#可变参数顺序">可变参数顺序</a></li>
+    <li><a href="#分解参数">分解参数</a></li>
+    <li><a href="#结论">结论</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="如何在-go-中使用可变参数函数">
+  如何在 Go 中使用可变参数函数
+  <a class="anchor" href="#%e5%a6%82%e4%bd%95%e5%9c%a8-go-%e4%b8%ad%e4%bd%bf%e7%94%a8%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0%e5%87%bd%e6%95%b0">#</a>
+</h1>
+<h3 id="介绍">
+  介绍
+  <a class="anchor" href="#%e4%bb%8b%e7%bb%8d">#</a>
+</h3>
+<p><em>可变参数函数</em> 是可以接受零个、一个或多个值作为单个参数的函数。虽然可变参数函数并不常见，但它们能够使您的代码更清晰、更具可读性。</p>
+<p>可变参数函数其实很常见。最常见的是<a href="https://golang.org/pkg/fmt"><code>fmt</code></a>包中的 <code>Println</code>。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">interface</span>{}) (<span style="color:#a6e22e">n</span> <span style="color:#66d9ef">int</span>, <span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>)
+</span></span></code></pre></div><p>参数前面带有一组省略号 ( <code>...</code> )的<a href="https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go">函数</a>被视为可变参数函数。省略号表示提供的参数可以是零个、一个或多个。对于<code>fmt.Println</code>包，它声明参数<code>a</code>是可变参数。</p>
+<p>让我们创建一个使用 <code>fmt.Println</code> 函数并传入零个、一个或多个值的程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;one&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;one&#34;</span>, <span style="color:#e6db74">&#34;two&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;one&#34;</span>, <span style="color:#e6db74">&#34;two&#34;</span>, <span style="color:#e6db74">&#34;three&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>第一次调用 <code>fmt.Println</code> 时，我们不传递任何参数。第二次调用时，我们只传入一个参数，值为 <code>one</code>。 然后我们传递 <code>one</code> 和 <code>two</code>，最后是 <code>one</code>，<code>two</code> 和 <code>three</code> 三个值。</p>
+<p>让我们使用以下命令运行程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>$ go run print.go
+</span></span></code></pre></div><p>我们将看到以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>one
+</span></span><span style="display:flex;"><span>one two
+</span></span><span style="display:flex;"><span>one two three
+</span></span></code></pre></div><p>输出的第一行为空。这是因为我们在第一次调用 <code>fmt.Println</code> 时没有传递任何参数。第二次打印了 <code>one</code> 。然后打印 <code>one</code> 和 <code>two</code>，最后打印 <code>one</code>，<code>two</code> 和 <code>three</code>。</p>
+<p>现在我们已经了解了如何调用可变参数函数，让我们看看如何定义自己的可变参数函数。</p>
+<h2 id="定义可变参数函数">
+  定义可变参数函数
+  <a class="anchor" href="#%e5%ae%9a%e4%b9%89%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0%e5%87%bd%e6%95%b0">#</a>
+</h2>
+<p>我们可以通过在参数前面使用省略号 ( <code>...</code> ) 来定义可变参数函数。让我们创建一个程序，当人们的名字被发送到函数时会进行问候：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sayHello</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sayHello</span>(<span style="color:#e6db74">&#34;Sammy&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sayHello</span>(<span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sayHello</span>(<span style="color:#a6e22e">names</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">names</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Hello %s\n&#34;</span>, <span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>我们创建了一个 <code>sayHello</code> 函数，它只接受一个名为<code>names</code>，该参数是可变参数，因为我们在数据类型之前放置了一个省略号 (<code>...</code>)： <code>...string</code>。这告诉 Go 这个函数可以接受零个、一个或多个参数。</p>
+<p><code>sayHello</code> 函数将 <code>names</code> 参数作为 <a href="https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#slices"><code>slice</code></a> 接收。由于数据类型是 <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#strings"><code>string</code></a>，因此 <code>names</code> 可以将参数视为字符串切片 ( <code>[]string</code> ) 。我们可以使用<a href="https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go#looping-through-sequential-data-types-with-rangeclause"><code>range</code></a>运算符创建一个循环并遍历字符串切片。</p>
+<p>如果我们运行程序，我们将得到以下输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>Hello Sammy
+</span></span><span style="display:flex;"><span>Hello Sammy
+</span></span><span style="display:flex;"><span>Hello Jessica
+</span></span><span style="display:flex;"><span>Hello Drew
+</span></span><span style="display:flex;"><span>Hello Jamie
+</span></span></code></pre></div><p>请注意，我们第一次调用 <code>sayHello</code> 什么也没打印。这是因为可变参数是一个空的字符串切片。 由于我们会遍历切片，因此没有任何内容可以迭代，并且 <code>fmt.Printf</code> 永远不会被调用。</p>
+<p>让我们修改程序以检测接收到值的情况：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sayHello</span>()
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sayHello</span>(<span style="color:#e6db74">&#34;Sammy&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sayHello</span>(<span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">sayHello</span>(<span style="color:#a6e22e">names</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">string</span>) {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> len(<span style="color:#a6e22e">names</span>) <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;nobody to greet&#34;</span>)
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">n</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">names</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Hello %s\n&#34;</span>, <span style="color:#a6e22e">n</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在，通过使用<a href="https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements"><code>if</code>语句</a>，如果没有传递任何值，则 <code>names</code> 长度将为 <code>0</code>，我们将打印出<code>nobody to greet</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>nobody to greet
+</span></span><span style="display:flex;"><span>Hello Sammy
+</span></span><span style="display:flex;"><span>Hello Sammy
+</span></span><span style="display:flex;"><span>Hello Jessica
+</span></span><span style="display:flex;"><span>Hello Drew
+</span></span><span style="display:flex;"><span>Hello Jamie
+</span></span></code></pre></div><p>使用可变参数可以使您的代码更具可读性。让我们创建一个函数，将单词通过指定的分隔符连接在一起。我们将首先创建没有可变参数函数的程序来展示它的读取方式：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>})
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">del</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">values</span> []<span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">values</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">!=</span> len(<span style="color:#a6e22e">values</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">del</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这个程序中，我们将逗号 (<code>,</code>) 作为分隔符传递给 <code>join</code> 函数，再传递一个字符串切片。输出如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>Sammy,Jessica,Drew,Jamie
+</span></span><span style="display:flex;"><span>Sammy,Jessica
+</span></span><span style="display:flex;"><span>Sammy
+</span></span></code></pre></div><p>因为该函数将字符串切片作为 <code>values</code> 参数，所以当我们调用 <code>join</code> 函数时，我们必须将所有单词包装在一个切片中。这会使代码难以阅读。</p>
+<p>现在，让我们编写相同的函数，但我们将使用可变参数函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">del</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">values</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">values</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">!=</span> len(<span style="color:#a6e22e">values</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">del</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们运行该程序，可以看到我们得到了与之前的程序相同的输出：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>Sammy,Jessica,Drew,Jamie
+</span></span><span style="display:flex;"><span>Sammy,Jessica
+</span></span><span style="display:flex;"><span>Sammy
+</span></span></code></pre></div><p>虽然这两个版本的 <code>join</code> 函数执行完全相同的操作，但可变参数函数的版本在调用时更容易阅读。</p>
+<h2 id="可变参数顺序">
+  可变参数顺序
+  <a class="anchor" href="#%e5%8f%af%e5%8f%98%e5%8f%82%e6%95%b0%e9%a1%ba%e5%ba%8f">#</a>
+</h2>
+<p>一个函数中只能有一个可变参数，并且它必须是函数定义中的最后一个参数。将可变参数放在最后位置以外的任何顺序在函数定义会导致编译错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">values</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">del</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">values</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">!=</span> len(<span style="color:#a6e22e">values</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">del</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这次我们把 <code>values</code> 参数放在 <code>join</code> 函数的首位时，将导致以下编译错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>./join_error.go:18:11: syntax error: cannot use ... with non-final parameter values
+</span></span></code></pre></div><p>定义任何可变参数函数时，只有最后一个参数可以是可变参数。</p>
+<h2 id="分解参数">
+  分解参数
+  <a class="anchor" href="#%e5%88%86%e8%a7%a3%e5%8f%82%e6%95%b0">#</a>
+</h2>
+<p>到目前为止，我们已经看到我们可以将零个、一个或多个值传递给可变参数函数。但是，有时我们有一个切片并且我们希望将它们发送到可变参数函数。</p>
+<p>让我们用上一节中的 <code>join</code> 函数尝试一下，看看会发生什么：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">names</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#a6e22e">names</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">del</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">values</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">values</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">!=</span> len(<span style="color:#a6e22e">values</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">del</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们运行这个程序，我们会收到一个编译错误：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>./join-error.go:10:14: cannot use names <span style="color:#f92672">(</span>type <span style="color:#f92672">[]</span>string<span style="color:#f92672">)</span> as type string in argument to join
+</span></span></code></pre></div><p>即使可变参数函数将 <code>values ...string</code> 参数转换为字符串切片 <code>[]string</code>，我们也不能将字符串切片作为参数传递。这是因为编译器需要的是字符串的离散参数。</p>
+<p>为了解决这个问题，我们可以通过在 <em>切片</em> 后面加上一组省略号 (<code>...</code>) 来分解切片，将其转换为离散参数，然后传递给可变参数函数：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">names</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#a6e22e">names</span><span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">del</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">values</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">values</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">!=</span> len(<span style="color:#a6e22e">values</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">del</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这一次，当我们调用 <code>join</code> 函数时，我们通过附加省略号 (<code>...</code>)来分解 <code>names</code> 切片。</p>
+<p>这样程序就会按照预期运行：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>Sammy,Jessica,Drew,Jamie
+</span></span></code></pre></div><p>要注意，我们仍然可以传递零个、一个或多个参数，以及我们分解的切片。以下是我们迄今为止看到的所有变体的代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>}<span style="color:#f92672">...</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>, <span style="color:#e6db74">&#34;Drew&#34;</span>, <span style="color:#e6db74">&#34;Jamie&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>, <span style="color:#e6db74">&#34;Jessica&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">join</span>(<span style="color:#e6db74">&#34;,&#34;</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>)
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">line</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">join</span>(<span style="color:#a6e22e">del</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">values</span> <span style="color:#f92672">...</span><span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">line</span> <span style="color:#66d9ef">string</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">i</span>, <span style="color:#a6e22e">v</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">values</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">v</span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">i</span> <span style="color:#f92672">!=</span> len(<span style="color:#a6e22e">values</span>)<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">line</span> = <span style="color:#a6e22e">line</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">del</span>
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">line</span>
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Output
+</span></span><span style="display:flex;"><span>Sammy,Jessica,Drew,Jamie
+</span></span><span style="display:flex;"><span>Sammy,Jessica,Drew,Jamie
+</span></span><span style="display:flex;"><span>Sammy,Jessica
+</span></span><span style="display:flex;"><span>Sammy
+</span></span></code></pre></div><p>现在，我们知道了如何将零个、一个或多个参数以及我们分解的切片传递给可变参数函数。</p>
+<h2 id="结论">
+  结论
+  <a class="anchor" href="#%e7%bb%93%e8%ae%ba">#</a>
+</h2>
+<p>在本教程中，我们了解了可变参数函数如何使您的代码更简洁。虽然您并不总是需要使用它们，但您可能会发现它们很有用：</p>
+<ul>
+<li>如果你创建了一个临时切片，只是为了传递给函数。</li>
+<li>当输入参数的数量未知或调用时会发生变化。</li>
+<li>使您的代码更具可读性。</li>
+</ul>
+<p>要了解有关创建和调用函数的更多信息，您可以阅读<a href="https://github.com/gocn/How-To-Code-in-Go/blob/main/27_How_To_Define_and_Call_Functions_in_Go.md">如何在 Go 中定义和调用函数</a>。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#定义可变参数函数">定义可变参数函数</a></li>
+    <li><a href="#可变参数顺序">可变参数顺序</a></li>
+    <li><a href="#分解参数">分解参数</a></li>
+    <li><a href="#结论">结论</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

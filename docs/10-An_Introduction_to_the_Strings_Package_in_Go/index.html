@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="An Introduction to the Strings Package in Go #  Introduction #  Go’s string package has several functions available to work with the string data type. These functions let us easily modify and manipulate strings. We can think of functions as being actions that we perform on elements of our code. Built-in functions are those that are defined in the Go programming language and are readily available for us to use.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="An Introduction to the Strings Package in Go #  Introduction #  Go’s string package has several functions available to work with the string data type. These functions let us easily modify and manipulate strings. We can think of functions as being actions that we perform on elements of our code. Built-in functions are those that are defined in the Go programming language and are readily available for us to use." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/10-An_Introduction_to_the_Strings_Package_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>10 an Introduction to the Strings Package in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/"class=active>An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>10 an Introduction to the Strings Package in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+      </ul>
+    </li>
+    <li><a href="#making-strings-uppercase-and-lowercase">Making Strings Uppercase and Lowercase</a></li>
+    <li><a href="#string-search-functions">String Search Functions</a></li>
+    <li><a href="#determining-string-length">Determining String Length</a></li>
+    <li><a href="#functions-for-string-manipulation">Functions for String Manipulation</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="an-introduction-to-the-strings-package-in-go">
+  An Introduction to the Strings Package in Go
+  <a class="anchor" href="#an-introduction-to-the-strings-package-in-go">#</a>
+</h1>
+<h3 id="introduction">
+  Introduction
+  <a class="anchor" href="#introduction">#</a>
+</h3>
+<p>Go’s <a href="https://golang.org/pkg/strings/"><code>string</code></a> package has several functions available to work with the <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go">string data type</a>. These functions let us easily modify and manipulate strings. We can think of functions as being actions that we perform on elements of our code. Built-in functions are those that are defined in the Go programming language and are readily available for us to use.</p>
+<p>In this tutorial, we’ll review several different functions that we can use to work with strings in Go.</p>
+<h2 id="making-strings-uppercase-and-lowercase">
+  Making Strings Uppercase and Lowercase
+  <a class="anchor" href="#making-strings-uppercase-and-lowercase">#</a>
+</h2>
+<p>The functions <code>strings.ToUpper</code> and <code>strings.ToLower</code> will return a string with all the letters of an original string converted to uppercase or lowercase letters. Because strings are immutable data types, the returned string will be a new string. Any characters in the string that are not letters will not be changed.</p>
+<p>To convert the string <code>&quot;Sammy Shark&quot;</code> to be all uppercase, you would use the <code>strings.ToUpper</code> function:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ss</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy Shark&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToUpper</span>(<span style="color:#a6e22e">ss</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">SAMMY</span> <span style="color:#a6e22e">SHARK</span>
+</span></span></code></pre></div><p>To convert to lowercase:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToLower</span>(<span style="color:#a6e22e">ss</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sammy</span> <span style="color:#a6e22e">shark</span>
+</span></span></code></pre></div><p>Since you are using the <code>strings</code> package, you first need to import it into a program. To convert the string to uppercase and lowercase the entire program would be as follows:</p>
+<pre tabindex="0"><code>package main
+
+import (
+	&#34;fmt&#34;
+	&#34;strings&#34;
+)
+
+func main() {
+	ss := &#34;Sammy Shark&#34;
+	fmt.Println(strings.ToUpper(ss))
+	fmt.Println(strings.ToLower(ss))
+}
+</code></pre><p>The <code>strings.ToUpper</code> and <code>strings.ToLower</code> functions make it easier to evaluate and compare strings by making case consistent throughout. For example, if a user writes their name all lowercase, we can still determine whether their name is in our database by checking it against an all uppercase version.</p>
+<h2 id="string-search-functions">
+  String Search Functions
+  <a class="anchor" href="#string-search-functions">#</a>
+</h2>
+<p>The <code>strings</code> package has a number of functions that help determine if a string contains a specific sequence of characters.</p>
+<table>
+<thead>
+<tr>
+<th>Function</th>
+<th>Use</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>strings.HasPrefix</code></td>
+<td>Searches the string from the beginning</td>
+</tr>
+<tr>
+<td><code>strings.HasSuffix</code></td>
+<td>Searches the string from the end</td>
+</tr>
+<tr>
+<td><code>strings.Contains</code></td>
+<td>Searches anywhere in the string</td>
+</tr>
+<tr>
+<td><code>strings.Count</code></td>
+<td>Counts how many times the string appears</td>
+</tr>
+</tbody>
+</table>
+<p>The <code>strings.HasPrefix</code> and <code>strings.HasSuffix</code> allow you to check to see if a string starts or ends with a specific set of characters.</p>
+<p>For example, to check to see if the string <code>&quot;Sammy Shark&quot;</code> starts with <code>Sammy</code> and ends with <code>Shark</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">ss</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy Shark&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasPrefix</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#e6db74">&#34;Sammy&#34;</span>))
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">HasSuffix</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#e6db74">&#34;Shark&#34;</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>You would use the <code>strings.Contains</code> function to check if <code>&quot;Sammy Shark&quot;</code> contains the sequence <code>Sh</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Contains</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#e6db74">&#34;Sh&#34;</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>Finally, to see how many times the letter <code>S</code> appears in the phrase <code>Sammy Shark</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Count</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#e6db74">&#34;S&#34;</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>
+</span></span></code></pre></div><p><strong>Note:</strong> All strings in Go are case sensitive. This means that <code>Sammy</code> is not the same as <code>sammy</code>.</p>
+<p>Using a lowercase <code>s</code> to get a count from <code>Sammy Shark</code> is not the same as using uppercase <code>S</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Count</span>(<span style="color:#a6e22e">ss</span>, <span style="color:#e6db74">&#34;s&#34;</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
+</span></span></code></pre></div><p>Because <code>S</code> is different than <code>s</code>, the count returned will be <code>0</code>.</p>
+<p>String functions are useful when you want to compare or search strings in your program.</p>
+<h2 id="determining-string-length">
+  Determining String Length
+  <a class="anchor" href="#determining-string-length">#</a>
+</h2>
+<p>The built-in function <code>len()</code> returns the number of characters in a string. This function is useful for when you need to enforce minimum or maximum password lengths, or to truncate larger strings to be within certain limits for use as abbreviations.</p>
+<p>To demonstrate this function, we’ll find the length of a sentence-long string:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">import</span> (
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strings&#34;</span>
+</span></span><span style="display:flex;"><span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">openSource</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy contributes to open source.&#34;</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(len(<span style="color:#a6e22e">openSource</span>))
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#ae81ff">33</span>
+</span></span></code></pre></div><p>We set the variable <code>openSource</code> equal to the string <code>&quot;Sammy contributes to open source.&quot;</code> and then passed that variable to the <code>len()</code> function with <code>len(openSource)</code>. Finally we passed the function into the <code>fmt.Println()</code> function so that we could see the program’s output on the screen…</p>
+<p>Keep in mind that the <code>len()</code> function will count any character bound by double quotation marks—including letters, numbers, whitespace characters, and symbols.</p>
+<h2 id="functions-for-string-manipulation">
+  Functions for String Manipulation
+  <a class="anchor" href="#functions-for-string-manipulation">#</a>
+</h2>
+<p>The <code>strings.Join</code>, <code>strings.Split</code>, and <code>strings.ReplaceAll</code> functions are a few additional ways to manipulate strings in Go.</p>
+<p>The <code>strings.Join</code> function is useful for combining a slice of strings into a new single string.</p>
+<p>To create a comma-separated string from a slice of strings, we would use this function as per the following:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Join</span>([]<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;sharks&#34;</span>, <span style="color:#e6db74">&#34;crustaceans&#34;</span>, <span style="color:#e6db74">&#34;plankton&#34;</span>}, <span style="color:#e6db74">&#34;,&#34;</span>))
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sharks</span>,<span style="color:#a6e22e">crustaceans</span>,<span style="color:#a6e22e">plankton</span>
+</span></span></code></pre></div><p>If we want to add a comma and a space between string values in our new string, we can simply rewrite our expression with a whitespace after the comma: <code>strings.Join([]string{&quot;sharks&quot;, &quot;crustaceans&quot;, &quot;plankton&quot;}, &quot;, &quot;)</code>.</p>
+<p>Just as we can join strings together, we can also split strings up. To do this, we can use the <code>strings.Split</code> function and split on the spaces:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">balloon</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy has a balloon.&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Split</span>(<span style="color:#a6e22e">balloon</span>, <span style="color:#e6db74">&#34; &#34;</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#a6e22e">Sammy</span> <span style="color:#a6e22e">has</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">balloon</span>]
+</span></span></code></pre></div><p>The output is a slice of strings. Since <code>strings.Println</code> was used, it is hard to tell what the output is by looking at it. To see that it is indeed a slice of strings, use the <code>fmt.Printf</code> function with the <code>%q</code> verb to quote the strings:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q&#34;</span>, <span style="color:#a6e22e">s</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#e6db74">&#34;Sammy&#34;</span> <span style="color:#e6db74">&#34;has&#34;</span> <span style="color:#e6db74">&#34;a&#34;</span> <span style="color:#e6db74">&#34;balloon.&#34;</span>]
+</span></span></code></pre></div><p>Another useful function in addition to <code>strings.Split</code> is <code>strings.Fields</code>. The difference is that <code>strings.Fields</code> will ignore all whitespace, and will only split out the actual <code>fields</code> in a string:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">data</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;  username password     email  date&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fields</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">Fields</span>(<span style="color:#a6e22e">data</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q&#34;</span>, <span style="color:#a6e22e">fields</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span>[<span style="color:#e6db74">&#34;username&#34;</span> <span style="color:#e6db74">&#34;password&#34;</span> <span style="color:#e6db74">&#34;email&#34;</span> <span style="color:#e6db74">&#34;date&#34;</span>]
+</span></span></code></pre></div><p>The <code>strings.ReplaceAll</code> function can take an original string and return an updated string with some replacement.</p>
+<p>Let’s say that the balloon that Sammy had is lost. Since Sammy no longer has this balloon, we would change the substring <code>&quot;has&quot;</code> from the original string <code>balloon</code> to <code>&quot;had&quot;</code> in a new string:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ReplaceAll</span>(<span style="color:#a6e22e">balloon</span>, <span style="color:#e6db74">&#34;has&#34;</span>, <span style="color:#e6db74">&#34;had&#34;</span>))
+</span></span></code></pre></div><p>Within the parentheses, first is <code>balloon</code> the variable that stores the original string; the second substring <code>&quot;has&quot;</code> is what we would want to replace, and the third substring <code>&quot;had&quot;</code> is what we would replace that second substring with. Our output would look like this when we incorporate this into a program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#a6e22e">had</span> <span style="color:#a6e22e">a</span> <span style="color:#a6e22e">balloon</span>.
+</span></span></code></pre></div><p>Using the string function <code>strings.Join</code>, <code>strings.Split</code>, and <code>strings.ReplaceAll</code> will provide you with greater control to manipulate strings in Go.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="anchor" href="#conclusion">#</a>
+</h2>
+<p>This tutorial went through some of the common string package functions for the string data type that you can use to work with and manipulate strings in your Go programs.</p>
+<p>You can learn more about other data types in <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go">Understanding Data Types</a> and read more about strings in <a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go">An Introduction to Working with Strings</a>.</p>
+<hr>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#introduction">Introduction</a></li>
+      </ul>
+    </li>
+    <li><a href="#making-strings-uppercase-and-lowercase">Making Strings Uppercase and Lowercase</a></li>
+    <li><a href="#string-search-functions">String Search Functions</a></li>
+    <li><a href="#determining-string-length">Determining String Length</a></li>
+    <li><a href="#functions-for-string-manipulation">Functions for String Manipulation</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

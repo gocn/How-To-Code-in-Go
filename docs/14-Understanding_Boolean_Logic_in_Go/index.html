@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Understanding Boolean Logic in Go #  The Boolean data type (bool) can be one of two values, either true or false. Booleans are used in programming to make comparisons and to control the flow of the program.
+Booleans represent the truth values that are associated with the logic branch of mathematics, which informs algorithms in computer science. Named for the mathematician George Boole, the word Boolean always begins with a capitalized B.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="Understanding Boolean Logic in Go #  The Boolean data type (bool) can be one of two values, either true or false. Booleans are used in programming to make comparisons and to control the flow of the program.
+Booleans represent the truth values that are associated with the logic branch of mathematics, which informs algorithms in computer science. Named for the mathematician George Boole, the word Boolean always begins with a capitalized B." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/14-Understanding_Boolean_Logic_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>14 Understanding Boolean Logic in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/"class=active>Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>14 Understanding Boolean Logic in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#comparison-operators">Comparison Operators</a></li>
+    <li><a href="#logical-operators">Logical Operators</a></li>
+    <li><a href="#truth-tables">Truth Tables</a></li>
+    <li><a href="#using-boolean-operators-for-flow-control">Using Boolean Operators for Flow Control</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="understanding-boolean-logic-in-go">
+  Understanding Boolean Logic in Go
+  <a class="anchor" href="#understanding-boolean-logic-in-go">#</a>
+</h1>
+<p>The Boolean data type (<code>bool</code>) can be one of two values, either <strong>true</strong> or <strong>false</strong>. Booleans are used in programming to make comparisons and to control the flow of the program.</p>
+<p>Booleans represent the truth values that are associated with the logic branch of mathematics, which informs algorithms in computer science. Named for the mathematician George Boole, the word Boolean always begins with a capitalized <code>B</code>.</p>
+<p>The data type in Go for Boolean is <code>bool</code>, all lowercase. The values <code>true</code> and <code>false</code> will always be with a lowercase <code>t</code> and <code>f</code> respectively, as they are special values in Go.</p>
+<p>This tutorial will cover the basics you’ll need to understand how the <code>bool</code> data type works, including Boolean comparison, logical operators, and truth tables.</p>
+<h2 id="comparison-operators">
+  Comparison Operators
+  <a class="anchor" href="#comparison-operators">#</a>
+</h2>
+<p>In programming, <em>comparison operators</em> are used to compare values and evaluate down to a single Boolean value of either true or false.</p>
+<p>The table below shows Boolean comparison operators.</p>
+<p>Operator What it means</p>
+<p>== Equal to</p>
+<p>!= Not equal to</p>
+<p>&lt; Less than</p>
+<p>&gt; Greater than</p>
+<p>&lt;= Less than or equal to</p>
+<p>&gt;= Greater than or equal to</p>
+<p>To understand how these operators work, let’s assign two integers to two variables in a Go program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">8</span>
+</span></span></code></pre></div><p>In this example, since <code>x</code> has the value of <code>5</code>, it is less than <code>y</code> which has the value of <code>8</code>.</p>
+<p>Using those two variables and their associated values, let’s go through the operators from the preceding table. In this program, you’ll ask Go to print out whether each comparison operator evaluates to either true or false. To help better understand this output, you’ll have Go also print a string to show you what it’s evaluating:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">y</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">8</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;x == y:&#34;</span>, <span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;x != y:&#34;</span>, <span style="color:#a6e22e">x</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;x &lt; y:&#34;</span>, <span style="color:#a6e22e">x</span> &lt; <span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;x &gt; y:&#34;</span>, <span style="color:#a6e22e">x</span> &gt; <span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;x &lt;= y:&#34;</span>, <span style="color:#a6e22e">x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;x &gt;= y:&#34;</span>, <span style="color:#a6e22e">x</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">y</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">y</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">y</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span> &lt; <span style="color:#a6e22e">y</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span> &gt; <span style="color:#a6e22e">y</span>: <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">&lt;=</span> <span style="color:#a6e22e">y</span>: <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">&gt;=</span> <span style="color:#a6e22e">y</span>: <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>Following mathematical logic, Go has evaluated the following from the expressions:</p>
+<ul>
+<li>Is 5 (<code>x</code>) equal to 8 (<code>y</code>)? <strong>false</strong></li>
+<li>Is 5 not equal to 8? <strong>true</strong></li>
+<li>Is 5 less than 8? <strong>true</strong></li>
+<li>Is 5 greater than 8? <strong>false</strong></li>
+<li>Is 5 less than or equal to 8? <strong>true</strong></li>
+<li>Is 5 not less than or equal to 8? <strong>false</strong></li>
+</ul>
+<p>Although integers were used here, you could substitute them with float values.</p>
+<p>Strings can also be used with Boolean operators. They are case-sensitive unless you use an additional string method.</p>
+<p>You can look at how strings are compared in practice:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sammy</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;sammy&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sammy == sammy: &#34;</span>, <span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">sammy</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">sammy</span>:  <span style="color:#66d9ef">false</span>
+</span></span></code></pre></div><p>The string <code>Sammy</code> is not equal to the string <code>sammy</code>, because they are not exactly the same; one starts with an uppercase <code>S</code> and the other with a lowercase <code>s</code>. But, if you add another variable that is assigned the value of <code>Sammy</code>, then they will evaluate to equal:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">sammy</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;sammy&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">alsoSammy</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy&#34;</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sammy == sammy: &#34;</span>, <span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">sammy</span>)
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sammy == alsoSammy&#34;</span>, <span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">alsoSammy</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">sammy</span>:  <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">alsoSammy</span> <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>You can also use the other comparison operators including <code>&gt;</code> and <code>&lt;</code> to compare two strings. Go will compare these strings lexicographically using the ASCII values of the characters.</p>
+<p>You can also evaluate Boolean values with comparison operators:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">t</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">false</span>
+</span></span><span style="display:flex;"><span>    
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;t != f: &#34;</span>, <span style="color:#a6e22e">t</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">f</span>)
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#a6e22e">t</span> <span style="color:#f92672">!=</span> <span style="color:#a6e22e">f</span>:  <span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>The preceding code block evaluated that <code>true</code> is not equal to <code>false</code>.</p>
+<p>Note the difference between the two operators <code>=</code> and <code>==</code>.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">x</span> = <span style="color:#a6e22e">y</span>   <span style="color:#75715e">// Sets x equal to y
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">x</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">y</span>  <span style="color:#75715e">// Evaluates whether x is equal to y
+</span></span></span></code></pre></div><p>The first <code>=</code> is the assignment operator, which will set one value equal to another. The second, <code>==</code>, is a comparison operator and will evaluate whether two values are equal.</p>
+<h2 id="logical-operators">
+  Logical Operators
+  <a class="anchor" href="#logical-operators">#</a>
+</h2>
+<p>There are two logical operators that are used to compare values. They evaluate expressions down to Boolean values, returning either <code>true</code> or <code>false</code>. These operators are <code>&amp;&amp;</code>, <code>||</code>, and <code>!</code>, and are defined in the list below:</p>
+<ul>
+<li><strong>&amp;&amp;</strong> (<code>x &amp;&amp; y</code>) is the <code>and</code> operator. It is true if both statements are true.</li>
+<li><strong>||</strong> (<code>x || y</code>) is the <code>or</code> operator. It is true if at least one statement is true.</li>
+<li><strong>!</strong> (<code>!x</code>) is the <code>not</code> operator. It is true only if the statement is false.</li>
+</ul>
+<p>Logical operators are typically used to evaluate whether two or more expressions are true or not true. For example, they can be used to determine if the grade is passing and that the student is registered in the course, and if both cases are true, then the student will be assigned a grade in the system. Another example would be to determine whether a user is a valid active customer of an online shop based on whether they have store credit or have made a purchase in the past 6 months.</p>
+<p>To understand how logical operators work, let’s evaluate three expressions:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>((<span style="color:#ae81ff">9</span> &gt; <span style="color:#ae81ff">7</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#ae81ff">2</span> &lt; <span style="color:#ae81ff">4</span>))   <span style="color:#75715e">// Both original expressions are true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>((<span style="color:#ae81ff">8</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">8</span>) <span style="color:#f92672">||</span> (<span style="color:#ae81ff">6</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">6</span>)) <span style="color:#75715e">// One original expression is true
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(!(<span style="color:#ae81ff">3</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">1</span>))            <span style="color:#75715e">// The original expression is false
+</span></span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">true</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>In the first case, <code>fmt.Println((9 &gt; 7) &amp;&amp; (2 &lt; 4))</code>, both <code>9 &gt; 7</code> and <code>2 &lt; 4</code> needed to evaluate to true since the <code>and</code> operator was used.</p>
+<p>In the second case, <code>fmt.Println((8 == 8) || (6 != 6))</code>, since <code>8 == 8</code> evaluated to true, it did not make a difference that <code>6 != 6</code> evaluates to false because the <code>or</code> operator was used. If you had used the <code>and</code> operator, this would evaluate to false.</p>
+<p>In the third case, <code>fmt.Println(!(3 &lt;= 1))</code>, the <code>not</code> operator negates the false value that <code>3 &lt;=1</code> returns.</p>
+<p>Let’s substitute floats for integers and aim for false evaluations:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>((<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2</span> &gt; <span style="color:#ae81ff">1.4</span>) <span style="color:#f92672">&amp;&amp;</span> (<span style="color:#ae81ff">0.8</span> &lt; <span style="color:#ae81ff">3.1</span>))  <span style="color:#75715e">// One original expression is false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>((<span style="color:#ae81ff">7.5</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">8.9</span>) <span style="color:#f92672">||</span> (<span style="color:#ae81ff">9.2</span> <span style="color:#f92672">!=</span> <span style="color:#ae81ff">9.2</span>)) <span style="color:#75715e">// Both original expressions are false
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(!(<span style="color:#f92672">-</span><span style="color:#ae81ff">5.7</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">0.3</span>))               <span style="color:#75715e">// The original expression is true
+</span></span></span></code></pre></div><p>In this example:</p>
+<ul>
+<li><code>and</code> must have at least one false expression evaluate to false.</li>
+<li><code>or</code> must have both expressions evaluate to false.</li>
+<li><code>!</code> must have its inner expression be true for the new expression to evaluate to false.</li>
+</ul>
+<p>If these results seem unclear to you, go through some <a href="#truth-tables">truth tables</a> for further clarification.</p>
+<p>You can also write compound statements using <code>&amp;&amp;</code>, <code>||</code>, and <code>!</code>:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>!((<span style="color:#f92672">-</span><span style="color:#ae81ff">0.2</span> &gt; <span style="color:#ae81ff">1.4</span>) <span style="color:#f92672">&amp;&amp;</span> ((<span style="color:#ae81ff">0.8</span> &lt; <span style="color:#ae81ff">3.1</span>) <span style="color:#f92672">||</span> (<span style="color:#ae81ff">0.1</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0.1</span>)))
+</span></span></code></pre></div><p>Take a look at the inner-most expression first: <code>(0.8 &lt; 3.1) || (0.1 == 0.1)</code>. This expression evaluates to <code>true</code> because both mathematical statements are <code>true</code>.</p>
+<p>Next, Go takes the returned value <code>true</code> and combines it with the next inner expression: <code>(-0.2 &gt; 1.4) &amp;&amp; (true)</code>. This example returns <code>false</code> because the mathematical statement <code>-0.2 &gt; 1.4</code> is false, and (<code>false</code>) and (<code>true</code>) returns <code>false</code>.</p>
+<p>Finally, we have the outer expression: <code>!(false)</code>, which evaluates to <code>true</code>, so the final returned value if we print this statement out is:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">true</span>
+</span></span></code></pre></div><p>The logical operators <code>&amp;&amp;</code>, <code>||</code>, and <code>!</code> evaluate expressions and return Boolean values.</p>
+<h2 id="truth-tables">
+  Truth Tables
+  <a class="anchor" href="#truth-tables">#</a>
+</h2>
+<p>There is a lot to learn about the logic branch of mathematics, but you can selectively learn some of it to improve your algorithmic thinking when programming.</p>
+<p>The following are truth tables for the comparison operator <code>==</code>, and each of the logic operators <code>&amp;&amp;</code>, <code>||</code> and <code>!</code>. While you may be able to reason them out, it can also be helpful to memorize them as that can make your programming decision-making process quicker.</p>
+<p><code>==</code> (equal) Truth Table</p>
+<p>x == y Returns</p>
+<p>true == true true</p>
+<p>true == false false</p>
+<p>false == true false</p>
+<p>false == false true</p>
+<p><code>&amp;&amp;</code> (and) Truth Table</p>
+<p>x and y Returns</p>
+<p>true and true true</p>
+<p>true and false false</p>
+<p>false and true false</p>
+<p>false and false false</p>
+<p><code>||</code> (or) Truth Table</p>
+<p>x or y Returns</p>
+<p>true or true true</p>
+<p>true or false true</p>
+<p>false or true true</p>
+<p>false or false false</p>
+<p><code>!</code> (not) Truth Table</p>
+<p>| not | x | Returns | | — | — | — | — | | not | true | false | | not | false | true |</p>
+<p>Truth tables are common mathematical tables used in logic, and are useful to keep in mind when constructing algorithms (instructions) in computer programming.</p>
+<h2 id="using-boolean-operators-for-flow-control">
+  Using Boolean Operators for Flow Control
+  <a class="anchor" href="#using-boolean-operators-for-flow-control">#</a>
+</h2>
+<p>To control the stream and outcomes of a program in the form of flow control statements, you can use a <em>condition</em> followed by a <em>clause</em>.</p>
+<p>A <em>condition</em> evaluates down to a Boolean value of true or false, presenting a point where a decision is made in the program. That is, a condition would tell you if something evaluates to true or false.</p>
+<p>The <em>clause</em> is the block of code that follows the <em>condition</em> and dictates the outcome of the program. That is, it is the “do this” part of the construction “If <code>x</code> is <code>true</code>, then do this.”</p>
+<p>The code block below shows an example of comparison operators working in tandem with conditional statements to control the flow of a Go program:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {                 <span style="color:#75715e">// Condition
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Passing grade&#34;</span>) <span style="color:#75715e">// Clause
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Failing grade&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>This program will evaluate whether each student’s grade is passing or failing. In the case of a student with a grade of <code>83</code>, the first statement will evaluate to <code>true</code>, and the print statement of <code>Passing grade</code> will be triggered. In the case of a student with a grade of <code>59</code>, the first statement will evaluate to <code>false</code>, so the program will move on to execute the print statement tied to the else expression: <code>Failing grade</code>.</p>
+<p>Boolean operators present conditions that can be used to decide the eventual outcome of a program through flow control statements.</p>
+<h2 id="conclusion">
+  Conclusion
+  <a class="anchor" href="#conclusion">#</a>
+</h2>
+<p>This tutorial went through comparison and logical operators belonging to the Boolean type, as well as truth tables and using Booleans for program flow control.</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li><a href="#comparison-operators">Comparison Operators</a></li>
+    <li><a href="#logical-operators">Logical Operators</a></li>
+    <li><a href="#truth-tables">Truth Tables</a></li>
+    <li><a href="#using-boolean-operators-for-flow-control">Using Boolean Operators for Flow Control</a></li>
+    <li><a href="#conclusion">Conclusion</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

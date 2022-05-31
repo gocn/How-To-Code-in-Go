@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="zh" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="如何在Go中编写条件语句 #  介绍 #  条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。
+当我们完全执行程序的每个语句时，我们并没有要求程序评估特定的条件。通过使用条件语句，程序可以确定某些条件是否被满足，然后被告知下一步该做什么。
+让我们来看看一些使用条件语句的例子。
+ 如果学生的考试成绩超过65%，报告她的成绩通过；如果没有，报告她的成绩不合格。 如果他的账户里有钱，就计算利息；如果没有，就收取罚款。 如果他们买了10个或更多的橙子，计算5%的折扣；如果他们买的少，就不买。  通过评估条件，并根据是否满足这些条件来分配代码运行，我们就是在写条件代码。
+本教程将带你了解在Go编程语言中编写条件语句。
+If 语句 #  我们将从 if 语句开始，它将评估一个语句是真的还是假的，并且只在该语句为真的情况下运行代码。
+在一个纯文本编辑器中，打开一个文件，写入以下代码：
+package main  import &#34;fmt&#34;  func main() { 	grade := 70  	if grade &gt;= 65 { 	fmt.Println(&#34;Passing grade&#34;) 	} } 在这段代码中，我们有一个变量grade，并给它一个整数值70。然后我们使用if语句来评估变量grade是否大于或等于（&gt;=）65。如果它确实满足这个条件，我们告诉程序打印出字符串 Passing grade。
+将程序保存为grade.go，并在终端窗口中用go run grade.go命令运行它。
+在这种情况下，70分的成绩*符合大于或等于65分的条件，因此，一旦你运行该程序，你将收到以下输出：
+Passing grade 现在让我们改变这个程序的结果，把grade变量的值改为60：
+package main  import &#34;fmt&#34;  func main() { 	grade := 60  	if grade &gt;= 65 { 	fmt.">
+<meta name="theme-color" content="#FFFFFF">
+<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
+<meta property="og:description" content="如何在Go中编写条件语句 #  介绍 #  条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。
+当我们完全执行程序的每个语句时，我们并没有要求程序评估特定的条件。通过使用条件语句，程序可以确定某些条件是否被满足，然后被告知下一步该做什么。
+让我们来看看一些使用条件语句的例子。
+ 如果学生的考试成绩超过65%，报告她的成绩通过；如果没有，报告她的成绩不合格。 如果他的账户里有钱，就计算利息；如果没有，就收取罚款。 如果他们买了10个或更多的橙子，计算5%的折扣；如果他们买的少，就不买。  通过评估条件，并根据是否满足这些条件来分配代码运行，我们就是在写条件代码。
+本教程将带你了解在Go编程语言中编写条件语句。
+If 语句 #  我们将从 if 语句开始，它将评估一个语句是真的还是假的，并且只在该语句为真的情况下运行代码。
+在一个纯文本编辑器中，打开一个文件，写入以下代码：
+package main  import &#34;fmt&#34;  func main() { 	grade := 70  	if grade &gt;= 65 { 	fmt.Println(&#34;Passing grade&#34;) 	} } 在这段代码中，我们有一个变量grade，并给它一个整数值70。然后我们使用if语句来评估变量grade是否大于或等于（&gt;=）65。如果它确实满足这个条件，我们告诉程序打印出字符串 Passing grade。
+将程序保存为grade.go，并在终端窗口中用go run grade.go命令运行它。
+在这种情况下，70分的成绩*符合大于或等于65分的条件，因此，一旦你运行该程序，你将收到以下输出：
+Passing grade 现在让我们改变这个程序的结果，把grade变量的值改为60：
+package main  import &#34;fmt&#34;  func main() { 	grade := 60  	if grade &gt;= 65 { 	fmt." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://example.com/docs/23-How_To_Write_Conditional_Statements_in_Go/" /><meta property="article:section" content="docs" />
+
+
+
+<title>23 How to Write Conditional Statements in Go | How To Code in Go</title>
+<link rel="manifest" href="/manifest.json">
+<link rel="icon" href="/favicon.png" type="image/x-icon">
+<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
+  <script defer src="/flexsearch.min.js"></script>
+  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
+<!--
+Made with Book Theme
+https://github.com/alex-shpak/hugo-book
+-->
+  
+</head>
+<body dir="ltr">
+  <input type="checkbox" class="hidden toggle" id="menu-control" />
+  <input type="checkbox" class="hidden toggle" id="toc-control" />
+  <main class="container flex">
+    <aside class="book-menu">
+      <div class="book-menu-content">
+        
+  <nav>
+<h2 class="book-brand">
+  <a class="flex align-center" href="/"><span>How To Code in Go</span>
+  </a>
+</h2>
+
+
+<div class="book-search">
+  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
+  <div class="book-search-spinner hidden"></div>
+  <ul id="book-search-results"></ul>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+  <ul>
+<li>
+<p><strong>开始学习</strong></p>
+<ul>
+<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
+<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
+<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
+<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
+<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
+<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
+<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
+<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
+<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
+<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
+<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
+<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
+<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
+<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
+<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
+<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
+<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
+<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
+<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
+<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
+<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/"class=active>如何在 Go 中编写条件语句</a></li>
+<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
+<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
+<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
+<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
+<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
+<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
+<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
+<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
+<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
+<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
+<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
+<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
+<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
+<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
+<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
+<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
+<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
+</ul>
+</li>
+<li>
+<p><strong>附录：资源</strong></p>
+</li>
+<li>
+<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
+</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+</nav>
+
+
+
+
+  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
+
+
+ 
+      </div>
+    </aside>
+
+    <div class="book-page">
+      <header class="book-header">
+        
+  <div class="flex align-center justify-between">
+  <label for="menu-control">
+    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
+  </label>
+
+  <strong>23 How to Write Conditional Statements in Go</strong>
+
+  <label for="toc-control">
+    
+    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
+    
+  </label>
+</div>
+
+
+  
+  <aside class="hidden clearfix">
+    
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#if-语句">If 语句</a></li>
+    <li><a href="#else-语句">Else 语句</a></li>
+    <li><a href="#else-if-语句">Else if 语句</a></li>
+    <li><a href="#嵌套的if语句">嵌套的If语句</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+
+  </aside>
+  
+ 
+      </header>
+
+      
+      
+  <article class="markdown"><h1 id="如何在go中编写条件语句">
+  如何在Go中编写条件语句
+  <a class="anchor" href="#%e5%a6%82%e4%bd%95%e5%9c%a8go%e4%b8%ad%e7%bc%96%e5%86%99%e6%9d%a1%e4%bb%b6%e8%af%ad%e5%8f%a5">#</a>
+</h1>
+<h3 id="介绍">
+  介绍
+  <a class="anchor" href="#%e4%bb%8b%e7%bb%8d">#</a>
+</h3>
+<p>条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。</p>
+<p>当我们完全执行程序的每个语句时，我们并没有要求程序评估特定的条件。通过使用条件语句，程序可以确定某些条件是否被满足，然后被告知下一步该做什么。</p>
+<p>让我们来看看一些使用条件语句的例子。</p>
+<ul>
+<li>如果学生的考试成绩超过65%，报告她的成绩通过；如果没有，报告她的成绩不合格。</li>
+<li>如果他的账户里有钱，就计算利息；如果没有，就收取罚款。</li>
+<li>如果他们买了10个或更多的橙子，计算5%的折扣；如果他们买的少，就不买。</li>
+</ul>
+<p>通过评估条件，并根据是否满足这些条件来分配代码运行，我们就是在写条件代码。</p>
+<p>本教程将带你了解在Go编程语言中编写条件语句。</p>
+<h2 id="if-语句">
+  If 语句
+  <a class="anchor" href="#if-%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p>我们将从 <code>if</code> 语句开始，它将评估一个语句是真的还是假的，并且只在该语句为真的情况下运行代码。</p>
+<p>在一个纯文本编辑器中，打开一个文件，写入以下代码：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">grade</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">70</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Passing grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这段代码中，我们有一个变量<code>grade</code>，并给它一个整数值<code>70</code>。然后我们使用<code>if</code>语句来评估变量<code>grade</code>是否大于或等于（<code>&gt;=</code>）<code>65</code>。如果它确实满足这个条件，我们告诉程序打印出<a href="https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go">字符串</a> <code>Passing grade</code>。</p>
+<p>将程序保存为<code>grade.go</code>，并在<a href="https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go">终端窗口</a>中用<code>go run grade.go</code>命令运行它。</p>
+<p>在这种情况下，70分的成绩*符合大于或等于65分的条件，因此，一旦你运行该程序，你将收到以下输出：</p>
+<pre tabindex="0"><code class="language-Output" data-lang="Output">Passing grade
+</code></pre><p>现在让我们改变这个程序的结果，把<code>grade</code>变量的值改为<code>60</code>：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">grade</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Passing grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当我们保存并运行<em>这个</em>代码时，我们不会收到任何输出，因为条件*没有得到满足，我们也没有告诉程序执行另一条语句。</p>
+<p>再举一个例子，让我们计算一个银行账户余额是否低于0。让我们创建一个名为<code>account.go</code>的文件，并编写以下程序：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">balance</span> <span style="color:#f92672">:=</span> <span style="color:#f92672">-</span><span style="color:#ae81ff">5</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">balance</span> &lt; <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Balance is below 0, add funds now or you will be charged a penalty.&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>当我们用<code>go run account.go</code>运行该程序时，我们会收到以下输出：</p>
+<pre tabindex="0"><code class="language-Output" data-lang="Output">Balance is below 0, add funds now or you will be charged a penalty.
+</code></pre><p>在程序中，我们将变量<code>balance</code>初始化为<code>5</code>，即小于0。由于<code>balance</code>符合<code>if</code>语句的条件（<code>balance&lt;0</code>），一旦我们保存并运行代码，我们将收到字符串的输出。同样，如果我们把余额改为0或一个正数，我们将不会收到任何输出。</p>
+<h2 id="else-语句">
+  Else 语句
+  <a class="anchor" href="#else-%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p>我们很可能希望程序在 <code>if</code>语句评估为假时也能有所作为。在我们的成绩例子中，我们希望输出成绩是合格还是不合格。</p>
+<p>要做到这一点，我们将在上面的成绩条件中添加一个 <code>else</code> 语句，其结构如下：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">grade</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Passing grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Failing grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>由于成绩变量的值是<code>60</code>，<code>if</code>语句评估为假，所以程序不会打印出<code>Passing grade</code>。接下来的 <code>else</code> 语句告诉程序无论如何都要做一些事情。</p>
+<p>当我们保存并运行该程序时，我们将收到以下输出：</p>
+<pre tabindex="0"><code class="language-Output" data-lang="Output">Failing grade
+</code></pre><p>如果我们重写程序，给成绩一个<code>65</code>或更高的值，我们将收到<code>Passing grade</code>的输出。</p>
+<p>为了给银行账户的例子增加一个 <code>else</code> 语句，我们这样改写代码:</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">balance</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">522</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">balance</span> &lt; <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Balance is below 0, add funds now or you will be charged a penalty.&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Your balance is 0 or above.&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><pre tabindex="0"><code class="language-Output" data-lang="Output">Your balance is 0 or above.
+</code></pre><p>在这里，我们把<code>balance</code>变量的值改为正数，这样<code>else</code>语句就会打印出来。为了让第一个<code>if</code>语句打印出来，我们可以把这个值改写成一个负数。</p>
+<p>通过将<code>if</code>语句和<code>else</code>语句结合起来，你就构建了一个由两部分组成的条件语句，无论<code>if</code>条件是否满足，都会告诉计算机执行某些代码。</p>
+<h2 id="else-if-语句">
+  Else if 语句
+  <a class="anchor" href="#else-if-%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p>到目前为止，我们已经为条件语句提出了一个<a href="https://www.digitalocean.com/community/tutorials/understanding-boolean-logic-in-go">布尔</a>选项，每个<code>if</code>语句的评估结果为真或假。在许多情况下，我们会希望一个程序能评估出两个以上的可能结果。为此，我们将使用<strong>else if</strong>语句，在Go中写成<code>else if</code>。<code>else if</code>或else if语句看起来和<code>if</code>语句一样，将评估另一个条件。</p>
+<p>在银行账户程序中，我们可能希望在三种不同的情况下有三个离散的输出。</p>
+<ul>
+<li>余额低于0</li>
+<li>余额等于0</li>
+<li>余额高于0</li>
+</ul>
+<p><code>else if</code>语句将被放在 <code>if</code> 语句和 <code>else</code> 语句之间，如下所示：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">balance</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">522</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">balance</span> &lt; <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Balance is below 0, add funds now or you will be charged a penalty.&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">balance</span> <span style="color:#f92672">==</span> <span style="color:#ae81ff">0</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Balance is equal to 0, add funds soon.&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Your balance is 0 or above.&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>现在，一旦我们运行该程序，有三种可能的输出：</p>
+<ul>
+<li>如果变量<code>余额</code>等于<code>0</code>，我们将收到<code>else if</code>语句的输出（`余额等于0，尽快添加资金。）</li>
+<li>如果变量<code>balance</code>被设置为一个正数，我们将收到<code>else</code>语句的输出（<code>你的余额为0或以上</code>）。</li>
+<li>如果变量<code>balance</code>被设置为一个负数，输出将是<code>if</code>语句的字符串（<code>余额低于0，现在添加资金，否则将被收取罚款</code>）。</li>
+</ul>
+<p>如果我们想有三个以上的可能性呢？我们可以通过在代码中写一个以上的<code>else if</code>语句来实现。</p>
+<p>在<code>grade.go</code>程序中，让我们重写代码，以便有几个字母等级对应于数字等级的范围。</p>
+<ul>
+<li>90分或以上相当于A级</li>
+<li>80-89相当于B级</li>
+<li>70-79相当于C级</li>
+<li>65-69相当于D级</li>
+<li>64分或以下相当于F级</li>
+</ul>
+<p>要运行这段代码，我们将需要一个<code>if</code>语句，三个<code>else if</code>语句，以及一个处理所有失败情况的<code>else</code>语句。</p>
+<p>让我们重写前面的例子中的代码，让字符串打印出每个字母等级。我们可以保持我们的<code>else</code>语句不变。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">grade</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">60</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">90</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;A grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">80</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;B grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">70</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;C grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;D grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Failing grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>由于<code>else if</code>语句将按顺序评估，我们可以保持我们的语句相当基本。这个程序正在完成以下步骤。</p>
+<ol>
+<li>如果成绩大于90，程序将打印 &ldquo;A级&rdquo;，如果成绩小于90，程序将继续下一个语句&hellip;。</li>
+<li>如果成绩大于或等于80，程序将打印 &ldquo;B级&rdquo;，如果成绩在79或以下，程序将继续下一个语句&hellip;&hellip;</li>
+<li>如果成绩大于或等于70，程序将打印 &ldquo;C级&rdquo;，如果成绩是69或更少，程序将继续下一个语句&hellip;&hellip;</li>
+<li>如果成绩大于或等于65，程序将打印 &ldquo;D级&rdquo;，如果成绩是64或更少，程序将继续下一个语句&hellip;&hellip;</li>
+<li>程序将打印 &ldquo;成绩不合格&rdquo;，因为上述所有的条件都没有满足。</li>
+</ol>
+<h2 id="嵌套的if语句">
+  嵌套的If语句
+  <a class="anchor" href="#%e5%b5%8c%e5%a5%97%e7%9a%84if%e8%af%ad%e5%8f%a5">#</a>
+</h2>
+<p>一旦你对 <code>if</code>, <code>else if</code>, 和 <code>else</code>语句感到满意，你就可以转到嵌套条件语句。我们可以使用嵌套的<code>if</code>语句来处理这样的情况：如果第一个条件执行为真，我们想检查第二个条件。为此，我们可以在另一个if-else 语句中设置一个if-else 语句。让我们来看看嵌套的<code>if</code>语句的语法。</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">statement1</span> { <span style="color:#75715e">// outer if statement
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;true&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">nested_statement</span> { <span style="color:#75715e">// nested if statement
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;yes&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> { <span style="color:#75715e">// nested else statement
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> { <span style="color:#75715e">// outer else statement
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;false&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>这段代码可以产生一些可能的输出。</p>
+<ul>
+<li>如果<code>statement1</code>评估为真，程序将评估<code>nested_statement</code>是否也评估为真。如果这两种情况都是真的，那么输出将是：</li>
+</ul>
+<blockquote>
+<pre tabindex="0"><code class="language-Output" data-lang="Output">true
+yes
+</code></pre></blockquote>
+<ul>
+<li>然而，如果<code>statement1</code>评估为真，但<code>nested_statement</code>评估为假，那么输出将是：</li>
+</ul>
+<blockquote>
+<pre tabindex="0"><code class="language-Output" data-lang="Output">true
+no
+</code></pre></blockquote>
+<ul>
+<li>而如果<code>statement1</code>评估为false，嵌套的if-else语句将不会运行，所以<code>else</code>语句将单独运行，输出结果为：</li>
+</ul>
+<blockquote>
+<pre tabindex="0"><code class="language-Output" data-lang="Output">false
+</code></pre></blockquote>
+<p>我们也可以在代码中嵌套多个<code>if</code>语句：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">statement1</span> { <span style="color:#75715e">// outer if
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;hello world&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">nested_statement1</span> { <span style="color:#75715e">// first nested if
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;yes&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">nested_statement2</span> { <span style="color:#75715e">// first nested else if
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;maybe&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> { <span style="color:#75715e">// first nested else
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">statement2</span> { <span style="color:#75715e">// outer else if
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;hello galaxy&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">nested_statement3</span> { <span style="color:#75715e">// second nested if
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;yes&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">nested_statement4</span> { <span style="color:#75715e">// second nested else if
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;maybe&#34;</span>)
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> { <span style="color:#75715e">// second nested else
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;no&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>} <span style="color:#66d9ef">else</span> { <span style="color:#75715e">// outer else
+</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">statement</span>(<span style="color:#e6db74">&#34;hello universe&#34;</span>)
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>在这段代码中，除了 <code>else if</code> 语句外，每个 <code>if</code> 语句内都有一个嵌套的 <code>if</code> 语句。这将使每个条件内有更多的选项。</p>
+<p>让我们用<code>grade.go</code>程序来看一个嵌套<code>if</code>语句的例子。可以首先检查一个成绩是否合格（大于或等于65%），然后评估数字成绩应该相当于哪个字母等级。如果成绩不合格，我们就不需要运行字母等级，而可以让程序报告该成绩不合格。修改后的代码和嵌套的 <code>if</code> 语句看起来是这样的：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">grade</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">92</span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Passing grade of: &#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">90</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">80</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;B&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">70</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;C&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;D&#34;</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Failing grade&#34;</span>)
+</span></span><span style="display:flex;"><span>	}
+</span></span><span style="display:flex;"><span>}
+</span></span></code></pre></div><p>如果我们在运行代码时将变量<code>grade</code>设置为整数值<code>92</code>，那么第一个条件就得到了满足，程序将打印出<code>Passing grade of:</code>。接下来，它将检查成绩是否大于或等于90，由于这个条件也被满足，它将打印出<code>A</code>。</p>
+<p>如果我们在运行代码时将<code>grade</code>变量设置为<code>60</code>，那么第一个条件就没有得到满足，所以程序将跳过嵌套的<code>if</code>语句，向下移动到<code>else</code>语句，程序将打印出<code>Failing grade</code>。</p>
+<p>当然，我们可以在此基础上增加更多的选项，并使用第二层嵌套的if语句。也许我们想对A+、A和A-的成绩分别进行评估。我们可以这样做，首先检查成绩是否合格，然后检查成绩是否在90分或以上，然后检查成绩是否在96分以上为A+：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">65</span> {
+</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Passing grade of: &#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">90</span> {
+</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> &gt; <span style="color:#ae81ff">96</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;A+&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> <span style="color:#66d9ef">if</span> <span style="color:#a6e22e">grade</span> &gt; <span style="color:#ae81ff">93</span> <span style="color:#f92672">&amp;&amp;</span> <span style="color:#a6e22e">grade</span> <span style="color:#f92672">&lt;=</span> <span style="color:#ae81ff">96</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;A&#34;</span>)
+</span></span><span style="display:flex;"><span>
+</span></span><span style="display:flex;"><span>		} <span style="color:#66d9ef">else</span> {
+</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;A-&#34;</span>)
+</span></span><span style="display:flex;"><span>		}
+</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
+</span></span></code></pre></div><p>在这段代码中，对于设置为96的 <code>grade</code> 变量，程序将运行以下程序。</p>
+<ol>
+<li>检查该等级是否大于或等于65（真）。</li>
+<li>打印出 <code>Passing grade of:</code></li>
+<li>检查成绩是否大于或等于90（真）。</li>
+<li>检查成绩是否大于96（假）。</li>
+<li>检查等级是否大于93，同时小于或等于96（真）。</li>
+<li>打印 &ldquo;A&rdquo;。</li>
+<li>离开这些嵌套的条件语句，继续执行剩余的代码</li>
+</ol>
+<p>因此，成绩为96的程序的输出看起来是这样的：</p>
+<pre tabindex="0"><code class="language-Output" data-lang="Output">Passing grade of: A
+</code></pre><p>嵌套的<code>if</code>语句可以提供机会，在你的代码中添加几个特定级别的条件。</p>
+<h2 id="总结">
+  总结
+  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
+</h2>
+<p>通过使用像 <code>if</code> 语句这样的条件语句，你将对你的程序执行内容有更大的控制。条件性语句告诉程序要评估是否满足某个条件。如果满足条件，它将执行特定的代码，但如果不满足条件，程序将继续执行其他代码。</p>
+<p>要继续练习条件语句，请尝试使用不同的<a href="https://www.digitalocean.com/community/tutorials/how-to-do-math-in-go-with-operators">运算符</a>来获得对条件语句的更多熟悉。</p>
+</article>
+ 
+      
+
+      <footer class="book-footer">
+        
+  <div class="flex flex-wrap justify-between">
+
+
+
+
+
+</div>
+
+
+
+  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
+
+
+ 
+        
+      </footer>
+
+      
+  
+  <div class="book-comments">
+
+</div>
+  
+ 
+
+      <label for="menu-control" class="hidden book-menu-overlay"></label>
+    </div>
+
+    
+    <aside class="book-toc">
+      <div class="book-toc-content">
+        
+  
+<nav id="TableOfContents">
+  <ul>
+    <li>
+      <ul>
+        <li><a href="#介绍">介绍</a></li>
+      </ul>
+    </li>
+    <li><a href="#if-语句">If 语句</a></li>
+    <li><a href="#else-语句">Else 语句</a></li>
+    <li><a href="#else-if-语句">Else if 语句</a></li>
+    <li><a href="#嵌套的if语句">嵌套的If语句</a></li>
+    <li><a href="#总结">总结</a></li>
+  </ul>
+</nav>
+
+
+ 
+      </div>
+    </aside>
+    
+  </main>
+
+  
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+

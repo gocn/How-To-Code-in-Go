@@ -12,16 +12,14 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/</guid>
-      <description>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 Go 语言简介 Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两种语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
+      <description>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 #  Go 语言简介 #  Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两种语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
 虽然 Go 是一门通用的编程语言，可用于许多不同类型的编程项目。但它特别适合网络/分布式系统项目，赢得了“云语言”的美誉。Go 语言专注于通过一组强大的工具来帮助现代程序员完成更多的工作，通过使格式成为语言规范的一部分来消除对格式的争论，以及通过编译为单个二进制文件来简化部署。 Go 易于学习，关键字非常少，这使其成为不论是初学者还是经验丰富的开发人员的不二之选。
 本教程将指导你通过命令行来安装 Go 和配置 Go 编程环境。本教程特别针对 Ubuntu 18.04 的安装过程，但是对于其他 Debian Linux 发行版也同样适用。
-安装前提 你需要一台安装了 Ubuntu 18.04 的电脑或者虚拟机，并且有对该计算机的管理员访问权限和网络连接。 您可以通过 Ubuntu 18.04 版本页面 下载此操作系统。
-第一步 — 安装 Go 在这一步，你通过 Go 官方下载页面下载最新版本来安装 Go。
+安装前提 #  你需要一台安装了 Ubuntu 18.04 的电脑或者虚拟机，并且有对该计算机的管理员访问权限和网络连接。 您可以通过 Ubuntu 18.04 版本页面 下载此操作系统。
+第一步 — 安装 Go #  在这一步，你通过 Go 官方下载页面下载最新版本来安装 Go。
 为此，你需要找到最新二进制版本压缩包的 URL 。你还要注意旁边列出的 SHA256 哈希值，因为你将用它来验证下载的文件。
 你将通过命令行来完成安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。
-命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。尽管有很多终端命令需要学习，但是这些命令可以让你做更强大的事情。有关命令行的更多信息，请查看 Linux 终端简介 教程。
-在 Ubuntu 18.04 上，你可以通过点击屏幕左上角的 Ubuntu 图标并在搜索栏中输入terminal来找到终端程序。点击终端程序图标来打开终端。或者你可以在键盘上同时按住的“CTRL”、“ALT”和“T”键来自动打开终端程序。
-终端打开之后，你可以手动安装 Go 二进制。虽然可以通过包管理工具，比如 apt-get，但是通过手动安装可以帮助你理解一个有效的 Go 工作区系统里面任何必要的配置信息的修改。</description>
+命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。尽管有很多终端命令需要学习，但是这些命令可以让你做更强大的事情。有关命令行的更多信息，请查看 Linux 终端简介 教程。</description>
     </item>
     
     <item>
@@ -30,15 +28,13 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/</guid>
-      <description>如何在 macOS 上安装 Go 和设置本地编程环境 Go 语言简介 Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两门语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
+      <description>如何在 macOS 上安装 Go 和设置本地编程环境 #  Go 语言简介 #  Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两门语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
 虽然 Go 是一门通用的编程语言，可用于许多不同类型的编程项目。但它特别适合网络/分布式系统项目，赢得了“云语言”的美誉。Go 语言专注于通过一组强大的工具来帮助现代程序员完成更多的工作，通过使格式成为语言规范的一部分来消除对格式的争论，以及通过编译为单个二进制文件来简化部署。 Go 易于学习，关键字非常少，这使其成为不论是初学者还是经验丰富的开发人员的不二之选。
 本教程将指导你通过命令行来安装 Go 和配置 Go 编程环境。本教程特别针对 Ubuntu 18.04 的安装过程，但是对于其他 Debian Linux 发行版也同样适用。
-安装前提 你需要一台拥有管理员权限并且能够连接上网的 macOS 的电脑。
-第一步 — 打开终端 我们将会在终端上完成我们大部分的安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。
+安装前提 #  你需要一台拥有管理员权限并且能够连接上网的 macOS 的电脑。
+第一步 — 打开终端 #  我们将会在终端上完成我们大部分的安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。
 macOS 终端是一个可以访问命令行界面的应用程序。就像其他应用程序那样，你可以通过进入 Finder ，导航到 Applications 文件夹，最后进入 Utilities 文件夹找到它。然后就像打开其他应用程序一样双击终端将其打开。或者，你可以通过按住CMD 和 SPACE 键来启动 Spotlight，然后在出现的框中输入终端来查找它。
-尽管有很多终端命令需要学习，但是这些命令可以让你做更强大的事情。 文章Linux 终端简介 可以让你更好地了解 Linux 终端，它和 macOS 终端类似。
-现在你已经打开了终端，你可以下载并安装 Xcode，这是安装 Go 语言所需的开发者工具包。
-第二步 — 安装 Xcode Xcode 是一个集成开发环境(IDE)，由 macOS 软件开发工具组成。你可以在终端窗口中输入以下命令来检查 Xcode 是否已安装。</description>
+尽管有很多终端命令需要学习，但是这些命令可以让你做更强大的事情。 文章Linux 终端简介 可以让你更好地了解 Linux 终端，它和 macOS 终端类似。</description>
     </item>
     
     <item>
@@ -47,13 +43,12 @@ macOS 终端是一个可以访问命令行界面的应用程序。就像其他�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/</guid>
-      <description>如何在 Windows 10 上安装 Go 和设置本地编程环境 Go 语言简介 Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两门语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
+      <description>如何在 Windows 10 上安装 Go 和设置本地编程环境 #  Go 语言简介 #  Go 是一门在 Google 备受挫折后而诞生的语言。开发者不得不频繁地在两门语言中选择，要么选择一门执行效率高但是编译时间长的语言，要么选择一种易于编程但在生产中运行效率低下的语言。 Go 被设计为同时提供所有这三个功能：快速编译、易于编程和生产中的高效执行。
 虽然 Go 是一门通用的编程语言，可用于许多不同类型的编程项目。但它特别适合网络/分布式系统项目，赢得了“云语言”的美誉。Go 语言专注于通过一组强大的工具来帮助现代程序员完成更多的工作，通过使格式成为语言规范的一部分来消除对格式的争论，以及通过编译为单个二进制文件来简化部署。 Go 易于学习，关键字非常少，这使其成为不论是初学者还是经验丰富的开发人员的不二之选。
 本教程将指导你通过命令行来安装 Go 和配置 Go 编程环境。本教程特别针对 Ubuntu 18.04 的安装过程，但是对于其他 Debian Linux 发行版也同样适用。
-安装前提 你需要一台拥有管理员权限并且能够连接上网的 Windows 10 的电脑。
-第一步 — 打开并配置 PowerShell 我们将会在终端上完成我们大部分的安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。
-PowerShell 是微软提供的一个命令行 shell 界面的程序。通过 cmdlets （发音为 command-lets ）来执行管理任务，它们是 .NET 软件框架可以执行操作的专用类。PowerShell 于 2016 年 8 月开源，现在可跨平台使用，适用于 Windows 和 UNIX 系统（包括 Mac 和 Linux）。
-如何找到 Windows PowerShell 呢，你可以右击屏幕左下角的开始按钮，弹出菜单后，点击搜索，然后在搜索栏中输入 PowerShell 。当你看到选项时，右击桌面应用程序中的 Windows PowerShell。 出于本教程的目的，选择以管理员身份运行。 当系统提示你出现一个对话框，询问是否允许此应用程序对您的 PC 进行更改？ 单击是。</description>
+安装前提 #  你需要一台拥有管理员权限并且能够连接上网的 Windows 10 的电脑。
+第一步 — 打开并配置 PowerShell #  我们将会在终端上完成我们大部分的安装和设置，这是一种与计算机交互的非图形化方式。也就是说，你输入的是文本，然后也是通过文本得到计算机的反馈，而不是点击按钮。命令行，也就是我们熟知的 shell 或者 终端 ，可以帮助你修改或自动化很多你每天执行在计算机上的任务，这是软件开发人员必备的工具。
+PowerShell 是微软提供的一个命令行 shell 界面的程序。通过 cmdlets （发音为 command-lets ）来执行管理任务，它们是 .NET 软件框架可以执行操作的专用类。PowerShell 于 2016 年 8 月开源，现在可跨平台使用，适用于 Windows 和 UNIX 系统（包括 Mac 和 Linux）。</description>
     </item>
     
     <item>
@@ -62,12 +57,11 @@ PowerShell 是微软提供的一个命令行 shell 界面的程序。通过 cmdl
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/</guid>
-      <description>如何用 Go 编写你的第一个程序 前言 “Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。
+      <description>如何用 Go 编写你的第一个程序 #  前言 #  “Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。
 本教程将引导你在 Go 中创建此程序。 但是，为了使程序更有趣，你将修改传统的 “Hello, World!” 程序，以便它可以询问用户的姓名。 然后，你将在回复中使用该姓名。 完成本教程后，你将拥有一个运行起来如下所示的程序：
-Output Please enter your name. Sammy Hello, Sammy! I&amp;#39;m Go! 安装前提 在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
- 如何在 macOS 上安装 Go 和设置本地编程环境 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 如何在 Windows 10 上安装 Go 和设置本地编程环境  第一步 — 编写最基本的 “Hello, World!” 程序 为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 nano，然后创建一个新文件：
-nano hello.go 在 nano 中打开文本文件后，输入你的程序代码：
-hello.go package main  import &amp;#34;fmt&amp;#34;  func main() {  fmt.</description>
+Output Please enter your name. Sammy Hello, Sammy! I&amp;#39;m Go! 安装前提 #  在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
+ 如何在 macOS 上安装 Go 和设置本地编程环境 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 如何在 Windows 10 上安装 Go 和设置本地编程环境  第一步 — 编写最基本的 “Hello, World!” 程序 #  为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 nano，然后创建一个新文件：
+nano hello.</description>
     </item>
     
     <item>
@@ -76,15 +70,13 @@ hello.go package main  import &amp;#34;fmt&amp;#34;  func main() {  fmt.</descri
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/05-Understanding_the_GOPATH/</guid>
-      <description>理解 GOPATH 介绍 本文将带领你了解什么是 GOPATH，它是如何工作的，以及如何设置它。这是设置 Go 开发环境以及理解 Go 如何查找、安装和构建源文件的关键步骤。在本文中，我们将使用 GOPATH 来指代我们将要讨论的文件夹结构的概念。我们将使用 $GOPATH 来指代 Go 用来查找文件夹结构的环境变量。
+      <description>理解 GOPATH #  介绍 #  本文将带领你了解什么是 GOPATH，它是如何工作的，以及如何设置它。这是设置 Go 开发环境以及理解 Go 如何查找、安装和构建源文件的关键步骤。在本文中，我们将使用 GOPATH 来指代我们将要讨论的文件夹结构的概念。我们将使用 $GOPATH 来指代 Go 用来查找文件夹结构的环境变量。
 Go 工作区 是 Go 管理源码文件、编译的二进制文件和用于后续更快编译的缓存对象。虽然可能有多个空间，但只有一个 Go 工作区是典型的，也是被建议的使用方式。GOPATH 充当工作区的根文件夹。
-设置 $GOPATH 环境变量 $GOPATH 环境变量列出了 Go 用来寻找 Go 工作区的地方。
+设置 $GOPATH 环境变量 #  $GOPATH 环境变量列出了 Go 用来寻找 Go 工作区的地方。
 默认情况下，Go 假设 GOPATH 位于 $HOME/go，其中 $HOME 是电脑上上我们帐户的根目录。我们可以通过设置 $GOPATH 环境变量来修改它。为了进一步的研究，请参考在 Linux 中阅读和设置环境变量的教程。
 想要了解更多关于设置 $GOPATH 变量的信息，可以参考 Go 文档。
 此外，本系列教程 简单介绍了安装 Go 和设置 Go 开发环境的方法。
-$GOPATH 不是 $GOROOT $GOROOT 是 Go 的代码、编译器和工具所在的地方ーー这不是我们的源代码。$GOROOT 通常类似于 /usr/local/go。我们的 $GOPATH 通常类似于 $HOME/go。
-虽然我们不再需要专门设置 $GOROOT 变量，但它仍然在旧材料中被引用。
-现在，让我们讨论一下 Go Workspace 的结构。</description>
+$GOPATH 不是 $GOROOT #  $GOROOT 是 Go 的代码、编译器和工具所在的地方ーー这不是我们的源代码。$GOROOT 通常类似于 /usr/local/go。我们的 $GOPATH 通常类似于 $HOME/go。</description>
     </item>
     
     <item>
@@ -93,10 +85,10 @@ $GOPATH 不是 $GOROOT $GOROOT 是 Go 的代码、编译器和工具所在的地
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/06-How_To_Write_Comments_in_Go/</guid>
-      <description>如何在 Go 中写注释 介绍 注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。
+      <description>如何在 Go 中写注释 #  介绍 #  注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。
 根据你程序的目的，注释可以作为你自己的笔记或者提醒，或者它们可以是为了其他程序员能够理解你的代码在做什么而写的。
 一般来说，在写或者更新程序的时候写评论是个不错的主意，因为以后很容易忘记你的思维过程，而且以后写的评论长期来看可能没那么有用。
-注释语法 Go 中的注释以一组向前斜杠（//）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。
+注释语法 #  Go 中的注释以一组向前斜杠（//）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。
 一般来说，评论看起来是这样的:
 // This is a comment 注释不会执行，因此在运行程序时没有注释的指示。注释在源代码中供人阅读，而不是供计算机执行。
 在一个 “Hello, World!” 的程序中，注释可能如下所示：
@@ -110,14 +102,14 @@ package main  import ( 	&amp;#34;fmt&amp;#34; )  func main() { 	// Define sharks
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/07-Understanding_Data_Types_in_Go/</guid>
-      <description>理解 Go 的数据类型 介绍 数据类型是指在编写程序时特定变量存储的值的类型。数据类型还决定对数据可以执行哪些操作。
+      <description>理解 Go 的数据类型 #  介绍 #  数据类型是指在编写程序时特定变量存储的值的类型。数据类型还决定对数据可以执行哪些操作。
 在本文中，我们将介绍 Go 本身的重要数据类型。本文并不是对数据类型的详尽调查，但将帮助你熟悉 Go 中可用的选项。理解一些基本数据类型将可以让你能够编写更清晰的代码，从而更有效地执行。
-背景 了解数据类型的一种方法是考虑我们在现实世界中使用的不同类型的数据。现实世界中数据的一个例子是数字: 例如，我们可以使用无符号整数（0，1，2，&amp;hellip;）、有符号整数（&amp;hellip; ，-1，0，1，&amp;hellip;）和无理数（π）。
+背景 #  了解数据类型的一种方法是考虑我们在现实世界中使用的不同类型的数据。现实世界中数据的一个例子是数字: 例如，我们可以使用无符号整数（0，1，2，&amp;hellip;）、有符号整数（&amp;hellip; ，-1，0，1，&amp;hellip;）和无理数（π）。
 通常，在数学中，我们可以把不同类型的数字组合起来，来得到某个答案。例如，我们可以把 5 加到 π 上:
 5 + π 我们可以把这个方程式作为答案因为存在无理数，也可以把 π 近似舍入到十进制的缩写数字，再把这些数字相加:
 5 + π = 5 + 3.14 = 8.14 但是，如果我们开始尝试用另一种数据类型，比如单词来计算数字，就变得不那么有意义了。我们如何解下面的公式呢？
 shark + 8 对于计算机来说，每种数据类型区别很大，就像文字和数字一样。因此，对于不同的数据类型的赋值和修改操作，我们必须谨慎。
-整数 和数学一样，计算机编程中的 整数 可以是正数、负数或者 0（&amp;hellip; -1,0,1，&amp;hellip;）。在 Go 中，整数被称为 int。与其他编程语言一样，不应该在四位数或更多的数字中使用逗号，所以在程序中写入 1,000 时，请写为 1000。
+整数 #  和数学一样，计算机编程中的 整数 可以是正数、负数或者 0（&amp;hellip; -1,0,1，&amp;hellip;）。在 Go 中，整数被称为 int。与其他编程语言一样，不应该在四位数或更多的数字中使用逗号，所以在程序中写入 1,000 时，请写为 1000。
 我们可以简单向下面这种方式打印一个整数：
 fmt.Println(-459) Output -459 或者，我们可以声明一个变量，在这个例子中是我们用来表示和操作数字的符号，如：
 var absoluteZero int = -459 fmt.Println(absoluteZero) Output -459 我们也可以在 Go 中对整数进行计算。在下面的代码块中，我们将使用 := 分配符来声明和实例化变量 sum：</description>
@@ -129,14 +121,14 @@ var absoluteZero int = -459 fmt.Println(absoluteZero) Output -459 我们也可�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/08-An_Introduction_to_Working_with_Strings_in_Go/</guid>
-      <description>Go 中处理字符串的介绍 _字符串_是由一个或多个字符(字母、数字、符号)组成的序列，这些字符可以是常量，也可以是变量。字符串由 Unicode 组成，是不可变的序列，这意味着它们是不变的。
+      <description>Go 中处理字符串的介绍 #  _字符串_是由一个或多个字符(字母、数字、符号)组成的序列，这些字符可以是常量，也可以是变量。字符串由 Unicode 组成，是不可变的序列，这意味着它们是不变的。
 因为文本是我们日常生活中使用的常见数据形式，所以字符串数据类型是编程中一个非常重要的基石。
 本 Go 教程将介绍如何创建和打印字符串，如何连接和复制字符串，以及如何在变量中存储字符串。
-字符串文字 在 Go 中，字符串存在于反引号 `（有时叫做反勾号）或双引号 &amp;quot; 中。根据使用的引号不同，字符串将具有不同的特征。
+字符串文字 #  在 Go 中，字符串存在于反引号 `（有时叫做反勾号）或双引号 &amp;quot; 中。根据使用的引号不同，字符串将具有不同的特征。
 使用反引号，如 ` bar `，将创建一个_原始_字符串。在原始字符串中，除了反引号之外，任何字符都可以出现在引号之间。下面是一个原始字符串的例子:
 `Say &amp;#34;hello&amp;#34; to Go!` 反斜杠在原始字符串中没有特殊含义。例如，\n 表示的是实际字符，以反斜杠 \ 和字母 n 的形式出现。不像解释的字符串文字，\n 会插入一个实际的新行。
 原始字符串也可用于创建多行字符串:
-`Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multi-core and networked machines, while its novel type system enables flexible and modular program construction. Go compiles quickly to machine code yet has the convenience of garbage collection and the power of run-time reflection.</description>
+`Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multi-core and networked machines, while its novel type system enables flexible and modular program construction.</description>
     </item>
     
     <item>
@@ -145,7 +137,7 @@ var absoluteZero int = -459 fmt.Println(absoluteZero) Output -459 我们也可�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/09-How_To_Format_Strings_in_Go/</guid>
-      <description>How To Format Strings in Go As strings are often made up of written text, there are many instances when we may want to have greater control over how strings look to make them more readable for humans through punctuation, line breaks, and indentation.
+      <description>How To Format Strings in Go #  As strings are often made up of written text, there are many instances when we may want to have greater control over how strings look to make them more readable for humans through punctuation, line breaks, and indentation.
 In this tutorial, we’ll go over some of the ways we can work with Go strings to make sure that all output text is formatted correctly.</description>
     </item>
     
@@ -155,8 +147,7 @@ In this tutorial, we’ll go over some of the ways we can work with Go strings t
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</guid>
-      <description>An Introduction to the Strings Package in Go Introduction Go’s string package has several functions available to work with the string data type. These functions let us easily modify and manipulate strings. We can think of functions as being actions that we perform on elements of our code. Built-in functions are those that are defined in the Go programming language and are readily available for us to use.
-In this tutorial, we’ll review several different functions that we can use to work with strings in Go.</description>
+      <description>An Introduction to the Strings Package in Go #  Introduction #  Go’s string package has several functions available to work with the string data type. These functions let us easily modify and manipulate strings. We can think of functions as being actions that we perform on elements of our code. Built-in functions are those that are defined in the Go programming language and are readily available for us to use.</description>
     </item>
     
     <item>
@@ -165,9 +156,9 @@ In this tutorial, we’ll review several different functions that we can use to 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/11-How_To_Use_Variables_and_Constants_in_Go/</guid>
-      <description>How To Use Variables and Constants in Go Variables are an important programming concept to master. They are symbols that stand in for a value you’re using in a program.
+      <description>How To Use Variables and Constants in Go #  Variables are an important programming concept to master. They are symbols that stand in for a value you’re using in a program.
 This tutorial will cover some variable basics and best practices for using them within the Go programs you create.
-Understanding Variables In technical terms, a variable is assigning a storage location to a value that is tied to a symbolic name or identifier.</description>
+Understanding Variables #  In technical terms, a variable is assigning a storage location to a value that is tied to a symbolic name or identifier.</description>
     </item>
     
     <item>
@@ -176,7 +167,7 @@ Understanding Variables In technical terms, a variable is assigning a storage lo
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/12-How_To_Convert_Data_Types_in_Go/</guid>
-      <description>How To Convert Data Types in Go Introduction In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values.</description>
+      <description>How To Convert Data Types in Go #  Introduction #  In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values.</description>
     </item>
     
     <item>
@@ -185,8 +176,8 @@ Understanding Variables In technical terms, a variable is assigning a storage lo
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/13-How_To_Do_Math_in_Go_with_Operators/</guid>
-      <description>How To Do Math in Go with Operators Introduction Numbers are common in programming. They are used to represent things such as: screen-size dimensions, geographic locations, money and points, the amount of time that passes in a video, positions of game avatars, colors through assigning numeric codes, and so on.
-Effectively performing mathematical operations in programming is an important skill to develop because of how frequently you’ll work with numbers. Though a high-level understanding of mathematics can certainly help you become a better programmer, it is not a prerequisite.</description>
+      <description>How To Do Math in Go with Operators #  Introduction #  Numbers are common in programming. They are used to represent things such as: screen-size dimensions, geographic locations, money and points, the amount of time that passes in a video, positions of game avatars, colors through assigning numeric codes, and so on.
+Effectively performing mathematical operations in programming is an important skill to develop because of how frequently you’ll work with numbers.</description>
     </item>
     
     <item>
@@ -195,7 +186,7 @@ Effectively performing mathematical operations in programming is an important sk
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/14-Understanding_Boolean_Logic_in_Go/</guid>
-      <description>Understanding Boolean Logic in Go The Boolean data type (bool) can be one of two values, either true or false. Booleans are used in programming to make comparisons and to control the flow of the program.
+      <description>Understanding Boolean Logic in Go #  The Boolean data type (bool) can be one of two values, either true or false. Booleans are used in programming to make comparisons and to control the flow of the program.
 Booleans represent the truth values that are associated with the logic branch of mathematics, which informs algorithms in computer science. Named for the mathematician George Boole, the word Boolean always begins with a capitalized B.</description>
     </item>
     
@@ -205,7 +196,7 @@ Booleans represent the truth values that are associated with the logic branch of
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/15-Understanding_Maps_in_Go/</guid>
-      <description>Understanding Maps in Go Most modern programming languages have the concept of a dictionary or a hash type. These types are commonly used to store data in pairs with a key that maps to a value.
+      <description>Understanding Maps in Go #  Most modern programming languages have the concept of a dictionary or a hash type. These types are commonly used to store data in pairs with a key that maps to a value.
 In Go, the map data type is what most programmers would think of as the dictionary type. It maps keys to values, making key-value pairs that are a useful way to store data in Go.</description>
     </item>
     
@@ -215,7 +206,7 @@ In Go, the map data type is what most programmers would think of as the dictiona
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/16-Understanding_Arrays_and_Slices_in_Go/</guid>
-      <description>Understanding Arrays and Slices in Go Introduction In Go, arrays and slices are data structures that consist of an ordered sequence of elements. These data collections are great to use when you want to work with many related values. They enable you to keep data together that belongs together, condense your code, and perform the same methods and operations on multiple values at once.
+      <description>Understanding Arrays and Slices in Go #  Introduction #  In Go, arrays and slices are data structures that consist of an ordered sequence of elements. These data collections are great to use when you want to work with many related values. They enable you to keep data together that belongs together, condense your code, and perform the same methods and operations on multiple values at once.
 Although arrays and slices in Go are both ordered sequences of elements, there are significant differences between the two.</description>
     </item>
     
@@ -227,7 +218,7 @@ Although arrays and slices in Go are both ordered sequences of elements, there a
       <guid>https://example.com/docs/17-Handling_Errors_in_Go_DigitalOcean/</guid>
       <description>健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。
 相比于其他编程语言, 要求开发者使用专门的语法去处理错误, 在 Go 中将错误作为 error(Go 中的一个接口类型) 类型的值, 并且和其他类型的值一样作为函数返回值的一部分返回。要处理 Go 中的错误, 我们必须检查函数返回值中是否包含了错误信息, 并采取合适的措施去保护数据并告知用户或者操作人员发生错误。
-创建错误 在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：errors.New 和 fmt.Errorf。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
+创建错误 #  在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：errors.New 和 fmt.Errorf。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
 errors.New 只提供了一个字符串类型的参数, 用户在使用的时候可以自定义一个错误发生时具体需要展示的错误消息.
 尝试运行以下示例以查看由 errors.New 创建的错误并打印到标准输出：
 package main  import ( 	&amp;#34;errors&amp;#34; 	&amp;#34;fmt&amp;#34; )  func main() {  // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles 	err := errors.New(&amp;#34;barnacles&amp;#34;)   // 将错误直接打印到标准错误输出 	fmt.Println(&amp;#34;Sammy says:&amp;#34;, err) } # 这里是控制台的输出 # Output Sammy says: barnacles 我们使用标准库的 errors.New 函数创建了具体的消息是 &amp;quot;barnacles&amp;quot; 的错误。这里我们遵循了 Go 程序设计风格指南 使用小写了表示错误消息。</description>
@@ -239,7 +230,7 @@ package main  import ( 	&amp;#34;errors&amp;#34; 	&amp;#34;fmt&amp;#34; )  func 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/</guid>
-      <description>介绍 GO 标准库提供了errors.New and fmt.Errorf 这两种方法来在创建错误。但是这两种方法并不能满足你的用户或者后期调试时提供更加复杂的错误信息或者报告发生了什么。为了传递这种更复杂的错误信息并获得更多功能，我们可以实现标准库 error 接口类型。
+      <description>介绍 #  GO 标准库提供了errors.New and fmt.Errorf 这两种方法来在创建错误。但是这两种方法并不能满足你的用户或者后期调试时提供更加复杂的错误信息或者报告发生了什么。为了传递这种更复杂的错误信息并获得更多功能，我们可以实现标准库 error 接口类型。
 error 接口定义如下：
 type error interface {  Error() string } 内置 软件包将 error 定义为具有单个 Error() 方法的接口，该接口将错误消息字符串作为返回。通过实现此方法，我们可以将定义的任何类型转换为自己的错误。
 让我们尝试运行以下示例以查看 error 接口的实现：
@@ -252,11 +243,11 @@ package main  import ( 	&amp;#34;fmt&amp;#34; 	&amp;#34;os&amp;#34; )  // 定义
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/19-Handling_Panics_in_Go-_DigitalOcean/</guid>
-      <description>介绍 程序遇到的错误分为两个广泛的类别：程序员已经预料到的错误和程序员没有预料到的错误。我们在前两篇关于 错误处理 的文章中介绍过的 error 接口主要用于处理我们在编写 Go 程序时可能遇到的错误。error 接口甚至允许我们去确认在调用一个函数时发生罕见性错误的可能性，因此我们可以在这些情况下进行适当的响应。
+      <description>介绍 #  程序遇到的错误分为两个广泛的类别：程序员已经预料到的错误和程序员没有预料到的错误。我们在前两篇关于 错误处理 的文章中介绍过的 error 接口主要用于处理我们在编写 Go 程序时可能遇到的错误。error 接口甚至允许我们去确认在调用一个函数时发生罕见性错误的可能性，因此我们可以在这些情况下进行适当的响应。
 Panics 属于第二类错误，这些错误是程序员意料之外的。这些意料之外的错误导致一个 GO 程序自发终止并退出运行。常见的错误通常是造成 panic 的原因。在本教程中，我们将研究哪些常见操作可以引起 panic ，我们还将看到避免这些 panic 的方法。我们还将使用 defer 语句与 recover 函数一起捕获 panic，以免 panic 有机会意外终止我们正在运行的 GO 程序。
-了解 panics GO 中的某些操作会自动返回 panic 并停止程序的运行。常见的操作包括索引超出 数组 的容量，执行类型的断言，空指针上的调用方法，错误地使用互斥锁以及尝试使用已经关闭的 chanel 等等。这些情况中的大多数是由于编程时犯错而导致的，再加上编译器在编译程序时没有检测到这些错误。
+了解 panics #  GO 中的某些操作会自动返回 panic 并停止程序的运行。常见的操作包括索引超出 数组 的容量，执行类型的断言，空指针上的调用方法，错误地使用互斥锁以及尝试使用已经关闭的 chanel 等等。这些情况中的大多数是由于编程时犯错而导致的，再加上编译器在编译程序时没有检测到这些错误。
 由于 panic 包含了有助于解决问题的细节，所以开发者通常会使用 panic 来标记在开发过程中犯了一个错误。
-由于越界引发的 panic 当你尝试访问超出切片长度或数组容量之外的索引时，GO 运行时会产生 panic。
+由于越界引发的 panic #  当你尝试访问超出切片长度或数组容量之外的索引时，GO 运行时会产生 panic。
 下面的示例是尝试使用内置的 len 函数返回的切片的长度, 然后访问切片的最后一个元素时常见错误。尝试运行此代码以了解为什么这可能会引起panic：
 package main  import ( 	&amp;#34;fmt&amp;#34; )  func main() { 	names := []string{ 	&amp;#34;lobster&amp;#34;, 	&amp;#34;sea urchin&amp;#34;, 	&amp;#34;sea cucumber&amp;#34;, 	} 	fmt.</description>
     </item>
@@ -267,9 +258,9 @@ package main  import ( 	&amp;#34;fmt&amp;#34; )  func main() { 	names := []strin
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/20-Importing_Packages_in_Go_DigitalOcean/</guid>
-      <description>介绍 有时，你的代码需要当前程序的基础上增加更多的功能。在这些情况下，你可以使用软件包来丰富你的程序。在 Go 中, 一个包表示磁盘上单个目录中的所有文件。包可以定义可以在其他 Go 文件或包中引用的函数、类型和接口。
+      <description>介绍 #  有时，你的代码需要当前程序的基础上增加更多的功能。在这些情况下，你可以使用软件包来丰富你的程序。在 Go 中, 一个包表示磁盘上单个目录中的所有文件。包可以定义可以在其他 Go 文件或包中引用的函数、类型和接口。
 本教程将带你来完成软件包的安装, 导入和重命名。
-标准库包 标准库是 Go 附带的一组软件包。这些软件包包含许多用于编写现代软件的基本模块。例如， fmt 软件包包含用于格式和打印字符串的基本功能。 net/http 软件包包含允许开发人员创建 Web 服务，通过HTTP 协议发送和检索数据的功能，等等。
+标准库包 #  标准库是 Go 附带的一组软件包。这些软件包包含许多用于编写现代软件的基本模块。例如， fmt 软件包包含用于格式和打印字符串的基本功能。 net/http 软件包包含允许开发人员创建 Web 服务，通过HTTP 协议发送和检索数据的功能，等等。
 为了利用软件包中的功能，你需要使用 import 语句访问软件包。import 语句由 import 关键字以及软件包的名称组成。
 例如，在 GO 程序中 random.go 文件。你可以导入 math/rand 包来生成随机数：
 import &amp;#34;math/rand&amp;#34; 当我们导入一个包时，我们把它在当前程序中作为一个单独namespace命名空间来使用。这意味着我们必须像 package.function 调用其中的函数。
@@ -285,15 +276,14 @@ package main  import &amp;#34;math/rand&amp;#34;  func main() {  for i := 0; i &
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/21-How_To_Write_Packages_in_Go/</guid>
-      <description>如何在 Go 中编写包 一个包由同一目录下的 Go 文件组成的，并且在文件开头有相同的包声明。你可以从包中加入额外的功能，使你的程序更加复杂。有些包可以通过 Go 标准库获得，因此在安装 Go 时就已经安装了。其他的可以用 Go 的go get命令来安装。你也可以通过在同一目录下创建Go文件来建立你自己的Go包，你可以通过使用必要的包声明来分享代码。
+      <description>如何在 Go 中编写包 #  一个包由同一目录下的 Go 文件组成的，并且在文件开头有相同的包声明。你可以从包中加入额外的功能，使你的程序更加复杂。有些包可以通过 Go 标准库获得，因此在安装 Go 时就已经安装了。其他的可以用 Go 的go get命令来安装。你也可以通过在同一目录下创建Go文件来建立你自己的Go包，你可以通过使用必要的包声明来分享代码。
 本教程将指导你如何编写Go包，以便在其他编程文件中使用。
-前提条件  按照如何安装和设置Go的本地编程环境系列教程中的一个教程设置Go编程环境。按照本地编程环境教程中的步骤5创建你的Go工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。 为了加深你对GOPATH的了解，请阅读文章了解GOPATH。  编写和导入软件包 编写包就像编写任何其他Go文件一样，包可以包含函数、类型和变量的定义，然后可以在其他Go程序中使用。
+前提条件 #   按照如何安装和设置Go的本地编程环境系列教程中的一个教程设置Go编程环境。按照本地编程环境教程中的步骤5创建你的Go工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。 为了加深你对GOPATH的了解，请阅读文章了解GOPATH。  编写和导入软件包 #  编写包就像编写任何其他Go文件一样，包可以包含函数、类型和变量的定义，然后可以在其他Go程序中使用。
 在我们创建一个新的包之前，我们需要进入我们的Go工作区。这通常是在我们的gopath下。对于这个例子，本教程中我们将把包称为greet。为了做到这一点，在我们的项目空间下的gopath中创建了一个名为greet的目录。当使用Github作为代码库，组织名称为gopherguides，想在此组织下创建greet包，那么我们的目录会是这样的：
 └── $GOPATH └── src └── github.com └── gopherguides greet目录在gopherguides目录中：
 └── $GOPATH └── src └── github.com └── gopherguides └── greet 最后，我们可以添加我们目录中的第一个文件。通常的做法是，包中的 主要或 入口 文件是以目录名来命名的。在这种情况下，将在greet目录下创建一个名为greet.go的文件：
 └── $GOPATH └── src └── github.com └── gopherguides └── greet └── greet.go 创建了文件后，我们就可以开始编写我们想要重复使用或在不同项目中共享的代码。在本例中，我们将创建一个打印出 Hello World的 Hello 的函数。
-在文本编辑器中打开 greet.go 文件，增加如下代码：
-package greet  import &amp;#34;fmt&amp;#34;  func Hello() { 	fmt.</description>
+在文本编辑器中打开 greet.go 文件，增加如下代码：</description>
     </item>
     
     <item>
@@ -302,19 +292,16 @@ package greet  import &amp;#34;fmt&amp;#34;  func Hello() { 	fmt.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/22-Understanding_Package_Visibility_in_Go/</guid>
-      <description>理解Go中包的可见性 介绍 当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
+      <description>理解Go中包的可见性 #  介绍 #  当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 这里的可见性是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。
 在编写符合人体工程学的代码时，仔细控制包的可见性是很重要的，特别是在考虑到将来可能要对你的包进行修改时。如果你需要修复一个错误，提高性能，或改变功能，你会希望以一种不会破坏使用你的包的人的代码的方式进行改变。尽量减少破坏性修改的一个方法是只允许访问你的包中需要正常使用的部分。通过限制访问，你可以在内部对包进行修改，而减少影响其他开发者使用你的包的机会。
 在这篇文章中，将学习如何控制包的可见性，以及如何保护代码中只应在包内使用的部分。为了做到这一点，我们将创建一个基本的记录器来记录和调试信息，使用具有不同程度的项目可见性的包。
-前提条件 要遵循本文中的示例，你将需要：
- 按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构：  . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 不同于其他程序语言，如Java和Python使用访问修饰符如public、private或protected来指定范围不同，Go通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &amp;ldquo;可见的&amp;rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
+前提条件 #  要遵循本文中的示例，你将需要：
+ 按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构：  . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 #  不同于其他程序语言，如Java和Python使用访问修饰符如public、private或protected来指定范围不同，Go通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &amp;ldquo;可见的&amp;rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
 这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &amp;ldquo;类型&amp;rdquo;、&amp;ldquo;变量&amp;rdquo;、&amp;ldquo;常量&amp;rdquo;、&amp;ldquo;函数&amp;quot;等，在当前包外是可见的。
 让我们看看下面的代码，仔细注意一下大写字母。
 package greet  import &amp;#34;fmt&amp;#34;  var Greeting string  func Hello(name string) string { 	return fmt.Sprintf(Greeting, name) } 这段代码声明它是在greet包中。然后声明了两个符号，一个叫做 Greeting 的变量和一个叫做 Hello 的函数。因为它们都以大写字母开头，所以它们都被 &amp;ldquo;可导出&amp;rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
-定义包的可见性 为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个logging包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么级别上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：信息、警告或错误。
-首先，在你的 src 目录下，创建一个名为 logging 的目录来放置日志文件：
-mkdir logging 进入目录：
-cd logging 然后，使用nano这样的编辑器，创建一个名为logging.</description>
+定义包的可见性 #  为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个logging包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么级别上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：信息、警告或错误。</description>
     </item>
     
     <item>
@@ -323,12 +310,12 @@ cd logging 然后，使用nano这样的编辑器，创建一个名为logging.</d
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/23-How_To_Write_Conditional_Statements_in_Go/</guid>
-      <description>如何在Go中编写条件语句 介绍 条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。
+      <description>如何在Go中编写条件语句 #  介绍 #  条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。
 当我们完全执行程序的每个语句时，我们并没有要求程序评估特定的条件。通过使用条件语句，程序可以确定某些条件是否被满足，然后被告知下一步该做什么。
 让我们来看看一些使用条件语句的例子。
  如果学生的考试成绩超过65%，报告她的成绩通过；如果没有，报告她的成绩不合格。 如果他的账户里有钱，就计算利息；如果没有，就收取罚款。 如果他们买了10个或更多的橙子，计算5%的折扣；如果他们买的少，就不买。  通过评估条件，并根据是否满足这些条件来分配代码运行，我们就是在写条件代码。
 本教程将带你了解在Go编程语言中编写条件语句。
-If 语句 我们将从 if 语句开始，它将评估一个语句是真的还是假的，并且只在该语句为真的情况下运行代码。
+If 语句 #  我们将从 if 语句开始，它将评估一个语句是真的还是假的，并且只在该语句为真的情况下运行代码。
 在一个纯文本编辑器中，打开一个文件，写入以下代码：
 package main  import &amp;#34;fmt&amp;#34;  func main() { 	grade := 70  	if grade &amp;gt;= 65 { 	fmt.Println(&amp;#34;Passing grade&amp;#34;) 	} } 在这段代码中，我们有一个变量grade，并给它一个整数值70。然后我们使用if语句来评估变量grade是否大于或等于（&amp;gt;=）65。如果它确实满足这个条件，我们告诉程序打印出字符串 Passing grade。
 将程序保存为grade.go，并在终端窗口中用go run grade.go命令运行它。
@@ -343,9 +330,9 @@ package main  import &amp;#34;fmt&amp;#34;  func main() { 	grade := 60  	if grad
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/24-How_To_Write_Switch_Statements_in_Go/</guid>
-      <description>如何在Go中编写Switch语句 介绍 条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
+      <description>如何在Go中编写Switch语句 #  介绍 #  条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
 我们可以用switch语句编写的所有内容也可以用if语句编写。在本教程中，我们将看几个例子，看看switch语句能做什么，它所取代的if语句，以及它最合适的应用场合。
-Switch语句的结构 Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
+Switch语句的结构 #  Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
 package main  import &amp;#34;fmt&amp;#34;  func main() { 	flavors := []string{&amp;#34;chocolate&amp;#34;, &amp;#34;vanilla&amp;#34;, &amp;#34;strawberry&amp;#34;, &amp;#34;banana&amp;#34;}  	for _, flav := range flavors { 	if flav == &amp;#34;strawberry&amp;#34; { 	fmt.Println(flav, &amp;#34;is my favorite!&amp;#34;) 	continue 	}  	if flav == &amp;#34;vanilla&amp;#34; { 	fmt.Println(flav, &amp;#34;is great!&amp;#34;) 	continue 	}  	if flav == &amp;#34;chocolate&amp;#34; { 	fmt.</description>
     </item>
     
@@ -355,10 +342,10 @@ package main  import &amp;#34;fmt&amp;#34;  func main() { 	flavors := []string{&
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/25_How_To_Construct_For_Loops_in_Go/</guid>
-      <description>如何在 Go 中构造 for 循环 介绍 在计算机编程中，循环 是在满足某些条件之前循环重复执行一段代码的代码结构。在计算机编程中使用循环可以让您自动并重复地执行类似的任务。想象一下，如果您有一个需要处理的文件列表，或者您想计算一篇文章的行数。您就可以在代码中使用循环来解决这样的问题。
+      <description>如何在 Go 中构造 for 循环 #  介绍 #  在计算机编程中，循环 是在满足某些条件之前循环重复执行一段代码的代码结构。在计算机编程中使用循环可以让您自动并重复地执行类似的任务。想象一下，如果您有一个需要处理的文件列表，或者您想计算一篇文章的行数。您就可以在代码中使用循环来解决这样的问题。
 在 Go 中，for 循环是基于循环计数器或循环变量实现代码的重复执行。与其他具有多个循环结构（例如 while ， do 等 ）的编程语言不同，Go 只有 for 循环。这有助于使您的代码更清晰和更具可读性，因为您不必担心会有多种策略来实现相同的循环结构。在开发过程中，这种强可读性和低认知负担也将使您的代码比其他语言更不容易出错。
 在本教程中，您将了解 Go 中 for 循环是如何工作的，包括其使用的三个主要变体。我们将首先展示如何创建不同类型的 for 循环，然后介绍如何在 Go 中遍历顺序数据类型。最后，我们将解释如何使用嵌套循环。
-声明 ForClause 和 Condition 循环 为了适应各种用例，在 Go 中创建 for 循环有三种不同的方法，每种方法都有自己的功能。这些是使用 Condition、ForClause 或 RangeClause 创建 for 循环。在本节中，我们将解释如何声明和使用 ForClause 和 Condition 变体。
+声明 ForClause 和 Condition 循环 #  为了适应各种用例，在 Go 中创建 for 循环有三种不同的方法，每种方法都有自己的功能。这些是使用 Condition、ForClause 或 RangeClause 创建 for 循环。在本节中，我们将解释如何声明和使用 ForClause 和 Condition 变体。
 让我们先看看如何在 ForClause 中使用 for 循环。
 ForClause循环 被定义为有一个 初始语句，后跟一个 条件，然后是一个 后置语句。它们按以下语法排列：
 for [ Initial Statement ] ; [ Condition ] ; [ Post Statement ] {  [Action] } 为了解释前面组成元素的作用，让我们看一个使用 ForClause 语法在指定值范围内递增的 for 循环：</description>
@@ -370,9 +357,9 @@ for [ Initial Statement ] ; [ Condition ] ; [ Post Statement ] {  [Action] } 为
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/</guid>
-      <description>在循环中使用 Break 和 Continue 介绍 在 Go 中使用 for 循环可以让您以有效的方式自动化重复任务。
+      <description>在循环中使用 Break 和 Continue #  介绍 #  在 Go 中使用 for 循环可以让您以有效的方式自动化重复任务。
 学习如何控制循环的操作和流程将允许在您的程序中自定义逻辑。您可以使用 break 和 continue 语句控制循环
-Break 语句 在 Go 中， break 语句终止当前循环的执行。break几乎总是与条件if语句配对。
+Break 语句 #  在 Go 中， break 语句终止当前循环的执行。break几乎总是与条件if语句配对。
 让我们看一个在循环中使用break语句的示例：
 package main  import &amp;#34;fmt&amp;#34;  func main() { 	for i := 0; i &amp;lt; 10; i++ { 	if i == 5 { 	fmt.Println(&amp;#34;Breaking out of loop&amp;#34;) 	break // break here 	} 	fmt.Println(&amp;#34;The value of i is&amp;#34;, i) 	} 	fmt.</description>
     </item>
@@ -383,11 +370,11 @@ package main  import &amp;#34;fmt&amp;#34;  func main() { 	for i := 0; i &amp;lt
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/27_How_To_Define_and_Call_Functions_in_Go/</guid>
-      <description>如何在 Go 中定义并调用函数 介绍 _函数_是一段一旦定义，就可以重用的代码。函数的作用在于可以通过将在整个程序中多次使用的代码分解为更小、更可理解的任务，从而使您的代码更易于理解。
+      <description>如何在 Go 中定义并调用函数 #  介绍 #  _函数_是一段一旦定义，就可以重用的代码。函数的作用在于可以通过将在整个程序中多次使用的代码分解为更小、更可理解的任务，从而使您的代码更易于理解。
 Go 附带了强大的标准库，其中包含许多预定义的函数。您可能已经熟悉了fmt包：
  fmt.Println() 会将对象打印到标准输出（最可能在您的终端）。 fmt.Printf() 允许您将输出格式化打印。  函数名称包括括号，并且可能包括参数。
 在本教程中，我们将介绍如何定义您自己的函数以在您的项目中使用。
-定义一个函数 让我们从经典的“Hello, World!”程序开始理解函数。
+定义一个函数 #  让我们从经典的“Hello, World!”程序开始理解函数。
 我们将在一个文本编辑器中创建一个新的文本文件，然后调用程序 hello.go。然后，我们将在里面定义函数。
 Go中使用 func 关键字来定义函数。然后是您选择的名称和一组括号，其中包含函数将采用的任何参数（它们可以为空）。函数代码行用大括号 {} 括起来。
 在这种情况下，我们将定义一个名为 hello() 的函数：
@@ -395,7 +382,7 @@ func hello() {} 这就是用于创建函数的初始语句。
 基于此，我们将添加第二行来提供函数功能的说明。我们将打印 Hello, World! 到控制台：
 func hello() { 	fmt.Println(&amp;#34;Hello, World!&amp;#34;) } 现在我们的函数已经完全定义好了，但是如果我们此时运行程序，什么都不会发生，因为我们没有调用函数。
 因此，在我们的 main() 代码块中，来调用 hello() 函数：
-package main  import &amp;#34;fmt&amp;#34;  func main() { 	hello() }  func hello() { 	fmt.Println(&amp;#34;Hello, World!&amp;#34;) } 现在，让我们运行程序：</description>
+package main  import &amp;#34;fmt&amp;#34;  func main() { 	hello() }  func hello() { 	fmt.</description>
     </item>
     
     <item>
@@ -404,14 +391,14 @@ package main  import &amp;#34;fmt&amp;#34;  func main() { 	hello() }  func hello
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/28_How_To_Use_Variadic_Functions_in_Go/</guid>
-      <description>如何在 Go 中使用可变参数函数 介绍 可变参数函数 是可以接受零个、一个或多个值作为单个参数的函数。虽然可变参数函数并不常见，但它们能够使您的代码更清晰、更具可读性。
+      <description>如何在 Go 中使用可变参数函数 #  介绍 #  可变参数函数 是可以接受零个、一个或多个值作为单个参数的函数。虽然可变参数函数并不常见，但它们能够使您的代码更清晰、更具可读性。
 可变参数函数其实很常见。最常见的是fmt包中的 Println。
 func Println(a ...interface{}) (n int, err error) 参数前面带有一组省略号 ( ... )的函数被视为可变参数函数。省略号表示提供的参数可以是零个、一个或多个。对于fmt.Println包，它声明参数a是可变参数。
 让我们创建一个使用 fmt.Println 函数并传入零个、一个或多个值的程序：
 package main  import &amp;#34;fmt&amp;#34;  func main() { 	fmt.Println() 	fmt.Println(&amp;#34;one&amp;#34;) 	fmt.Println(&amp;#34;one&amp;#34;, &amp;#34;two&amp;#34;) 	fmt.Println(&amp;#34;one&amp;#34;, &amp;#34;two&amp;#34;, &amp;#34;three&amp;#34;) } 第一次调用 fmt.Println 时，我们不传递任何参数。第二次调用时，我们只传入一个参数，值为 one。 然后我们传递 one 和 two，最后是 one，two 和 three 三个值。
 让我们使用以下命令运行程序：
 $ go run print.go 我们将看到以下输出：
-Output one one two one two three 输出的第一行为空。这是因为我们在第一次调用 fmt.Println 时没有传递任何参数。第二次打印了 one 。然后打印 one 和 two，最后打印 one，two 和 three。</description>
+Output one one two one two three 输出的第一行为空。这是因为我们在第一次调用 fmt.</description>
     </item>
     
     <item>
@@ -420,10 +407,10 @@ Output one one two one two three 输出的第一行为空。这是因为我们�
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/29-Understanding_defer_in_Go/</guid>
-      <description>了解 Go 中的 defer 简介 Go 有许多其他编程语言中常见的控制流关键字，如 if、switch、for 等。有一个关键词在大多数其他编程语言中都没有，那就是 defer ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。
+      <description>了解 Go 中的 defer #  简介 #  Go 有许多其他编程语言中常见的控制流关键字，如 if、switch、for 等。有一个关键词在大多数其他编程语言中都没有，那就是 defer ，虽然它不太常见，但你很快就会发现它在你的程序中是多么有用。
 defer 语句的主要用途之一是清理资源，如打开的文件、网络连接和数据库句柄。当你的程序使用完这些资源后，关闭它们很重要，以避免耗尽程序的限制，并允许其他程序访问这些资源。defer 通过保持关闭文件/资源的调用与打开调用保持一致，使我们的代码更加简洁，不易出错。
 在这篇文章中，我们将学习如何正确使用 defer 语句来清理资源，以及使用 defer 时常犯的几个错误。
-什么是 defer 语句 defer 语句将 defer 关键字后面的函数调用添加到一个栈中。当该语句所在的函数返回时，将执行堆栈中所有的函数调用。由于这些调用位于堆栈上，因此将按照后进先出的顺序进行调用。
+什么是 defer 语句 #  defer 语句将 defer 关键字后面的函数调用添加到一个栈中。当该语句所在的函数返回时，将执行堆栈中所有的函数调用。由于这些调用位于堆栈上，因此将按照后进先出的顺序进行调用。
 让我们看看 defer 是如何工作的，打印出一些文本：
 package main  import &amp;#34;fmt&amp;#34;  func main() {  defer fmt.Println(&amp;#34;Bye&amp;#34;)  fmt.Println(&amp;#34;Hi&amp;#34;) } 在 main 函数中，我们有两条语句。第一条语句以 defer 关键字开始，后面是 print 语句，打印出 Bye。下一行打印出 Hi。
 如果我们运行该程序，我们将看到以下输出：
@@ -438,11 +425,11 @@ package main  import &amp;#34;fmt&amp;#34;  func main() {  // defer statement is
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/30_Understanding_init_in_Go/</guid>
-      <description>了解 Go 中的 init 简介 在 Go 中，预定义的 init() 函数设置了一段代码，在你的包的任何其他部分之前运行。这段代码将在包被导入后立即执行，当你需要你的应用程序在一个特定的状态下初始化时，例如你有一个特定的配置或一组资源，你的应用程序需要用它来启动。它也可以在导入副作用时使用，这是一种通过导入特定包来设置程序状态的技术。这经常被用于 register 一个包和另一个包，以确保程序考虑任务的正确代码。
+      <description>了解 Go 中的 init #  简介 #  在 Go 中，预定义的 init() 函数设置了一段代码，在你的包的任何其他部分之前运行。这段代码将在包被导入后立即执行，当你需要你的应用程序在一个特定的状态下初始化时，例如你有一个特定的配置或一组资源，你的应用程序需要用它来启动。它也可以在导入副作用时使用，这是一种通过导入特定包来设置程序状态的技术。这经常被用于 register 一个包和另一个包，以确保程序考虑任务的正确代码。
 尽管 init() 是一个有用的工具，但它有时会使代码难以阅读，因为难以找到的 init() 实例会大大影响代码的运行顺序。正因为如此，对于刚接触 Go 的开发者来说，了解这个函数的方方面面是非常重要的，这样他们在写代码时就能确保以可读的方式使用 init()。
 在本教程中，你将学习 init() 如何用于设置和初始化特定包的变量、一次性计算，以及注册一个包以便与另一个包一起使用。
-先决条件 对于本文中的一些例子，你将需要：
- 按照 [如何安装 Go 和设置本地编程环境]（https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go）设置的 Go 工作空间。本教程将使用以下文件结构：  . ├── bin │ └── src  └── github.com  └── gopherguides 定义 init() 只要你定义一个 init() 函数，Go 就会在该包的其他东西之前加载并运行它。为了证明这一点，本节将介绍如何定义一个 init() 函数，并展示对包的运行的影响。
+先决条件 #  对于本文中的一些例子，你将需要：
+ 按照 [如何安装 Go 和设置本地编程环境]（https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go）设置的 Go 工作空间。本教程将使用以下文件结构：  . ├── bin │ └── src  └── github.com  └── gopherguides 定义 init() #  只要你定义一个 init() 函数，Go 就会在该包的其他东西之前加载并运行它。为了证明这一点，本节将介绍如何定义一个 init() 函数，并展示对包的运行的影响。
 首先，让我们以下面这个没有 init() 函数的代码为例：
 package main  import &amp;#34;fmt&amp;#34;  var weekday string  func main() { 	fmt.</description>
     </item>
@@ -453,11 +440,11 @@ package main  import &amp;#34;fmt&amp;#34;  var weekday string  func main() { 	f
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/31_Customizing_Go_Binaries_with_Build_Tags/</guid>
-      <description>用构建标签定制 Go 二进制文件 简介 在 Go 中，构建标签 或 构建约束 是添加到一段代码中的标识符，它决定了该文件在 build 过程中何时应被包含在一个包中。这允许你从同一源代码中构建不同版本的 Go 应用程序，并以快速和有组织的方式在它们之间进行切换。许多开发者使用构建标签来改善构建跨平台兼容的应用程序的工作流程，例如需要修改代码以考虑不同操作系统之间的差异的程序。构建标签还可用于集成测试，允许你在集成代码和带有Mock 服务的代码之间快速切换，并用于应用程序内不同级别的功能集。
+      <description>用构建标签定制 Go 二进制文件 #  简介 #  在 Go 中，构建标签 或 构建约束 是添加到一段代码中的标识符，它决定了该文件在 build 过程中何时应被包含在一个包中。这允许你从同一源代码中构建不同版本的 Go 应用程序，并以快速和有组织的方式在它们之间进行切换。许多开发者使用构建标签来改善构建跨平台兼容的应用程序的工作流程，例如需要修改代码以考虑不同操作系统之间的差异的程序。构建标签还可用于集成测试，允许你在集成代码和带有Mock 服务的代码之间快速切换，并用于应用程序内不同级别的功能集。
 让我们以不同的客户功能集的问题为例。在编写一些应用程序时，你可能想控制在二进制文件中包括哪些功能，例如一个提供免费、专业和企业级别的应用程序。当客户在这些应用程序中增加他们的订阅级别时，更多的功能将被解锁并可用。为了解决这个问题，你可以维护独立的项目，并试图通过使用 import 语句来保持它们的同步性。虽然这种方法可行，但随着时间的推移，它将变得乏味和容易出错。另一种方法是使用构建标签。
 在本文中，您将使用 Go 中的构建标签来生成不同的可执行二进制文件，这些文件提供了一个示例应用程序的免费、专业和企业功能集。每一个都有不同的功能集，其中免费版本是默认的。
-先决条件 要遵循本文的例子，你将需要：
- 按照 如何安装 Go 和设置本地编程环境设置的 Go 工作区。  构建免费版本 让我们从构建应用程序的免费版本开始，因为当运行 go build 而没有任何构建标签时，它将是默认的。稍后，我们将使用构建标签来有选择地将其他部分添加到我们的程序中。
+先决条件 #  要遵循本文的例子，你将需要：
+ 按照 如何安装 Go 和设置本地编程环境设置的 Go 工作区。  构建免费版本 #  让我们从构建应用程序的免费版本开始，因为当运行 go build 而没有任何构建标签时，它将是默认的。稍后，我们将使用构建标签来有选择地将其他部分添加到我们的程序中。
 在 src 目录下，用你的应用程序的名字创建一个文件夹。本教程将使用app：
 mkdir app 移动到这个文件夹中：
 cd app 接下来，在你选择的文本编辑器中建立一个新的文本文件，名为 main.go：
@@ -471,14 +458,13 @@ package main  import &amp;#34;fmt&amp;#34;  var features = []string{  &amp;#34;F
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/32_Understanding_Pointers_in_Go/</guid>
-      <description>了解 Go 中的指针 简介 当你用 Go 编写软件时，你会编写函数和方法。你将数据作为 参数 传递给这些函数。有时，函数会需要一个数据的本地拷贝，你希望原始数据保持不变。例如，如果你是一家银行，你有一个函数可以根据用户选择的储蓄计划来显示他们的余额变化，你不想在客户选择计划之前改变他们的实际余额，而只想用它来做计算。这被称为 按值传递，因为你是在向函数发送变量的值，而不是变量本身。
+      <description>了解 Go 中的指针 #  简介 #  当你用 Go 编写软件时，你会编写函数和方法。你将数据作为 参数 传递给这些函数。有时，函数会需要一个数据的本地拷贝，你希望原始数据保持不变。例如，如果你是一家银行，你有一个函数可以根据用户选择的储蓄计划来显示他们的余额变化，你不想在客户选择计划之前改变他们的实际余额，而只想用它来做计算。这被称为 按值传递，因为你是在向函数发送变量的值，而不是变量本身。
 其他时候，你可能希望函数能够改变原始变量中的数据。例如，当银行客户向其账户存款时，你希望存款函数能够访问实际的余额，而不是一个副本。在这种情况下，你不需要向函数发送实际数据， 而只需要告诉函数数据在内存中的位置。一个叫做 指针 的数据类型持有数据的内存地址，但不是数据本身。内存地址告诉函数在哪里可以找到数据，而不是数据的值。你可以把指针传给函数而不是实际的数据，然后函数就可以在原地改变原始变量的值。这被称为 通过引用传递，因为变量的值并没有传递给函数，而是传递了它指向的位置。
 在这篇文章中，你将创建并使用指针来分享对一个变量的内存空间的访问。
-定义和使用指针 当你使用一个指向变量的指针时，有几个不同的语法元素你需要了解。第一个是与号（&amp;amp;）的使用。如果你在一个变量名称前面加一个与号，你就说明你想获得 地址，或者说是该变量的一个指针。第二个语法元素是使用星号（*）或 引用 操作符。当你声明一个指针变量时，你在变量名后面加上指针指向的变量类型，前面加一个*，像这样：
+定义和使用指针 #  当你使用一个指向变量的指针时，有几个不同的语法元素你需要了解。第一个是与号（&amp;amp;）的使用。如果你在一个变量名称前面加一个与号，你就说明你想获得 地址，或者说是该变量的一个指针。第二个语法元素是使用星号（*）或 引用 操作符。当你声明一个指针变量时，你在变量名后面加上指针指向的变量类型，前面加一个*，像这样：
 var myPointer *int32 = &amp;amp;someint 这将创建 myPointer 作为一个指向 int32 变量的指针，并以 someint 的地址初始化该指针。指针实际上并不包含一个 int32，而只是一个地址。
 让我们来看看一个指向 string 的指针。下面的代码既声明了一个字符串的值，又声明了一个指向字符串的指针：
-package main  import &amp;#34;fmt&amp;#34;  func main() { 	var creature string = &amp;#34;shark&amp;#34; 	var pointer *string = &amp;amp;creature  	fmt.Println(&amp;#34;creature =&amp;#34;, creature) 	fmt.Println(&amp;#34;pointer =&amp;#34;, pointer) } 用以下命令运行该程序：
-go run main.</description>
+package main  import &amp;#34;fmt&amp;#34;  func main() { 	var creature string = &amp;#34;shark&amp;#34; 	var pointer *string = &amp;amp;creature  	fmt.Println(&amp;#34;creature =&amp;#34;, creature) 	fmt.</description>
     </item>
     
     <item>
@@ -487,8 +473,8 @@ go run main.</description>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/33_Defining_Structs_in_Go/</guid>
-      <description>在 Go 中定义结构体 简介 围绕具体的细节建立抽象，是编程语言能给开发者的最大工具。结构体使我们可以谈论 Address 而不是通过描述 Street, City, 或 PostalCode 字符串来进行推断。它们作为文档的一个自然纽带，致力于告诉未来的开发者（包括我们自己）哪些数据对我们的 Go 程序是重要的，以及未来的代码应该如何正确使用这些数据。结构体可以用几种不同的方式来定义和使用。在本教程中，我们将会逐一看下这些技术。
-定义结构体 结构体的工作方式类似于你可能正在使用的纸质表格，例如用来报税的表单。纸质表格可能有文本信息的字段，比如你的名字和姓氏。除了文本字段外，表单可能还有复选框来表示布尔值，如“已婚”或“单身”，或表示出生日期的日期字段。同样，结构体将不同数据收集在一起，并通过不同的字段名组织它们。当你用一个新的结构体初始化一个变量时，就好像你影印了一张表格并准备填写。
+      <description>在 Go 中定义结构体 #  简介 #  围绕具体的细节建立抽象，是编程语言能给开发者的最大工具。结构体使我们可以谈论 Address 而不是通过描述 Street, City, 或 PostalCode 字符串来进行推断。它们作为文档的一个自然纽带，致力于告诉未来的开发者（包括我们自己）哪些数据对我们的 Go 程序是重要的，以及未来的代码应该如何正确使用这些数据。结构体可以用几种不同的方式来定义和使用。在本教程中，我们将会逐一看下这些技术。
+定义结构体 #  结构体的工作方式类似于你可能正在使用的纸质表格，例如用来报税的表单。纸质表格可能有文本信息的字段，比如你的名字和姓氏。除了文本字段外，表单可能还有复选框来表示布尔值，如“已婚”或“单身”，或表示出生日期的日期字段。同样，结构体将不同数据收集在一起，并通过不同的字段名组织它们。当你用一个新的结构体初始化一个变量时，就好像你影印了一张表格并准备填写。
 要创建一个新的结构体，你必须首先给 Go 定义一个蓝图来描述结构体所包含的字段。这个结构定义通常以关键字 type 开始，紧跟着结构体的名称。随后，使用 struct 关键字，后面跟着一对大括号 {}，在这里声明结构体将包含的字段。一旦你定义了结构体，就可以声明使用该结构体定义的变量。本例定义了一个结构并使用它。
 package main  import &amp;#34;fmt&amp;#34;  type Creature struct { 	Name string }  func main() { 	c := Creature{ 	Name: &amp;#34;Sammy the Shark&amp;#34;, 	} 	fmt.Println(c.Name) } 当你运行这段代码时，会看到这样的输出：
 output Sammy the Shark 在这个例子中，我们首先定义了一个 Creature 结构体，包含一个字符串类型的 Name 字段。在 main 方法中，我们通过在 Creature 类型名称后添加一对大括号来创建一个 Creature 实例，然后为该实例的字段设定值。c 实例的 Name 字段将被设置为 “Sammy the Shark”。在 fmt.</description>
@@ -500,8 +486,8 @@ output Sammy the Shark 在这个例子中，我们首先定义了一个 Creature
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/34_Defining_Methods_in_Go/</guid>
-      <description>在 Go 中定义方法 简介 函数允许你将逻辑组织成可重复的程序，每次运行时可以使用不同的参数。在定义函数的过程中，你常常会发现，可能会有多个函数每次对同一块数据进行操作。Go 可以识别这种模式，并允许您定义特殊的函数，称为方法，其目的是对某些特定类型（称为接收器）的实例进行操作。将方法添加到类型中，不仅可以传达数据是什么，还可以传达如何使用这些数据。
-定义一个方法 定义一个方法的语法与定义一个函数的语法很相似。唯一的区别是在 func 关键字后面增加了一个额外的参数，用于指定方法的接收器。接收器是你希望定义的方法的类型声明。下面的例子为一个结构体类型定义了一个方法。
+      <description>在 Go 中定义方法 #  简介 #  函数允许你将逻辑组织成可重复的程序，每次运行时可以使用不同的参数。在定义函数的过程中，你常常会发现，可能会有多个函数每次对同一块数据进行操作。Go 可以识别这种模式，并允许您定义特殊的函数，称为方法，其目的是对某些特定类型（称为接收器）的实例进行操作。将方法添加到类型中，不仅可以传达数据是什么，还可以传达如何使用这些数据。
+定义一个方法 #  定义一个方法的语法与定义一个函数的语法很相似。唯一的区别是在 func 关键字后面增加了一个额外的参数，用于指定方法的接收器。接收器是你希望定义的方法的类型声明。下面的例子为一个结构体类型定义了一个方法。
 package main  import &amp;#34;fmt&amp;#34;  type Creature struct { 	Name string 	Greeting string }  func (c Creature) Greet() { 	fmt.Printf(&amp;#34;%s says %s&amp;#34;, c.Name, c.Greeting) }  func main() { 	sammy := Creature{ 	Name: &amp;#34;Sammy&amp;#34;, 	Greeting: &amp;#34;Hello!&amp;#34;, 	} 	Creature.Greet(sammy) } 如果你运行这段代码，输出将是：
 Output Sammy says Hello! 我们创建了一个名为 Creature 的结构，包含字符串类型的 Name 和 Greeting 字段。这个 Creature 结构体有一个定义的方法，即 Greet。在接收器声明中，我们将 Creature 的实例分配给变量 c，以便我们在 fmt.</description>
     </item>
@@ -512,15 +498,14 @@ Output Sammy says Hello! 我们创建了一个名为 Creature 的结构，包含
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/35_How_To_Build_and_Install_Go_Programs/</guid>
-      <description>如何构建和安装 Go 程序 简介 到目前为止，在我们的 How To Code in Go 系列中，你已经使用了go run 命令来自动编译你的源代码并生成可执行文件。虽然这个命令对于在命令行上测试你的代码很有用，但是分发或部署你的应用程序则需要将你的代码构建成一个可共享的二进制可执行文件，或者一个包含机器字节码的单一文件来运行你的应用程序。要做到这一点，你可以使用 Go 工具链来构建和安装你的程序。
+      <description>如何构建和安装 Go 程序 #  简介 #  到目前为止，在我们的 How To Code in Go 系列中，你已经使用了go run 命令来自动编译你的源代码并生成可执行文件。虽然这个命令对于在命令行上测试你的代码很有用，但是分发或部署你的应用程序则需要将你的代码构建成一个可共享的二进制可执行文件，或者一个包含机器字节码的单一文件来运行你的应用程序。要做到这一点，你可以使用 Go 工具链来构建和安装你的程序。
 在 Go 中，将源代码转译成二进制可执行文件的过程被称为构建。一旦这个可执行文件被构建，它将不仅包含你的应用程序，还包含在目标平台上执行二进制文件所需的所有支持代码。这意味着 Go 二进制文件不需要 Go 工具链等系统依赖就可以在新系统上运行。将这些可执行文件放在自己系统的可执行文件路径中，就可以在系统的任何地方运行程序，这与把程序安装到你的操作系统上是一样的。
 在本教程中，你将使用 Go 工具链来运行、构建和安装一个示例 Hello, World! 程序，让你有效地使用、分发和部署未来的应用程序。
-前置条件 要遵循本文的例子，你将需要：
- 按照如何安装 Go 与设置本地编程环境设置的 Go 工作区。  第 1 步 - 设置和运行 Go 二进制文件 首先，创建一个应用程序，作为演示 Go 工具链的例子。要做到这一点，你将使用如何用 Go 写第一个程序教程中的经典程序 &amp;ldquo;Hello, World!&amp;quot;。
+前置条件 #  要遵循本文的例子，你将需要：
+ 按照如何安装 Go 与设置本地编程环境设置的 Go 工作区。  第 1 步 - 设置和运行 Go 二进制文件 #  首先，创建一个应用程序，作为演示 Go 工具链的例子。要做到这一点，你将使用如何用 Go 写第一个程序教程中的经典程序 &amp;ldquo;Hello, World!&amp;quot;。
 在你的 src 目录下创建一个名为 greeter 的目录：
 mkdir greeter 接下来，进入新创建的目录，在你选择的文本编辑器中创建 main.go 文件：
-cd greeter nano main.go 打开文件，添加以下内容：
-# src/greeter/main.go  package main  import &amp;#34;fmt&amp;#34;  func main() {  fmt.</description>
+cd greeter nano main.</description>
     </item>
     
     <item>
@@ -529,12 +514,12 @@ cd greeter nano main.go 打开文件，添加以下内容：
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/36_How_To_Use_Struct_Tags_in_Go/</guid>
-      <description>如何在 Go 中使用结构体标签 简介 结构，或称结构体，被用来将多个信息聚合在一个单元中。这些信息集合被用来描述更高层次的概念，例如由 Street、City、State 和 PostalCode 组成的 Address。当你从数据库或 API 等系统中读取这些信息时，你可以使用结构体标签来控制这些信息如何被分配到结构体的字段中。结构体标签是附加在结构体字段上的小块元数据，为与该结构体一起工作的其他 Go 代码提供指示。
-结构体标签是怎么样的 Go 结构体标签是出现在 Go 结构声明中类型后的注释，每个标签都由与一些相应的值相关的短字符串组成。
+      <description>如何在 Go 中使用结构体标签 #  简介 #  结构，或称结构体，被用来将多个信息聚合在一个单元中。这些信息集合被用来描述更高层次的概念，例如由 Street、City、State 和 PostalCode 组成的 Address。当你从数据库或 API 等系统中读取这些信息时，你可以使用结构体标签来控制这些信息如何被分配到结构体的字段中。结构体标签是附加在结构体字段上的小块元数据，为与该结构体一起工作的其他 Go 代码提供指示。
+结构体标签是怎么样的 #  Go 结构体标签是出现在 Go 结构声明中类型后的注释，每个标签都由与一些相应的值相关的短字符串组成。
 一个结构体的标签看起来像这样，标签的偏移量为 ` 字符：
 type User struct { 	Name string `example:&amp;#34;name&amp;#34;` } 其他 Go 代码就能够检查这些结构并提取分配给它所要求的特定键的值。如果没有其他代码对其进行检查，结构体标签对你的代码运行没有任何影响。
 试试这个例子，看看结构体标签是怎么样的，如果没有来自另一个包的代码，它们将没有任何作用。
-package main  import &amp;#34;fmt&amp;#34;  type User struct { 	Name string `example:&amp;#34;name&amp;#34;` }  func (u *User) String() string { 	return fmt.Sprintf(&amp;#34;Hi! My name is %s&amp;#34;, u.Name) }  func main() { 	u := &amp;amp;User{ 	Name: &amp;#34;Sammy&amp;#34;, 	}  	fmt.</description>
+package main  import &amp;#34;fmt&amp;#34;  type User struct { 	Name string `example:&amp;#34;name&amp;#34;` }  func (u *User) String() string { 	return fmt.Sprintf(&amp;#34;Hi! My name is %s&amp;#34;, u.</description>
     </item>
     
     <item>
@@ -543,14 +528,14 @@ package main  import &amp;#34;fmt&amp;#34;  type User struct { 	Name string `exa
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/37-How_To_Use_Interfaces_in_Go/</guid>
-      <description>如何在 Go 使用 interface 简述 编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，继承是一种常见的方法，在 Java、C++、C#等语言中都有使用。
+      <description>如何在 Go 使用 interface #  简述 #  编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，继承是一种常见的方法，在 Java、C++、C#等语言中都有使用。
 开发者们也可以通过组合实现这个设计目标。组合是一个将多个对象和数据类型组合到一个复杂的结构体中的方式。这个是 Go 用来促进代码复用，模块化和灵活性的方法。在 Go 中 intrerface 提供了一个方法用于构建复杂的组合，学习使用它们，将会使你创建通用的可重复使用的代码。
 在这篇文章中，我们将会学习如何构建那些有相同行为的自定义类型，用于复用代码。 我们还将学习如何为我们自己的自定义类型实现 interface，以满足在另一个包中定义的接口。
-定义一个行为 组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是fmt.Stringer 接口：
+定义一个行为 #  组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是fmt.Stringer 接口：
 type Stringer interface {  String() string } 第一行代码定义一个type叫Stringer。然后表明它是一个interface。就好像定义一个结构体，Go 使用大括号({})来囊括 interface 的定义。跟结构体的定义相比，我们只定义interface的行为，就是“这个类型可以做什么”
 对这个Stringer接口的例子来说，唯一的行为就是String()这个方法。这个方法没有参数。
 接着，让我们看一些代码，这些代码有fmt.Stringer的行为：
-package main  import &amp;#34;fmt&amp;#34;  type Article struct { 	Title string 	Author string }  func (a Article) String() string { 	return fmt.Sprintf(&amp;#34;The %q article was written by %s.</description>
+package main  import &amp;#34;fmt&amp;#34;  type Article struct { 	Title string 	Author string }  func (a Article) String() string { 	return fmt.</description>
     </item>
     
     <item>
@@ -559,11 +544,11 @@ package main  import &amp;#34;fmt&amp;#34;  type Article struct { 	Title string 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/</guid>
-      <description>在不同的操作系统和架构编译 Go 应用 在软件开发中，重要的是要考虑你想为之编译二进制的操作系统和底层处理器架构。因为在不同的操作系统/架构平台上运行一个二进制文件通常很慢或不可能，所以通常的做法是为许多不同的平台编译你最终的二进制文件，以最大化你的程序的受众。然而，这通常是很困难的，当你开发软件的平台和你想要部署的平台不是同一个的时候。例如，在过去，在 Windows 上开发一个程序并将其部署到 Linux 或 macOS 机器上，需要为每一个你想要的二进制文件的环境设置构建机器。你还需要保持你的工具同步，此外还有其他考虑因素，这些因素会增加成本，使协作测试和分布式更加困难。
+      <description>在不同的操作系统和架构编译 Go 应用 #  在软件开发中，重要的是要考虑你想为之编译二进制的操作系统和底层处理器架构。因为在不同的操作系统/架构平台上运行一个二进制文件通常很慢或不可能，所以通常的做法是为许多不同的平台编译你最终的二进制文件，以最大化你的程序的受众。然而，这通常是很困难的，当你开发软件的平台和你想要部署的平台不是同一个的时候。例如，在过去，在 Windows 上开发一个程序并将其部署到 Linux 或 macOS 机器上，需要为每一个你想要的二进制文件的环境设置构建机器。你还需要保持你的工具同步，此外还有其他考虑因素，这些因素会增加成本，使协作测试和分布式更加困难。
 Go 通过在go build工具中直接建立对多平台的支持，以及 Go 工具链的其他部分解决了这个问题。通过使用环境变量和构建标签，你可以控制你最终的二进制文件是为哪个操作系统和架构构建的，此外还可以把一个工作流程放在一起，在不改变你的代码库的情况下快速切换对平台依赖的代码。
 在本教程中，你将把一个将strings连接成文件路径的示例应用程序放在一起，创建并有选择地包括与平台有关的片段，并在你自己的系统上为多个操作系统和系统架构构建二进制文件，向你展示如何使用 Go 编程语言的这一强大能力。
-前期准备 为了跟随本文的例子，你将需要：
- 按照如何安装 Go 和设置本地程序环境设置的 Go 的 workspace  GOOS和GOARCH可能支持的平台 在展示如何控制构建过程为不同的平台构建二进制文件之前，让我们先了解一下 Go 能够为哪些类型的平台进行构建，以及 Go 如何使用环境变量GOOS和GOARCH关联这些平台。
+前期准备 #  为了跟随本文的例子，你将需要：
+ 按照如何安装 Go 和设置本地程序环境设置的 Go 的 workspace  GOOS和GOARCH可能支持的平台 #  在展示如何控制构建过程为不同的平台构建二进制文件之前，让我们先了解一下 Go 能够为哪些类型的平台进行构建，以及 Go 如何使用环境变量GOOS和GOARCH关联这些平台。
 Go 工具有一个命令，可以打印出 Go 可以构建的平台的列表。这个列表会随着每一个新的 Go 版本而改变，所以这里讨论的组合在另一个版本的 Go 中可能不一样。当下写这个教程的时候，Go release 版本是 1.13.
 为了找到适用的平台，执行如下命令：
 go tool dist list 你将会收到如下相似的输出：
@@ -576,17 +561,16 @@ Output aix/ppc64 freebsd/amd64 linux/mipsle openbsd/386 android/386 freebsd/arm 
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/</guid>
-      <description>用 ldflags 设置 Go 应用程序的版本信息 简介 当把应用程序部署到生产环境中时，用版本信息和其他元数据构建二进制文件将改善你的监控、日志和调试过程，增加识别信息来帮助跟踪随着时间推移后，应用程序的构建信息。这种版本信息通常包括高度动态的数据，如构建时间、构建二进制文件的机器或用户、版本控制系统（VCS）的提交 ID，等其他更多信息。因为这些值是不断变化的，将这些数据直接编码到源代码中，并在每次新的构建之前进行修改，是很繁琐的，而且容易出错：源文件可能会移动，变量/常量在整个开发过程中可能会随着切换文件而改动，打断构建过程。
+      <description>用 ldflags 设置 Go 应用程序的版本信息 #  简介 #  当把应用程序部署到生产环境中时，用版本信息和其他元数据构建二进制文件将改善你的监控、日志和调试过程，增加识别信息来帮助跟踪随着时间推移后，应用程序的构建信息。这种版本信息通常包括高度动态的数据，如构建时间、构建二进制文件的机器或用户、版本控制系统（VCS）的提交 ID，等其他更多信息。因为这些值是不断变化的，将这些数据直接编码到源代码中，并在每次新的构建之前进行修改，是很繁琐的，而且容易出错：源文件可能会移动，变量/常量在整个开发过程中可能会随着切换文件而改动，打断构建过程。
 在 Go 中解决这个问题的一个方法是在使用go build命令时加上-ldflags，在构建时将动态信息插入二进制文件中，而不需要修改源代码。在这个标志中，ld代表linker，这个程序将编译后的源代码的不同部分连接成最终的二进制文件。ldflags就代表linker 的标志。之所以这样说，是因为它向底层的 Go 工具链 linkercmd/link传递了一个标志，允许你在构建时从命令行中改变导入的包的值。
 在本教程中，你将使用-ldflags在构建时改变变量的值，并将你自己的动态信息加入二进制，用一个将版本信息打印到屏幕上的应用程序作为示例应用程序。
-前期准备 为了接下去在文章中的例子，你需要：
- 按照如何安装 Go 和设置本地编程环境设置 Go 的 workspace。  构建你的范例应用程序 在使用ldflags加入动态数据之前，你首先需要一个应用程序来插入信息。在这一步，你将制作这个应用程序，在这个阶段，它将只打印静态的版本信息。现在让我们来创建这个应用程序。
+前期准备 #  为了接下去在文章中的例子，你需要：
+ 按照如何安装 Go 和设置本地编程环境设置 Go 的 workspace。  构建你的范例应用程序 #  在使用ldflags加入动态数据之前，你首先需要一个应用程序来插入信息。在这一步，你将制作这个应用程序，在这个阶段，它将只打印静态的版本信息。现在让我们来创建这个应用程序。
 在你的src目录下，建立一个以你的应用程序命名的目录。本教程将使用叫app的应用程序：
 mkdir app 跳转你的目录到这个文件夹：
 cd app 然后，使用你喜欢的文本编辑器，在main.go创建你的程序的 entry point：
 nano main.go 现在，通过加入如下内容到你的程序内，来打印出版本信息：
-package main  import ( 	&amp;#34;fmt&amp;#34; )  var Version = &amp;#34;development&amp;#34;  func main() { 	fmt.Println(&amp;#34;Version:\t&amp;#34;, Version) } 在main()函数内，你宣告了Version变量，然后打印string类型的Version：紧跟着 tab 的字符，\t，然后是声明的变量。
-现在，参数Version被定义为development，将作为 app 的默认版本。稍后，你将会修改这个值来符合官方版本编号，根据semantic versioning format来定义。</description>
+package main  import ( 	&amp;#34;fmt&amp;#34; )  var Version = &amp;#34;development&amp;#34;  func main() { 	fmt.Println(&amp;#34;Version:\t&amp;#34;, Version) } 在main()函数内，你宣告了Version变量，然后打印string类型的Version：紧跟着 tab 的字符，\t，然后是声明的变量。</description>
     </item>
     
     <item>
@@ -595,9 +579,9 @@ package main  import ( 	&amp;#34;fmt&amp;#34; )  var Version = &amp;#34;developm
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://example.com/docs/40-How_To_Use_the_Flag_Package_in_Go/</guid>
-      <description>在 Go 里面如何使用 Flag 包 简介 命令行工具很少在没有额外配置的情况下开箱即用。好的默认值固然很重要，但有用的工具需要接受用户的配置。在大多数平台上，命令行工具通过接收标志来指定命令的执行。标志是以键值分隔的字符串，加在命令的名称后面。Go 让你通过使用标准库中的 flag 包来制作接受标志的命令行工具。
+      <description>在 Go 里面如何使用 Flag 包 #  简介 #  命令行工具很少在没有额外配置的情况下开箱即用。好的默认值固然很重要，但有用的工具需要接受用户的配置。在大多数平台上，命令行工具通过接收标志来指定命令的执行。标志是以键值分隔的字符串，加在命令的名称后面。Go 让你通过使用标准库中的 flag 包来制作接受标志的命令行工具。
 在本教程中，你将探索使用 flag 包来建立不同种类的命令行工具的各种方法。你将使用一个标志来控制程序输出，引入位置参数，在这里你将混合标志和其他数据，然后实现子命令。
-用 Flag 来改变程序的行为 使用 flag 包包括三个步骤：首先，定义变量以捕获标志值，然后定义你的 Go 应用程序将使用的标志，最后解析执行时提供给应用程序的标志。flag包内的大多数函数都与定义标志和将它们与你定义的变量绑定有关。解析阶段由Parse()函数处理。
+用 Flag 来改变程序的行为 #  使用 flag 包包括三个步骤：首先，定义变量以捕获标志值，然后定义你的 Go 应用程序将使用的标志，最后解析执行时提供给应用程序的标志。flag包内的大多数函数都与定义标志和将它们与你定义的变量绑定有关。解析阶段由Parse()函数处理。
 为了阐述这一点，你将创建一个程序，定义一个 Boolean标志，改变这个标志将会把信息打印到标准输出上。如果提供一个-color标志，程序会用蓝色来打印消息。如果没有这个标志，则打印消息不会有颜色。
 创建一个叫boolean.go的文件：
 nano boolean.go 添加如下代码到文件里面来创建程序：
