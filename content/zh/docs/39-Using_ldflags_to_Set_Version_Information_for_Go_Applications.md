@@ -1,9 +1,3 @@
-- 原文地址：[Using ldflags to Set Version Information for Go Applications | DigitalOcean](https://www.digitalocean.com/community/tutorials/using-ldflags-to-set-version-information-for-go-applications)
-- 原文作者：digitalocean
-- 本文永久链接：https://github.com/gocn/How-To-Code-in-Go/blob/main/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications.md
-- 译者：[zxmfke](https://github.com/zxmfke)
-- 校对：[pseudoyu](https://github.com/pseudoyu)
-
 # 用 ldflags 设置 Go 应用程序的版本信息
 
 ## 简介

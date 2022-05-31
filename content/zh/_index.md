@@ -1,3 +1,8 @@
+---
+title: How-To-Code-in-Go
+type: docs
+--- 
+
 # How-To-Code-in-Go
 
 [《How-To-Code-in-Go》](https://github.com/gocn/How-To-Code-in-Go)采用 [Hugo](https://gohugo.io) 发布。欢迎大家通过 [issue](https://github.com/gocn/How-To-Code-in-Go/issues) 提供建议，也可以通过 [pull requests](https://github.com/gocn/How-To-Code-in-Go/pulls) 来共同参与贡献。

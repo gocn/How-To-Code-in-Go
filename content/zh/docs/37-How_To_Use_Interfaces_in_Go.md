@@ -1,9 +1,3 @@
-- 原文地址：[How To Use Interfaces in Go | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-interfaces-in-go)
-- 原文作者：digitalocean
-- 本文永久链接：
-- 译者：[zxmfke](https://github.com/zxmfke)
-- 校对：[pseudoyu](https://github.com/pseudoyu)
-
 # 如何在 Go 使用 interface
 
 ## 简述
