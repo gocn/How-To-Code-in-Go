@@ -1,43 +1,43 @@
-# How To Use Variables and Constants in Go
+# 如何在 Go 中使用变量和常量
 
-*Variables* are an important programming concept to master. They are symbols that stand in for a value you’re using in a program.
+*变量*  是一个需要掌握的重要编程概念。它们是代表你在程序中使用的值的符号。
 
-This tutorial will cover some variable basics and best practices for using them within the Go programs you create.
+本教程将介绍一些变量基础知识和在你创建的 Go 程序中使用它们的最佳实践。
 
-## Understanding Variables
+## 理解变量
 
-In technical terms, a variable is assigning a storage location to a value that is tied to a symbolic name or identifier. We use the variable name to reference that stored value within a computer program.
+用术语来说，变量将存储位置分配给与符号名称或标识符相关的值。我们使用变量名来引用计算机程序中存储的值。
 
-We can think of a variable as a label that has a name on it, which you tie onto a value.
+我们可以将变量视为带有名称的标签，您可以将其绑定到值上。
 
 ![Variables in Go](https://assets.digitalocean.com/articles/go_variables/variable1.png)
 
-Let’s say we have an integer, `1032049348`, and we want to store it in a variable rather than continuously retype the long number over and over again. To achieve this, we can use a name that’s easy to remember, like the variable `i`. To store a value in a variable, we use the following syntax:
+假设我们有一个整数 `1032049348` ，我们希望将它存储在一个变量中，而不是一遍又一遍地不断地重新输入长数字。为了达到这个目的，我们可以使用一个容易记住的名字，比如变量 `i`。要将值存储在变量中，我们使用以下语法：
 
 ```go
 i := 1032049348
 ```
 
-We can think of this variable like a label that is tied to the value.
+我们可以把这个变量想象成一个与值绑定的标签。
 
 ![Go Variable Example](https://assets.digitalocean.com/articles/go_variables/variable2.png)
 
-The label has the variable name `i` written on it, and is tied to the integer value `1032049348`.
+标签上写有变量名 `i` ，并与整数值 `1032049348` 相关联。
 
-The phrase `i := 1032049348` is a declaration and assignment statement that consists of a few parts:
+`i := 1032049348` 是一个声明和赋值语句，由几个部分组成：
 
-- the variable name (`i`)
-- the short variable declaration assignment (`:=`)
-- the value that is being tied to the variable name (`1032049348`)
-- the data type inferred by Go (`int`)
+- 变量名 (`i`)
+- 变量声明赋值 (`:=`)
+- 与变量名绑定的值（`1032049348`）
+- Go 推断的数据类型 (`int`)
 
-We’ll see later how to explicitly set the type in the next section.
+稍后我们将在下一节中看到如何显式设置类型。
 
-Together, these parts make up the statement that sets the variable `i` equal to the value of the integer `1032049348`.
+这些部分共同构成了将变量 `i` 设置为整数 `1032049348` 的值的语句。
 
-As soon as we set a variable equal to a value, we *initialize* or create that variable. Once we have done that, we are ready to use the variable instead of the value.
+一旦我们设置一个等于某个值的变量，变量就会被*初始化*或创建出来。一旦我们这样做了，我们就可以使用变量而不是值了。
 
-Once we’ve set `i` equal to the value of `1032049348`, we can use `i` in the place of the integer, so let’s print it out:
+一旦我们将 `i` 设置为 `1032049348` ，我们可以使用 `i` 代替整数，所以让我们打印出来：
 
 ```go
 package main
@@ -55,7 +55,7 @@ Output
 1032049348
 ```
 
-We can also quickly and easily do math by using variables. With `i := 1032049348`, we can subtract the integer value `813` with the following syntax:
+我们还可以通过使用变量快速轻松地进行数学运算。使用`i := 1032049348`，我们可以使用以下语法减去整数值`813`：
 
 ```go
 fmt.Println(i - 813)
@@ -66,17 +66,17 @@ Output
 1032048535
 ```
 
-In this example, Go does the math for us, subtracting 813 from the variable `i` to return the sum `1032048535`.
+在这个例子中，Go 为我们做数学运算，从变量 i 中减去 813 以返回总和 1032048535。
 
-Speaking of math, variables can be set equal to the result of a math equation. You can also add two numbers together and store the value of the sum into the variable `x`:
+说到数学，变量可以设置为某个数学方程的结果。你还可以将两个数字相加并将总和的值存储到变量 `x` 中：
 
 ```go
 x := 76 + 145
 ```
 
-You may have noticed that this example looks similar to algebra. In the same way that we use letters and other symbols to represent numbers and quantities within formulas and equations, variables are symbolic names that represent the value of a data type. For correct Go syntax, you’ll need to make sure that your variable is on the left side of any equations.
+你可能已经注意到这个例子看起来和代数很像。就像我们在公式和方程式中使用字母和其他符号来表示数字和数量一样，变量是表示数据类型值的符号名称。对于正确的 Go 语法，你需要确保你的变量位于任何等式的左侧。
 
-Let’s go ahead and print `x`:
+让我们继续打印 `x`：
 
 ```go
 package main
@@ -94,9 +94,9 @@ Output
 221
 ```
 
-Go returned the value `221` because the variable `x` was set equal to the sum of `76` and `145`.
+Go 返回值 `221` 因为变量 `x` 被设置为等于 `76` 和 `145` 的总和。
 
-Variables can represent any data type, not just integers:
+变量可以表示任何数据类型，而不仅仅是整数：
 
 ```go
 s := "Hello, World!"
@@ -107,7 +107,7 @@ slice := []string{"one", "two", "three"}
 m := map[string]string{"letter": "g", "number": "seven", "symbol": "&"}
 ```
 
-If you print any of these variables, Go will return what that variable is equivalent to. Let’s work with the assignment statement for the string `slice` data type:
+如果你打印这些变量中的任何一个，Go 将返回该变量等价的内容。让我们使用 `slice` 数据类型的赋值语句：
 
 ```go
 package main
@@ -125,59 +125,59 @@ Output
 [one two three]
 ```
 
-We assigned the slice value of `[]string{"one", "two", "three"}` to the variable `slice`, and then used the `fmt.Println` function to print out that value by calling `slice`.
+我们将 `[]string{"one", "two", "three"}` 的切片值分配给变量 `slice`，然后使用 `fmt.Println` 函数通过调用 `slice` 打印出该值。
 
-Variables work by carving out a little area of memory within your computer that accepts specified values that are then associated with that space.
+变量通过在你的计算机中开辟一小块内存区域来工作，该区域接受指定的值，然后与该空间相关联。
 
-## Declaring Variables
+## 声明变量
 
-In Go, there are several ways to declare a variable, and in some cases, more than one way to declare the exact same variable and value.
+在 Go 中，有多种声明变量的方法，在某些情况下，声明完全相同的变量和值的方法不止一种。
 
-We can declare a variable called `i` of data type `int` without initialization. This means we will declare a space to put a value, but not give it an initial value:
+我们可以在不初始化的情况下声明一个数据类型为 `int` 的名为 `i` 的变量。这意味着我们将声明一个空间来放置一个值，但不给它一个初始值：
 
 ```go
 var i int
 ```
 
-This creates a variable declared as `i` of data type `int`.
+这将创建一个数据类型为 `int` 的 `i` 的变量。
 
-We can initialize the value by using the equal (`=`) operator, like in the following example:
+我们可以使用等于 (`=`) 运算符来初始化值，如下例所示：
 
 ```go
 var i int = 1
 ```
 
-In Go, both of these forms of declaration are called *long variable declarations*.
+在 Go 中，这两种声明形式都称为*长变量声明*。
 
-We can also use *short variable declaration*:
+我们也可以使用*短变量声明*：
 
 ```go
 i := 1
 ```
 
-In this case, we have a variable called `i`, and a data type of `int`. When we don’t specify a data type, Go will infer the data type.
+在这种情况下，我们有一个名为 `i` 的变量和一个 `int` 数据类型。当我们不指定数据类型时，Go 会推断数据类型。
 
-With the three ways to declare variables, the Go community has adopted the following idioms:
+对于声明变量的三种方式，Go 社区采用了以下习惯用法：
 
-- Only use long form, `var i int`, when you’re not initializing the variable.
-- Use short form, `i := 1`, when declaring and initializing.
-- If you did not desire Go to infer your data type, but you still want to use short variable declaration, you can wrap your value in your desired type, with the following syntax:
+- 仅在不初始化变量时使用长格式，`var i int`。
+- 在声明和初始化时使用缩写形式，`i := 1`。
+- 如果你不希望 Go 推断数据类型，但仍想使用短变量声明，则可以使用以下语法将值包装为所需类型：
 
 ```go
 i := int64(1)
 ```
 
-It’s not considered idiomatic in Go to use the long variable declaration form when we’re initializing the value:
+当我们初始化值时，长变量声明形式在 Go 中是不常用的：
 
 ```go
 var i int = 1
 ```
 
-It’s good practice to follow how the Go community typically declares variables so that others can seamlessly read your programs.
+遵循 Go 社区关于如何声明变量的方式，以便其他人可以无缝阅读你的程序。
 
-## Zero Values
+## 零值
 
-All built-in types have a zero value. Any allocated variable is usable even if it never has a value assigned. We can see the zero values for the following types:
+所有内置类型的默认值都为零值。任何分配的变量都是可用的，即使它从未分配过值。我们可以看到以下类型的零值：
 
 ```go
 package main
@@ -205,41 +205,41 @@ var c float64 = 0
 var d bool = false
 ```
 
-We used the `%T` verb in the `fmt.Printf` statement. This tells the function to print the `data type` for the variable.
+我们在 `fmt.Printf` 语句中使用了 `%T` 。这告诉函数打印变量的 `数据类型` 。
 
-In Go, because all values have a `zero` value, we can’t have `undefined` values like some other languages. For instance, a [`boolean`](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#booleans) in some languages could be `undefined`, `true`, or `false`, which allows for `three` states to the variable. In Go, we can’t have more than `two` states for a boolean value.
+在 Go 中，因为所有值都有一个 `零` 值，所以我们不能像其他一些语言那样有“未定义”值。例如，某些语言中的 [`boolean`](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#booleans) 可能是 `undefined`、`true` 或 `false`，它允许变量有`三种`状态。在 Go 中，一个布尔值的状态不能超过 `两个` 。
 
-## Naming Variables: Rules and Style
+## 命名变量：规则和样式
 
-The naming of variables is quite flexible, but there are some rules to keep in mind:
+变量的命名相当灵活，但有一些规则需要牢记：
 
-- Variable names must only be one word (as in no spaces).
-- Variable names must be made up of only letters, numbers, and underscores (`_`).
-- Variable names cannot begin with a number.
+- 变量名只能是一个单词（如没有空格）。
+- 变量名称必须仅由字母、数字和下划线 (`_`) 组成。
+- 变量名不能以数字开头。
 
-Following these rules, let’s look at both valid and invalid variable names:
+按照这些规则，让我们看看有效和无效的变量名：
 
-| Valid      | Invalid     | Why Invalid                  |
-| ---------- | ----------- | ---------------------------- |
-| `userName` | `user-name` | Hyphens are not permitted    |
-| `name4`    | `4name`     | Cannot begin with a number   |
-| `user`     | `$user`     | Cannot use symbols           |
-| `userName` | `user name` | Cannot be more than one word |
+| Valid有效  | Invalid无效 | 无效原因         |
+| ---------- | ----------- | ---------------- |
+| `userName` | `user-name` | 不允许使用连字符 |
+| `name4`    | `4name`     | 不能以数字开头   |
+| `user`     | `$user`     | 不能使用符号     |
+| `userName` | `user name` | 不能超过一个单词 |
 
-Furthermore, keep in mind when naming variables that they are case sensitive. These names `userName`, `USERNAME`, `UserName`, and `uSERnAME` are all completely different variables. It’s best practice to avoid using similar variable names within a program to ensure that both you and your collaborators—current and future—can keep your variables straight.
+此外，在命名变量时请记住它们区分大小写。这些名称 `userName`、`USERNAME`、`UserName` 和 `uSERNAME` 都是完全不同的变量。最好避免在程序中使用相似的变量名称，以确保你和你的合作者（当前和未来）都能保持变量的正确性。
 
-While variables are case sensitive, the case of the first letter of a variable has special meaning in Go. If a variable starts with an uppercase letter, then that variable is accessible outside the package it was declared in (or `exported`). If a variable starts with a lowercase letter, then it is only available within the package it is declared in.
+虽然变量区分大小写，但变量首字母的大小写在 Go 中具有特殊含义。如果变量以大写字母开头，则该变量可以在声明它的包（或 `exporter` ）之外访问。如果变量以小写字母开头，则它仅在声明它的包中可用。
 
 ```go
 var Email string
 var password string
 ```
 
-`Email` starts with an uppercase letter and can be accessed by other packages. `password` starts with a lowercase letter, and is only accessible inside the package it is declared in.
+`Email` 以大写字母开头，可以被其他包访问。`password` 以小写字母开头，只能在声明它的包内访问。
 
-It is common in Go to use very terse (or short) variable names. Given the choice between using `userName` and `user` for a variable, it would be idiomatic to choose `user`.
+在 Go 中使用非常简洁（或短）的变量名是很常见的。变量 `userName` 和 `user` 之间的选择，通常会选择 `user` 。
 
-Scope also plays a role in the terseness of the variable name. The rule is that the smaller the scope the variable exists in, the smaller the variable name:
+作用域在变量名称的简洁性方面也发挥了作用。规则是变量存在的作用域越小，变量名越小：
 
 ```go
 names := []string{"Mary", "John", "Bob", "Anna"}
@@ -248,25 +248,25 @@ for i, n := range names {
 }
 ```
 
-We use the variable `names` in a larger scope, so it would be common to give it a more meaningful name to help remember what it means in the program. However, we use the `i` and `n` variables immediately in the next line of code, and then do not use them again… Because of this, it won’t confuse someone reading the code about where the variables are used, or what they mean.
+我们在更大的作用域内使用变量 `names`，因此通常给它一个更有意义的名称以帮助记住它在程序中的含义。但是，我们在下一行代码中立即使用 `i` 和 `n` 变量，然后不再使用它们……因此，它不会让阅读代码的人混淆变量的使用位置，或者它们代表的意思。
 
-Next, let’s cover some notes about variable style. The style is to use `MixedCaps` or `mixedCaps` rather than underscores for multi-word names.
+接下来，让我们介绍一些关于变量样式的注意事项。使用 `MixedCaps` 或 `mixedCaps` 而不是下划线作为多词名称。
 
-| Conventional Style | Unconventional Style | Why Unconventional                       |
-| ------------------ | -------------------- | ---------------------------------------- |
-| `userName`         | `user_name`          | Underscores are not conventional         |
-| `i`                | `index`              | prefer `i` over `index` as it is shorter |
-| `serveHTTP`        | `serveHttp`          | acronyms should be capitalized           |
+| 常用风格    | 非常用风格  | 为什么不常用                           |
+| ----------- | ----------- | -------------------------------------- |
+| `userName`  | `user_name` | 下划线不常用                           |
+| `i`         | `index`     | 更倾向用 `i` 而不是 `index` 因为它更短 |
+| `serveHTTP` | `serveHttp` | 专业词缩写应该用大写                   |
 
-The most important thing about style is to be consistent, and that the team you work on agrees to the style.
+风格最重要的是要保持一致，并且你所在的团队同意这种风格。
 
-## Reassigning Variables
+## 重新分配变量
 
-As the word “variable” implies, we can change Go variables readily. This means that we can connect a different value with a previously assigned variable through reassignment. Being able to reassign is useful because throughout the course of a program we may need to accept user-generated values into already initialized variables. We may also need to change the assignment to something previously defined.
+正如 `变量` 一词所暗示的那样，我们可以轻松地更改 Go 变量。这意味着我们可以通过重新分配将不同的值与先前分配的变量联系起来。能够重新分配变量是很有用的，因为在整个程序过程中，我们可能需要将用户生成的值赋给已经初始化的变量中。我们可能还需要将分配更改为先前定义的内容。
 
-Knowing that we can readily reassign a variable can be useful when working on a large program that someone else wrote, and it isn’t clear what variables are already defined.
+在处理其他人编写的大型程序时，知道变量可以被重新分配对我们是很有帮助的，特别是当我们不清楚哪些变量已经被定义了。
 
-Let’s assign the value of `76` to a variable called `i` of type `int`, then assign it a new value of `42`:
+让我们将 `76` 的值分配给一个名为 `i` 的类型为 `int` 的变量，然后为它分配一个新的值 `42`：
 
 ```go
 package main
@@ -288,25 +288,25 @@ Output
 42
 ```
 
-This example shows that we can first assign the variable `i` with the value of an integer, and then reassign the variable `i` assigning it this time with the value of `42`.
+这个例子表明我们可以先给变量 `i` 赋值一个整数，然后再重新赋值变量 `i` ，这次赋值为 `42`。
 
-**Note:** When you declare **and** initialize a variable, you can use `:=`, however, when you want to simply change the value of an already declared variable, you only need to use the equal operator (`=`).
+**注意：**当你声明**和**初始化一个变量时，你可以使用`:=`，但是，当你想简单地改变一个已经声明的变量的值时，你只需要使用等号运算符 (`=`)。
 
-Because Go is a `typed` language, we can’t assign one type to another. For instance, we can’t assign the value `"Sammy"` to a variable of type `int`:
+因为 Go 是一种静态强类型语言，我们不能将一种类型分配给另一种类型。例如，我们不能将值 `"Sammy"` 分配给 `int` 类型的变量：
 
 ```go
 i := 72
 i = "Sammy"
 ```
 
-Trying to assign different types to each other will result in a compile-time error:
+尝试相互分配不同的类型将导致编译时错误：
 
 ```go
 Output
 cannot use "Sammy" (type string) as type int in assignment
 ```
 
-Go will not allow us to use a variable name more than once:
+Go 不允许我们多次声明相同变量名：
 
 ```go
 var s string
@@ -318,7 +318,7 @@ Output
 s redeclared in this block
 ```
 
-If we try to use short variable declaration more than once for the same variable name we’ll also receive a compilation error. This can happen by mistake, so understanding what the error message means is helpful:
+如果我们尝试对同一个变量名多次使用短变量声明，我们也会收到编译错误。这可能会发生错误，因此了解错误消息的含义是有帮助的：
 
 ```go
 i := 5
@@ -330,11 +330,11 @@ Output
 no new variables on left side of :=
 ```
 
-Similarly to variable declaration, giving consideration to the naming of your variables will improve the readability of your program for you, and others, when you revisit it in the future.
+与变量声明类似，考虑变量的命名将提高你和其他人在将来维护程序的可读性。
 
-## Multiple Assignment
+## 多重赋值
 
-Go also allows us to assign several values to several variables within the same line. Each of these values can be of a different data type:
+Go 还允许我们为同一行中的多个变量分配多个值。这些值中的每一个都可以是不同的数据类型：
 
 ```go
 j, k, l := "shark", 2.05, 15
@@ -350,17 +350,17 @@ shark
 15
 ```
 
-In this example, the variable `j` was assigned to the string `"shark"`, the variable `k` was assigned to the float `2.05`, and the variable `l` was assigned to the integer `15`.
+在这个例子中，变量 `j` 被赋值给字符串 `shark`，变量 `k` 被赋值给浮点数 `2.05`，变量 `l` 被赋值给整数 `15` 。
 
-This approach to assigning multiple variables to multiple values in one line can keep the number of lines in your code down. However, it’s important to not compromise readability for fewer lines of code.
+这种在一行中将多个变量分配给多个值的方法可以减少代码中的行数。但是，重要的是不要因为更少的代码行而损害可读性。
 
-## Global and Local Variables
+## 全局和局部变量
 
-When using variables within a program, it is important to keep *variable scope* in mind. A variable’s scope refers to the particular places it is accessible from within the code of a given program. This is to say that not all variables are accessible from all parts of a given program—some variables will be global and some will be local.
+在程序中使用变量时，牢记*变量作用域*很重要。变量的作用域是指可以从给定程序的代码中访问的特定位置。也就是说，并非所有变量都可以从给定程序的所有部分访问——有些变量是全局变量，有些变量是局部变量。
 
-Global variables exist outside of functions. Local variables exist within functions.
+全局变量存在于函数之外。局部变量存在于函数中。
 
-Let’s take a look at global and local variables in action:
+让我们看一下全局和局部变量的作用：
 
 ```go
 package main
@@ -387,9 +387,9 @@ local
 global
 ```
 
-Here we use `var g = "global"` to create a global variable outside of the function. Then we define the function `printLocal()`. Inside of the function a local variable called `l` is assigned and then printed out. The program ends by calling `printLocal()` and then printing the global variable `g`.
+这里我们使用 `var g = "global"` 在函数外部创建一个全局变量。然后我们定义函数`printLocal()`。在函数内部，分配了一个名为 `l` 的局部变量，然后打印出来。程序先调用 `printLocal()` ，然后打印全局变量 `g`。
 
-Because `g` is a global variable, we can refer to it in `printLocal()`. Let’s modify the previous program to do that:
+因为 `g` 是一个全局变量，我们可以在 `printLocal()` 中引用它。让我们修改之前的程序来做到这一点：
 
 ```go
 package main
@@ -418,9 +418,9 @@ global
 global
 ```
 
-We start by declaring a global variable `g`, `var g = "global"`. In the `main` function, we call the function `printLocal`, which declares a local variable `l` and prints it out, `fmt.Println(l)`. Then, `printLocal` prints out the global variable `g`, `fmt.Println(g)`. Even though `g` wasn’t defined within `printLocal`, it could still be accessed because it was declared in a global scope. Finally, the `main` function prints out `g` as well.
+我们首先声明一个全局变量 `g` ，`var g = "global"`。在 `main` 函数中，我们调用函数`printLocal`，它声明了一个局部变量`l`并打印出来，`fmt.Println(l)`。然后，`printLocal` 打印出全局变量`g`，`fmt.Println(g)`。即使 `g` 没有在 `printLocal` 中定义，它仍然可以被访问，因为它是在全局作用域内声明的。最后，`main` 函数也打印出 `g`。
 
-Now let’s try to call the local variable outside of the function:
+现在让我们尝试在函数外部调用局部变量：
 
 ```go
 package main
@@ -444,9 +444,9 @@ Output
 undefined: l
 ```
 
-We can’t use a local variable outside of the function it is assigned in. If you try to do so, you’ll receive a `undefined` error when you compile.
+我们不能在分配它的函数之外使用局部变量。如果你尝试这样做，编译时会收到 `未定义` 错误。
 
-Let’s look at another example where we use the same variable name for a global variable and a local variable:
+让我们看另一个例子，我们对全局变量和局部变量使用相同的变量名：
 
 ```go
 package main
@@ -476,17 +476,17 @@ Output
 5
 ```
 
-In this program, we declared the `num1` variable twice. First, we declared `num1` at the global scope, `var num1 = 5`, and again within the local scope of the `printNumbers` function, `num1 := 10`. When we print `num1` from the `main` program, we see the value of `5` printed out. This is because `main` only sees the global variable declaration. However, when we print out `num1` from the `printNumbers` function, it sees the local declaration, and will print out the value of `10`. Even though `printNumbers` creates a new variable called `num1` and assigned it a value of `10`, it does not affect the global instance of `num1` with the value of `5`.
+在这个程序中，我们两次声明了 `num1` 变量。首先，我们在全局作用域内声明了`num1`，`var num1 = 5`，然后再次在 `printNumbers` 函数的本地作用域内声明 `num1 := 10`。当我们从 `main` 程序中打印 `num1` 时，我们看到 `5` 的值被打印出来了。这是因为 `main` 只看到全局变量声明。但是，当我们从 `printNumbers` 函数中打印出 `num1` 时，它会看到本地声明，并会打印出 `10` 的值。尽管 `printNumbers` 创建了一个名为 `num1` 的新变量并为其分配了 `10` 的值，但它不会影响值为 `5` 的 `num1` 的全局实例。
 
-When working with variables, you also need to consider what parts of your program will need access to each variables; adopting a global or local variable accordingly. Across Go programs, you’ll find that local variables are typically more common.
+使用变量时，你还需要考虑程序的哪些部分需要访问每个变量； 相应地采用全局或局部变量。在 Go 程序中，你会发现局部变量通常更常见。
 
-## Constants
+## 常量
 
-Constants are like variables, except they can’t be modified once they have been declared. Constants are useful for defining a value that will be used more than once in your program, but shouldn’t be able to change.
+常量就像变量一样，除了它们一旦被声明就不能被修改。常量对于定义在程序中多次使用但不能更改的值很有用。
 
-For instance, if we wanted to declare the tax rate for a shopping cart system, we could use a constant and then calculate tax in different areas of our program. At some point in the future, if the tax rate changes, we only have to change that value in one spot in our program. If we used a variable, it is possible that we might accidentally change the value somewhere in our program, which would result in an improper calculation.
+例如，如果我们想声明购物车系统的税率，我们可以使用一个常数，然后在程序的不同区域计算税收。在未来的某个时候，如果税率发生变化，我们只需在程序中的一个位置更改该值。如果我们使用了一个变量，我们可能会在程序中不小心更改某个值，从而导致计算不正确。
 
-To declare a constant, we can use the following syntax:
+要声明一个常量，我们可以使用以下语法：
 
 ```go
 const shark = "Sammy"
@@ -498,14 +498,14 @@ Output
 Sammy
 ```
 
-If we try to modify a constant after it was declared, we’ll get a compile-time error:
+如果我们在声明后尝试修改常量，我们会得到一个编译时错误：
 
 ```go
 Output
 cannot assign to shark
 ```
 
-Constants can be `untyped`. This can be useful when working with numbers such as integer-type data. If the constant is `untyped`, it is explicitly converted, where `typed` constants are not. Let’s see how we can use constants:
+常量可以是 `untyped` 。这在处理整数类型数据等数字时很有用。如果常量是 `untyped`，它会被显式转换，而 `typed` 常量则不是。让我们看看如何使用常量：
 
 ```go
 package main
@@ -533,31 +533,31 @@ Output
 21960
 ```
 
-If you declare a constant with a type, it will be that exact type. Here when we declare the constant `leapYear`, we define it as data type `int32`. Therefore it is a `typed` constant, which means it can only operate with `int32` data types. The `year` constant we declare with no type, so it is considered `untyped`. Because of this, you can use it with any integer data type.
+如果你用一个类型声明一个常量，它将是那个确切的类型。在这里，当我们声明常量 `leapYear` 时，我们将其定义为数据类型 `int32`。因此它是一个 `typed` 常量，这意味着它只能对 `int32` 数据类型进行操作。我们声明的 `year` 常量没有类型，所以它被认为是 `untyped`。因此，你可以将它与任何整数数据类型一起使用。
 
-When `hours` was defined, it *inferred* that it was of type `int` because we did not explicitly give it a type, `hours := 24`. When we declared `minutes`, we explicitly declared it as an `int32`, `minutes := int32(60)`.
+当`hours`被定义时，它*推断*它是`int`类型，因为我们没有明确地给它一个类型，`hours := 24`。当我们声明 `minutes` 时，我们明确地将其声明为 `int32`，`minutes := int32(60)`。
 
-Now let’s walk through each calculation and why it works:
+现在让我们来看看每个计算以及它的工作原理：
 
 ```go
 hours * year
 ```
 
-In this case, `hours` is an `int`, and `years` is *untyped*. When the program compiles, it explicitly converts `years` to an `int`, which allows the multiplication operation to succeed.
+在这种情况下，`hours` 是 `int`，而 `years` 是 *untyped*。当程序编译时，它显式地将 `years` 转换为 `int`，这使得乘法运算成功。
 
 ```go
 minutes * year
 ```
 
-In this case, `minutes` is an `int32`, and `year` is *untyped*. When the program compiles, it explicitly converts `years` to an `int32`, which allows the multiplication operation to succeed.
+在这种情况下，`minutes` 是 `int32`，而 `year` 是 *untyped*。当程序编译时，它显式地将 `years` 转换为 `int32`，从而允许乘法运算成功。
 
 ```go
 minutes * leapYear
 ```
 
-In this case, `minutes` is an `int32`, and `leapYear` is a *typed* constant of `int32`. There is nothing for the compiler to do this time as both variables are already of the same type.
+在这种情况下，`minutes` 是 `int32`，而 `leapYear` 是 `int32` 的 *typed* 常量。这次编译器无需执行任何操作，因为这两个变量已经属于同一类型。
 
-If we try to multiply two types that are `typed` and not compatible, the program will not compile:
+如果我们尝试将两种类型不兼容的类型相乘，程序将无法编译：
 
 ```go
 fmt.Println(hours * leapYear)
@@ -568,8 +568,8 @@ Output
 invalid operation: hours * leapYear (mismatched types int and int32)
 ```
 
-In this case, `hours` was inferred as an `int`, and `leapYear` was explicitly declared as an `int32`. Because Go is a typed language, an `int` and an `int32` are not compatible for mathematical operations. To multiply them, you would need [to convert one to a `int32` or an `int`](https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go#converting-number-types).
+在这种情况下，`hours` 被推断为 `int`，而 `leapYear` 被显式声明为 `int32`。因为 Go 是一种强类型语言，所以 `int` 和 `int32` 不兼容数学运算。要将它们相乘，你需要 [将其中一个转换为 `int32` 或 `int`](https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go #converting-number-types)。
 
-## Conclusion
+## 结论
 
-In this tutorial we reviewed some of the common use cases of variables within Go. Variables are an important building block of programming, serving as symbols that stand in for the value of a data type we use in a program.
+在本教程中，我们回顾了 Go 中变量的一些常见用例。变量是编程的重要组成部分，充当我们在程序中使用的数据类型的值的代表。

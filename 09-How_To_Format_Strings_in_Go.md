@@ -1,49 +1,49 @@
-# How To Format Strings in Go
+# 如何在Go中格式化字符串
 
-As strings are often made up of written text, there are many instances when we may want to have greater control over how strings look to make them more readable for humans through punctuation, line breaks, and indentation.
+由于字符串通常由书面文本组成，因此在许多情况下，我们可能希望更好的定制字符串的展示形式，以便通过定时、换行和缩进使其更易于阅读。
 
-In this tutorial, we’ll go over some of the ways we can work with Go strings to make sure that all output text is formatted correctly.
+在本教程中，我们将介绍一些使用 Go 字符串的方法，以确保所有输出文本的格式正确。
 
-## String Literals
+## 字符串文字
 
-Let’s first differentiate between a *string literal* and a *string value*. A string literal is what we see in the source code of a computer program, including the quotation marks. A string value is what we see when we call the `fmt.Println` function and run the program.
+我们先来看看  *字符串文字*  和  *字符串值* 的区别。 字符串文字是我们在计算机程序的源代码中看到的，包括引号。 当我们调用 `fmt.Println` 函数并运行程序时，我们会看到一个字符串值。
 
-In the “Hello, World!” program, the string literal is `"Hello, World!"` while the string value is `Hello, World!` without the quotation marks. The string value is what we see as the output in a terminal window when we run a Go program.
+在“Hello, World!” 程序中，字符串文字是 `"Hello, World!"` 而字符串值是 `Hello, World!` 不带引号。 字符串值是我们在运行 Go 程序时在终端窗口中看到的输出。
 
-But some string values may need to include quotation marks, like when we are quoting a source. Because string literals and string values are not equivalent, it is often necessary to add additional formatting to string literals to ensure that string values are displayed the way in which we intend.
+但是某些字符串值可能需要包含引号，例如当我们引用某个资源时。由于字符串文字和字符串值不等价，因此通常需要为字符串文字添加额外的转换格式，以确保字符串值按照我们想要的方式显示。
 
-## Quotes
+## 引号
 
-Because we can use back quotes (`` `) or double quotes (`"`) within Go, it is simple to embed quotes within a string by using double quotes within a string enclosed by back quotes:
+因为我们可以在 Go 中使用反引号 (`` `) 或双引号 (`"`)，所以我们很容易在反引号里使用双引号来括住字符串：
 
 ```go
 `Sammy says, "Hello!"`
 ```
 
-Or, to use a back quote, you can enclose the string in double quotes:
+或者，要使用反引号，你可以将字符串括在双引号中：
 
 ```go
 "Sammy likes the `fmt` package for formatting strings.."
 ```
 
-In the way we combine back quotes and double quotes, we can control the display of quotation marks and back quotes within our strings.
+在组合反引号和双引号的方式中，我们可以控制字符串中引号和反引号的显示方式。
 
-It’s important to remember that using back quotes in Go creates a `raw` string literal, and using double quotes creates an `interpreted` string literal. To learn more about the difference, read the [An Introduction to Working with Strings in Go](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go) tutorial.
+这里有个重点，在 Go 中使用反引号会创建一个 `raw` 字符串文字，而使用双引号会创建一个 `interpreted` 字符串文字。要了解有关差异的更多信息，请阅读 [An Introduction to Working with Strings in Go](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go) 教程。
 
-## Escape Characters
+## 转义字符
 
-Another way to format strings is to use an *escape character*. Escape characters are used to tell the code that the following character has a special meaning. Escape characters all start with the backslash key (`\`) combined with another character within a string to format the given string a certain way.
+格式化字符串的另一种方法是使用*转义字符*。转义字符用于告诉代码后面的字符具有特殊含义。转义字符都以反斜杠 (`\`) 开头，并结合字符串中的另一个字符以某种方式格式化给定的字符串。
 
-Here is a list of several of the common escape characters:
+以下是几个常见转义字符的列表：
 
-| Escape Character | How it formats               |
-| ---------------- | ---------------------------- |
-| \\               | Backslash                    |
-| \"               | Double Quote                 |
-| \n               | Line Break                   |
-| \t               | Tab (horizontal indentation) |
+| 转义字符 | 如何格式化         |
+| -------- | ------------------ |
+| \\       | 反斜杠             |
+| \"       | 双引号             |
+| \n       | 换行               |
+| \t       | 制表符（水平缩进） |
 
-Let’s use an escape character to add the quotation marks to the example on quotation marks above, but this time we’ll use double quotes to denote the string:
+让我们使用转义字符将引号添加到上面的引号示例中，但这次将使用双引号来表示字符串：
 
 ```go
 fmt.Println("Sammy says, \"Hello!\"")
@@ -54,9 +54,9 @@ Output
 Sammy says, "Hello!"
 ```
 
-By using the escape character `\"` we are able to use double quotes to enclose a string that includes text quoted between double quotes.
+我们可以通过转义字符 `\"` 来转义掉双引号，从而实现双引号中还能嵌套使用双引号。
 
-We can use the `\n` escape character to break lines without hitting the enter or return key:
+我们可以使用 `\n` 转义字符来换行，而无需使用 enter 或 return ：
 
 ```go
 fmt.Println("This string\nspans multiple\nlines.")
@@ -69,7 +69,7 @@ spans multiple
 lines.
 ```
 
-We can combine escape characters, too. Let’s print a multi-line string and include tab spacing for an itemized list, for example:
+我们也可以组合转义字符。 打印一个多行字符串且每行包含一个制表符，例如：
 
 ```go
 fmt.Println("1.\tShark\n2.\tShrimp\n10.\tSquid")
@@ -82,15 +82,15 @@ Output
 10.     Squid
 ```
 
-The horizontal indentation provided with the `\t` escape character ensures alignment within the second column in the preceding example, making the output extremely readable for humans.
+`\t` 转义字符提供的水平缩进确保在前面示例中的第二列内对齐，使输出结果非常易读。
 
-Escape characters are used to add additional formatting to strings that may be difficult or impossible to achieve. Without escape characters, you would not be able to construct the string `Sammy says, "I like to use the `fmt` package"`.
+转义字符用于向可能难以或不可能实现的字符串添加额外的格式。 如果没有转义字符，你将无法构造字符串 `Sammy says, "I like to use the `fmt` package"`。
 
-## Multiple Lines
+## 多行
 
-Printing strings on multiple lines can make text more readable to humans. With multiple lines, strings can be grouped into clean and orderly text, formatted as a letter, or used to maintain the linebreaks of a poem or song lyrics.
+在多行上打印字符串可以使文本更具可读性。 通过多行，可以将字符串分组为干净有序的文本，格式化为字母，或用于维护诗歌或歌曲歌词的换行符。
 
-To create strings that span multiple lines, back quotes are used to enclose the string. Keep in mind that while this will preserve the line returns, it is also creating a `raw` string literal.
+要创建跨越多行的字符串，使用反引号将字符串括起来。 请记住，虽然这么写会保留换行，但它也创建了一个 `raw` 字符串文字。
 
 ```go
 `
@@ -101,7 +101,7 @@ quotes on either side.
 `
 ```
 
-You will notice if you print this that there is a leading and trailing return:
+如果你打印这个，你会注意到有一个前空行和后空行：
 
 ```go
 Output
@@ -113,7 +113,7 @@ quotes on either side.
 
 ```
 
-To avoid this, you need to put the first line immediately following the back quote and end the last with the back quote.
+为避免这种情况，您需要将第一行紧跟在反引号之后，并以反引号结束最后一行。
 
 ```go
 `This string is on 
@@ -122,7 +122,7 @@ within three single
 quotes on either side.`
 ```
 
-If you need to create an interpreted string literal, this can be done with double quotes and the `+` operator, but you will need to insert your own line breaks.
+如果你需要创建解释字符串文字，可以使用双引号和 `+` 运算符来完成，但你需要插入自己的换行符。
 
 ```go
 "This string is on\n" +
@@ -131,15 +131,15 @@ If you need to create an interpreted string literal, this can be done with doubl
 "quotes on either side."
 ```
 
-While back quotes can make it easier to print and read lengthy text, if you need an interpreted string literal, you will need to use double quotes.
+虽然反引号可以更轻松地打印和阅读冗长的文本，但如果你需要解释字符串文字，则需要使用双引号。
 
-## Raw String Literals
+## 原始字符串文字
 
-What if we don’t want special formatting within our strings? For example, we may need to compare or evaluate strings of computer code that use the backslash on purpose, so we won’t want Go to use it as an escape character.
+如果我们不想在字符串中使用特殊格式怎么办？ 例如，我们可能需要比较或评估故意使用反斜杠的计算机代码字符串，因此我们不希望 Go 将其用作转义字符。
 
-A **raw** string literal tells Go to ignore all formatting within a string, including escape characters.
+**raw** 字符串文字告诉 Go 忽略字符串中的所有格式，包括转义字符。
 
-We create a raw string by using back quotes around the string:
+我们通过在字符串周围使用反引号来创建一个原始字符串：
 
 ```go
 fmt.Println(`Sammy says,\"The balloon\'s color is red.\"`)
@@ -150,8 +150,8 @@ Output
 Sammy says,\"The balloon\'s color is red.\"
 ```
 
-By constructing a raw string by using back quotes around a given string, we can retain backslashes and other characters that are used as escape characters.
+通过在给定字符串周围使用反引号来构造原始字符串，我们可以保留反斜杠和其他用作转义字符的字符。
 
-## Conclusion
+## 结论
 
-This tutorial went over several ways to format text in Go through working with strings. By using techniques such as escape characters or raw strings, we are able to ensure that the strings of our program are rendered correctly on-screen so that the end user is able to easily read all of the output text.
+本教程通过使用字符串介绍了几种在 Go 中格式化文本的方法。 通过使用转义字符或原始字符串等技术，我们能够确保程序的字符串正确的呈现在屏幕上，以便用户最终能够轻松阅读所有输出文本。
