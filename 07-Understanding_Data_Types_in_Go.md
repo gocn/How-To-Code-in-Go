@@ -1,96 +1,132 @@
-### Introduction
+# 理解 Go 的数据类型
 
-Data types specify the kinds of values that particular variables will store when you are writing a program. The data type also determines what operations can be performed on the data.
+### 介绍
 
-In this article, we will go over the important data types native to Go. This is not an exhaustive investigation of data types, but will help you become familiar with what options you have available to you in Go. Understanding some basic data types will enable you to write clearer code that performs efficiently.
+数据类型是指在编写程序时特定变量存储的值的类型。数据类型还决定对数据可以执行哪些操作。
 
-## Background
+在本文中，我们将介绍 Go 本身的重要数据类型。本文并不是对数据类型的详尽调查，但将帮助你熟悉 Go 中可用的选项。理解一些基本数据类型将可以让你能够编写更清晰的代码，从而更有效地执行。
 
-One way to think about data types is to consider the different types of data that we use in the real world. An example of data in the real world are numbers: we may use whole numbers (0, 1, 2, …), integers (…, -1, 0, 1, …), and irrational numbers (π), for example.
+## 背景
 
-Usually, in math, we can combine numbers from different types, and get some kind of an answer. We may want to add 5 to π, for example:
+了解数据类型的一种方法是考虑我们在现实世界中使用的不同类型的数据。现实世界中数据的一个例子是数字: 例如，我们可以使用无符号整数（0，1，2，...）、有符号整数（... ，-1，0，1，...）和无理数（π）。
+
+通常，在数学中，我们可以把不同类型的数字组合起来，来得到某个答案。例如，我们可以把 5 加到 π 上:
 
 ```
 5 + π
 ```
 
-We can either keep the equation as the answer to account for the irrational number, or round π to a number with an abbreviated number of decimal places, and then add the numbers together:
+我们可以把这个方程式作为答案因为存在无理数，也可以把 π 近似舍入到十进制的缩写数字，再把这些数字相加:
 
 ```
 5 + π = 5 + 3.14 = 8.14 
 ```
 
-But, if we start to try to evaluate numbers with another data type, such as words, things start to make less sense. How would we solve for the following equation?
+但是，如果我们开始尝试用另一种数据类型，比如单词来计算数字，就变得不那么有意义了。我们如何解下面的公式呢？
 
 ```
 shark + 8
 ```
 
-For computers, each data type is quite different—like words and numbers. As a result we have to be careful about how we use varying data types to assign values and how we manipulate them through operations.
+对于计算机来说，每种数据类型区别很大，就像文字和数字一样。因此，对于不同的数据类型的赋值和修改操作，我们必须谨慎。
 
-## Integers
+## 整数
 
-Like in math, _integers_ in computer programming are whole numbers that can be positive, negative, or 0 (…, -1, 0, 1, …). In Go, an integer is known as an `int`. As with other programming languages, you should not use commas in numbers of four digits or more, so when you write 1,000 in your program, write it as `1000`.
+和数学一样，计算机编程中的 _整数_ 可以是正数、负数或者 0（... -1,0,1，...）。在 Go 中，整数被称为 `int`。与其他编程语言一样，不应该在四位数或更多的数字中使用逗号，所以在程序中写入 1,000 时，请写为 `1000`。
 
-We can print out an integer in a simple way like this:
+我们可以简单向下面这种方式打印一个整数：
 
-```
-Output-459
-```
-
-Or, we can declare a variable, which in this case is a symbol of the number we are using or manipulating, like so:
-
-```
-Output-459
+```go
+fmt.Println(-459)
 ```
 
-We can do math with integers in Go, too. In the following code block, we will use the `:=` assignment operator to declare and instantiate the variable `sum`:
-
 ```
-Output48
-```
-
-As the output shows, the mathematical operator `-` subtracted the integer `68` from `116`, resulting in `48`. You’ll learn more about variable declaration in the **Declaring Data Types for Variables** section.
-
-Integers can be used in many ways within Go programs. As you continue to learn about Go, you’ll have a lot of opportunities to work with integers and build upon your knowledge of this data type.
-
-## Floating-Point Numbers
-
-A _floating-point number_ or a _float_ is used to represent [_real numbers_](https://en.wikipedia.org/wiki/Real_number) that cannot be expressed as integers. Real numbers include all rational and irrational numbers, and because of this, floating-point numbers can contain a fractional part, such as 9.0 or -116.42. For the purposes of thinking of a float in a Go program, it is a number that contains a decimal point.
-
-Like we did with integers, we can print out a floating-point number in a simple way like this:
-
-```
-Output-459.67
+Output
+-459
 ```
 
-We can also declare a variable that stands in for a float, like so:
+或者，我们可以声明一个变量，在这个例子中是我们用来表示和操作数字的符号，如：
 
-```
-Output-459.67
-```
-
-Just like with integers, we can do math with floats in Go, too:
-
-```
-Output929.24
+```go
+var absoluteZero int = -459
+fmt.Println(absoluteZero)
 ```
 
-With integers and floating-point numbers, it is important to keep in mind that 3 ≠ 3.0, as 3 refers to an integer while 3.0 refers to a float.
+```
+Output
+-459
+```
 
-## Sizes of Numeric Types
+我们也可以在 Go 中对整数进行计算。在下面的代码块中，我们将使用 `:=` 分配符来声明和实例化变量 `sum`：
 
-In addition to the distinction between integers and floats, Go has two types of numeric data that are distinguished by the static or dynamic nature of their sizes. The first type is an _architecture-independent_ type, which means that the size of the data in bits does not change, regardless of the machine that the code is running on.
+```go
+sum := 116 - 68
+fmt.Println(sum)
+```
 
-Most system architectures today are either 32 bit or 64 bit. For instance, you may be developing for a modern Windows laptop, on which the operating system runs on a 64-bit architecture. However, if you are developing for a device like a fitness watch, you may be working with a 32-bit architecture. If you use an architecture-independent type like `int32`, regardless of the architecture you compile for, the type will have a constant size.
+```
+Output
+48
+```
 
-The second type is an _implementation-specific_ type. In this type, the bit size can vary based on the architecture the program is built on. For instance, if we use the `int` type, when Go compiles for a 32-bit architecture, the size of the data type will be 32 bits. If the program is compiled for a 64-bit architecture, the variable will be 64 bits in size.
+如输出所示，数学算子 `-` 从 `116` 中减去整数 `68`，得到 `48`。你将在**声明变量的数据类型**部分了解有关变量声明的更多信息。
 
-In addition to data types having different sizes, types like integers also come in two basic types: _signed_ and _unsigned_. An `int8` is a signed integer, and can have a value from -128 to 127. A `uint8` is an unsigned integer, and can only have a positive value of 0 to 255.
+在 Go 程序中，有多种方式可以使用整数。随着你继续学习 Go，你将有很多机会使用整数并在此数据类型的知识基础上进行构建。
 
-The ranges are based on the bit size. For binary data, 8 bits can represent a total of 256 different values. Because an `int` type needs to support both positive and negative values, an 8-bit integer (`int8`) will have a range of -128 to 127, for a total of 256 unique possible values.
+## 浮点数
 
-Go has the following architecture-independent integer types:
+_浮点数_ 或 _float_ 用于表示不能表示为整数的[实数](https://en.wikipedia.org/wiki/Real_number)。实数包括所有的有理数和无理数，因此，浮点数可以包含小数部分，比如 9.0 或 -116.42。Go 程序中的浮点数，可以认为是一个包含小数点的数字。
+
+就像我们处理整数一样，我们可以用这样一种简单的方式打印出一个浮点数:
+
+```go
+fmt.Println(-459.67)
+```
+
+```
+Output
+-459.67
+```
+
+我们也可以声明一个变量表示浮点数，如：
+
+```go
+absoluteZero := -459.67
+fmt.Println(absoluteZero)
+```
+
+```
+Output
+-459.67
+```
+
+和整数类似，我们也可以在 Go 中计算浮点数：
+
+```go
+var sum = 564.0 + 365.24
+fmt.Println(sum)
+```
+
+```
+Output
+929.24
+```
+
+对于整数和浮点数，记住 3 ≠ 3.0 很重要，因为 3 表示的是一个整数，而 3.0 表示的是一个浮点数。
+
+## 数字类型的大小
+
+除了整数和浮点数之间的区别之外，Go 还有两种类型的数值数据，这两种数值数据通过其大小的静态或动态特性进行区分。第一种类型是与_体系结构无关_的类型，这意味着无论代码运行在哪台机器上，以位为单位的数据的大小都不会改变。
+
+今天的大多数系统架构都是32位或64位的。例如，你可能正在一台现代的 Windows 笔记本电脑上开发，其操作系统运行在 Windows 64位架构上。然而，如果你正在为一个像健身手表这样的设备开发应用时，你可能正在使用一个32位的架构。如果你使用像 `int32` 这样独立于体系架构的类型，那么无论你为何种体系架构编译，该类型都将具有一个固定的大小。
+
+第二种是_实现专用_的类型。在这种类型中，位大小可以根据程序所在的体系架构的不同而变化。例如，如果我们使用 `int` 类型，当 Go 为 32 位架构编译时，数据类型的大小将为 32 位。如果程序是为 64 位架构编译的，那么变量的大小是 64 位。
+
+除了数据类型大小不同外，类似整数的类型还有两种基本类型: _有符号_和_无符号_。`int8` 是一个有符号整数，可以取 -128 到 127 之间的值。`uint8` 是一个无符号整数，只能取 0 到 255 之间的正数值。
+
+取值范围与位的大小有关。对于二进制数据，8 位可以表示总共 256 个不同的值。因为 `int` 类型需要同时支持正值和负值，所以 8 位整数（`int8`）的范围是 -128 到 127，总共有 256 个不同的值。
+
+Go 具有以下与架构无关的整数类型:
 
 ```
 uint8       unsigned  8-bit integers (0 to 255)
@@ -103,7 +139,7 @@ int32       signed 32-bit integers (-2147483648 to 2147483647)
 int64       signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
 ```
 
-Floats and complex numbers also come in varying sizes:
+浮点数和复数的大小也是变化的：
 
 ```
 float32     IEEE-754 32-bit floating-point numbers
@@ -112,18 +148,18 @@ complex64   complex numbers with float32 real and imaginary parts
 complex128  complex numbers with float64 real and imaginary parts
 ```
 
-There are also a couple of alias number types, which assign useful names to specific data types:
+还有一些数字类型的别名，通过分配有用的名称来表示特定的数据类型：
 
 ```
 byte        alias for uint8
 rune        alias for int32
 ```
 
-The purpose of the `byte` alias is to make it clear when your program is using bytes as a common computing measurement in character string elements, as opposed to small integers unrelated to the byte data measurement. Even though `byte` and `uint8` are identical once the program is compiled, `byte` is often used to represent character data in numeric form, whereas `uint8` is intended to be a number in your program.
+`byte` 别名的目的是清楚地表明程序何时使用字节作为字符串元素的常用计算度量，而不是与字节数据度量无关的小整数。尽管程序编译后 `byte` 和 `uint8` 是相同的，但 `byte` 通常用于表示数字形式的字符数据，而 `uint8` 则用于表示程序中的数字。
 
-The `rune` alias is a bit different. Where `byte` and `uint8` are exactly the same data, a `rune` can be a single byte or four bytes, a range determined by `int32`. A `rune` is used to represent a Unicode character, whereas only ASCII characters can be represented solely by an `int32` data type.
+`rune` 别名有点不同。如果 `byte` 和 `uint8` 是完全相同的数据，那么 `rune` 可以是一个字节或四个字节，这个范围由 `int32` 决定。`rune` 用来表示 Unicode 字符，而只有 ASCII 字符可以由 `int32` 数据类型单独表示。
 
-In addition, Go has the following implementation-specific types:
+此外，Go 还有以下特定实现的类型:
 
 ```
 uint     unsigned, either 32 or 64 bits
@@ -131,130 +167,217 @@ int      signed, either 32 or 64 bits
 uintptr  unsigned integer large enough to store the uninterpreted bits of a pointer value 
 ```
 
-Implementation-specific types will have their size defined by the architecture the program is compiled for.
+特定实现的类型大小将由程序编译的架构决定。
 
-### Picking Numeric Data Types
+### 选择数值数据类型
 
-Picking the correct size usually has more to do with performance for the target architecture you are programming for than the size of the data you are working with. However, without needing to know the specific ramifications of performance for your program, you can follow some of these basic guidelines when first starting out.
+选择正确的大小通常更多地取决于编程所针对的目标架构的性能，而不是所处理的数据的大小。但是，无需知道性能对程序的具体影响，你可以在动手前遵循一些基本指导原则。
 
-As discussed earlier in this article, there are architecture-independent types, and implementation-specific types. For integer data, it’s common in Go to use the implementation types like `int` or `uint` instead of `int64` or `uint64`. This will typically result in the fastest processing speed for your target architecture. For instance, if you use an `int64` and compile to a 32-bit architecture, it will take at least twice as much time to process those values as it takes additional CPU cycles to move the data across the architecture. If you used an `int` instead, the program would define it as a 32-bit size for a 32-bit architecture, and would be significantly faster to process.
+正如本文前面所讨论的，有与架构无关的类型和特定实现的类型。对于整数数据，Go 中通常使用 `int` 或 `uint` 等实现类型，而不是 `int64` 或 `uint64`。这通常会为你的目标架构带来最快的处理速度。例如，如果使用 `int64` 并将其编译为 32 位架构上的应用，那么处理这些值所需的时间至少多花一倍，因为在该架构下移动数据需要额外的 CPU 周期。如果使用 `int`，程序会将其定义为 32 位体系结构的 32 位大小，并且处理起来会快得多。
 
-If you know you won’t exceed a specific size range, then picking an architecture-independent type can both increase speed and decrease memory usage. For example, if you know your data won’t exceed the value of `100`, and will only be a positive number, then choosing a `uint8` would make your program more efficient as it will require less memory.
+如果你知道你不会超过特定的大小范围，那么选择与体系结构无关的类型既可以提高速度，又可以减少内存使用。例如，如果你知道你的数据不会超过 `100`，而且只是一个正数，那么选择 `uint8` 会使你的程序更有效率，因为它需要更少的内存。
 
-Now that we have looked at some of the possible ranges for numeric data types, let’s look at what will happen if we exceed those ranges in our program.
+既然我们已经了解了数值数据类型的一些可能范围，接下来让我们看看如果在程序中超过这些范围会发生什么。
 
-### Overflow vs. Wraparound
+### 溢出 vs. 折叠
 
-Go has the potential to both _overflow_ a number and _wraparound_ a number when you try to store a value larger than the data type was designed to store, depending on if the value is calculated at compile time or at runtime. A compile time error happens when the program finds an error as it tries to build the program. A runtime error happens after the program is compiled, while it is actually executing.
+当你试图存储一个比设计存储的数据类型更大的值时，Go 有可能会_溢出_和_折叠_一个数字，这取决于这个值是在编译时还是在运行时计算的。当程序在尝试构建程序时发现错误时，就会发生编译时错误。程序编译完成后，在实际执行过程中会发生的是运行时错误。
 
-In the following example, we set `maxUint32` to its maximum value:
+在下面的例子中，我们将 `maxUint32` 设置为它的最大值:
 
-It will compile and run with the following result:
+```go
+package main
 
-If we add `1` to the value at runtime, it will wraparound to `0`:
+import "fmt"
 
-On the other hand, let’s change the program to add `1` to the variable when we assign it, before compile time:
+func main() {
+	var maxUint32 uint32 = 4294967295 // Max uint32 size
+	fmt.Println(maxUint32)
+}
+```
 
-At compile time, if the compiler can determine a value will be too large to hold in the data type specified, it will throw an `overflow` error. This means that the value calculated is too large for the data type you specified.
+编译后的运行结果如下：
 
-Because the compiler can determine it will overflow the value, it will now throw an error:
+```
+Output
+4294967295
+```
+
+如果我们在运行时对该值加 `1`，它将会被折叠为 `0`：
+
+```
+Output
+0
+```
+
+另一方面，我们修改程序，在分配值且编译前加 `1`：
+
+```go
+package main
+
+import "fmt"
+
+func main() {
+	var maxUint32 uint32 = 4294967295 + 1
+	fmt.Println(maxUint32)
+
+}
+```
+
+在编译时，如果编译器可以确定一个值将太大而无法保存在指定的数据类型中时，它将抛出 `overflow` 溢出错误。这意味着计算的值对于指定的数据类型来说太大了。
+
+因为编译器可以确定它会溢出值，它现在会抛出一个错误:
 
 ```
 Outputprog.go:6:36: constant 4294967296 overflows uint32
 ```
 
-Understanding the boundaries of your data will help you avoid potential bugs in your program in the future.
+理解数据的边界将帮助你避免将来程序中可能出现的错误。
 
-Now that we have covered numeric types, let’s look at how to store boolean values.
+现在我们已经介绍了数值类型，让我们来看看如何存储布尔值。
 
-## Booleans
+## 布尔值
 
-The _boolean_ data type can be one of two values, either `true` or `false`, and is defined as `bool` when declaring it as a data type. Booleans are used to represent the truth values that are associated with the logic branch of mathematics, which informs algorithms in computer science.
+_boolean_ 数据类型可以从两个值中取值，即 `true` 或 `false`，在声明为数据类型时定义为 `bool`。布尔值用于表示与数学逻辑分支相关的真值，它为计算机科学中的算法提供信息。
 
-The values `true` and `false` will always be with a lowercase `t` and `f` respectively, as they are pre-declared identifiers in Go.
+值 `true` 和 `false` 将始终分别使用小写的 `t` 和 `f`，因为它们是 Go 中预先声明的标识符。
 
-Many operations in math give us answers that evaluate to either true or false:
+许多数学运算给出的答案要么是真要么是假：
 
--   greater than
-    -   500 > 100 true
-    -   1 > 5 false
--   less than
-    -   200 < 400 true
-    -   4 < 2 false
--   equal
-    -   5 = 5 true
-    -   500 = 400 false
+- 大于
+    - 500 > 100 true
+    - 1 > 5 false
+- 小于
+    - 200 < 400 true
+    - 4 < 2 false
+- 等于
+    - 5 = 5 true
+    - 500 = 400 false
 
-Like with numbers, we can store a boolean value in a variable:
+与数字相似，我们可以用变量保存布尔值：
 
-We can then print the boolean value with a call to the `fmt.Println()` function:
-
-Since `5` is not greater than `8`, we will receive the following output:
-
-```
-Outputfalse
+```go
+myBool := 5 > 8
 ```
 
-As you write more programs in Go, you will become more familiar with how booleans work and how different functions and operations evaluating to either `true` or `false` can change the course of the program.
+接下来我们可以调用 `fmt.Println()` 函数来打印布尔值：
 
-## Strings
-
-A string is a sequence of one or more characters (letters, numbers, symbols) that can be either a constant or a variable. Strings exist within either back quotes `` ` `` or double quotes `"` in Go and have different characteristics depending on which quotes you use.
-
-If you use the back quotes, you are creating a _raw_ string literal. If you use the double quotes, you are creating an _interpreted_ string literal.
-
-### Raw String Literals
-
-Raw string literals are character sequences between back quotes, often called back ticks. Within the quotes, any character will appear just as it is displayed between the back quotes, except for the back quote character itself.
-
-```
-OutputSay "hello" to Go!
+```go
+fmt.Println(myBool)
 ```
 
-Usually, backslashes are used to represent special characters in strings. For example, in an interpreted string, `\n` would represent a new line in a string. However, backslashes have no special meaning inside of raw string literals:
-
-Because the backslash has no special meaning in a string literal, it will actually print out the value of `\n` instead of making a new line:
+因为 `5` 小于 `8`， 我们将会得到下面的输出结果：
 
 ```
-OutputSay "hello" to Go!\n
+Output
+false
 ```
 
-Raw string literals may also be used to create multiline strings:
+随着你在 Go 中编写越来越多的程序，你会越来越熟悉布尔值是如何工作的，以及不同的函数和操作计算为 `true` 或 `false` 会如何改变程序的进程。
+
+## 字符串
+
+字符串是由一个或多个字符（字母、数字、符号）组成的序列，这些字符可以是常量，也可以是变量。字符串存在于 Go 中的反引号 ``` 或 `"` 中，并且根据使用的引号具有不同的特征。
+
+如果使用反引号，就是创建了一个_原始_字符串。如果使用双引号，就是创建了一个_解释_字符串。
+
+### 原始字符串
+
+原始字符串文字是反引号之间的字符序列，通常称为反引号。在引号中，除了引号字符本身之外，反引号之间的任何字符都会显示。
+
+```go
+a := `Say "hello" to Go!`
+fmt.Println(a)
+```
 
 ```
-OutputThis string is on 
+Output
+Say "hello" to Go!
+```
+
+通常，反斜杠用于表示字符串中的特殊字符。例如，在解释字符串中，`\n` 表示字符串中的新行。但是，反斜杠在原始字符串中没有特殊含义:
+
+```go
+a := `Say "hello" to Go!\n`
+fmt.Println(a)
+```
+
+因为反斜杠在字符串文字中没有特殊含义，它实际上会打印出 `\n` 的值，而不是创建一个新的行:
+
+```
+Output
+Say "hello" to Go!\n
+```
+
+原始字符串也可以用来创建多行字符串：
+
+```go
+a := `This string is on 
+multiple lines
+within a single back 
+quote on either side.`
+fmt.Println(a)
+```
+
+```
+Output
+This string is on 
 multiple lines
 within a single back 
 quote on either side.
 ```
 
-In the preceding code blocks, the new lines were carried over literally from input to output.
+在前面的代码块中，新行会按字面意思从输入传递到输出。
 
-### Interpreted String Literals
+### 解释字符串
 
-Interpreted string literals are character sequences between double quotes, as in `"bar"`. Within the quotes, any character may appear except newline and unescaped double quotes. To show double quotes in an interpreted string, you can use the backslash as an escape character, like so:
+解释字符串是双引号之间的字符序列，如 `"bar"` 中所示。在引号中，除了换行符和非转义双引号外，任何字符都可以出现。要在解释字符串中显示双引号，可以使用反斜杠作为转义字符，如下所示:
+
+```go
+a := "Say \"hello\" to Go!"
+fmt.Println(a)
+```
 
 ```
-OutputSay "hello" to Go!
+Output
+Say "hello" to Go!
 ```
 
-You will almost always use interpreted string literals because they allow for escape characters within them. For more on working with strings, check out [An Introduction to Working with Strings in Go](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go).
+你几乎总会使用解释字符串，因为它们允许在其中使用转义字符。想要了解更多关于字符串使用的信息，请查看[Go 中使用字符串的简介](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)。
 
-### Strings with UTF-8 Characters
+### UTF-8 字符的字符串
 
-UTF-8 is an encoding scheme used to encode variable width characters into one to four bytes. Go supports UTF-8 characters out of the box, without any special setup, libaries, or packages. Roman characters such as the letter `A` can be represented by an ASCII value such as the number 65. However, with special characters such as an international character of `世`, UTF-8 would be required. Go uses the `rune` alias type for UTF-8 data.
+UTF-8 是一种编码方案，用于将可变宽度字符编码为一到四个字节。Go 支持开箱即用的 UTF-8 字符，不需要任何特殊设置、库或包。像字母 `A` 这样的罗马字符可以用像数字65这样的 ASCII 值表示。但是，如果使用特殊字符，例如`世`这样的国际字符，则需要 UTF-8。Go 对 UTF-8 数据使用 `rune` 别名类型。
 
-You can use the `range` keyword in a `for` loop to index through any string in Go, even a UTF-8 string. `for` loops and `range` will be covered in more depth later in the series; for now, it’s important to know that we can use this to count the bytes in a given string:
+```go
+a := "Hello, 世界"
+```
 
-In the above code block, we declared the variable `a` and assigned the value of `Hello, 世界` to it. The text assigned has UTF-8 characters in it.
+你可以在 `for` 循环中使用 `range` 关键字来索引 Go 中的任何字符串，甚至是 UTF-8 字符串。`for` 循环和 `range` 将在本系列后面更深入地讨论; 现在，重要的是知道我们可以使用它来计算给定字符串中的字节数：
 
-We then used a standard `for` loop as well as the `range` keyword. In Go, the `range` keyword will index through a string returning one character at a time, as well as the byte index the character is at in the string.
+```go
+package main
 
-Using the `fmt.Printf` function, we provided a format string of `%d: %s\n`. `%d` is the print verb for a digit (in this case an integer), and `%s` is the print verb for a string. We then provided the values of `i`, which is the current index of the `for` loop, and `c`, which is the current character in the `for` loop.
+import "fmt"
 
-Finally, we printed the entire length of the variable `a` by using the builtin `len` function.
+func main() {
+	a := "Hello, 世界"
+	for i, c := range a {
+		fmt.Printf("%d: %s\n", i, string(c))
+	}
+	fmt.Println("length of 'Hello, 世界': ", len(a))
+}
+```
 
-Earlier, we mentioned that a rune is an alias for `int32` and can be made up of one to four bytes. The `世` character takes three bytes to define and the index moves accordingly when ranging through the UTF-8 string. This is the reason that `i` is not sequential when it is printed out.
+在上面的代码块中，我们声明了变量 `a`，并为其赋值 `Hello，世界`。分配的文本中包含 UTF-8 字符。
+
+然后我们使用了一个标准的 `for` 循环以及 `range` 关键字。在 Go 中，`range` 关键字将通过字符串索引，每次返回一个字符，以及字符位于字符串中的字节索引。
+
+使用 `fmt.Printf` 函数中，我们提供了一个格式字符串 `%d:%s\n`。`%d` 是数字的打印动词（在本例中是整数），`%s` 是字符串的打印动词。然后我们提供了 `i` 的值，它是 `for` 循环的当前索引，`c` 是 `for` 循环中的当前字符。
+
+最后，我们使用内建的 `len` 函数打印了变量 `a` 的整个长度。
+
+在前面，我们提到了 rune 是 `int32` 的别名，可以由一到四个字节组成。`世` 字符需要三个字节来定义，当通过 UTF-8 字符串进行循环时，索引也会相应地移动。这就是当它被打印出来时 `i` 不是顺序的原因。
 
 ```
 Output0: H
@@ -269,116 +392,198 @@ Output0: H
 length of 'Hello, 世界':  13
 ```
 
-As you can see, the length is longer than the number of times it took to range over the string.
+如你所见，字符串的长度比它循环迭代的次数大。
 
-You won’t always be working with UTF-8 strings, but when you are, you’ll now understand why they are runes and not a single `int32`.
+你不会总使用 UTF-8 字符串，但当使用时，你将会理解为什么他们叫做 rune 而不是单个 `int32`。
 
-## Declaring Data Types for Variables
+## 声明变量的数据类型
 
-Now that you know about the different primitive data types, we will go over how to assign these types to variables in Go.
+既然你已经了解了不同的基本数据类型，接下来我们将讨论如何在 Go 中将这些类型分配给变量。
 
-In Go, we can define a variable with the keyword `var` followed by the name of the variable and the data type desired.
+在 Go 中，我们可以使用关键字 `var` ，后面跟着变量名和所需的数据类型来定义一个变量。
 
-In the following example we will declare a variable called `pi` of type `float64`.
+在下面的示例中，我们将声明一个类型为 `float64` 的变量 `pi`。
 
-The keyword `var` is the first thing declared:
+关键字 `var` 是首先声明的:
 
-Followed by the name of our variable, `pi`:
-
-And finally the data type `float64`:
-
-We can optionally specify an initial value as well, such as `3.14`:
-
-Go is a _statically typed_ language. Statically typed means that each statement in the program is checked at compile time. It also means that the data type is bound to the variable, whereas in dynamically linked languages, the data type is bound to the value.
-
-For example, in Go, the type is declared when declaring a variable:
-
-Each of these variables could be a different data type if you declared them differently.
-
-This is different from a language like PHP, where the data type is associated to the value:
-
-In the preceding code block, the first `$s` is a string because it is assigned the value `"sammy"`, and the second is an integer because it has the value `123`.
-
-Next, let’s look at more complex data types like arrays.
-
-## Arrays
-
-An _array_ is an ordered sequence of elements. The capacity of an array is defined at creation time. Once an array has allocated its size, the size can no longer be changed. Because the size of an array is static, it means that it only allocates memory once. This makes arrays somewhat rigid to work with, but increases performance of your program. Because of this, arrays are typically used when optimizing programs. _Slices_, covered next, are more flexible, and constitute what you would think of as arrays in other languages.
-
-Arrays are defined by declaring the size of the array, then the data type with the values defined between curly brackets `{ }`.
-
-An array of strings looks like this:
-
-We can store an array in a variable and print it out:
-
-```
-Output[blue coral staghorn coral pillar coral]
+```go
+`var` pi float64
 ```
 
-As mentioned before, slices are similar to arrays, but are much more flexible. Let’s take a look at this mutable data type.
+后面是我们的变量名，`pi`：
 
-## Slices
+```go
+var `pi` float64
+```
 
-A _slice_ is an ordered sequence of elements that can change in length. Slices can increase their size dynamically. When you add new items to a slice, if the slice does not have enough memory to store the new items, it will request more memory from the system as needed. Because a slice can be expanded to add more elements when needed, they are more commonly used than arrays.
+最后是数据类型 `float64`：
 
-Slices are defined by declaring the data type preceded by an opening and closing square bracket `[]` and having values between curly brackets `{ }` .
+```go
+var pi `float64`
+```
 
-A slice of integers looks like this:
+我们也有指定初始值的选项，比如 `3.14`：
 
-A slice of floats looks like this:
+```go
+var pi float64 = `3.14`
+```
 
-A slice of strings looks like this:
+Go 是一种_静态类型_语言。静态类型意味着在编译时检查程序中的每个语句。它还意味着数据类型绑定到变量，而在动态链接的语言中是数据类型绑定到值。
 
-Let’s define our slice of strings as `seaCreatures`:
+例如，在 Go 中，当声明一个变量时，类型被声明:
 
-We can print them out by calling the variable:
+```go
+var pi float64 = 3.14
+var week int = 7
+```
 
-The output will look exactly like the list that we created:
+如果以不同的方式声明这些变量，它们中的每一个都可能是不同的数据类型。
+
+这与 PHP 语言不同，它的数据类型与值相关联:
+
+```php
+$s = "sammy";         // $s is automatically a string
+$s = 123;             // $s is automatically an integer
+```
+
+在前面的代码块中，第一个 `$s` 是一个字符串，因为它被赋值为 `"sammy"`，第二个是一个整数，因为它的值为 `123`。
+
+接下来，让我们看看更复杂的数据类型，比如数组。
+
+## 数组
+
+_数组_是元素的有序序列。数组的容量在创建时定义。一旦数组分配了它的大小，它的大小就不能再改变了。因为数组的大小是静态的，这意味着它只分配一次内存。这使得数组有些僵硬，但是增加了程序的性能。因此，数组通常用于优化程序。接下来介绍的_切片_更加灵活，它与你在其他语言中认识的数组更相似。
+
+数组是通过声明数组的大小来定义的，然后是数据类型和定义在花括号 `{ }`之间的值。
+
+字符串数组如下所示：
+
+```go
+[3]string{"blue coral", "staghorn coral", "pillar coral"}
+```
+
+我们可以把数组保存在变量中并打印出来：
+
+```go
+coral := [3]string{"blue coral", "staghorn coral", "pillar coral"}
+fmt.Println(coral)
+```
 
 ```
-Output[shark cuttlefish squid mantis shrimp]
+Output
+[blue coral staghorn coral pillar coral]
+```
+
+上面提到过，切片和数组类似，但更加的灵活。让我们看下这个可变的数据类型。
+
+## 切片
+
+一个_切片_是一个可以改变长度的有序元素序列。切片可以动态地增加它们的大小。当你向一个切片添加新元素时，如果该切片没有足够的内存来存储新元素，那么它将根据需要从系统中申请更多的内存。由于可以根据需要扩展切片以添加更多的元素，因此它们比数组更常用。
+
+切片的定义是通过声明前面有开方括号和闭方括号 `[]` 的数据类型，并且在花括号 `{}` 之间有值。
+
+整数切片如下所示：
+
+```go
+[]int{-3, -2, -1, 0, 1, 2, 3}
+```
+
+浮点数的切片如下所示：
+
+```go
+[]float64{3.14, 9.23, 111.11, 312.12, 1.05}
+```
+
+字符串的切片如下所示：
+
+```go
+[]string{"shark", "cuttlefish", "squid", "mantis shrimp"}
+```
+
+我们定义一个字符切片叫做 `seaCreatures`：
+
+```go
+seaCreatures := []string{"shark", "cuttlefish", "squid", "mantis shrimp"}
+```
+
+我们可以通过调用变量打印出来：
+
+```go
+fmt.Println(seaCreatures)
+```
+
+输出将和我们创建的列表完全一样：
+
+```
+Output
+[shark cuttlefish squid mantis shrimp]
 ```
 
 We can use the `append` keyword to add an item to our slice. The following command will add the string value of `seahorse` to the slice:
+我们可以使用 `append` 关键字，在切片中添加一个元素。下面的命令将在切片中增加字符串值 `seahorse`：
 
-You can verify it was added by printing it out:
+```go
+seaCreatures = append(seaCreatures, "seahorse")
+```
+
+你可以通过打印来验证确实添加了这个元素：
+
+```go
+fmt.Println(seaCreatures)
+```
 
 ```
-Output[shark cuttlefish squid mantis shrimp seahorse]
+Output
+[shark cuttlefish squid mantis shrimp seahorse]
 ```
 
-As you can see, if you need to manage an unknown size of elements, a slice will be much more versatile than an array.
+如你所见，若你需要管理一个未知长度的元素，切片将比数据更加适合。
 
 ## Maps
 
-The _map_ is Go’s built-in hash or dictionary type. Maps use _keys_ and _values_ as a pair to store data. This is useful in programming to quickly look up values by an index, or in this case, a key. For instance, you may want to keep a map of users, indexed by their user ID. The key would be the user ID, and the user object would be the value. A map is constructed by using the keyword `map` followed by the key data type in square brackets `[ ]`, followed by the value data type and the key value pairs in curly braces.
+_map_是 Go 内建的哈希或字典类型。 Map 使用 _键_ _值_对来存储数据。在编程中快速通过索引或在 Go 中通过键来查找值时非常有用。比如，你可能会用 map 按用户 ID 为索引来保存用户。键可以是用户 ID，用户对象可以是值。map 可以用 `map` 关键字，接着把键的数据类型放在 `[]` 中括号里，后面是值的数据类型，且键值对放在大括号中。
 
 ```
 map[key]value{}
 ```
 
-Typically used to hold data that are related, such as the information contained in an ID, a map looks like this:
+一般用于保存相关的数据，比如包含 ID 的信息，map 如下所示：
 
-You will notice that in addition to the curly braces, there are also colons throughout the map. The words to the left of the colons are the keys. Keys can be any _comparable_ type in Go. Comparable types are primitive types like `strings`, `ints`, etc. A primitive type is defined by the language, and not built from combining any other types. While they can be user-defined types, it’s considered best practice to keep them simple to avoid programming errors. The keys in the dictionary above are: `name`, `animal`, `color`, and `location`.
-
-The words to the right of the colons are the values. Values can be comprised of any data type. The values in the dictionary above are: `Sammy`, `shark`, `blue`, and `ocean`.
-
-Let’s store the map inside a variable and print it out:
-
-```
-Outputmap[animal:shark color:blue location:ocean name:Sammy]
+```go
+map[string]string{"name": "Sammy", "animal": "shark", "color": "blue", "location": "ocean"}
 ```
 
-If we want to isolate Sammy’s color, we can do so by calling `sammy["color"]`. Let’s print that out:
+你将注意到，除了大括号之外，整个 map 中还有冒号。冒号左边的字是键。键可以是 Go 中的任何_可比较的_类型。可比较的类型是一些基本类型，如 `strings`、`ints` 等。基本类型是由语言定义的，而不是通过组合任何其他类型构建的。虽然它们可以是用户定义的类型，但为了避免编程错误，保持它们简单被认为是最佳实践。上面字典中的键是: `name`、`animal`、`color` 和 `location`。
+
+冒号右边的单词是值。值可以由任何数据类型组成。上面字典中的值是: `Sammy`，`shark`，`blue` 和 `ocean`。
+
+让我们把 map 存储在一个变量中，然后打印出来:
+
+```go
+sammy := map[string]string{"name": "Sammy", "animal": "shark", "color": "blue", "location": "ocean"}
+fmt.Println(sammy)
+```
 
 ```
-Outputblue
+Output
+map[animal:shark color:blue location:ocean name:Sammy]
 ```
 
-As maps offer key-value pairs for storing data, they can be important elements in your Go program.
+如果我们只想打印 Sammy 的颜色，可以通过调用 `sammy["color"]` 的方式完成。我们把它打印出来：
 
-## Conclusion
+```go
+fmt.Println(sammy["color"])
+```
 
-At this point, you should have a better understanding of some of the major data types that are available for you to use in Go. Each of these data types will become important as you develop programming projects in the Go language.
+```
+Output
+blue
+```
 
-Once you have a solid grasp of data types available to you in Go, you can learn [How To Convert Data Types](https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go) in order to change your data types according to the situation.
+因为 map 提供了以键-值的方式来存储值，在你的 Go 程序中它们会是重要的元素。
+
+## 结论
+
+此时，你应该对 Go 中可用的一些主要数据类型有了更好的理解。当你使用 Go 语言开发编程项目时，这些数据类型中的每一种都将变得非常重要。
+
+一旦掌握了 Go 中可用的数据类型，就可以学习[如何转换数据类型](https://www.digitalocean.com/community/tutorials/how-to-convert-data-types-in-go)，以便根据具体情况更改数据类型。
