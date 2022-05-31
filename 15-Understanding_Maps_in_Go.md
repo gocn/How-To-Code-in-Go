@@ -23,7 +23,7 @@ map[string]string{"name": "Sammy", "animal": "shark", "color": "blue", "location
 *   `"color"`
 *   `"location"`
 
-冒号右边的字是值，值可以是任何数据类型。示例地图中的值是：
+冒号右边的字是值，值可以是任何数据类型。示例 map 中的值是：
 
 *   `"Sammy"`
 *   `"shark"`
@@ -380,7 +380,7 @@ delete(map, key)
 permissions := map[int]string{1: "read", 2: "write", 4: "delete", 8: "create", 16:"modify"}
 ```
 
-你不再需要修改 `permission` 变量，所以你要把它从 map 上删除。然后，你要打印出 map，以确认它被删除。
+你不再需要 `modify` 变量，所以你要把它从 map 上删除。然后，你要打印出 map，以确认它被删除。
 
 ```go
 permissions := map[int]string{1: "read", 2: "write", 4: "delete", 8: "create", 16: "modify"}
