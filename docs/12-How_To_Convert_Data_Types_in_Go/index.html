@@ -1,357 +1,108 @@
-<!DOCTYPE html>
-<html lang="zh" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="How To Convert Data Types in Go #  Introduction #  In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values.">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
-<meta property="og:description" content="How To Convert Data Types in Go #  Introduction #  In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.com/docs/12-How_To_Convert_Data_Types_in_Go/" /><meta property="article:section" content="docs" />
-
-
-
-<title>12 How to Convert Data Types in Go | How To Code in Go</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
-  <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
-  
-</head>
-<body dir="ltr">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <main class="container flex">
-    <aside class="book-menu">
-      <div class="book-menu-content">
-        
-  <nav>
-<h2 class="book-brand">
-  <a class="flex align-center" href="/"><span>How To Code in Go</span>
-  </a>
-</h2>
-
-
-<div class="book-search">
-  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
-  <div class="book-search-spinner hidden"></div>
-  <ul id="book-search-results"></ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-<li>
-<p><strong>开始学习</strong></p>
-<ul>
-<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
-<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
-<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
-<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
-<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
-<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
-<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
-<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
-<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/"class=active>How To Convert Data Types in Go</a></li>
-<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
-<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
-<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
-<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
-<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
-<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
-<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
-<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
-<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
-<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
-<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
-<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
-<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
-<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
-<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
-<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
-<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
-<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
-<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
-<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
-<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
-<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
-<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
-<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
-<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
-<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
-<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
-<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
-</ul>
-</li>
-<li>
-<p><strong>附录：资源</strong></p>
-</li>
-<li>
-<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
-</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-</nav>
-
-
-
-
-  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
-
-
- 
-      </div>
-    </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        
-  <div class="flex align-center justify-between">
-  <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
-  </label>
-
-  <strong>12 How to Convert Data Types in Go</strong>
-
-  <label for="toc-control">
-    
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
-    
-  </label>
-</div>
-
-
-  
-  <aside class="hidden clearfix">
-    
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#introduction">Introduction</a></li>
-      </ul>
-    </li>
-    <li><a href="#converting-number-types">Converting Number Types</a>
-      <ul>
-        <li><a href="#converting-between-integer-types">Converting Between Integer Types</a></li>
-        <li><a href="#converting-integers-to-floats">Converting Integers to Floats</a></li>
-        <li><a href="#converting-floats-to-integers">Converting Floats to Integers</a></li>
-        <li><a href="#numbers-converted-through-division">Numbers Converted Through Division</a></li>
-      </ul>
-    </li>
-    <li><a href="#converting-with-strings">Converting with Strings</a>
-      <ul>
-        <li><a href="#converting-numbers-to-strings">Converting Numbers to Strings</a></li>
-        <li><a href="#converting-strings-to-numbers">Converting Strings to Numbers</a></li>
-        <li><a href="#converting-strings-and-bytes">Converting Strings and Bytes</a></li>
-      </ul>
-    </li>
-    <li><a href="#conclusion">Conclusion</a></li>
-  </ul>
-</nav>
-
-
-
-  </aside>
-  
- 
-      </header>
-
-      
-      
-  <article class="markdown"><h1 id="how-to-convert-data-types-in-go">
-  How To Convert Data Types in Go
-  <a class="anchor" href="#how-to-convert-data-types-in-go">#</a>
-</h1>
-<h3 id="introduction">
-  Introduction
-  <a class="anchor" href="#introduction">#</a>
-</h3>
-<p>In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values. User-generated data is often automatically assigned the string data type, even if it consists of numbers; in order to perform mathematical operations in this input, you would have to convert the string to a numeric data type.</p>
-<p>Since Go is a statically typed language, <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#declaring-data-types-for-variables">data types are bound to variables</a> rather than values. This means that, if you define a variable as an <code>int</code>, it can only be an <code>int</code>; you can’t assign a <code>string</code> to it without converting the data type of the variable. The static nature of data types in Go places even more importance on learning the ways to convert them.</p>
-<p>This tutorial will guide you through converting numbers and strings, as well as provide examples to help familiarize yourself with different use cases.</p>
-<h2 id="converting-number-types">
-  Converting Number Types
-  <a class="anchor" href="#converting-number-types">#</a>
-</h2>
-<p>Go has several numeric types to choose from. Primarily they break out into two general types: <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers">integers</a> and <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers">floating-point numbers</a>.</p>
-<p>There are many situations in which you may want to convert between numeric types. Converting between <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types">different sizes of numeric types</a> can help optimize performance for specific kinds of system architecture. If you have an integer from another part of your code and want to do division on it, you may want to convert the integer to a float to preserve the precision of the operation. Additionally, working with time durations usually involves integer conversion. To address these situations, Go has built-in <em>type conversions</em> for most numeric types.</p>
-<h3 id="converting-between-integer-types">
-  Converting Between Integer Types
-  <a class="anchor" href="#converting-between-integer-types">#</a>
-</h3>
-<p>Go has many integer data types to pick from. When to use one over the other is typically more about <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#picking-numeric-data-types">performance</a>; however, there will be times when you will need to convert from one integer type to another. For example, Go sometimes automatically generates numeric values as <code>int</code>, which may not match your input value. If your input value were <code>int64</code>, you would not be able to use the <code>int</code> and the <code>int64</code> numbers in the same mathematical expression until you converted their data types to match.</p>
-<p>Assume that you have an <code>int8</code> and you need to convert it to an <code>int32</code>. You can do this by wrapping it in the <code>int32()</code> type conversion:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">index</span> <span style="color:#66d9ef">int8</span> = <span style="color:#ae81ff">15</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">bigIndex</span> <span style="color:#66d9ef">int32</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">bigIndex</span> = int32(<span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">bigIndex</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">15</span>
-</span></span></code></pre></div><p>This code block defines <code>index</code> as an <code>int8</code> data type and <code>bigIndex</code> as an <code>int32</code> data type. To store the value of <code>index</code> in <code>bigIndex</code>, it converts the data type to an <code>int32</code>. This is done by wrapping the <code>int32()</code> conversion around the <code>index</code> variable.</p>
-<p>To verify your data types, you could use the <code>fmt.Printf</code> statement and the <code>%T</code> verb with the following syntax:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;index data type:    %T\n&#34;</span>, <span style="color:#a6e22e">index</span>)
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;bigIndex data type: %T\n&#34;</span>, <span style="color:#a6e22e">bigIndex</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">index</span> <span style="color:#a6e22e">data</span> <span style="color:#66d9ef">type</span>:    <span style="color:#66d9ef">int8</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">bigIndex</span> <span style="color:#a6e22e">data</span> <span style="color:#66d9ef">type</span>: <span style="color:#66d9ef">int32</span>
-</span></span></code></pre></div><p>Since this uses the <code>%T</code> verb, the print statement outputs the type for the variable, and not the actual value of the variable. This way, you can confirm the converted data type.</p>
-<p>You can also convert from a larger bit-size integer to a smaller bit-size integer:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">big</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">64</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">little</span> <span style="color:#66d9ef">int8</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">little</span> = int8(<span style="color:#a6e22e">big</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">little</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">64</span>
-</span></span></code></pre></div><p>Keep in mind that when converting integers you could potentially exceed the maximum value of the data type and <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#overflow-vs-wraparound"><em>wraparound</em></a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">big</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">129</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">little</span> = int8(<span style="color:#a6e22e">big</span>)
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">little</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">-</span><span style="color:#ae81ff">127</span>
-</span></span></code></pre></div><p>A wraparound happens when the value is converted to a data type that is too small to hold it. In the preceding example, the 8-bit data type <code>int8</code> did not have enough space to hold the 64-bit variable <code>big</code>. Care should always be taken when converting from a larger number data type to a smaller number data type so that you do not truncate the data by accident.</p>
-<h3 id="converting-integers-to-floats">
-  Converting Integers to Floats
-  <a class="anchor" href="#converting-integers-to-floats">#</a>
-</h3>
-<p>Converting integers to floats in Go is similar to converting one integer type to another. You can use the built-in type conversions by wrapping <code>float64()</code> or <code>float32()</code> around the integer you are converting:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">57</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">float64</span> = float64(<span style="color:#a6e22e">x</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%.2f\n&#34;</span>, <span style="color:#a6e22e">y</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">57.00</span>
-</span></span></code></pre></div><p>This code declares a variable <code>x</code> of type <code>int64</code> and initializes its value to <code>57</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">x</span> <span style="color:#66d9ef">int64</span> = <span style="color:#ae81ff">57</span>
-</span></span></code></pre></div><p>Wrapping the <code>float64()</code> conversion around <code>x</code> will convert the value of <code>57</code> to a float value of <code>57.00</code>.</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">float64</span> = float64(<span style="color:#a6e22e">x</span>)
-</span></span></code></pre></div><p>The <code>%.2f</code> print verb tells <code>fmt.Printf</code> to format the float with two decimals.</p>
-<p>You can also use this process on a variable. The following code declares <code>f</code> as equal to <code>57</code>, and then prints out the new float:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">float64</span> = <span style="color:#ae81ff">57</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%.2f\n&#34;</span>, <span style="color:#a6e22e">f</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">57.00</span>
-</span></span></code></pre></div><p>By using either <code>float32()</code> or <code>float64()</code>, you can convert integers to floats. Next, you will learn how to convert floats to integers.</p>
-<h3 id="converting-floats-to-integers">
-  Converting Floats to Integers
-  <a class="anchor" href="#converting-floats-to-integers">#</a>
-</h3>
-<p>Go can convert floats to integers, but the program will lose the precision of the float.</p>
-<p>Wrapping floats in <code>int()</code>, or one of its architecture-independent data types, works similarly to when you used it to convert from one integer type to another. You can add a floating-point number inside of the parentheses to convert it to an integer:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">f</span> <span style="color:#66d9ef">float64</span> = <span style="color:#ae81ff">390.8</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">i</span> <span style="color:#66d9ef">int</span> = int(<span style="color:#a6e22e">f</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;f = %.2f\n&#34;</span>, <span style="color:#a6e22e">f</span>)
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;i = %d\n&#34;</span>, <span style="color:#a6e22e">i</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">f</span> = <span style="color:#ae81ff">390.80</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">i</span> = <span style="color:#ae81ff">390</span>
-</span></span></code></pre></div><p>This syntax would convert the float <code>390.8</code> to the integer <code>390</code>, dropping the decimal place.</p>
-<p>You can also use this with variables. The following code declares <code>b</code> as equal to <code>125.0</code> and <code>c</code> as equal to <code>390.8</code>, then prints them out as integers. Short variable declaration (<code>:=</code>) shortens up the syntax:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">125.0</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">390.8</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(int(<span style="color:#a6e22e">b</span>))
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(int(<span style="color:#a6e22e">c</span>))
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output125</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">390</span>
-</span></span></code></pre></div><p>When converting floats to integers with the <code>int()</code> type, Go cuts off the decimal and remaining numbers of a float to create an integer. Note that, even though you may want to round 390.8 up to 391, Go will not do this through the <code>int()</code> type. Instead, it will drop the decimal.</p>
-<h3 id="numbers-converted-through-division">
-  Numbers Converted Through Division
-  <a class="anchor" href="#numbers-converted-through-division">#</a>
-</h3>
-<p>When dividing integer types in Go the result will also be an integer type, with the <em>modulus</em>, or remainder, dropped:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2</span>
-</span></span></code></pre></div><p>If, when dividing, any of the number types are a float, then all of the types will automatically be declared as a float:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5.0</span> <span style="color:#f92672">/</span> <span style="color:#ae81ff">2</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>)
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">2.5</span>
-</span></span></code></pre></div><p>This divides the float <code>5.0</code> by the integer <code>2</code>, and the answer <code>2.5</code> is a float that retains the decimal precision.</p>
-<p>In this section, you have converted between different number data types, including differing sizes of integers and floating-point numbers. Next, you will learn how to convert between numbers and strings.</p>
-<h2 id="converting-with-strings">
-  Converting with Strings
-  <a class="anchor" href="#converting-with-strings">#</a>
-</h2>
-<p>A <em>string</em> is a sequence of one or more characters (letters, numbers, or symbols). Strings are a common form of data in computer programs, and you may need to convert strings to numbers or numbers to strings fairly often, especially when you are taking in user-generated data.</p>
-<h3 id="converting-numbers-to-strings">
-  Converting Numbers to Strings
-  <a class="anchor" href="#converting-numbers-to-strings">#</a>
-</h3>
-<p>You can convert numbers to strings by using the <code>strconv.Itoa</code> method from the <code>strconv</code> package in the Go standard libary. If you pass either a number or a variable into the parentheses of the method, that numeric value will be converted into a string value.</p>
-<p>First, let’s look at converting integers. To convert the integer <code>12</code> to a string value, you can pass <code>12</code> into the <code>strconv.Itoa</code> method:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Itoa</span>(<span style="color:#ae81ff">12</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q\n&#34;</span>, <span style="color:#a6e22e">a</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>When running this program, you’ll receive the following output:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#e6db74">&#34;12&#34;</span>
-</span></span></code></pre></div><p>The quotes around the number 12 signify that the number is no longer an integer but is now a string value.</p>
-<p>You used the <code>:=</code> assignment operator to both declare a new variable with the name of <code>a</code> and assign the value returned from the <code>strconv.Itoa()</code> function. In this case, you assigned the value <code>12</code> to your variable. You also used the <code>%q</code> verb in the <code>fmt.Printf</code> function, which tells the function to quote the string provided.</p>
-<p>With variables you can begin to see how practical it can be to convert integers to strings. Say you want to keep track of a user’s daily programming progress and are inputting how many lines of code they write at a time. You would like to show this feedback to the user and will be printing out string and integer values at the same time:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">user</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;Sammy&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lines</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">50</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Congratulations, &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">user</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;! You just wrote &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">lines</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; lines of code.&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>When you run this code, you’ll receive the following error:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid</span> <span style="color:#a6e22e">operation</span>: (<span style="color:#e6db74">&#34;Congratulations, &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">user</span> <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34;! You just wrote &#34;</span>) <span style="color:#f92672">+</span> <span style="color:#a6e22e">lines</span> (<span style="color:#a6e22e">mismatched</span> <span style="color:#a6e22e">types</span> <span style="color:#66d9ef">string</span> <span style="color:#a6e22e">and</span> <span style="color:#66d9ef">int</span>)
-</span></span></code></pre></div><p>You’re not able to concatenate strings and integers in Go, so you’ll have to convert the variable <code>lines</code> to be a string value:</p>
-<pre tabindex="0"><code>package main
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="How To Convert Data Types in Go # Introduction # In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="How To Convert Data Types in Go # Introduction # In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values."><meta property="og:type" content="article"><meta property="og:url" content="https://example.com/docs/12-How_To_Convert_Data_Types_in_Go/"><meta property="article:section" content="docs"><title>12 How to Convert Data Types in Go | How To Code in Go</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css integrity="sha256-gsXb0jRHzuC0wqo+0Izglh+qQOH6Nw7uT4yfAuDUa18=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/zh.search.min.49dd84c1863c020bc1e7dc2da56c6f5767094cc4a336b6ce9c015604b7f5c488.js integrity="sha256-Sd2EwYY8AgvB59wtpWxvV2cJTMSjNrbOnAFWBLf1xIg=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>How To Code in Go</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/>如何用 Go 编写你的第一个程序</a></li><li><a href=/docs/05-Understanding_the_GOPATH/>理解 GOPATH</a></li><li><a href=/docs/06-How_To_Write_Comments_in_Go/>如何在 Go 中写注释</a></li><li><a href=/docs/07-Understanding_Data_Types_in_Go/>理解 Go 的数据类型</a></li><li><a href=/docs/08-An_Introduction_to_Working_with_Strings_in_Go/>Go 中处理字符串的介绍</a></li><li><a href=/docs/09-How_To_Format_Strings_in_Go/>How To Format Strings in Go</a></li><li><a href=/docs/10-An_Introduction_to_the_Strings_Package_in_Go/>An Introduction to the Strings Package in Go</a></li><li><a href=/docs/11-How_To_Use_Variables_and_Constants_in_Go/>How To Use Variables and Constants in Go</a></li><li><a href=/docs/12-How_To_Convert_Data_Types_in_Go/ class=active>How To Convert Data Types in Go</a></li><li><a href=/docs/13-How_To_Do_Math_in_Go_with_Operators/>How To Do Math in Go with Operators</a></li><li><a href=/docs/14-Understanding_Boolean_Logic_in_Go/>Understanding Boolean Logic in Go</a></li><li><a href=/docs/15-Understanding_Maps_in_Go/>Understanding Maps in Go</a></li><li><a href=/docs/16-Understanding_Arrays_and_Slices_in_Go/>Understanding Arrays and Slices in Go</a></li><li><a href=/docs/17-Handling_Errors_in_Go_DigitalOcean/>Handling Errors in Go</a></li><li><a href=/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/>Creating Custom Errors in Go</a></li><li><a href=/docs/19-Handling_Panics_in_Go-_DigitalOcean/>Handling Panics in Go</a></li><li><a href=/docs/20-Importing_Packages_in_Go_DigitalOcean/>Importing Packages in Go</a></li><li><a href=/docs/21-How_To_Write_Packages_in_Go/>如何在 Go 中编写包</a></li><li><a href=/docs/22-Understanding_Package_Visibility_in_Go/>理解 Go 中包的可见性</a></li><li><a href=/docs/23-How_To_Write_Conditional_Statements_in_Go/>如何在 Go 中编写条件语句</a></li><li><a href=/docs/24-How_To_Write_Switch_Statements_in_Go/>如何在 Go 中编写 Switch 语句</a></li><li><a href=/docs/25_How_To_Construct_For_Loops_in_Go/>如何在 Go 中构造 for 循环</a></li><li><a href=/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/>在循环中使用 Break 和 Continue</a></li><li><a href=/docs/27_How_To_Define_and_Call_Functions_in_Go/>如何在 Go 中定义并调用函数</a></li><li><a href=/docs/28_How_To_Use_Variadic_Functions_in_Go/>如何在 Go 中使用可变参数函数</a></li><li><a href=/docs/29-Understanding_defer_in_Go/>了解 Go 中的 defer</a></li><li><a href=/docs/30_Understanding_init_in_Go/>了解 Go 中的 init</a></li><li><a href=/docs/31_Customizing_Go_Binaries_with_Build_Tags/>用构建标签定制 Go 二进制文件</a></li><li><a href=/docs/32_Understanding_Pointers_in_Go/>了解 Go 中的指针</a></li><li><a href=/docs/33_Defining_Structs_in_Go/>在 Go 中定义结构体</a></li><li><a href=/docs/34_Defining_Methods_in_Go/>在 Go 中定义方法</a></li><li><a href=/docs/35_How_To_Build_and_Install_Go_Programs/>如何构建和安装 Go 程序</a></li><li><a href=/docs/36_How_To_Use_Struct_Tags_in_Go/>如何在 Go 中使用结构体标签</a></li><li><a href=/docs/37-How_To_Use_Interfaces_in_Go/>如何在 Go 使用 interface</a></li><li><a href=/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/>在不同的操作系统和架构编译 Go 应用</a></li><li><a href=/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/>用 ldflags 设置 Go 应用程序的版本信息</a></li><li><a href=/docs/40-How_To_Use_the_Flag_Package_in_Go/>在 Go 里面如何使用 Flag 包</a></li></ul></li><li><p><strong>附录：资源</strong></p></li><li><p><a href=https://github.com/gocn/How-To-Code-in-Go><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>12 How to Convert Data Types in Go</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#introduction>Introduction</a></li></ul></li><li><a href=#converting-number-types>Converting Number Types</a><ul><li><a href=#converting-between-integer-types>Converting Between Integer Types</a></li><li><a href=#converting-integers-to-floats>Converting Integers to Floats</a></li><li><a href=#converting-floats-to-integers>Converting Floats to Integers</a></li><li><a href=#numbers-converted-through-division>Numbers Converted Through Division</a></li></ul></li><li><a href=#converting-with-strings>Converting with Strings</a><ul><li><a href=#converting-numbers-to-strings>Converting Numbers to Strings</a></li><li><a href=#converting-strings-to-numbers>Converting Strings to Numbers</a></li><li><a href=#converting-strings-and-bytes>Converting Strings and Bytes</a></li></ul></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></aside></header><article class=markdown><h1 id=how-to-convert-data-types-in-go>How To Convert Data Types in Go
+<a class=anchor href=#how-to-convert-data-types-in-go>#</a></h1><h3 id=introduction>Introduction
+<a class=anchor href=#introduction>#</a></h3><p>In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values. User-generated data is often automatically assigned the string data type, even if it consists of numbers; in order to perform mathematical operations in this input, you would have to convert the string to a numeric data type.</p><p>Since Go is a statically typed language, <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#declaring-data-types-for-variables>data types are bound to variables</a> rather than values. This means that, if you define a variable as an <code>int</code>, it can only be an <code>int</code>; you can’t assign a <code>string</code> to it without converting the data type of the variable. The static nature of data types in Go places even more importance on learning the ways to convert them.</p><p>This tutorial will guide you through converting numbers and strings, as well as provide examples to help familiarize yourself with different use cases.</p><h2 id=converting-number-types>Converting Number Types
+<a class=anchor href=#converting-number-types>#</a></h2><p>Go has several numeric types to choose from. Primarily they break out into two general types: <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers>integers</a> and <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers>floating-point numbers</a>.</p><p>There are many situations in which you may want to convert between numeric types. Converting between <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types>different sizes of numeric types</a> can help optimize performance for specific kinds of system architecture. If you have an integer from another part of your code and want to do division on it, you may want to convert the integer to a float to preserve the precision of the operation. Additionally, working with time durations usually involves integer conversion. To address these situations, Go has built-in <em>type conversions</em> for most numeric types.</p><h3 id=converting-between-integer-types>Converting Between Integer Types
+<a class=anchor href=#converting-between-integer-types>#</a></h3><p>Go has many integer data types to pick from. When to use one over the other is typically more about <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#picking-numeric-data-types>performance</a>; however, there will be times when you will need to convert from one integer type to another. For example, Go sometimes automatically generates numeric values as <code>int</code>, which may not match your input value. If your input value were <code>int64</code>, you would not be able to use the <code>int</code> and the <code>int64</code> numbers in the same mathematical expression until you converted their data types to match.</p><p>Assume that you have an <code>int8</code> and you need to convert it to an <code>int32</code>. You can do this by wrapping it in the <code>int32()</code> type conversion:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>index</span> <span style=color:#66d9ef>int8</span> = <span style=color:#ae81ff>15</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>bigIndex</span> <span style=color:#66d9ef>int32</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bigIndex</span> = int32(<span style=color:#a6e22e>index</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>bigIndex</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>15</span>
+</span></span></code></pre></div><p>This code block defines <code>index</code> as an <code>int8</code> data type and <code>bigIndex</code> as an <code>int32</code> data type. To store the value of <code>index</code> in <code>bigIndex</code>, it converts the data type to an <code>int32</code>. This is done by wrapping the <code>int32()</code> conversion around the <code>index</code> variable.</p><p>To verify your data types, you could use the <code>fmt.Printf</code> statement and the <code>%T</code> verb with the following syntax:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;index data type:    %T\n&#34;</span>, <span style=color:#a6e22e>index</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;bigIndex data type: %T\n&#34;</span>, <span style=color:#a6e22e>bigIndex</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>index</span> <span style=color:#a6e22e>data</span> <span style=color:#66d9ef>type</span>:    <span style=color:#66d9ef>int8</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>bigIndex</span> <span style=color:#a6e22e>data</span> <span style=color:#66d9ef>type</span>: <span style=color:#66d9ef>int32</span>
+</span></span></code></pre></div><p>Since this uses the <code>%T</code> verb, the print statement outputs the type for the variable, and not the actual value of the variable. This way, you can confirm the converted data type.</p><p>You can also convert from a larger bit-size integer to a smaller bit-size integer:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>big</span> <span style=color:#66d9ef>int64</span> = <span style=color:#ae81ff>64</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>little</span> <span style=color:#66d9ef>int8</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>little</span> = int8(<span style=color:#a6e22e>big</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>little</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>64</span>
+</span></span></code></pre></div><p>Keep in mind that when converting integers you could potentially exceed the maximum value of the data type and <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#overflow-vs-wraparound><em>wraparound</em></a>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>big</span> <span style=color:#66d9ef>int64</span> = <span style=color:#ae81ff>129</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>little</span> = int8(<span style=color:#a6e22e>big</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>little</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>-</span><span style=color:#ae81ff>127</span>
+</span></span></code></pre></div><p>A wraparound happens when the value is converted to a data type that is too small to hold it. In the preceding example, the 8-bit data type <code>int8</code> did not have enough space to hold the 64-bit variable <code>big</code>. Care should always be taken when converting from a larger number data type to a smaller number data type so that you do not truncate the data by accident.</p><h3 id=converting-integers-to-floats>Converting Integers to Floats
+<a class=anchor href=#converting-integers-to-floats>#</a></h3><p>Converting integers to floats in Go is similar to converting one integer type to another. You can use the built-in type conversions by wrapping <code>float64()</code> or <code>float32()</code> around the integer you are converting:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>x</span> <span style=color:#66d9ef>int64</span> = <span style=color:#ae81ff>57</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>y</span> <span style=color:#66d9ef>float64</span> = float64(<span style=color:#a6e22e>x</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%.2f\n&#34;</span>, <span style=color:#a6e22e>y</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>57.00</span>
+</span></span></code></pre></div><p>This code declares a variable <code>x</code> of type <code>int64</code> and initializes its value to <code>57</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>x</span> <span style=color:#66d9ef>int64</span> = <span style=color:#ae81ff>57</span>
+</span></span></code></pre></div><p>Wrapping the <code>float64()</code> conversion around <code>x</code> will convert the value of <code>57</code> to a float value of <code>57.00</code>.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>y</span> <span style=color:#66d9ef>float64</span> = float64(<span style=color:#a6e22e>x</span>)
+</span></span></code></pre></div><p>The <code>%.2f</code> print verb tells <code>fmt.Printf</code> to format the float with two decimals.</p><p>You can also use this process on a variable. The following code declares <code>f</code> as equal to <code>57</code>, and then prints out the new float:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>f</span> <span style=color:#66d9ef>float64</span> = <span style=color:#ae81ff>57</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%.2f\n&#34;</span>, <span style=color:#a6e22e>f</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>57.00</span>
+</span></span></code></pre></div><p>By using either <code>float32()</code> or <code>float64()</code>, you can convert integers to floats. Next, you will learn how to convert floats to integers.</p><h3 id=converting-floats-to-integers>Converting Floats to Integers
+<a class=anchor href=#converting-floats-to-integers>#</a></h3><p>Go can convert floats to integers, but the program will lose the precision of the float.</p><p>Wrapping floats in <code>int()</code>, or one of its architecture-independent data types, works similarly to when you used it to convert from one integer type to another. You can add a floating-point number inside of the parentheses to convert it to an integer:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>f</span> <span style=color:#66d9ef>float64</span> = <span style=color:#ae81ff>390.8</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>i</span> <span style=color:#66d9ef>int</span> = int(<span style=color:#a6e22e>f</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;f = %.2f\n&#34;</span>, <span style=color:#a6e22e>f</span>)
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;i = %d\n&#34;</span>, <span style=color:#a6e22e>i</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>f</span> = <span style=color:#ae81ff>390.80</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>i</span> = <span style=color:#ae81ff>390</span>
+</span></span></code></pre></div><p>This syntax would convert the float <code>390.8</code> to the integer <code>390</code>, dropping the decimal place.</p><p>You can also use this with variables. The following code declares <code>b</code> as equal to <code>125.0</code> and <code>c</code> as equal to <code>390.8</code>, then prints them out as integers. Short variable declaration (<code>:=</code>) shortens up the syntax:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>125.0</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>c</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>390.8</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(int(<span style=color:#a6e22e>b</span>))
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(int(<span style=color:#a6e22e>c</span>))
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output125</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>390</span>
+</span></span></code></pre></div><p>When converting floats to integers with the <code>int()</code> type, Go cuts off the decimal and remaining numbers of a float to create an integer. Note that, even though you may want to round 390.8 up to 391, Go will not do this through the <code>int()</code> type. Instead, it will drop the decimal.</p><h3 id=numbers-converted-through-division>Numbers Converted Through Division
+<a class=anchor href=#numbers-converted-through-division>#</a></h3><p>When dividing integer types in Go the result will also be an integer type, with the <em>modulus</em>, or remainder, dropped:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>5</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>a</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2</span>
+</span></span></code></pre></div><p>If, when dividing, any of the number types are a float, then all of the types will automatically be declared as a float:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>5.0</span> <span style=color:#f92672>/</span> <span style=color:#ae81ff>2</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>a</span>)
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>2.5</span>
+</span></span></code></pre></div><p>This divides the float <code>5.0</code> by the integer <code>2</code>, and the answer <code>2.5</code> is a float that retains the decimal precision.</p><p>In this section, you have converted between different number data types, including differing sizes of integers and floating-point numbers. Next, you will learn how to convert between numbers and strings.</p><h2 id=converting-with-strings>Converting with Strings
+<a class=anchor href=#converting-with-strings>#</a></h2><p>A <em>string</em> is a sequence of one or more characters (letters, numbers, or symbols). Strings are a common form of data in computer programs, and you may need to convert strings to numbers or numbers to strings fairly often, especially when you are taking in user-generated data.</p><h3 id=converting-numbers-to-strings>Converting Numbers to Strings
+<a class=anchor href=#converting-numbers-to-strings>#</a></h3><p>You can convert numbers to strings by using the <code>strconv.Itoa</code> method from the <code>strconv</code> package in the Go standard libary. If you pass either a number or a variable into the parentheses of the method, that numeric value will be converted into a string value.</p><p>First, let’s look at converting integers. To convert the integer <code>12</code> to a string value, you can pass <code>12</code> into the <code>strconv.Itoa</code> method:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strconv&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Itoa</span>(<span style=color:#ae81ff>12</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%q\n&#34;</span>, <span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>When running this program, you’ll receive the following output:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#e6db74>&#34;12&#34;</span>
+</span></span></code></pre></div><p>The quotes around the number 12 signify that the number is no longer an integer but is now a string value.</p><p>You used the <code>:=</code> assignment operator to both declare a new variable with the name of <code>a</code> and assign the value returned from the <code>strconv.Itoa()</code> function. In this case, you assigned the value <code>12</code> to your variable. You also used the <code>%q</code> verb in the <code>fmt.Printf</code> function, which tells the function to quote the string provided.</p><p>With variables you can begin to see how practical it can be to convert integers to strings. Say you want to keep track of a user’s daily programming progress and are inputting how many lines of code they write at a time. You would like to show this feedback to the user and will be printing out string and integer values at the same time:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>user</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;Sammy&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>lines</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>50</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Congratulations, &#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>user</span> <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;! You just wrote &#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>lines</span> <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; lines of code.&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>When you run this code, you’ll receive the following error:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>invalid</span> <span style=color:#a6e22e>operation</span>: (<span style=color:#e6db74>&#34;Congratulations, &#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>user</span> <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34;! You just wrote &#34;</span>) <span style=color:#f92672>+</span> <span style=color:#a6e22e>lines</span> (<span style=color:#a6e22e>mismatched</span> <span style=color:#a6e22e>types</span> <span style=color:#66d9ef>string</span> <span style=color:#a6e22e>and</span> <span style=color:#66d9ef>int</span>)
+</span></span></code></pre></div><p>You’re not able to concatenate strings and integers in Go, so you’ll have to convert the variable <code>lines</code> to be a string value:</p><pre tabindex=0><code>package main
 
 import (
 	&#34;fmt&#34;
@@ -364,65 +115,53 @@ func main() {
 
 	fmt.Println(&#34;Congratulations, &#34; + user + &#34;! You just wrote &#34; + strconv.Itoa(lines) + &#34; lines of code.&#34;)
 }
-</code></pre><p>Now, when you run the code, you’ll receive the following output that congratulates your user on their progress:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Congratulations</span>, <span style="color:#a6e22e">Sammy</span>! <span style="color:#a6e22e">You</span> <span style="color:#a6e22e">just</span> <span style="color:#a6e22e">wrote</span> <span style="color:#ae81ff">50</span> <span style="color:#a6e22e">lines</span> <span style="color:#a6e22e">of</span> <span style="color:#a6e22e">code</span>.
-</span></span></code></pre></div><p>If you are looking to convert a float to a string rather than an integer to a string, you follow similar steps and format. When you pass a float into the <code>fmt.Sprint</code> method, from the <code>fmt</code> package in the Go standard library, a string value of the float will be returned. You can use either the float value itself or a variable:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprint</span>(<span style="color:#ae81ff">421.034</span>))
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5524.53</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprint</span>(<span style="color:#a6e22e">f</span>))
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">421.034</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">5524.53</span>
-</span></span></code></pre></div><p>You can test to make sure it’s right by concatenating with a string:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">f</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">5524.53</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sammy has &#34;</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprint</span>(<span style="color:#a6e22e">f</span>) <span style="color:#f92672">+</span> <span style="color:#e6db74">&#34; points.&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">Sammy</span> <span style="color:#a6e22e">has</span> <span style="color:#ae81ff">5524.53</span> <span style="color:#a6e22e">points</span>.
-</span></span></code></pre></div><p>You can be sure your float was properly converted to a string because the concatenation was performed without error.</p>
-<h3 id="converting-strings-to-numbers">
-  Converting Strings to Numbers
-  <a class="anchor" href="#converting-strings-to-numbers">#</a>
-</h3>
-<p>Strings can be converted to numbers by using the <code>strconv</code> package in the Go standard library. The <code>strconv</code> package has functions for converting both integer and float number types. This is a very common operation when accepting input from the user. For example, if you had a program that asked for a person’s age, when they type the response in, it is captured as a <code>string</code>. You would then need to convert it to an <code>int</code> to do any math with it.</p>
-<p>If your string does not have decimal places, you’ll most likely want to convert it to an integer by using the <code>strconv.Atoi</code> function. If you know you will use the number as a float, you would use <code>strconv.ParseFloat</code>.</p>
-<p>Let’s use the example of the user Sammy keeping track of lines of code written each day. You may want to manipulate those values with math to provide more interesting feedback for the user, but those values are currently stored in strings:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lines_yesterday</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;50&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lines_today</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;108&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">lines_more</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">lines_today</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">lines_yesterday</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">lines_more</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">invalid</span> <span style="color:#a6e22e">operation</span>: <span style="color:#a6e22e">lines_today</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">lines_yesterday</span> (<span style="color:#a6e22e">operator</span> <span style="color:#f92672">-</span> <span style="color:#a6e22e">not</span> <span style="color:#a6e22e">defined</span> <span style="color:#a6e22e">on</span> <span style="color:#66d9ef">string</span>)
-</span></span></code></pre></div><p>Because the two numeric values were stored in strings, you received an error. The operand <code>-</code> for subtraction is not a valid operand for two string values.</p>
-<p>Modify the code to include the <code>strconv.Atoi()</code> method that will convert the strings to integers, which will allow you to do math with values that were originally strings. Because there is a potential to fail when converting a string to an integer, you have to check for any errors. You can use an <code>if</code> statement to check if your conversion was successful.</p>
-<pre tabindex="0"><code>package main
+</code></pre><p>Now, when you run the code, you’ll receive the following output that congratulates your user on their progress:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>Congratulations</span>, <span style=color:#a6e22e>Sammy</span>! <span style=color:#a6e22e>You</span> <span style=color:#a6e22e>just</span> <span style=color:#a6e22e>wrote</span> <span style=color:#ae81ff>50</span> <span style=color:#a6e22e>lines</span> <span style=color:#a6e22e>of</span> <span style=color:#a6e22e>code</span>.
+</span></span></code></pre></div><p>If you are looking to convert a float to a string rather than an integer to a string, you follow similar steps and format. When you pass a float into the <code>fmt.Sprint</code> method, from the <code>fmt</code> package in the Go standard library, a string value of the float will be returned. You can use either the float value itself or a variable:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprint</span>(<span style=color:#ae81ff>421.034</span>))
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>f</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>5524.53</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprint</span>(<span style=color:#a6e22e>f</span>))
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>421.034</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>5524.53</span>
+</span></span></code></pre></div><p>You can test to make sure it’s right by concatenating with a string:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>f</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>5524.53</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Sammy has &#34;</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprint</span>(<span style=color:#a6e22e>f</span>) <span style=color:#f92672>+</span> <span style=color:#e6db74>&#34; points.&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>Sammy</span> <span style=color:#a6e22e>has</span> <span style=color:#ae81ff>5524.53</span> <span style=color:#a6e22e>points</span>.
+</span></span></code></pre></div><p>You can be sure your float was properly converted to a string because the concatenation was performed without error.</p><h3 id=converting-strings-to-numbers>Converting Strings to Numbers
+<a class=anchor href=#converting-strings-to-numbers>#</a></h3><p>Strings can be converted to numbers by using the <code>strconv</code> package in the Go standard library. The <code>strconv</code> package has functions for converting both integer and float number types. This is a very common operation when accepting input from the user. For example, if you had a program that asked for a person’s age, when they type the response in, it is captured as a <code>string</code>. You would then need to convert it to an <code>int</code> to do any math with it.</p><p>If your string does not have decimal places, you’ll most likely want to convert it to an integer by using the <code>strconv.Atoi</code> function. If you know you will use the number as a float, you would use <code>strconv.ParseFloat</code>.</p><p>Let’s use the example of the user Sammy keeping track of lines of code written each day. You may want to manipulate those values with math to provide more interesting feedback for the user, but those values are currently stored in strings:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>lines_yesterday</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;50&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>lines_today</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;108&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>lines_more</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>lines_today</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>lines_yesterday</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>lines_more</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>invalid</span> <span style=color:#a6e22e>operation</span>: <span style=color:#a6e22e>lines_today</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>lines_yesterday</span> (<span style=color:#a6e22e>operator</span> <span style=color:#f92672>-</span> <span style=color:#a6e22e>not</span> <span style=color:#a6e22e>defined</span> <span style=color:#a6e22e>on</span> <span style=color:#66d9ef>string</span>)
+</span></span></code></pre></div><p>Because the two numeric values were stored in strings, you received an error. The operand <code>-</code> for subtraction is not a valid operand for two string values.</p><p>Modify the code to include the <code>strconv.Atoi()</code> method that will convert the strings to integers, which will allow you to do math with values that were originally strings. Because there is a potential to fail when converting a string to an integer, you have to check for any errors. You can use an <code>if</code> statement to check if your conversion was successful.</p><pre tabindex=0><code>package main
 
 import (
 	&#34;fmt&#34;
@@ -447,149 +186,47 @@ func main() {
 
 	fmt.Println(lines_more)
 }
-</code></pre><p>Because it is possible for a string to not be a number, the <code>strconv.Atoi()</code> method will return both the converted type, as well as a potential error. When converting from <code>lines_yesterday</code> with the <code>strconv.Atoi</code> function, you have to check the <code>err</code> return value to ensure that the value was converted. If the <code>err</code> is not <code>nil</code>, it means that <code>strconv.Atoi</code> was unable to successfully convert the string value to an integer. In this example, you used an <code>if</code> statement to check for the error, and if an error was returned, you used <code>log.Fatal</code> to log the error and exit the program.</p>
-<p>When you run the preceding code, you will get:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">58</span>
-</span></span></code></pre></div><p>Now try to convert a string that is not a number:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strconv&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;not a number&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">b</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>(<span style="color:#a6e22e">a</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">b</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>You will get the following error:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#ae81ff">0</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">strconv</span>.<span style="color:#a6e22e">Atoi</span>: <span style="color:#a6e22e">parsing</span> <span style="color:#e6db74">&#34;not a number&#34;</span>: <span style="color:#a6e22e">invalid</span> <span style="color:#a6e22e">syntax</span>
-</span></span></code></pre></div><p>Because <code>b</code> was declared, but <code>strconv.Atoi</code> failed to make a conversion, a value was never assigned to <code>b</code>. Notice that <code>b</code> has the value of <code>0</code>. This is because Go has default values, referred to as zero values in Go. <code>strconv.Atoi</code> provides an error describing why it failed to convert the string as well.</p>
-<h3 id="converting-strings-and-bytes">
-  Converting Strings and Bytes
-  <a class="anchor" href="#converting-strings-and-bytes">#</a>
-</h3>
-<p>Strings in Go are stored as a slice of bytes. In Go, you can convert between a slice of bytes and a string by wrapping it in the corresponding conversions of <code>[]byte()</code> and <code>string()</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#e6db74">&#34;my string&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> []byte(<span style="color:#a6e22e">a</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> string(<span style="color:#a6e22e">b</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">b</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">c</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>Here you have stored a string value in <code>a</code>, then converted it to a slice of bytes <code>b</code>, then converted the slice of bytes back to a string as <code>c</code>. You then print <code>a</code>, <code>b</code>, and <code>c</code> to the screen:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">my</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>[<span style="color:#ae81ff">109</span> <span style="color:#ae81ff">121</span> <span style="color:#ae81ff">32</span> <span style="color:#ae81ff">115</span> <span style="color:#ae81ff">116</span> <span style="color:#ae81ff">114</span> <span style="color:#ae81ff">105</span> <span style="color:#ae81ff">110</span> <span style="color:#ae81ff">103</span>]
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">my</span> <span style="color:#66d9ef">string</span>
-</span></span></code></pre></div><p>The first line of output is the original string <code>my string</code>. The second line printed out is the byte slice that makes up the original string. The third line shows that the byte slice can be safely converted back into a string and printed back out.</p>
-<h2 id="conclusion">
-  Conclusion
-  <a class="anchor" href="#conclusion">#</a>
-</h2>
-<p>This Go tutorial demonstrated how to convert several of the important native data types to other data types, primarily through built-in methods. Being able to convert data types in Go will allow you to do things like accept user input and do math across different number types. Later on, when you are using Go to write programs that accept data from many different sources like databases and APIs, you will use these conversion methods to ensure you can act on your data. You will also be able to optimize storage by converting data to smaller data types.</p>
-<p>If you would like a deeper analysis of data types in Go, check out our <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go">Understanding Data Types in Go</a> article.</p>
-</article>
- 
-      
-
-      <footer class="book-footer">
-        
-  <div class="flex flex-wrap justify-between">
-
-
-
-
-
-</div>
-
-
-
-  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
-
-
- 
-        
-      </footer>
-
-      
-  
-  <div class="book-comments">
-
-</div>
-  
- 
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
-    </div>
-
-    
-    <aside class="book-toc">
-      <div class="book-toc-content">
-        
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#introduction">Introduction</a></li>
-      </ul>
-    </li>
-    <li><a href="#converting-number-types">Converting Number Types</a>
-      <ul>
-        <li><a href="#converting-between-integer-types">Converting Between Integer Types</a></li>
-        <li><a href="#converting-integers-to-floats">Converting Integers to Floats</a></li>
-        <li><a href="#converting-floats-to-integers">Converting Floats to Integers</a></li>
-        <li><a href="#numbers-converted-through-division">Numbers Converted Through Division</a></li>
-      </ul>
-    </li>
-    <li><a href="#converting-with-strings">Converting with Strings</a>
-      <ul>
-        <li><a href="#converting-numbers-to-strings">Converting Numbers to Strings</a></li>
-        <li><a href="#converting-strings-to-numbers">Converting Strings to Numbers</a></li>
-        <li><a href="#converting-strings-and-bytes">Converting Strings and Bytes</a></li>
-      </ul>
-    </li>
-    <li><a href="#conclusion">Conclusion</a></li>
-  </ul>
-</nav>
-
-
- 
-      </div>
-    </aside>
-    
-  </main>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+</code></pre><p>Because it is possible for a string to not be a number, the <code>strconv.Atoi()</code> method will return both the converted type, as well as a potential error. When converting from <code>lines_yesterday</code> with the <code>strconv.Atoi</code> function, you have to check the <code>err</code> return value to ensure that the value was converted. If the <code>err</code> is not <code>nil</code>, it means that <code>strconv.Atoi</code> was unable to successfully convert the string value to an integer. In this example, you used an <code>if</code> statement to check for the error, and if an error was returned, you used <code>log.Fatal</code> to log the error and exit the program.</p><p>When you run the preceding code, you will get:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>58</span>
+</span></span></code></pre></div><p>Now try to convert a string that is not a number:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strconv&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;not a number&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>You will get the following error:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#ae81ff>0</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>strconv</span>.<span style=color:#a6e22e>Atoi</span>: <span style=color:#a6e22e>parsing</span> <span style=color:#e6db74>&#34;not a number&#34;</span>: <span style=color:#a6e22e>invalid</span> <span style=color:#a6e22e>syntax</span>
+</span></span></code></pre></div><p>Because <code>b</code> was declared, but <code>strconv.Atoi</code> failed to make a conversion, a value was never assigned to <code>b</code>. Notice that <code>b</code> has the value of <code>0</code>. This is because Go has default values, referred to as zero values in Go. <code>strconv.Atoi</code> provides an error describing why it failed to convert the string as well.</p><h3 id=converting-strings-and-bytes>Converting Strings and Bytes
+<a class=anchor href=#converting-strings-and-bytes>#</a></h3><p>Strings in Go are stored as a slice of bytes. In Go, you can convert between a slice of bytes and a string by wrapping it in the corresponding conversions of <code>[]byte()</code> and <code>string()</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#e6db74>&#34;my string&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> []byte(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>c</span> <span style=color:#f92672>:=</span> string(<span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>c</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>Here you have stored a string value in <code>a</code>, then converted it to a slice of bytes <code>b</code>, then converted the slice of bytes back to a string as <code>c</code>. You then print <code>a</code>, <code>b</code>, and <code>c</code> to the screen:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>Output</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>my</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>[<span style=color:#ae81ff>109</span> <span style=color:#ae81ff>121</span> <span style=color:#ae81ff>32</span> <span style=color:#ae81ff>115</span> <span style=color:#ae81ff>116</span> <span style=color:#ae81ff>114</span> <span style=color:#ae81ff>105</span> <span style=color:#ae81ff>110</span> <span style=color:#ae81ff>103</span>]
+</span></span><span style=display:flex><span><span style=color:#a6e22e>my</span> <span style=color:#66d9ef>string</span>
+</span></span></code></pre></div><p>The first line of output is the original string <code>my string</code>. The second line printed out is the byte slice that makes up the original string. The third line shows that the byte slice can be safely converted back into a string and printed back out.</p><h2 id=conclusion>Conclusion
+<a class=anchor href=#conclusion>#</a></h2><p>This Go tutorial demonstrated how to convert several of the important native data types to other data types, primarily through built-in methods. Being able to convert data types in Go will allow you to do things like accept user input and do math across different number types. Later on, when you are using Go to write programs that accept data from many different sources like databases and APIs, you will use these conversion methods to ensure you can act on your data. You will also be able to optimize storage by converting data to smaller data types.</p><p>If you would like a deeper analysis of data types in Go, check out our <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go>Understanding Data Types in Go</a> article.</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#introduction>Introduction</a></li></ul></li><li><a href=#converting-number-types>Converting Number Types</a><ul><li><a href=#converting-between-integer-types>Converting Between Integer Types</a></li><li><a href=#converting-integers-to-floats>Converting Integers to Floats</a></li><li><a href=#converting-floats-to-integers>Converting Floats to Integers</a></li><li><a href=#numbers-converted-through-division>Numbers Converted Through Division</a></li></ul></li><li><a href=#converting-with-strings>Converting with Strings</a><ul><li><a href=#converting-numbers-to-strings>Converting Numbers to Strings</a></li><li><a href=#converting-strings-to-numbers>Converting Strings to Numbers</a></li><li><a href=#converting-strings-and-bytes>Converting Strings and Bytes</a></li></ul></li><li><a href=#conclusion>Conclusion</a></li></ul></nav></div></aside></main></body></html>

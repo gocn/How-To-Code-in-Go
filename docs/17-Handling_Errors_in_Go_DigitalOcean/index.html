@@ -1,491 +1,193 @@
-<!DOCTYPE html>
-<html lang="zh" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。
 相比于其他编程语言, 要求开发者使用专门的语法去处理错误, 在 Go 中将错误作为 error(Go 中的一个接口类型) 类型的值, 并且和其他类型的值一样作为函数返回值的一部分返回。要处理 Go 中的错误, 我们必须检查函数返回值中是否包含了错误信息, 并采取合适的措施去保护数据并告知用户或者操作人员发生错误。
-创建错误 #  在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：errors.New 和 fmt.Errorf。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
+创建错误 # 在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：errors.New 和 fmt.Errorf。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
 errors.New 只提供了一个字符串类型的参数, 用户在使用的时候可以自定义一个错误发生时具体需要展示的错误消息.
 尝试运行以下示例以查看由 errors.New 创建的错误并打印到标准输出：
-package main  import ( 	&#34;errors&#34; 	&#34;fmt&#34; )  func main() {  // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles 	err := errors.New(&#34;barnacles&#34;)   // 将错误直接打印到标准错误输出 	fmt.Println(&#34;Sammy says:&#34;, err) } # 这里是控制台的输出 # Output Sammy says: barnacles 我们使用标准库的 errors.New 函数创建了具体的消息是 &quot;barnacles&quot; 的错误。这里我们遵循了 Go 程序设计风格指南 使用小写了表示错误消息。">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
-<meta property="og:description" content="健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。
+package main import ( &#34;errors&#34; &#34;fmt&#34; ) func main() { // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles err := errors.New(&#34;barnacles&#34;) // 将错误直接打印到标准错误输出 fmt.Println(&#34;Sammy says:&#34;, err) } # 这里是控制台的输出 # Output Sammy says: barnacles 我们使用标准库的 errors.New 函数创建了具体的消息是 &#34;barnacles&#34; 的错误。这里我们遵循了 Go 程序设计风格指南 使用小写了表示错误消息。
+最后，我们使用 fmt.Println 函数将我们的错误消息与&#34;Sammy says:&#34;相结合并且输出到控制台。
+fmt.Errorf 函数允许用户构建动态的错误消息。它的第一个参数是一个字符串，包含包含占位符值的错误消息，例如字符串的 %s 和整数的%d。fmt."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。
 相比于其他编程语言, 要求开发者使用专门的语法去处理错误, 在 Go 中将错误作为 error(Go 中的一个接口类型) 类型的值, 并且和其他类型的值一样作为函数返回值的一部分返回。要处理 Go 中的错误, 我们必须检查函数返回值中是否包含了错误信息, 并采取合适的措施去保护数据并告知用户或者操作人员发生错误。
-创建错误 #  在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：errors.New 和 fmt.Errorf。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
+创建错误 # 在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：errors.New 和 fmt.Errorf。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
 errors.New 只提供了一个字符串类型的参数, 用户在使用的时候可以自定义一个错误发生时具体需要展示的错误消息.
 尝试运行以下示例以查看由 errors.New 创建的错误并打印到标准输出：
-package main  import ( 	&#34;errors&#34; 	&#34;fmt&#34; )  func main() {  // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles 	err := errors.New(&#34;barnacles&#34;)   // 将错误直接打印到标准错误输出 	fmt.Println(&#34;Sammy says:&#34;, err) } # 这里是控制台的输出 # Output Sammy says: barnacles 我们使用标准库的 errors.New 函数创建了具体的消息是 &quot;barnacles&quot; 的错误。这里我们遵循了 Go 程序设计风格指南 使用小写了表示错误消息。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.com/docs/17-Handling_Errors_in_Go_DigitalOcean/" /><meta property="article:section" content="docs" />
-
-
-
-<title>17 Handling Errors in Go Digital Ocean | How To Code in Go</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
-  <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
-  
-</head>
-<body dir="ltr">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <main class="container flex">
-    <aside class="book-menu">
-      <div class="book-menu-content">
-        
-  <nav>
-<h2 class="book-brand">
-  <a class="flex align-center" href="/"><span>How To Code in Go</span>
-  </a>
-</h2>
-
-
-<div class="book-search">
-  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
-  <div class="book-search-spinner hidden"></div>
-  <ul id="book-search-results"></ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-<li>
-<p><strong>开始学习</strong></p>
-<ul>
-<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
-<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
-<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
-<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
-<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
-<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
-<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
-<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
-<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
-<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
-<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
-<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
-<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
-<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/"class=active>Handling Errors in Go</a></li>
-<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
-<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
-<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
-<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
-<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
-<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
-<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
-<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
-<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
-<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
-<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
-<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
-<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
-<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
-<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
-<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
-<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
-<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
-<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
-<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
-<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
-<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
-<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
-</ul>
-</li>
-<li>
-<p><strong>附录：资源</strong></p>
-</li>
-<li>
-<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
-</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-</nav>
-
-
-
-
-  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
-
-
- 
-      </div>
-    </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        
-  <div class="flex align-center justify-between">
-  <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
-  </label>
-
-  <strong>17 Handling Errors in Go Digital Ocean</strong>
-
-  <label for="toc-control">
-    
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
-    
-  </label>
-</div>
-
-
-  
-  <aside class="hidden clearfix">
-    
-  
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#创建错误">创建错误</a></li>
-    <li><a href="#错误处理">错误处理</a></li>
-    <li><a href="#同时返回错误和多个值">同时返回错误和多个值</a>
-      <ul>
-        <li><a href="#简化重复的代码">简化重复的代码</a></li>
-        <li><a href="#处理多回报功能的错误">处理多回报功能的错误</a></li>
-      </ul>
-    </li>
-    <li><a href="#结论">结论</a></li>
-  </ul>
-</nav>
-
-
-
-  </aside>
-  
- 
-      </header>
-
-      
-      
-  <article class="markdown"><p>健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。</p>
-<p>相比于其他编程语言, 要求开发者使用专门的语法去处理错误, 在 Go 中将错误作为 <code>error</code>(Go 中的一个接口类型) 类型的值, 并且和其他类型的值一样作为函数返回值的一部分返回。要处理 Go 中的错误, 我们必须检查函数返回值中是否包含了错误信息, 并采取合适的措施去保护数据并告知用户或者操作人员发生错误。</p>
-<h2 id="创建错误">
-  创建错误
-  <a class="anchor" href="#%e5%88%9b%e5%bb%ba%e9%94%99%e8%af%af">#</a>
-</h2>
-<p>在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：<code>errors.New</code> 和 <code>fmt.Errorf</code>。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。</p>
-<p><code>errors.New</code> 只提供了一个字符串类型的参数, 用户在使用的时候可以自定义一个错误发生时具体需要展示的错误消息.</p>
-<p>尝试运行以下示例以查看由 <code>errors.New</code> 创建的错误并打印到标准输出：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;errors&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;barnacles&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>    <span style="color:#75715e">// 将错误直接打印到标准错误输出
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Sammy says:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 这里是控制台的输出</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Output</span>
-</span></span><span style="display:flex;"><span>Sammy says: barnacles
-</span></span></code></pre></div><p>我们使用标准库的 <code>errors.New</code> 函数创建了具体的消息是 <code>&quot;barnacles&quot;</code> 的错误。这里我们遵循了 <a href="https://github.com/golang/go/wiki/CodeReviewComments#error-strings">Go 程序设计风格指南</a> 使用小写了表示错误消息。</p>
-<p>最后，我们使用 <code>fmt.Println</code> 函数将我们的错误消息与<code>&quot;Sammy says:&quot;</code>相结合并且输出到控制台。</p>
-<p><code>fmt.Errorf</code> 函数允许用户构建动态的错误消息。它的第一个参数是一个字符串，包含包含占位符值的错误消息，例如字符串的 <code>%s</code> 和整数的<code>%d</code>。<code>fmt.Errorf</code> 将这个格式化字符串后面的参数按顺序插入到这些占位符中:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 使用 fmt.Errorf() 来构建动态错误信息
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 错误内容是 error occurred at: %v
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 其中 %v 的具体内容由 time.Now() 的具体返回值决定
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Errorf</span>(<span style="color:#e6db74">&#34;error occurred at: %v&#34;</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>())
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 将具体的错误信息 结合 `An error happened:` 打印到控制台
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;An error happened:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># 在控制台中输出错误信息</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># Output</span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e"># 输出内容中的: 2019-07-11 16:52:42.532621 -0400 EDT m=+0.000137103 是由 `time.Now()` 动态生成的</span>
-</span></span><span style="display:flex;"><span>An error happened: error occurred at: 2019-07-11 16:52:42.532621 -0400 EDT m<span style="color:#f92672">=</span>+0.000137103
-</span></span></code></pre></div><p>我们使用 <code>fmt.Errorf</code> 函数来构建一个错误消息，该消息将包括当前时间。我们提供给 <code>fmt.Errorf</code> 的格式字符串包含 <code>％v</code> 格式指令，该指令告诉 <code>fmt.Errorf</code> 使用默认格式为格式化字符串后提供的第一个参数。这个参数由标准库的 <code>time.Now</code> 函数提供的当前时间。与较早的示例类似，我们将错误消息与简短前缀结合在一起，并使用 <code>fmt.Println</code> 函数将结果打印到标准输出。</p>
-<h2 id="错误处理">
-  错误处理
-  <a class="anchor" href="#%e9%94%99%e8%af%af%e5%a4%84%e7%90%86">#</a>
-</h2>
-<p>一般来说, 你不会看到像上面一样直接创建错误, 然后直接打印。实际上, 在出现问题时, 错误都是由从函数中创建并且返回这种情况更加普遍。调用者使用 <code>if</code> 语句判断返回的错误是否为 <code>nil</code>(error 非初始化的值) 来判断错误是否存在。</p>
-<p>下面这个示例包含了一个总是返回错误的函数, 需要特别留意的时尽管这里的错误是由一个函数返回的, 当你在运行这个程序时, 它产生的输出总是与前面的示例相同。在其他位置声明错误不会改变错误的消息。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;errors&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// 定义一个名为: boom 的函数, 返回值总是 errors.New(&#34;barnacles&#34;)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">boom</span>() <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;barnacles&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 调用 boom() 函数, 并将返回值赋值给 err 变量
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">boom</span>()
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 判断 err 是否等于  nil 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// 如果 err != nil 条件成立, 输出内容, 然后返回 main.main 函数
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;An error occurred:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 如果 err == nil 成立, 
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#75715e">// 将会输出下面这一句
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Anchors away!&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Output</span>
-</span></span><span style="display:flex;"><span>An error occurred: barnacles
-</span></span></code></pre></div><p>这里我们先定义了一个名为 <code>boom()</code> 的函数并且总是返回单个使用 <code>errors.New</code> 构造 <code>error</code> 的函数。然后, 我们通过 <code>err := boom()</code> 这行调用 <code>boom()</code> 并捕捉错误(赋值给 err 变量即为捕捉错误)。在赋值 error 之后, 我们使用 <code>if err != nil</code> 这个条件判断语句来进行判断错误是否存在。因为 <code>boom()</code> 函数总是返回有效的 <code>error</code> 所以这里的判断条件永远为 <code>true</code>。</p>
-<p>但是情况并非总是如此(值的是 <code>boom()</code> 函数总是返回有效的 <code>error</code> 变量), 所以, 最好有逻辑去处理错误不存在和错误存在这两种情况。当错误存在时, 就像上面的示例中一样, 我们使用 <code>fmt.Println</code> 和前面的前缀打印错误。最后我们使用 <code>return</code> 语句来跳过 <code>fmt.Println(&quot;Anchors away!&quot;)</code> 语句的执行, 因为这个语句只有在 <code>err == nil</code> 时才会执行。</p>
-<blockquote>
-<p><strong>注意:</strong> 在 Go 中主要采用上一个示例中的 <code>if err != nil</code> 来进行错误处理。函数运行到哪里都有可能发生错误, 重要的是使用 <code>if</code> 语句来判断错误是否发生。这样, Go 代码通常就具有第一个缩进级别的 <a href="https://en.wikipedia.org/wiki/Happy_path">快乐路径</a> 的逻辑, 并且所有的 &ldquo;悲伤的路径&rdquo; 在第二个缩进。</p>
-</blockquote>
-<p><code>if</code> 语句有一个可选的赋值子句，可以用来帮助压缩函数调用和错误处理。</p>
-<p>运行下一个程序，查看与前面示例相同的输出，但这一次使用复合 <code>if</code> 语句来减少一些重复的代码:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;errors&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">boom</span>() <span style="color:#66d9ef">error</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;barnacles&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// 将 err 变量的赋值和判断都压缩在一个语句块中执行
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">boom</span>(); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;An error occurred:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Anchors away!&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e">#Output</span>
-</span></span><span style="display:flex;"><span>An error occurred: barnacles
-</span></span></code></pre></div><p>和之前的示例一样, 我们定义一个 <code>boom()</code> 总是返回错误的函数。我们将从 <code>boom()</code> 返回的错误赋值给 <code>err</code> 作为 <code>if</code> 语句的一部分。在 <code>if</code> 语句的第二部分语句中, <code>err</code> 变量变得可用。我们检查错误是否存在, 然后像以前一样使用一个简短的前缀字符串打印我们的错误。</p>
-<p>在本节中，我们学习了如何处理只返回错误的函数。这些函数很常见，但是能够处理可能返回多个值的函数的错误也很重要。</p>
-<h2 id="同时返回错误和多个值">
-  同时返回错误和多个值
-  <a class="anchor" href="#%e5%90%8c%e6%97%b6%e8%bf%94%e5%9b%9e%e9%94%99%e8%af%af%e5%92%8c%e5%a4%9a%e4%b8%aa%e5%80%bc">#</a>
-</h2>
-<p>返回单个值的函数通常是影响某些状态更改的函数。 比如将行数据插入到数据库中。通常还会编写这样的函数: 如果成功则返回一个值, 如果失败则返回一个潜在的错误。Go 允许函数返回多个结果, 可以用来同时返回一个值和一个错误类型。</p>
-<p>为了创建一个返回多个值的函数, 我们需要在函数签名的括号中列出返回值类型。例如, 一个 <code>capitalize</code> 函数返回值类型是 <code>string</code> 和 <code>error</code>, 那么我们可以这么声明 <code>func capitalize(name string)(string, error){}</code>。其中 <code>(string, error)</code> 这一块的语法是告诉 Go 的编译器, 函数会按照 <code>string</code> 和 <code>error</code> 这一顺序返回值。</p>
-<p>运行下面的程序并且查看函数返回的 <code>string</code> 和 <code>error</code>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;errors&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strings&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">capitalize</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;no name provided&#34;</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToTitle</span>(<span style="color:#a6e22e">name</span>), <span style="color:#66d9ef">nil</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">capitalize</span>(<span style="color:#e6db74">&#34;sammy&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Could not capitalize:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Capitalized name:&#34;</span>, <span style="color:#a6e22e">name</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Output</span>
-</span></span><span style="display:flex;"><span>Capitalized name: SAMMY
-</span></span></code></pre></div><p>我们定义了 <code>capitalize()</code> 函数, 这个函数需要传递一个字符串作为参数(完成将字符串的转为大写)并返回字符串和错误。在 <code>main()</code> 函数中, 我们调用 <code>capitalize()</code>, 然后在 <code>:=</code> 运算符的左边将函数的返回值赋值给 <code>name</code> 和 <code>err</code> 这两个变量。之后, 我们执行 <code>if err != nil</code> 检查错误, 如果存在错误, 使用 <code>fmt.Prtintln</code> 将错误信息打印到标准输出。如果没有错误, 输出 <code>Capitalized name: SAMMY</code>。</p>
-<p>如果将 <code>err := capitalize(&quot;sammy&quot;)</code> 中的 <code>&quot;sammy&quot;</code> 更改为为空字符串 <code>(&quot;&quot;)</code>，你将收到 <code>Could not capitalize: no name provided</code> 这个错误。</p>
-<p>当函数的调用者为 <code>name</code> 参数提供一个空字符串时， <code>capitalize</code> 函数将返回错误。当 <code>name</code> 参数不是空字符串时，<code>capledize()</code> 调用 <code>strings.ToTitle</code> 函数将 <code>name</code> 参数转为大写并返回为 <code>nil</code> 的错误值。</p>
-<p>这个例子遵循一些微妙的规约，这些规约是 Go 代码的典型特征，但 GO 编译器并没有强制执行。当函数返回多个值（包括错误）时，规约我们将 <code>error</code> 类型作为最后一项。具有多个返回值的函数返回错误时，通常约定 GO 代码还将每个不是 <code>error</code> 类型的值设置为零值。比如字符串的零值空字符串，整数为 0，一个用于结构类型的空结构，以及用 <code>nil</code> 表示接口和指针类型的零值。我们在有关 <a href="https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values">变量和常数的教程</a> 中更详细地介绍零值。</p>
-<h3 id="简化重复的代码">
-  简化重复的代码
-  <a class="anchor" href="#%e7%ae%80%e5%8c%96%e9%87%8d%e5%a4%8d%e7%9a%84%e4%bb%a3%e7%a0%81">#</a>
-</h3>
-<p>如果函数有多个返回值时，遵守这些约定可能会变得啰嗦。我们可以使用 <a href="https://en.wikipedia.org/wiki/Anonymous_function">匿名函数</a> 来帮助减少重复的代码。匿名函数是分配变量的过程。与我们在较早的示例中定义的函数相反，它们仅在你声明它们的函数中可用 - 这使其非常适合用作可重复使用的 <code>helper</code> 逻辑代码片段。</p>
-<p>以下程序是修改了最后一个示例，返回值增加了一个类型, 包括大写的名称的长度。由于它具有三个值可以返回的值，因此如果没有匿名函数来帮助我们，处理错误可能会变得麻烦:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;errors&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strings&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">capitalize</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">handle</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">func</span>(<span style="color:#a6e22e">err</span> <span style="color:#66d9ef">error</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">int</span>, <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#ae81ff">0</span>, <span style="color:#a6e22e">err</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">handle</span>(<span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;no name provided&#34;</span>))
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToTitle</span>(<span style="color:#a6e22e">name</span>), len(<span style="color:#a6e22e">name</span>), <span style="color:#66d9ef">nil</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">size</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">capitalize</span>(<span style="color:#e6db74">&#34;sammy&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;An error occurred:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Capitalized name: %s, length: %d&#34;</span>, <span style="color:#a6e22e">name</span>, <span style="color:#a6e22e">size</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Output</span>
-</span></span><span style="display:flex;"><span>Capitalized name: SAMMY, length: <span style="color:#ae81ff">5</span>
-</span></span></code></pre></div><p>在 <code>main()</code> 中，我们现在可以从 <code>capitalize()</code> 函数中获取转为大写的 <code>name</code>，<code>size</code> 和 <code>err</code> 这三个返回的参数。然后，我们检查是否通过检查错误变量不等于 <code>nil</code>。在尝试使用 <code>capitalize()</code> 返回的任何其他值之前，这一点很重要，因为匿名函数可以将它们设置为零值。由于我们提供了字符串 <code>&quot;Sammy&quot;</code>，因此没有发生错误，因此我们打印出转为大写之后的名称及其长度。</p>
-<p>再次，你可以尝试将 <code>&quot;Sammy&quot;</code> 更改为空字符串 <code>(&quot;&quot;)</code> 以查看已打印的错误情况 (<code>An error occurred: no name provided</code>)。</p>
-<p>在 <code>capitalize</code> 函数中，我们将 <code>handle</code> 变量定义为匿名函数。它需要传递要给错误类型的参数，并以与 <code>capitalize</code> 函数的返回值相同的顺序返回相同的值。<code>handle</code> 将这些值设置为零值，并将其作为最终返回值作为参数传递的错误转发。然后，使用 <code>err</code> 作为 <code>handle</code> 的参数，就可以返回在 <code>capitalize</code> 中遇到的任何错误。</p>
-<p>请记住，<code>capitalize</code> 必须一直返回三个值，因为这就是我们定义函数的方式。有时我们不想处理函数可能返回的所有值。幸运的是，我们在赋值并如何使用这些值方面具有一定的灵活性。</p>
-<h3 id="处理多回报功能的错误">
-  处理多回报功能的错误
-  <a class="anchor" href="#%e5%a4%84%e7%90%86%e5%a4%9a%e5%9b%9e%e6%8a%a5%e5%8a%9f%e8%83%bd%e7%9a%84%e9%94%99%e8%af%af">#</a>
-</h3>
-<p>当函数返回许多值时，Go 要求我们将每个值分配给变量。在最后一个示例中，我们通过提供从 <code>capitalize</code> 函数返回的两个值的名称来做到这一点。这些名称应通过逗号分隔，并出现在 <code>:=</code> 操作符的左侧。从 <code>capitalize</code> 返回的第一个值将分配给 <code>name</code> 变量，第二个值(<code>error</code>)将分配给 <code>err</code> 这个变量。有时，我们只对错误值感兴趣。您可以丢弃使用特殊 <code>_</code> 变量名称返回功能的任何不需要值。</p>
-<p>在以下程序中，我们修改了涉及大写功能的第一个示例，以通过传递空字符串 <code>(&quot;&quot;)</code> 来产生错误。尝试运行此程序，以查看我们如何通过使用 <code>_</code> 变量丢弃第一个返回的值来检查错误：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;errors&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strings&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">capitalize</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>) (<span style="color:#66d9ef">string</span>, <span style="color:#66d9ef">error</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">name</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;&#34;</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#e6db74">&#34;&#34;</span>, <span style="color:#a6e22e">errors</span>.<span style="color:#a6e22e">New</span>(<span style="color:#e6db74">&#34;no name provided&#34;</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToTitle</span>(<span style="color:#a6e22e">name</span>), <span style="color:#66d9ef">nil</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">capitalize</span>(<span style="color:#e6db74">&#34;&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Could not capitalize:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Success!&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span><span style="color:#75715e"># Output</span>
-</span></span><span style="display:flex;"><span>Could not capitalize: no name provided
-</span></span></code></pre></div><p>这次在 <code>main()</code> 函数中，我们将 <code>capitalize</code> 的第一个返回值 (首先返回的字符串) 分配给下划线变量(<code>_</code>)。同时，我们分配了通过  <code>capitalize</code> 返回的 <code>err</code> 变量返回的错误。然后，我们通过 <code>if err != nil</code> 条件判断错误是否存在。由于我们已经对一个空字符串进行了硬编码，作为在行中大写的参数，<code>_, err := capitalize(&quot;&quot;)</code>，因此该条件始终将评估为 <code>true</code>。这会产生输出<code>&quot;Could not capitalize: no name provided&quot;</code>，该输出由 <code>fmt.Println</code> 函数在 <code>if</code> 语句的正文中打印出来。此后的返回将跳过 <code>fmt.Println(&quot;Success!&quot;)</code>。</p>
-<h2 id="结论">
-  结论
-  <a class="anchor" href="#%e7%bb%93%e8%ae%ba">#</a>
-</h2>
-<p>我们已经看到了许多使用标准库创建错误的方法，以及如何构建以惯用方式返回错误的函数。在本教程中，我们设法使用标准库的 <code>errors.New</code> 和 <code>fmt.Errorf</code> 函数成功地创建了各种错误。在将来的教程中，我们将研究如何创建自己的自定义错误类型，以向用户传达更丰富的信息。</p>
-</article>
- 
-      
-
-      <footer class="book-footer">
-        
-  <div class="flex flex-wrap justify-between">
-
-
-
-
-
-</div>
-
-
-
-  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
-
-
- 
-        
-      </footer>
-
-      
-  
-  <div class="book-comments">
-
-</div>
-  
- 
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
-    </div>
-
-    
-    <aside class="book-toc">
-      <div class="book-toc-content">
-        
-  
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#创建错误">创建错误</a></li>
-    <li><a href="#错误处理">错误处理</a></li>
-    <li><a href="#同时返回错误和多个值">同时返回错误和多个值</a>
-      <ul>
-        <li><a href="#简化重复的代码">简化重复的代码</a></li>
-        <li><a href="#处理多回报功能的错误">处理多回报功能的错误</a></li>
-      </ul>
-    </li>
-    <li><a href="#结论">结论</a></li>
-  </ul>
-</nav>
-
-
- 
-      </div>
-    </aside>
-    
-  </main>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+package main import ( &#34;errors&#34; &#34;fmt&#34; ) func main() { // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles err := errors.New(&#34;barnacles&#34;) // 将错误直接打印到标准错误输出 fmt.Println(&#34;Sammy says:&#34;, err) } # 这里是控制台的输出 # Output Sammy says: barnacles 我们使用标准库的 errors.New 函数创建了具体的消息是 &#34;barnacles&#34; 的错误。这里我们遵循了 Go 程序设计风格指南 使用小写了表示错误消息。
+最后，我们使用 fmt.Println 函数将我们的错误消息与&#34;Sammy says:&#34;相结合并且输出到控制台。
+fmt.Errorf 函数允许用户构建动态的错误消息。它的第一个参数是一个字符串，包含包含占位符值的错误消息，例如字符串的 %s 和整数的%d。fmt."><meta property="og:type" content="article"><meta property="og:url" content="https://example.com/docs/17-Handling_Errors_in_Go_DigitalOcean/"><meta property="article:section" content="docs"><title>17 Handling Errors in Go Digital Ocean | How To Code in Go</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css integrity="sha256-gsXb0jRHzuC0wqo+0Izglh+qQOH6Nw7uT4yfAuDUa18=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/zh.search.min.49dd84c1863c020bc1e7dc2da56c6f5767094cc4a336b6ce9c015604b7f5c488.js integrity="sha256-Sd2EwYY8AgvB59wtpWxvV2cJTMSjNrbOnAFWBLf1xIg=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>How To Code in Go</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/>如何用 Go 编写你的第一个程序</a></li><li><a href=/docs/05-Understanding_the_GOPATH/>理解 GOPATH</a></li><li><a href=/docs/06-How_To_Write_Comments_in_Go/>如何在 Go 中写注释</a></li><li><a href=/docs/07-Understanding_Data_Types_in_Go/>理解 Go 的数据类型</a></li><li><a href=/docs/08-An_Introduction_to_Working_with_Strings_in_Go/>Go 中处理字符串的介绍</a></li><li><a href=/docs/09-How_To_Format_Strings_in_Go/>How To Format Strings in Go</a></li><li><a href=/docs/10-An_Introduction_to_the_Strings_Package_in_Go/>An Introduction to the Strings Package in Go</a></li><li><a href=/docs/11-How_To_Use_Variables_and_Constants_in_Go/>How To Use Variables and Constants in Go</a></li><li><a href=/docs/12-How_To_Convert_Data_Types_in_Go/>How To Convert Data Types in Go</a></li><li><a href=/docs/13-How_To_Do_Math_in_Go_with_Operators/>How To Do Math in Go with Operators</a></li><li><a href=/docs/14-Understanding_Boolean_Logic_in_Go/>Understanding Boolean Logic in Go</a></li><li><a href=/docs/15-Understanding_Maps_in_Go/>Understanding Maps in Go</a></li><li><a href=/docs/16-Understanding_Arrays_and_Slices_in_Go/>Understanding Arrays and Slices in Go</a></li><li><a href=/docs/17-Handling_Errors_in_Go_DigitalOcean/ class=active>Handling Errors in Go</a></li><li><a href=/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/>Creating Custom Errors in Go</a></li><li><a href=/docs/19-Handling_Panics_in_Go-_DigitalOcean/>Handling Panics in Go</a></li><li><a href=/docs/20-Importing_Packages_in_Go_DigitalOcean/>Importing Packages in Go</a></li><li><a href=/docs/21-How_To_Write_Packages_in_Go/>如何在 Go 中编写包</a></li><li><a href=/docs/22-Understanding_Package_Visibility_in_Go/>理解 Go 中包的可见性</a></li><li><a href=/docs/23-How_To_Write_Conditional_Statements_in_Go/>如何在 Go 中编写条件语句</a></li><li><a href=/docs/24-How_To_Write_Switch_Statements_in_Go/>如何在 Go 中编写 Switch 语句</a></li><li><a href=/docs/25_How_To_Construct_For_Loops_in_Go/>如何在 Go 中构造 for 循环</a></li><li><a href=/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/>在循环中使用 Break 和 Continue</a></li><li><a href=/docs/27_How_To_Define_and_Call_Functions_in_Go/>如何在 Go 中定义并调用函数</a></li><li><a href=/docs/28_How_To_Use_Variadic_Functions_in_Go/>如何在 Go 中使用可变参数函数</a></li><li><a href=/docs/29-Understanding_defer_in_Go/>了解 Go 中的 defer</a></li><li><a href=/docs/30_Understanding_init_in_Go/>了解 Go 中的 init</a></li><li><a href=/docs/31_Customizing_Go_Binaries_with_Build_Tags/>用构建标签定制 Go 二进制文件</a></li><li><a href=/docs/32_Understanding_Pointers_in_Go/>了解 Go 中的指针</a></li><li><a href=/docs/33_Defining_Structs_in_Go/>在 Go 中定义结构体</a></li><li><a href=/docs/34_Defining_Methods_in_Go/>在 Go 中定义方法</a></li><li><a href=/docs/35_How_To_Build_and_Install_Go_Programs/>如何构建和安装 Go 程序</a></li><li><a href=/docs/36_How_To_Use_Struct_Tags_in_Go/>如何在 Go 中使用结构体标签</a></li><li><a href=/docs/37-How_To_Use_Interfaces_in_Go/>如何在 Go 使用 interface</a></li><li><a href=/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/>在不同的操作系统和架构编译 Go 应用</a></li><li><a href=/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/>用 ldflags 设置 Go 应用程序的版本信息</a></li><li><a href=/docs/40-How_To_Use_the_Flag_Package_in_Go/>在 Go 里面如何使用 Flag 包</a></li></ul></li><li><p><strong>附录：资源</strong></p></li><li><p><a href=https://github.com/gocn/How-To-Code-in-Go><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>17 Handling Errors in Go Digital Ocean</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#创建错误>创建错误</a></li><li><a href=#错误处理>错误处理</a></li><li><a href=#同时返回错误和多个值>同时返回错误和多个值</a><ul><li><a href=#简化重复的代码>简化重复的代码</a></li><li><a href=#处理多回报功能的错误>处理多回报功能的错误</a></li></ul></li><li><a href=#结论>结论</a></li></ul></nav></aside></header><article class=markdown><p>健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。</p><p>相比于其他编程语言, 要求开发者使用专门的语法去处理错误, 在 Go 中将错误作为 <code>error</code>(Go 中的一个接口类型) 类型的值, 并且和其他类型的值一样作为函数返回值的一部分返回。要处理 Go 中的错误, 我们必须检查函数返回值中是否包含了错误信息, 并采取合适的措施去保护数据并告知用户或者操作人员发生错误。</p><h2 id=创建错误>创建错误
+<a class=anchor href=#%e5%88%9b%e5%bb%ba%e9%94%99%e8%af%af>#</a></h2><p>在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：<code>errors.New</code> 和 <code>fmt.Errorf</code>。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。</p><p><code>errors.New</code> 只提供了一个字符串类型的参数, 用户在使用的时候可以自定义一个错误发生时具体需要展示的错误消息.</p><p>尝试运行以下示例以查看由 <code>errors.New</code> 创建的错误并打印到标准输出：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;barnacles&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>    <span style=color:#75715e>// 将错误直接打印到标准错误输出
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Sammy says:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># 这里是控制台的输出</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Output</span>
+</span></span><span style=display:flex><span>Sammy says: barnacles
+</span></span></code></pre></div><p>我们使用标准库的 <code>errors.New</code> 函数创建了具体的消息是 <code>"barnacles"</code> 的错误。这里我们遵循了 <a href=https://github.com/golang/go/wiki/CodeReviewComments#error-strings>Go 程序设计风格指南</a> 使用小写了表示错误消息。</p><p>最后，我们使用 <code>fmt.Println</code> 函数将我们的错误消息与<code>"Sammy says:"</code>相结合并且输出到控制台。</p><p><code>fmt.Errorf</code> 函数允许用户构建动态的错误消息。它的第一个参数是一个字符串，包含包含占位符值的错误消息，例如字符串的 <code>%s</code> 和整数的<code>%d</code>。<code>fmt.Errorf</code> 将这个格式化字符串后面的参数按顺序插入到这些占位符中:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 使用 fmt.Errorf() 来构建动态错误信息
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>// 错误内容是 error occurred at: %v
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>// 其中 %v 的具体内容由 time.Now() 的具体返回值决定
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Errorf</span>(<span style=color:#e6db74>&#34;error occurred at: %v&#34;</span>, <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>())
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 将具体的错误信息 结合 `An error happened:` 打印到控制台
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;An error happened:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># 在控制台中输出错误信息</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># Output</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 输出内容中的: 2019-07-11 16:52:42.532621 -0400 EDT m=+0.000137103 是由 `time.Now()` 动态生成的</span>
+</span></span><span style=display:flex><span>An error happened: error occurred at: 2019-07-11 16:52:42.532621 -0400 EDT m<span style=color:#f92672>=</span>+0.000137103
+</span></span></code></pre></div><p>我们使用 <code>fmt.Errorf</code> 函数来构建一个错误消息，该消息将包括当前时间。我们提供给 <code>fmt.Errorf</code> 的格式字符串包含 <code>％v</code> 格式指令，该指令告诉 <code>fmt.Errorf</code> 使用默认格式为格式化字符串后提供的第一个参数。这个参数由标准库的 <code>time.Now</code> 函数提供的当前时间。与较早的示例类似，我们将错误消息与简短前缀结合在一起，并使用 <code>fmt.Println</code> 函数将结果打印到标准输出。</p><h2 id=错误处理>错误处理
+<a class=anchor href=#%e9%94%99%e8%af%af%e5%a4%84%e7%90%86>#</a></h2><p>一般来说, 你不会看到像上面一样直接创建错误, 然后直接打印。实际上, 在出现问题时, 错误都是由从函数中创建并且返回这种情况更加普遍。调用者使用 <code>if</code> 语句判断返回的错误是否为 <code>nil</code>(error 非初始化的值) 来判断错误是否存在。</p><p>下面这个示例包含了一个总是返回错误的函数, 需要特别留意的时尽管这里的错误是由一个函数返回的, 当你在运行这个程序时, 它产生的输出总是与前面的示例相同。在其他位置声明错误不会改变错误的消息。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// 定义一个名为: boom 的函数, 返回值总是 errors.New(&#34;barnacles&#34;)
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>boom</span>() <span style=color:#66d9ef>error</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;barnacles&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 调用 boom() 函数, 并将返回值赋值给 err 变量
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>boom</span>()
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 判断 err 是否等于  nil 
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// 如果 err != nil 条件成立, 输出内容, 然后返回 main.main 函数
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;An error occurred:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 如果 err == nil 成立, 
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#75715e>// 将会输出下面这一句
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Anchors away!&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># Output</span>
+</span></span><span style=display:flex><span>An error occurred: barnacles
+</span></span></code></pre></div><p>这里我们先定义了一个名为 <code>boom()</code> 的函数并且总是返回单个使用 <code>errors.New</code> 构造 <code>error</code> 的函数。然后, 我们通过 <code>err := boom()</code> 这行调用 <code>boom()</code> 并捕捉错误(赋值给 err 变量即为捕捉错误)。在赋值 error 之后, 我们使用 <code>if err != nil</code> 这个条件判断语句来进行判断错误是否存在。因为 <code>boom()</code> 函数总是返回有效的 <code>error</code> 所以这里的判断条件永远为 <code>true</code>。</p><p>但是情况并非总是如此(值的是 <code>boom()</code> 函数总是返回有效的 <code>error</code> 变量), 所以, 最好有逻辑去处理错误不存在和错误存在这两种情况。当错误存在时, 就像上面的示例中一样, 我们使用 <code>fmt.Println</code> 和前面的前缀打印错误。最后我们使用 <code>return</code> 语句来跳过 <code>fmt.Println("Anchors away!")</code> 语句的执行, 因为这个语句只有在 <code>err == nil</code> 时才会执行。</p><blockquote><p><strong>注意:</strong> 在 Go 中主要采用上一个示例中的 <code>if err != nil</code> 来进行错误处理。函数运行到哪里都有可能发生错误, 重要的是使用 <code>if</code> 语句来判断错误是否发生。这样, Go 代码通常就具有第一个缩进级别的 <a href=https://en.wikipedia.org/wiki/Happy_path>快乐路径</a> 的逻辑, 并且所有的 &ldquo;悲伤的路径&rdquo; 在第二个缩进。</p></blockquote><p><code>if</code> 语句有一个可选的赋值子句，可以用来帮助压缩函数调用和错误处理。</p><p>运行下一个程序，查看与前面示例相同的输出，但这一次使用复合 <code>if</code> 语句来减少一些重复的代码:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>boom</span>() <span style=color:#66d9ef>error</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;barnacles&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// 将 err 变量的赋值和判断都压缩在一个语句块中执行
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>boom</span>(); <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;An error occurred:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Anchors away!&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e>#Output</span>
+</span></span><span style=display:flex><span>An error occurred: barnacles
+</span></span></code></pre></div><p>和之前的示例一样, 我们定义一个 <code>boom()</code> 总是返回错误的函数。我们将从 <code>boom()</code> 返回的错误赋值给 <code>err</code> 作为 <code>if</code> 语句的一部分。在 <code>if</code> 语句的第二部分语句中, <code>err</code> 变量变得可用。我们检查错误是否存在, 然后像以前一样使用一个简短的前缀字符串打印我们的错误。</p><p>在本节中，我们学习了如何处理只返回错误的函数。这些函数很常见，但是能够处理可能返回多个值的函数的错误也很重要。</p><h2 id=同时返回错误和多个值>同时返回错误和多个值
+<a class=anchor href=#%e5%90%8c%e6%97%b6%e8%bf%94%e5%9b%9e%e9%94%99%e8%af%af%e5%92%8c%e5%a4%9a%e4%b8%aa%e5%80%bc>#</a></h2><p>返回单个值的函数通常是影响某些状态更改的函数。 比如将行数据插入到数据库中。通常还会编写这样的函数: 如果成功则返回一个值, 如果失败则返回一个潜在的错误。Go 允许函数返回多个结果, 可以用来同时返回一个值和一个错误类型。</p><p>为了创建一个返回多个值的函数, 我们需要在函数签名的括号中列出返回值类型。例如, 一个 <code>capitalize</code> 函数返回值类型是 <code>string</code> 和 <code>error</code>, 那么我们可以这么声明 <code>func capitalize(name string)(string, error){}</code>。其中 <code>(string, error)</code> 这一块的语法是告诉 Go 的编译器, 函数会按照 <code>string</code> 和 <code>error</code> 这一顺序返回值。</p><p>运行下面的程序并且查看函数返回的 <code>string</code> 和 <code>error</code>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>capitalize</span>(<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>) (<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>name</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;&#34;</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;no name provided&#34;</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>ToTitle</span>(<span style=color:#a6e22e>name</span>), <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>capitalize</span>(<span style=color:#e6db74>&#34;sammy&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Could not capitalize:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Capitalized name:&#34;</span>, <span style=color:#a6e22e>name</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># Output</span>
+</span></span><span style=display:flex><span>Capitalized name: SAMMY
+</span></span></code></pre></div><p>我们定义了 <code>capitalize()</code> 函数, 这个函数需要传递一个字符串作为参数(完成将字符串的转为大写)并返回字符串和错误。在 <code>main()</code> 函数中, 我们调用 <code>capitalize()</code>, 然后在 <code>:=</code> 运算符的左边将函数的返回值赋值给 <code>name</code> 和 <code>err</code> 这两个变量。之后, 我们执行 <code>if err != nil</code> 检查错误, 如果存在错误, 使用 <code>fmt.Prtintln</code> 将错误信息打印到标准输出。如果没有错误, 输出 <code>Capitalized name: SAMMY</code>。</p><p>如果将 <code>err := capitalize("sammy")</code> 中的 <code>"sammy"</code> 更改为为空字符串 <code>("")</code>，你将收到 <code>Could not capitalize: no name provided</code> 这个错误。</p><p>当函数的调用者为 <code>name</code> 参数提供一个空字符串时， <code>capitalize</code> 函数将返回错误。当 <code>name</code> 参数不是空字符串时，<code>capledize()</code> 调用 <code>strings.ToTitle</code> 函数将 <code>name</code> 参数转为大写并返回为 <code>nil</code> 的错误值。</p><p>这个例子遵循一些微妙的规约，这些规约是 Go 代码的典型特征，但 GO 编译器并没有强制执行。当函数返回多个值（包括错误）时，规约我们将 <code>error</code> 类型作为最后一项。具有多个返回值的函数返回错误时，通常约定 GO 代码还将每个不是 <code>error</code> 类型的值设置为零值。比如字符串的零值空字符串，整数为 0，一个用于结构类型的空结构，以及用 <code>nil</code> 表示接口和指针类型的零值。我们在有关 <a href=https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values>变量和常数的教程</a> 中更详细地介绍零值。</p><h3 id=简化重复的代码>简化重复的代码
+<a class=anchor href=#%e7%ae%80%e5%8c%96%e9%87%8d%e5%a4%8d%e7%9a%84%e4%bb%a3%e7%a0%81>#</a></h3><p>如果函数有多个返回值时，遵守这些约定可能会变得啰嗦。我们可以使用 <a href=https://en.wikipedia.org/wiki/Anonymous_function>匿名函数</a> 来帮助减少重复的代码。匿名函数是分配变量的过程。与我们在较早的示例中定义的函数相反，它们仅在你声明它们的函数中可用 - 这使其非常适合用作可重复使用的 <code>helper</code> 逻辑代码片段。</p><p>以下程序是修改了最后一个示例，返回值增加了一个类型, 包括大写的名称的长度。由于它具有三个值可以返回的值，因此如果没有匿名函数来帮助我们，处理错误可能会变得麻烦:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>capitalize</span>(<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>) (<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>handle</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>func</span>(<span style=color:#a6e22e>err</span> <span style=color:#66d9ef>error</span>) (<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>int</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#ae81ff>0</span>, <span style=color:#a6e22e>err</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>name</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;&#34;</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>handle</span>(<span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;no name provided&#34;</span>))
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>ToTitle</span>(<span style=color:#a6e22e>name</span>), len(<span style=color:#a6e22e>name</span>), <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>size</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>capitalize</span>(<span style=color:#e6db74>&#34;sammy&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;An error occurred:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Capitalized name: %s, length: %d&#34;</span>, <span style=color:#a6e22e>name</span>, <span style=color:#a6e22e>size</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># Output</span>
+</span></span><span style=display:flex><span>Capitalized name: SAMMY, length: <span style=color:#ae81ff>5</span>
+</span></span></code></pre></div><p>在 <code>main()</code> 中，我们现在可以从 <code>capitalize()</code> 函数中获取转为大写的 <code>name</code>，<code>size</code> 和 <code>err</code> 这三个返回的参数。然后，我们检查是否通过检查错误变量不等于 <code>nil</code>。在尝试使用 <code>capitalize()</code> 返回的任何其他值之前，这一点很重要，因为匿名函数可以将它们设置为零值。由于我们提供了字符串 <code>"Sammy"</code>，因此没有发生错误，因此我们打印出转为大写之后的名称及其长度。</p><p>再次，你可以尝试将 <code>"Sammy"</code> 更改为空字符串 <code>("")</code> 以查看已打印的错误情况 (<code>An error occurred: no name provided</code>)。</p><p>在 <code>capitalize</code> 函数中，我们将 <code>handle</code> 变量定义为匿名函数。它需要传递要给错误类型的参数，并以与 <code>capitalize</code> 函数的返回值相同的顺序返回相同的值。<code>handle</code> 将这些值设置为零值，并将其作为最终返回值作为参数传递的错误转发。然后，使用 <code>err</code> 作为 <code>handle</code> 的参数，就可以返回在 <code>capitalize</code> 中遇到的任何错误。</p><p>请记住，<code>capitalize</code> 必须一直返回三个值，因为这就是我们定义函数的方式。有时我们不想处理函数可能返回的所有值。幸运的是，我们在赋值并如何使用这些值方面具有一定的灵活性。</p><h3 id=处理多回报功能的错误>处理多回报功能的错误
+<a class=anchor href=#%e5%a4%84%e7%90%86%e5%a4%9a%e5%9b%9e%e6%8a%a5%e5%8a%9f%e8%83%bd%e7%9a%84%e9%94%99%e8%af%af>#</a></h3><p>当函数返回许多值时，Go 要求我们将每个值分配给变量。在最后一个示例中，我们通过提供从 <code>capitalize</code> 函数返回的两个值的名称来做到这一点。这些名称应通过逗号分隔，并出现在 <code>:=</code> 操作符的左侧。从 <code>capitalize</code> 返回的第一个值将分配给 <code>name</code> 变量，第二个值(<code>error</code>)将分配给 <code>err</code> 这个变量。有时，我们只对错误值感兴趣。您可以丢弃使用特殊 <code>_</code> 变量名称返回功能的任何不需要值。</p><p>在以下程序中，我们修改了涉及大写功能的第一个示例，以通过传递空字符串 <code>("")</code> 来产生错误。尝试运行此程序，以查看我们如何通过使用 <code>_</code> 变量丢弃第一个返回的值来检查错误：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;errors&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>capitalize</span>(<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>) (<span style=color:#66d9ef>string</span>, <span style=color:#66d9ef>error</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>name</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;&#34;</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#e6db74>&#34;&#34;</span>, <span style=color:#a6e22e>errors</span>.<span style=color:#a6e22e>New</span>(<span style=color:#e6db74>&#34;no name provided&#34;</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>ToTitle</span>(<span style=color:#a6e22e>name</span>), <span style=color:#66d9ef>nil</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>capitalize</span>(<span style=color:#e6db74>&#34;&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Could not capitalize:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Success!&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># Output</span>
+</span></span><span style=display:flex><span>Could not capitalize: no name provided
+</span></span></code></pre></div><p>这次在 <code>main()</code> 函数中，我们将 <code>capitalize</code> 的第一个返回值 (首先返回的字符串) 分配给下划线变量(<code>_</code>)。同时，我们分配了通过 <code>capitalize</code> 返回的 <code>err</code> 变量返回的错误。然后，我们通过 <code>if err != nil</code> 条件判断错误是否存在。由于我们已经对一个空字符串进行了硬编码，作为在行中大写的参数，<code>_, err := capitalize("")</code>，因此该条件始终将评估为 <code>true</code>。这会产生输出<code>"Could not capitalize: no name provided"</code>，该输出由 <code>fmt.Println</code> 函数在 <code>if</code> 语句的正文中打印出来。此后的返回将跳过 <code>fmt.Println("Success!")</code>。</p><h2 id=结论>结论
+<a class=anchor href=#%e7%bb%93%e8%ae%ba>#</a></h2><p>我们已经看到了许多使用标准库创建错误的方法，以及如何构建以惯用方式返回错误的函数。在本教程中，我们设法使用标准库的 <code>errors.New</code> 和 <code>fmt.Errorf</code> 函数成功地创建了各种错误。在将来的教程中，我们将研究如何创建自己的自定义错误类型，以向用户传达更丰富的信息。</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#创建错误>创建错误</a></li><li><a href=#错误处理>错误处理</a></li><li><a href=#同时返回错误和多个值>同时返回错误和多个值</a><ul><li><a href=#简化重复的代码>简化重复的代码</a></li><li><a href=#处理多回报功能的错误>处理多回报功能的错误</a></li></ul></li><li><a href=#结论>结论</a></li></ul></nav></div></aside></main></body></html>

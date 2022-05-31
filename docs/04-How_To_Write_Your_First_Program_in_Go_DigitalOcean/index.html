@@ -1,267 +1,51 @@
-<!DOCTYPE html>
-<html lang="zh" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="如何用 Go 编写你的第一个程序 #  前言 #  “Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="如何用 Go 编写你的第一个程序 # 前言 # “Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。
 本教程将引导你在 Go 中创建此程序。 但是，为了使程序更有趣，你将修改传统的 “Hello, World!” 程序，以便它可以询问用户的姓名。 然后，你将在回复中使用该姓名。 完成本教程后，你将拥有一个运行起来如下所示的程序：
-Output Please enter your name. Sammy Hello, Sammy! I&#39;m Go! 安装前提 #  在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
- 如何在 macOS 上安装 Go 和设置本地编程环境 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 如何在 Windows 10 上安装 Go 和设置本地编程环境  第一步 — 编写最基本的 “Hello, World!” 程序 #  为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 nano，然后创建一个新文件：
-nano hello.">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
-<meta property="og:description" content="如何用 Go 编写你的第一个程序 #  前言 #  “Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。
+Output Please enter your name. Sammy Hello, Sammy! I'm Go! 安装前提 # 在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
+如何在 macOS 上安装 Go 和设置本地编程环境 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 如何在 Windows 10 上安装 Go 和设置本地编程环境 第一步 — 编写最基本的 “Hello, World!” 程序 # 为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 nano，然后创建一个新文件：
+nano hello.go 在 nano 中打开文本文件后，输入你的程序代码：
+hello.go package main import &#34;fmt&#34; func main() { fmt."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="如何用 Go 编写你的第一个程序 # 前言 # “Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。
 本教程将引导你在 Go 中创建此程序。 但是，为了使程序更有趣，你将修改传统的 “Hello, World!” 程序，以便它可以询问用户的姓名。 然后，你将在回复中使用该姓名。 完成本教程后，你将拥有一个运行起来如下所示的程序：
-Output Please enter your name. Sammy Hello, Sammy! I&#39;m Go! 安装前提 #  在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
- 如何在 macOS 上安装 Go 和设置本地编程环境 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 如何在 Windows 10 上安装 Go 和设置本地编程环境  第一步 — 编写最基本的 “Hello, World!” 程序 #  为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 nano，然后创建一个新文件：
-nano hello." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.com/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/" /><meta property="article:section" content="docs" />
-
-
-
-<title>04 How to Write Your First Program in Go Digital Ocean | How To Code in Go</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
-  <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
-  
-</head>
-<body dir="ltr">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <main class="container flex">
-    <aside class="book-menu">
-      <div class="book-menu-content">
-        
-  <nav>
-<h2 class="book-brand">
-  <a class="flex align-center" href="/"><span>How To Code in Go</span>
-  </a>
-</h2>
-
-
-<div class="book-search">
-  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
-  <div class="book-search-spinner hidden"></div>
-  <ul id="book-search-results"></ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-<li>
-<p><strong>开始学习</strong></p>
-<ul>
-<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/"class=active>如何用 Go 编写你的第一个程序</a></li>
-<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
-<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
-<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
-<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
-<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
-<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
-<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
-<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
-<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
-<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
-<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
-<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
-<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
-<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
-<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
-<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
-<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
-<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
-<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
-<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
-<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
-<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
-<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
-<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
-<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
-<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
-<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
-<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
-<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
-<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
-<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
-<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
-<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
-<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
-<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
-<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
-</ul>
-</li>
-<li>
-<p><strong>附录：资源</strong></p>
-</li>
-<li>
-<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
-</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-</nav>
-
-
-
-
-  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
-
-
- 
-      </div>
-    </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        
-  <div class="flex align-center justify-between">
-  <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
-  </label>
-
-  <strong>04 How to Write Your First Program in Go Digital Ocean</strong>
-
-  <label for="toc-control">
-    
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
-    
-  </label>
-</div>
-
-
-  
-  <aside class="hidden clearfix">
-    
-  
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#安装前提">安装前提</a></li>
-    <li><a href="#第一步--编写最基本的-hello-world-程序">第一步 — 编写最基本的 “Hello, World!” 程序</a></li>
-    <li><a href="#第二步--运行-go-程序">第二步 — 运行 Go 程序</a></li>
-    <li><a href="#第三步--提示用户输入">第三步 — 提示用户输入</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
-
-  </aside>
-  
- 
-      </header>
-
-      
-      
-  <article class="markdown"><h1 id="如何用-go-编写你的第一个程序">
-  如何用 Go 编写你的第一个程序
-  <a class="anchor" href="#%e5%a6%82%e4%bd%95%e7%94%a8-go-%e7%bc%96%e5%86%99%e4%bd%a0%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e7%a8%8b%e5%ba%8f">#</a>
-</h1>
-<h2 id="前言">
-  前言
-  <a class="anchor" href="#%e5%89%8d%e8%a8%80">#</a>
-</h2>
-<p>“Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。</p>
-<p>本教程将引导你在 Go 中创建此程序。 但是，为了使程序更有趣，你将修改传统的 “Hello, World!” 程序，以便它可以询问用户的姓名。 然后，你将在回复中使用该姓名。 完成本教程后，你将拥有一个运行起来如下所示的程序：</p>
-<pre tabindex="0"><code>Output
+Output Please enter your name. Sammy Hello, Sammy! I'm Go! 安装前提 # 在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
+如何在 macOS 上安装 Go 和设置本地编程环境 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境 如何在 Windows 10 上安装 Go 和设置本地编程环境 第一步 — 编写最基本的 “Hello, World!” 程序 # 为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 nano，然后创建一个新文件：
+nano hello.go 在 nano 中打开文本文件后，输入你的程序代码：
+hello.go package main import &#34;fmt&#34; func main() { fmt."><meta property="og:type" content="article"><meta property="og:url" content="https://example.com/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/"><meta property="article:section" content="docs"><title>04 How to Write Your First Program in Go Digital Ocean | How To Code in Go</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css integrity="sha256-gsXb0jRHzuC0wqo+0Izglh+qQOH6Nw7uT4yfAuDUa18=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/zh.search.min.49dd84c1863c020bc1e7dc2da56c6f5767094cc4a336b6ce9c015604b7f5c488.js integrity="sha256-Sd2EwYY8AgvB59wtpWxvV2cJTMSjNrbOnAFWBLf1xIg=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>How To Code in Go</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/ class=active>如何用 Go 编写你的第一个程序</a></li><li><a href=/docs/05-Understanding_the_GOPATH/>理解 GOPATH</a></li><li><a href=/docs/06-How_To_Write_Comments_in_Go/>如何在 Go 中写注释</a></li><li><a href=/docs/07-Understanding_Data_Types_in_Go/>理解 Go 的数据类型</a></li><li><a href=/docs/08-An_Introduction_to_Working_with_Strings_in_Go/>Go 中处理字符串的介绍</a></li><li><a href=/docs/09-How_To_Format_Strings_in_Go/>How To Format Strings in Go</a></li><li><a href=/docs/10-An_Introduction_to_the_Strings_Package_in_Go/>An Introduction to the Strings Package in Go</a></li><li><a href=/docs/11-How_To_Use_Variables_and_Constants_in_Go/>How To Use Variables and Constants in Go</a></li><li><a href=/docs/12-How_To_Convert_Data_Types_in_Go/>How To Convert Data Types in Go</a></li><li><a href=/docs/13-How_To_Do_Math_in_Go_with_Operators/>How To Do Math in Go with Operators</a></li><li><a href=/docs/14-Understanding_Boolean_Logic_in_Go/>Understanding Boolean Logic in Go</a></li><li><a href=/docs/15-Understanding_Maps_in_Go/>Understanding Maps in Go</a></li><li><a href=/docs/16-Understanding_Arrays_and_Slices_in_Go/>Understanding Arrays and Slices in Go</a></li><li><a href=/docs/17-Handling_Errors_in_Go_DigitalOcean/>Handling Errors in Go</a></li><li><a href=/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/>Creating Custom Errors in Go</a></li><li><a href=/docs/19-Handling_Panics_in_Go-_DigitalOcean/>Handling Panics in Go</a></li><li><a href=/docs/20-Importing_Packages_in_Go_DigitalOcean/>Importing Packages in Go</a></li><li><a href=/docs/21-How_To_Write_Packages_in_Go/>如何在 Go 中编写包</a></li><li><a href=/docs/22-Understanding_Package_Visibility_in_Go/>理解 Go 中包的可见性</a></li><li><a href=/docs/23-How_To_Write_Conditional_Statements_in_Go/>如何在 Go 中编写条件语句</a></li><li><a href=/docs/24-How_To_Write_Switch_Statements_in_Go/>如何在 Go 中编写 Switch 语句</a></li><li><a href=/docs/25_How_To_Construct_For_Loops_in_Go/>如何在 Go 中构造 for 循环</a></li><li><a href=/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/>在循环中使用 Break 和 Continue</a></li><li><a href=/docs/27_How_To_Define_and_Call_Functions_in_Go/>如何在 Go 中定义并调用函数</a></li><li><a href=/docs/28_How_To_Use_Variadic_Functions_in_Go/>如何在 Go 中使用可变参数函数</a></li><li><a href=/docs/29-Understanding_defer_in_Go/>了解 Go 中的 defer</a></li><li><a href=/docs/30_Understanding_init_in_Go/>了解 Go 中的 init</a></li><li><a href=/docs/31_Customizing_Go_Binaries_with_Build_Tags/>用构建标签定制 Go 二进制文件</a></li><li><a href=/docs/32_Understanding_Pointers_in_Go/>了解 Go 中的指针</a></li><li><a href=/docs/33_Defining_Structs_in_Go/>在 Go 中定义结构体</a></li><li><a href=/docs/34_Defining_Methods_in_Go/>在 Go 中定义方法</a></li><li><a href=/docs/35_How_To_Build_and_Install_Go_Programs/>如何构建和安装 Go 程序</a></li><li><a href=/docs/36_How_To_Use_Struct_Tags_in_Go/>如何在 Go 中使用结构体标签</a></li><li><a href=/docs/37-How_To_Use_Interfaces_in_Go/>如何在 Go 使用 interface</a></li><li><a href=/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/>在不同的操作系统和架构编译 Go 应用</a></li><li><a href=/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/>用 ldflags 设置 Go 应用程序的版本信息</a></li><li><a href=/docs/40-How_To_Use_the_Flag_Package_in_Go/>在 Go 里面如何使用 Flag 包</a></li></ul></li><li><p><strong>附录：资源</strong></p></li><li><p><a href=https://github.com/gocn/How-To-Code-in-Go><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>04 How to Write Your First Program in Go Digital Ocean</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#前言>前言</a></li><li><a href=#安装前提>安装前提</a></li><li><a href=#第一步--编写最基本的-hello-world-程序>第一步 — 编写最基本的 “Hello, World!” 程序</a></li><li><a href=#第二步--运行-go-程序>第二步 — 运行 Go 程序</a></li><li><a href=#第三步--提示用户输入>第三步 — 提示用户输入</a></li><li><a href=#总结>总结</a></li></ul></nav></aside></header><article class=markdown><h1 id=如何用-go-编写你的第一个程序>如何用 Go 编写你的第一个程序
+<a class=anchor href=#%e5%a6%82%e4%bd%95%e7%94%a8-go-%e7%bc%96%e5%86%99%e4%bd%a0%e7%9a%84%e7%ac%ac%e4%b8%80%e4%b8%aa%e7%a8%8b%e5%ba%8f>#</a></h1><h2 id=前言>前言
+<a class=anchor href=#%e5%89%8d%e8%a8%80>#</a></h2><p>“Hello, World!” 程序是计算机编程中的经典且历史悠久的传统。 对于初学者来说，这是一个简单而完整的第一个程序，它是一个确保你的环境配置正确的好方法。</p><p>本教程将引导你在 Go 中创建此程序。 但是，为了使程序更有趣，你将修改传统的 “Hello, World!” 程序，以便它可以询问用户的姓名。 然后，你将在回复中使用该姓名。 完成本教程后，你将拥有一个运行起来如下所示的程序：</p><pre tabindex=0><code>Output
 Please enter your name.
 Sammy
 Hello, Sammy! I&#39;m Go!
-</code></pre><h2 id="安装前提">
-  安装前提
-  <a class="anchor" href="#%e5%ae%89%e8%a3%85%e5%89%8d%e6%8f%90">#</a>
-</h2>
-<p>在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：</p>
-<ul>
-<li><a href="https://github.com/gocn/How-To-Code-in-Go/blob/main/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean.md">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="https://github.com/gocn/How-To-Code-in-Go/blob/main/01-How_To_Install_Go_and_Set_Up_a_Local%20Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="https://github.com/gocn/How-To-Code-in-Go/blob/main/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean.md">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-</ul>
-<h2 id="第一步--编写最基本的-hello-world-程序">
-  第一步 — 编写最基本的 “Hello, World!” 程序
-  <a class="anchor" href="#%e7%ac%ac%e4%b8%80%e6%ad%a5--%e7%bc%96%e5%86%99%e6%9c%80%e5%9f%ba%e6%9c%ac%e7%9a%84-hello-world-%e7%a8%8b%e5%ba%8f">#</a>
-</h2>
-<p>为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 <code>nano</code>，然后创建一个新文件：</p>
-<pre tabindex="0"><code>nano hello.go
-</code></pre><p>在 nano 中打开文本文件后，输入你的程序代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">hello</span>.<span style="color:#66d9ef">go</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello, World!&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>让我们分解下代码的各个部分。</p>
-<p><code>package</code> 是一个 Go 关键字，它定义了这个文件属于哪个代码包。 每个文件夹只能有一个包，并且文件夹中每个 <code>.go</code> 文件必须在其文件顶部声明相同的包名。 在这个例子中，代码属于 <code>main</code> 包。</p>
-<p><code>import</code> 是一个 Go 关键字，它告诉 Go 编译器你想在这个文件中使用哪些其他包。 在这里，你导入标准库附带的 <code>fmt</code> 包。 <code>fmt</code> 包提供了在开发时很有用的格式化和打印功能。</p>
-<p><code>fmt.Println</code> 是一个 Go 函数，位于 <code>fmt</code> 包中，它告诉计算机将一些文本打印到屏幕上。</p>
-<p>在 <code>fmt.Println</code> 函数后面跟着一系列字符，例如 <code>&quot;Hello, World!&quot;</code>，用引号括起来。 引号内的任何字符都称为 <em>string</em>。 <code>fmt.Println</code> 函数会在程序运行时将此字符串打印到屏幕上。</p>
-<p>按 <code>CTRL</code> 和 <code>X</code> 键退出 <code>nano</code>。 当提示保存文件时，按 <code>Y</code>，然后按 <code>ENTER</code> 退出。</p>
-<p>现在你可以试试你的程序了。</p>
-<h2 id="第二步--运行-go-程序">
-  第二步 — 运行 Go 程序
-  <a class="anchor" href="#%e7%ac%ac%e4%ba%8c%e6%ad%a5--%e8%bf%90%e8%a1%8c-go-%e7%a8%8b%e5%ba%8f">#</a>
-</h2>
-<p>你的 “Hello, World!” 程序写好之后，你就可以运行程序了。你可以用 <code>go</code>  命令然后后面跟着你刚刚创建的文件名。</p>
-<pre tabindex="0"><code>go run hello.go
-</code></pre><p>程序执行后会显示以下输出：</p>
-<pre tabindex="0"><code>Output
+</code></pre><h2 id=安装前提>安装前提
+<a class=anchor href=#%e5%ae%89%e8%a3%85%e5%89%8d%e6%8f%90>#</a></h2><p>在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：</p><ul><li><a href=https://github.com/gocn/How-To-Code-in-Go/blob/main/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean.md>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=https://github.com/gocn/How-To-Code-in-Go/blob/main/01-How_To_Install_Go_and_Set_Up_a_Local%20Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=https://github.com/gocn/How-To-Code-in-Go/blob/main/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean.md>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li></ul><h2 id=第一步--编写最基本的-hello-world-程序>第一步 — 编写最基本的 “Hello, World!” 程序
+<a class=anchor href=#%e7%ac%ac%e4%b8%80%e6%ad%a5--%e7%bc%96%e5%86%99%e6%9c%80%e5%9f%ba%e6%9c%ac%e7%9a%84-hello-world-%e7%a8%8b%e5%ba%8f>#</a></h2><p>为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 <code>nano</code>，然后创建一个新文件：</p><pre tabindex=0><code>nano hello.go
+</code></pre><p>在 nano 中打开文本文件后，输入你的程序代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>hello</span>.<span style=color:#66d9ef>go</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Hello, World!&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>让我们分解下代码的各个部分。</p><p><code>package</code> 是一个 Go 关键字，它定义了这个文件属于哪个代码包。 每个文件夹只能有一个包，并且文件夹中每个 <code>.go</code> 文件必须在其文件顶部声明相同的包名。 在这个例子中，代码属于 <code>main</code> 包。</p><p><code>import</code> 是一个 Go 关键字，它告诉 Go 编译器你想在这个文件中使用哪些其他包。 在这里，你导入标准库附带的 <code>fmt</code> 包。 <code>fmt</code> 包提供了在开发时很有用的格式化和打印功能。</p><p><code>fmt.Println</code> 是一个 Go 函数，位于 <code>fmt</code> 包中，它告诉计算机将一些文本打印到屏幕上。</p><p>在 <code>fmt.Println</code> 函数后面跟着一系列字符，例如 <code>"Hello, World!"</code>，用引号括起来。 引号内的任何字符都称为 <em>string</em>。 <code>fmt.Println</code> 函数会在程序运行时将此字符串打印到屏幕上。</p><p>按 <code>CTRL</code> 和 <code>X</code> 键退出 <code>nano</code>。 当提示保存文件时，按 <code>Y</code>，然后按 <code>ENTER</code> 退出。</p><p>现在你可以试试你的程序了。</p><h2 id=第二步--运行-go-程序>第二步 — 运行 Go 程序
+<a class=anchor href=#%e7%ac%ac%e4%ba%8c%e6%ad%a5--%e8%bf%90%e8%a1%8c-go-%e7%a8%8b%e5%ba%8f>#</a></h2><p>你的 “Hello, World!” 程序写好之后，你就可以运行程序了。你可以用 <code>go</code>  命令然后后面跟着你刚刚创建的文件名。</p><pre tabindex=0><code>go run hello.go
+</code></pre><p>程序执行后会显示以下输出：</p><pre tabindex=0><code>Output
 Hello, World!
-</code></pre><p>让我们来探索下实际发生了什么。</p>
-<p>Go 程序在运行之前必须要先编译。当你使用文件名调用 <code>go run</code> 时，在本例中为 <code>hello.go</code>，<code>go</code> 命令将 <em>编译</em> 应用程序，然后运行生成的二进制文件。 对于用 <em>编译型</em> 编程语言编写的程序，编译器将获取程序的源代码并生成另一种类型的低级代码（例如机器代码）来生成可执行程序。</p>
-<p>Go 应用程序需要一个 <code>main</code> 包和一个确切的 <strong>唯一</strong> <code>main()</code> 函数，作为应用程序的入口点。 <code>main</code> 函数不接受任何参数并且不返回任何值。 相反，它告诉 Go 编译器应该将包编译为可执行包。</p>
-<p>编译后，代码通过在 <code>main</code> 包中输入 <code>main()</code> 函数来执行。 它通过_调用_ <code>fmt.Println</code> 函数来执行<code>fmt.Println(&quot;Hello, World!&quot;)</code> 行。 <code>Hello, World!</code> 的字符串值被传递给函数。 在此示例中，字符串 <code>Hello, World!</code> 也称为 <em>参数</em>，因为它是传递给方法的值。</p>
-<p><code>Hello, World!</code> 两边的引号不会打印到屏幕上，因为你用它们告诉 Go 你的字符串在哪里开始和结束。</p>
-<p>在这一步中，你已经用 Go 编程创建了一个有效的“Hello, World！” 。 在下一步中，你将探索如何使程序更具交互性。</p>
-<h2 id="第三步--提示用户输入">
-  第三步 — 提示用户输入
-  <a class="anchor" href="#%e7%ac%ac%e4%b8%89%e6%ad%a5--%e6%8f%90%e7%a4%ba%e7%94%a8%e6%88%b7%e8%be%93%e5%85%a5">#</a>
-</h2>
-<p>每次运行程序时，它都会产生相同的输出。 在此步骤中，你可以把提示用户输入他们的姓名添加到程序中。 然后，你将在输出中使用他们的名字。</p>
-<p>不要修改现有程序，而是使用 <code>nano</code> 编辑器创建一个名为 <code>greeting.go</code> 的新程序：</p>
-<pre tabindex="0"><code>nano greeting.go
-</code></pre><p>首先，添加这段代码，提示用户输入他们的姓名：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">greeting</span>.<span style="color:#66d9ef">go</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>  <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Please enter your name.&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>再一次，你使用 <code>fmt.Println</code> 函数将一些文本打印到屏幕上。</p>
-<p>现在添加下面高亮行代码来存储用户的输入：</p>
-<pre tabindex="0"><code>greeting.go
+</code></pre><p>让我们来探索下实际发生了什么。</p><p>Go 程序在运行之前必须要先编译。当你使用文件名调用 <code>go run</code> 时，在本例中为 <code>hello.go</code>，<code>go</code> 命令将 <em>编译</em> 应用程序，然后运行生成的二进制文件。 对于用 <em>编译型</em> 编程语言编写的程序，编译器将获取程序的源代码并生成另一种类型的低级代码（例如机器代码）来生成可执行程序。</p><p>Go 应用程序需要一个 <code>main</code> 包和一个确切的 <strong>唯一</strong> <code>main()</code> 函数，作为应用程序的入口点。 <code>main</code> 函数不接受任何参数并且不返回任何值。 相反，它告诉 Go 编译器应该将包编译为可执行包。</p><p>编译后，代码通过在 <code>main</code> 包中输入 <code>main()</code> 函数来执行。 它通过_调用_ <code>fmt.Println</code> 函数来执行<code>fmt.Println("Hello, World!")</code> 行。 <code>Hello, World!</code> 的字符串值被传递给函数。 在此示例中，字符串 <code>Hello, World!</code> 也称为 <em>参数</em>，因为它是传递给方法的值。</p><p><code>Hello, World!</code> 两边的引号不会打印到屏幕上，因为你用它们告诉 Go 你的字符串在哪里开始和结束。</p><p>在这一步中，你已经用 Go 编程创建了一个有效的“Hello, World！” 。 在下一步中，你将探索如何使程序更具交互性。</p><h2 id=第三步--提示用户输入>第三步 — 提示用户输入
+<a class=anchor href=#%e7%ac%ac%e4%b8%89%e6%ad%a5--%e6%8f%90%e7%a4%ba%e7%94%a8%e6%88%b7%e8%be%93%e5%85%a5>#</a></h2><p>每次运行程序时，它都会产生相同的输出。 在此步骤中，你可以把提示用户输入他们的姓名添加到程序中。 然后，你将在输出中使用他们的名字。</p><p>不要修改现有程序，而是使用 <code>nano</code> 编辑器创建一个名为 <code>greeting.go</code> 的新程序：</p><pre tabindex=0><code>nano greeting.go
+</code></pre><p>首先，添加这段代码，提示用户输入他们的姓名：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>greeting</span>.<span style=color:#66d9ef>go</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>  <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Please enter your name.&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>再一次，你使用 <code>fmt.Println</code> 函数将一些文本打印到屏幕上。</p><p>现在添加下面高亮行代码来存储用户的输入：</p><pre tabindex=0><code>greeting.go
 package main
 
 import (
@@ -272,9 +56,7 @@ func main() {
   fmt.Println(&#34;Please enter your name.&#34;)
   var name string
 }
-</code></pre><p><code>var name string</code> 行将使用 <code>var</code> <em>关键字</em> 创建一个新变量。 你将变量命名为 “name” ，它的类型为 “string” 。</p>
-<p>然后添加下面高亮行代码来捕捉用户的输入：</p>
-<pre tabindex="0"><code>greeting.go
+</code></pre><p><code>var name string</code> 行将使用 <code>var</code> <em>关键字</em> 创建一个新变量。 你将变量命名为 “name” ，它的类型为 “string” 。</p><p>然后添加下面高亮行代码来捕捉用户的输入：</p><pre tabindex=0><code>greeting.go
 package main
 
 import (
@@ -286,10 +68,7 @@ func main() {
   var name string
   fmt.Scanln(&amp;name)
 }
-</code></pre><p><code>fmt.Scanln</code> 方法告诉计算机等待以换行符或 (<code>\n</code>) 字符结尾的键盘输入。 该方法会暂停程序，允许用户输入他们想要的任何文本。 当用户按下键盘上的 <code>ENTER</code> 键时，程序将继续。 然后捕获所有点击，包括 <code>ENTER</code> ，然后将其转换为字符串。</p>
-<p>你想在程序中使用这些字符输出，因此你通过将这些字符 <em>写入</em> 到被称为 <code>name</code> 的字符串 <em>变量</em> 中来保存这些字符。 Go 将该字符串存储在计算机的内存中，直到程序完成运行。</p>
-<p>最后，在程序中添加以下高亮行来打印输出：</p>
-<pre tabindex="0"><code>greeting.go
+</code></pre><p><code>fmt.Scanln</code> 方法告诉计算机等待以换行符或 (<code>\n</code>) 字符结尾的键盘输入。 该方法会暂停程序，允许用户输入他们想要的任何文本。 当用户按下键盘上的 <code>ENTER</code> 键时，程序将继续。 然后捕获所有点击，包括 <code>ENTER</code> ，然后将其转换为字符串。</p><p>你想在程序中使用这些字符输出，因此你通过将这些字符 <em>写入</em> 到被称为 <code>name</code> 的字符串 <em>变量</em> 中来保存这些字符。 Go 将该字符串存储在计算机的内存中，直到程序完成运行。</p><p>最后，在程序中添加以下高亮行来打印输出：</p><pre tabindex=0><code>greeting.go
 package main
 
 import (
@@ -302,138 +81,46 @@ func main() {
   fmt.Scanln(&amp;name)
   fmt.Printf(&#34;Hi, %s! I&#39;m Go!&#34;, name)
 }
-</code></pre><p>这一次，你使用的是 <code>fmt.Printf</code>，而不是再次使用 <code>fmt.Println</code> 方法。 <code>fmt.Printf</code> 函数接受一个字符串，并使用特殊的打印 <em>占位符</em>, (<code>%s</code>)，将 <code>name</code> 的值注入到字符串中。 你这样做是因为 Go 不支持 <em>字符串插值</em> ，它可以让你获取分配给变量的值并将其插入在字符串中。</p>
-<p>按 <code>CTRL</code> 和 <code>X</code> 键退出 <code>nano</code>。 当提示保存文件时，按 <code>Y</code>。</p>
-<p>现在运行程序。 系统将提示你输入你的姓名，因此请输入并按 <code>ENTER</code>。 输出可能不完全符合你的预期：</p>
-<pre tabindex="0"><code>Output
+</code></pre><p>这一次，你使用的是 <code>fmt.Printf</code>，而不是再次使用 <code>fmt.Println</code> 方法。 <code>fmt.Printf</code> 函数接受一个字符串，并使用特殊的打印 <em>占位符</em>, (<code>%s</code>)，将 <code>name</code> 的值注入到字符串中。 你这样做是因为 Go 不支持 <em>字符串插值</em> ，它可以让你获取分配给变量的值并将其插入在字符串中。</p><p>按 <code>CTRL</code> 和 <code>X</code> 键退出 <code>nano</code>。 当提示保存文件时，按 <code>Y</code>。</p><p>现在运行程序。 系统将提示你输入你的姓名，因此请输入并按 <code>ENTER</code>。 输出可能不完全符合你的预期：</p><pre tabindex=0><code>Output
 Please enter your name.
 Sammy
 Hi, Sammy
 ! I&#39;m Go!
-</code></pre><p>而不是 <code>Hi, Sammy! I'm Go!</code>，名字后面有一个换行符。</p>
-<p>该程序捕获了我们 <strong>所有</strong> 的点击，包括我们按下以告诉程序继续的 <code>ENTER</code> 键。 在字符串中，按 <code>ENTER</code> 键会创建一个特殊字符，该字符会创建一个新行。 该程序的输出完全按照你的要求执行； 它正在显示你输入的文本，包括新行。 这不是你期望的输出，但你可以使用其他功能对其进行修复。</p>
-<p>在你的编辑器里面打开 <code>greeting.go</code></p>
-<pre tabindex="0"><code>nano greeting.go
-</code></pre><p>在你的程序里定位到下面这一行：</p>
-<pre tabindex="0"><code>greeting.go
+</code></pre><p>而不是 <code>Hi, Sammy! I'm Go!</code>，名字后面有一个换行符。</p><p>该程序捕获了我们 <strong>所有</strong> 的点击，包括我们按下以告诉程序继续的 <code>ENTER</code> 键。 在字符串中，按 <code>ENTER</code> 键会创建一个特殊字符，该字符会创建一个新行。 该程序的输出完全按照你的要求执行； 它正在显示你输入的文本，包括新行。 这不是你期望的输出，但你可以使用其他功能对其进行修复。</p><p>在你的编辑器里面打开 <code>greeting.go</code></p><pre tabindex=0><code>nano greeting.go
+</code></pre><p>在你的程序里定位到下面这一行：</p><pre tabindex=0><code>greeting.go
 ...
 fmt.Scanln(&amp;name)
 ...
-</code></pre><p>在其后面增加下面一行：</p>
-<pre tabindex="0"><code>greeting.go
+</code></pre><p>在其后面增加下面一行：</p><pre tabindex=0><code>greeting.go
 name = strings.TrimSpace(name)
-</code></pre><p>上面使用了 Go 标准库 <code>strings</code> 包中的 <code>TrimSpace</code> 函数，来处理你使用 <code>fmt.Scanln</code> 捕获的字符串。 <code>strings.TrimSpace</code> 函数从字符串的开头和结尾删除任何空格字符，包括换行符。 在这种情况下，它会删除你按下 <code>ENTER</code> 时创建的字符串末尾的换行符。</p>
-<p>要使用 <code>strings</code> 包，你需要在程序顶部导入它。</p>
-<p>在你的程序找到下面这几行代码：</p>
-<pre tabindex="0"><code>greeting.go
+</code></pre><p>上面使用了 Go 标准库 <code>strings</code> 包中的 <code>TrimSpace</code> 函数，来处理你使用 <code>fmt.Scanln</code> 捕获的字符串。 <code>strings.TrimSpace</code> 函数从字符串的开头和结尾删除任何空格字符，包括换行符。 在这种情况下，它会删除你按下 <code>ENTER</code> 时创建的字符串末尾的换行符。</p><p>要使用 <code>strings</code> 包，你需要在程序顶部导入它。</p><p>在你的程序找到下面这几行代码：</p><pre tabindex=0><code>greeting.go
 import (
 	&#34;fmt&#34;
 )
-</code></pre><p>增加下面几行来导入  <code>strings</code> 包：</p>
-<pre tabindex="0"><code>greeting.go
+</code></pre><p>增加下面几行来导入 <code>strings</code> 包：</p><pre tabindex=0><code>greeting.go
 import (
 &#34;fmt&#34;
 &#34;strings&#34;
 )
-</code></pre><p>你的程序现在包含了以下代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">greeting</span>.<span style="color:#66d9ef">go</span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strings&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Please enter your name.&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">name</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">name</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">TrimSpace</span>(<span style="color:#a6e22e">name</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Hi, %s! I&#39;m Go!&#34;</span>, <span style="color:#a6e22e">name</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>按 <code>CTRL</code> 和 <code>X</code> 键退出 <code>nano</code>。 当提示保存文件时，按 <code>Y</code>。</p>
-<p>再次运行程序：</p>
-<pre tabindex="0"><code>go run greeting.go
-</code></pre><p>这一次，在你输入你的名字并按 <code>ENTER</code> 后，你会得到预期的输出：</p>
-<pre tabindex="0"><code>Output
+</code></pre><p>你的程序现在包含了以下代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>greeting</span>.<span style=color:#66d9ef>go</span>
+</span></span><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Please enter your name.&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Scanln</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>name</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>name</span> = <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>TrimSpace</span>(<span style=color:#a6e22e>name</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Hi, %s! I&#39;m Go!&#34;</span>, <span style=color:#a6e22e>name</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>按 <code>CTRL</code> 和 <code>X</code> 键退出 <code>nano</code>。 当提示保存文件时，按 <code>Y</code>。</p><p>再次运行程序：</p><pre tabindex=0><code>go run greeting.go
+</code></pre><p>这一次，在你输入你的名字并按 <code>ENTER</code> 后，你会得到预期的输出：</p><pre tabindex=0><code>Output
 Please enter your name.
 Sammy
 Hi, Sammy! I&#39;m Go!
-</code></pre><p>你现在有一个 Go 程序，它接受用户的输入并将其打印回屏幕。</p>
-<h2 id="总结">
-  总结
-  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
-</h2>
-<p>在本教程中，你编写了 一个 “Hello, World！” 程序，可以从用户那里获取输入、处理结果并显示输出。 既然你有一个基本程序可以使用，请尝试进一步扩展你的程序。 例如，询问用户最喜欢的颜色，让程序说它最喜欢的颜色是红色。 你甚至可以尝试使用相同的技术来创建一个简单的 Mad-Lib 程序。</p>
-</article>
- 
-      
-
-      <footer class="book-footer">
-        
-  <div class="flex flex-wrap justify-between">
-
-
-
-
-
-</div>
-
-
-
-  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
-
-
- 
-        
-      </footer>
-
-      
-  
-  <div class="book-comments">
-
-</div>
-  
- 
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
-    </div>
-
-    
-    <aside class="book-toc">
-      <div class="book-toc-content">
-        
-  
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#前言">前言</a></li>
-    <li><a href="#安装前提">安装前提</a></li>
-    <li><a href="#第一步--编写最基本的-hello-world-程序">第一步 — 编写最基本的 “Hello, World!” 程序</a></li>
-    <li><a href="#第二步--运行-go-程序">第二步 — 运行 Go 程序</a></li>
-    <li><a href="#第三步--提示用户输入">第三步 — 提示用户输入</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
- 
-      </div>
-    </aside>
-    
-  </main>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+</code></pre><p>你现在有一个 Go 程序，它接受用户的输入并将其打印回屏幕。</p><h2 id=总结>总结
+<a class=anchor href=#%e6%80%bb%e7%bb%93>#</a></h2><p>在本教程中，你编写了 一个 “Hello, World！” 程序，可以从用户那里获取输入、处理结果并显示输出。 既然你有一个基本程序可以使用，请尝试进一步扩展你的程序。 例如，询问用户最喜欢的颜色，让程序说它最喜欢的颜色是红色。 你甚至可以尝试使用相同的技术来创建一个简单的 Mad-Lib 程序。</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#前言>前言</a></li><li><a href=#安装前提>安装前提</a></li><li><a href=#第一步--编写最基本的-hello-world-程序>第一步 — 编写最基本的 “Hello, World!” 程序</a></li><li><a href=#第二步--运行-go-程序>第二步 — 运行 Go 程序</a></li><li><a href=#第三步--提示用户输入>第三步 — 提示用户输入</a></li><li><a href=#总结>总结</a></li></ul></nav></div></aside></main></body></html>

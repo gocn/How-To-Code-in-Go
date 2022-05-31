@@ -1,433 +1,134 @@
-<!DOCTYPE html>
-<html lang="zh" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="如何在 Go 中写注释 #  介绍 #  注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="如何在 Go 中写注释 # 介绍 # 注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。
 根据你程序的目的，注释可以作为你自己的笔记或者提醒，或者它们可以是为了其他程序员能够理解你的代码在做什么而写的。
 一般来说，在写或者更新程序的时候写评论是个不错的主意，因为以后很容易忘记你的思维过程，而且以后写的评论长期来看可能没那么有用。
-注释语法 #  Go 中的注释以一组向前斜杠（//）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。
+注释语法 # Go 中的注释以一组向前斜杠（//）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。
 一般来说，评论看起来是这样的:
 // This is a comment 注释不会执行，因此在运行程序时没有注释的指示。注释在源代码中供人阅读，而不是供计算机执行。
 在一个 “Hello, World!” 的程序中，注释可能如下所示：
-package main  import ( 	&#34;fmt&#34; )  func main() { 	// Print “Hello, World!” to console 	fmt.Println(&#34;Hello, World!&#34;) } 在一个迭代切片的 for 循环时，注释可能如下所示：
-package main  import ( 	&#34;fmt&#34; )  func main() { 	// Define sharks variable as a slice of strings 	sharks := []string{&#34;hammerhead&#34;, &#34;great white&#34;, &#34;dogfish&#34;, &#34;frilled&#34;, &#34;bullhead&#34;, &#34;requiem&#34;}  	// For loop that iterates over sharks list and prints each string item 	for _, shark := range sharks { 	fmt.">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
-<meta property="og:description" content="如何在 Go 中写注释 #  介绍 #  注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。
+package main import ( &#34;fmt&#34; ) func main() { // Print “Hello, World!” to console fmt.Println(&#34;Hello, World!&#34;) } 在一个迭代切片的 for 循环时，注释可能如下所示：
+package main import ( &#34;fmt&#34; ) func main() { // Define sharks variable as a slice of strings sharks := []string{&#34;hammerhead&#34;, &#34;great white&#34;, &#34;dogfish&#34;, &#34;frilled&#34;, &#34;bullhead&#34;, &#34;requiem&#34;} // For loop that iterates over sharks list and prints each string item for _, shark := range sharks { fmt."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="如何在 Go 中写注释 # 介绍 # 注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。
 根据你程序的目的，注释可以作为你自己的笔记或者提醒，或者它们可以是为了其他程序员能够理解你的代码在做什么而写的。
 一般来说，在写或者更新程序的时候写评论是个不错的主意，因为以后很容易忘记你的思维过程，而且以后写的评论长期来看可能没那么有用。
-注释语法 #  Go 中的注释以一组向前斜杠（//）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。
+注释语法 # Go 中的注释以一组向前斜杠（//）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。
 一般来说，评论看起来是这样的:
 // This is a comment 注释不会执行，因此在运行程序时没有注释的指示。注释在源代码中供人阅读，而不是供计算机执行。
 在一个 “Hello, World!” 的程序中，注释可能如下所示：
-package main  import ( 	&#34;fmt&#34; )  func main() { 	// Print “Hello, World!” to console 	fmt.Println(&#34;Hello, World!&#34;) } 在一个迭代切片的 for 循环时，注释可能如下所示：
-package main  import ( 	&#34;fmt&#34; )  func main() { 	// Define sharks variable as a slice of strings 	sharks := []string{&#34;hammerhead&#34;, &#34;great white&#34;, &#34;dogfish&#34;, &#34;frilled&#34;, &#34;bullhead&#34;, &#34;requiem&#34;}  	// For loop that iterates over sharks list and prints each string item 	for _, shark := range sharks { 	fmt." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.com/docs/06-How_To_Write_Comments_in_Go/" /><meta property="article:section" content="docs" />
-
-
-
-<title>06 How to Write Comments in Go | How To Code in Go</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
-  <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
-  
-</head>
-<body dir="ltr">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <main class="container flex">
-    <aside class="book-menu">
-      <div class="book-menu-content">
-        
-  <nav>
-<h2 class="book-brand">
-  <a class="flex align-center" href="/"><span>How To Code in Go</span>
-  </a>
-</h2>
-
-
-<div class="book-search">
-  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
-  <div class="book-search-spinner hidden"></div>
-  <ul id="book-search-results"></ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-<li>
-<p><strong>开始学习</strong></p>
-<ul>
-<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
-<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
-<li><a href="/docs/06-How_To_Write_Comments_in_Go/"class=active>如何在 Go 中写注释</a></li>
-<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
-<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
-<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
-<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
-<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
-<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
-<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
-<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
-<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
-<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
-<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
-<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
-<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
-<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
-<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
-<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
-<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
-<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
-<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
-<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
-<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
-<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
-<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
-<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
-<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
-<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
-<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
-<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
-<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
-<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
-<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
-<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
-<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
-<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
-</ul>
-</li>
-<li>
-<p><strong>附录：资源</strong></p>
-</li>
-<li>
-<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
-</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-</nav>
-
-
-
-
-  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
-
-
- 
-      </div>
-    </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        
-  <div class="flex align-center justify-between">
-  <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
-  </label>
-
-  <strong>06 How to Write Comments in Go</strong>
-
-  <label for="toc-control">
-    
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
-    
-  </label>
-</div>
-
-
-  
-  <aside class="hidden clearfix">
-    
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#介绍">介绍</a></li>
-        <li><a href="#注释语法">注释语法</a></li>
-        <li><a href="#注释块">注释块</a></li>
-        <li><a href="#内联注释">内联注释</a></li>
-        <li><a href="#注释测试代码">注释测试代码</a></li>
-        <li><a href="#结论">结论</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-
-
-
-  </aside>
-  
- 
-      </header>
-
-      
-      
-  <article class="markdown"><h1 id="如何在-go-中写注释">
-  如何在 Go 中写注释
-  <a class="anchor" href="#%e5%a6%82%e4%bd%95%e5%9c%a8-go-%e4%b8%ad%e5%86%99%e6%b3%a8%e9%87%8a">#</a>
-</h1>
-<h3 id="介绍">
-  介绍
-  <a class="anchor" href="#%e4%bb%8b%e7%bb%8d">#</a>
-</h3>
-<p>注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。</p>
-<p>根据你程序的目的，注释可以作为你自己的笔记或者提醒，或者它们可以是为了其他程序员能够理解你的代码在做什么而写的。</p>
-<p>一般来说，在写或者更新程序的时候写评论是个不错的主意，因为以后很容易忘记你的思维过程，而且以后写的评论长期来看可能没那么有用。</p>
-<h3 id="注释语法">
-  注释语法
-  <a class="anchor" href="#%e6%b3%a8%e9%87%8a%e8%af%ad%e6%b3%95">#</a>
-</h3>
-<p>Go 中的注释以一组向前斜杠（<code>//</code>）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。</p>
-<p>一般来说，评论看起来是这样的:</p>
-<pre tabindex="0"><code>// This is a comment
-</code></pre><p>注释不会执行，因此在运行程序时没有注释的指示。注释在源代码中供人阅读，而不是供计算机执行。</p>
-<p>在一个 “Hello, World!” 的程序中，注释可能如下所示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Print “Hello, World!” to console
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Hello, World!&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>在一个迭代切片的 <code>for</code> 循环时，注释可能如下所示：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Define sharks variable as a slice of strings
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#a6e22e">sharks</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;hammerhead&#34;</span>, <span style="color:#e6db74">&#34;great white&#34;</span>, <span style="color:#e6db74">&#34;dogfish&#34;</span>, <span style="color:#e6db74">&#34;frilled&#34;</span>, <span style="color:#e6db74">&#34;bullhead&#34;</span>, <span style="color:#e6db74">&#34;requiem&#34;</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// For loop that iterates over sharks list and prints each string item
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">shark</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">sharks</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">shark</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>注释应该与注释代码的缩进相同。也就是说，一个没有缩进的函数定义将有一个没有缩进的注释，并且下面的每个缩进级别中，注释与所注释的代码对齐。</p>
-<p>比如，下面是 <code>main</code> 函数如何注释，以及各个缩进级别的代码和注释：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span> <span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">const</span> <span style="color:#a6e22e">favColor</span> <span style="color:#66d9ef">string</span> = <span style="color:#e6db74">&#34;blue&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">guess</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// Create an input loop
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Ask the user to guess my favorite color
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Guess my favorite color:&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Try to read a line of input from the user. Print out the error 0
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanln</span>(<span style="color:#f92672">&amp;</span><span style="color:#a6e22e">guess</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s\n&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Did they guess the correct color?
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">favColor</span> <span style="color:#f92672">==</span> <span style="color:#a6e22e">guess</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#75715e">// They guessed it!
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%q is my favorite color!\n&#34;</span>, <span style="color:#a6e22e">favColor</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>		<span style="color:#75715e">// Wrong! Have them guess again.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;Sorry, %q is not my favorite color. Guess again.\n&#34;</span>, <span style="color:#a6e22e">guess</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>编写注释是为了帮助程序员，无论是最初的程序员还是在项目中使用或合作的其他人。如果注释不能与代码库一起适当地维护和更新，那么对于编写与代码相矛盾或将与将来的代码相矛盾的注释，不如不包含注释。</p>
-<p>在给代码注释时，你应该回答代码背后的 <em>原因</em>，而不是 <em>什么</em> 或 <em>怎么</em> 回事。除非代码特别复杂，否则查看代码通常可以回答是 <em>什么</em> 或者 <em>怎么</em> 的问题，这就是为什么注释通常是围绕 <em>为什么</em> 的原因。</p>
-<h3 id="注释块">
-  注释块
-  <a class="anchor" href="#%e6%b3%a8%e9%87%8a%e5%9d%97">#</a>
-</h3>
-<p>注释块可以用来解释更复杂的代码或那些读者可能并不熟悉的代码。</p>
-<p>你可以用两种方式在 Go 中创建注释块。第一种方法是使用一组双向前斜杠，并在每行中重复它们。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// First line of a block comment
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// Second line of a block comment
-</span></span></span></code></pre></div><p>第二种是使用开始标记（<code>/*</code>）和结束标记（<code>*/</code>）。为了记录代码，惯例方式是使用 <code>//</code> 语法。你只能使用 <code>/* ... */</code> 语法进行调试，我们将在本文后面讨论这个问题。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">Everything here
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">will be considered
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">a block comment
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">*/</span>
-</span></span></code></pre></div><p>在这个例子中，注释块定义了 <code>MustGet()</code> 函数中发生的事情：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// MustGet will retrieve a url and return the body of the page.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">// If Get encounters any errors, it will panic.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">MustGet</span>(<span style="color:#a6e22e">url</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">resp</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">http</span>.<span style="color:#a6e22e">Get</span>(<span style="color:#a6e22e">url</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">// don&#39;t forget to close the body
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>	<span style="color:#66d9ef">defer</span> <span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>.<span style="color:#a6e22e">Close</span>()
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">body</span> []<span style="color:#66d9ef">byte</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">body</span>, <span style="color:#a6e22e">err</span> = <span style="color:#a6e22e">ioutil</span>.<span style="color:#a6e22e">ReadAll</span>(<span style="color:#a6e22e">resp</span>.<span style="color:#a6e22e">Body</span>); <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>		panic(<span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> string(<span style="color:#a6e22e">body</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>在 Go 中导出函数的开头经常会看到注释块; 这些注释也是生成代码文档的元素。当操作不那么直观，而需要完全解释时，也会使用注释块。除了记录函数之外，你应该尽量避免对代码进行过度注释，并相信其他程序员能够理解 Go，除非你是为特定的用户编写代码。</p>
-<h3 id="内联注释">
-  内联注释
-  <a class="anchor" href="#%e5%86%85%e8%81%94%e6%b3%a8%e9%87%8a">#</a>
-</h3>
-<p>内联注释出现在语句的同一行，位于代码本身之后。像其他注释一样，它们以一组向前斜杠开始。同样，不需要在前向斜杠后面加空格，但是惯例是这样做的。</p>
-<p>一般来说，内联注释是这样的:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span>[<span style="color:#a6e22e">code</span>]  <span style="color:#75715e">// Inline comment about the code
-</span></span></span></code></pre></div><p>内联注释应该谨慎使用，但是对于解释代码中棘手或不明显的部分来说可能是有效的。如果你认为自己将来可能不记得正在编写的代码中的某一行，或者你正在与一个你认识的人合作，而这个人可能并不熟悉代码的所有方面，那么它们也会很有用。</p>
-<p>例如，如果你在你的 Go 程序中没有使用大量的数学，你或者你的合作者可能不知道下面的代码创建了一个复杂的数字，所以你可能需要包含一个关于这个的内联注释:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">z</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">%</span> <span style="color:#ae81ff">2</span>  <span style="color:#75715e">// Get the modulus of x
-</span></span></span></code></pre></div><p>你也可以使用行内注释来解释做某事背后的原因，或者提供一些额外的信息，比如:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#a6e22e">x</span> <span style="color:#f92672">:=</span> <span style="color:#ae81ff">8</span>  <span style="color:#75715e">// Initialize x with an arbitrary number
-</span></span></span></code></pre></div><p>你应该只在必要的时候，并且当它们可以为阅读程序的人提供有用的指导时，使用内联注释。</p>
-<h3 id="注释测试代码">
-  注释测试代码
-  <a class="anchor" href="#%e6%b3%a8%e9%87%8a%e6%b5%8b%e8%af%95%e4%bb%a3%e7%a0%81">#</a>
-</h3>
-<p>除了使用注释作为记录代码的方式之外，还可以使用开始标记（<code>/*</code>）和结束标记（<code>*/</code>）来创建块注释。这允许你在测试或调试当前正在创建的程序时注释掉不想执行的代码。也就是说，当你在实现新代码后遇到错误时，你可能希望对其中的一些代码行进行注释，以查看是否能够解决这个确切的问题。</p>
-<p>Using the <code>/*</code> and <code>*/</code> tags can also allow you to try alternatives while you’re determining how to set up your code. You can also use block comments to comment out code that is failing while you continue to work on other parts of your code.
-在决定如何设置代码时，使用 <code>/*</code> 和 <code>*/</code> 标记还可以让你尝试其他选择。你也可以使用注释块来注释失败的代码，同时继续处理代码的其他部分。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#75715e">// Function to add two numbers
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">addTwoNumbers</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">sum</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">+</span> <span style="color:#a6e22e">y</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">sum</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#75715e">// Function to multiply two numbers
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">multiplyTwoNumbers</span>(<span style="color:#a6e22e">x</span>, <span style="color:#a6e22e">y</span> <span style="color:#66d9ef">int</span>) <span style="color:#66d9ef">int</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">product</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">x</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">y</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">product</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#75715e">/*
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		In this example, we&#39;re commenting out the addTwoNumbers
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		function because it is failing, therefore preventing it from executing.
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		Only the multiplyTwoNumbers function will run
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		a := addTwoNumbers(3, 5)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">		fmt.Println(a)
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">
-</span></span></span><span style="display:flex;"><span><span style="color:#75715e">	*/</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">m</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">multiplyTwoNumbers</span>(<span style="color:#ae81ff">5</span>, <span style="color:#ae81ff">9</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">m</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p><strong>注意</strong>: 注释掉代码只能用于测试目的。不要在最终的程序中保留注释掉的代码片段。</p>
-<p>使用 <code>/*</code> 和 <code>*/</code> 标记注释代码可以让你尝试不同的编程方法，并通过系统地注释和运行程序的各个部分来帮助你找到错误的源代码。</p>
-<h3 id="结论">
-  结论
-  <a class="anchor" href="#%e7%bb%93%e8%ae%ba">#</a>
-</h3>
-<p>在你的 Go 程序中使用注释有助于使你的程序对于人类来说更具可读性，包括未来的你自己。添加适当相关和有用的注释可以使其他人更容易地与你合作编程项目，并使代码的价值更加明显。</p>
-<p>在 Go 中正确注释代码还可以让你用到 <a href="https://godoc.org/golang.org/x/tools/cmd/godoc">Godoc</a> 工具。Godoc 是一个从代码中提取注释并为 Go 程序生成文档的工具。</p>
-</article>
- 
-      
-
-      <footer class="book-footer">
-        
-  <div class="flex flex-wrap justify-between">
-
-
-
-
-
-</div>
-
-
-
-  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
-
-
- 
-        
-      </footer>
-
-      
-  
-  <div class="book-comments">
-
-</div>
-  
- 
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
-    </div>
-
-    
-    <aside class="book-toc">
-      <div class="book-toc-content">
-        
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#介绍">介绍</a></li>
-        <li><a href="#注释语法">注释语法</a></li>
-        <li><a href="#注释块">注释块</a></li>
-        <li><a href="#内联注释">内联注释</a></li>
-        <li><a href="#注释测试代码">注释测试代码</a></li>
-        <li><a href="#结论">结论</a></li>
-      </ul>
-    </li>
-  </ul>
-</nav>
-
-
- 
-      </div>
-    </aside>
-    
-  </main>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+package main import ( &#34;fmt&#34; ) func main() { // Print “Hello, World!” to console fmt.Println(&#34;Hello, World!&#34;) } 在一个迭代切片的 for 循环时，注释可能如下所示：
+package main import ( &#34;fmt&#34; ) func main() { // Define sharks variable as a slice of strings sharks := []string{&#34;hammerhead&#34;, &#34;great white&#34;, &#34;dogfish&#34;, &#34;frilled&#34;, &#34;bullhead&#34;, &#34;requiem&#34;} // For loop that iterates over sharks list and prints each string item for _, shark := range sharks { fmt."><meta property="og:type" content="article"><meta property="og:url" content="https://example.com/docs/06-How_To_Write_Comments_in_Go/"><meta property="article:section" content="docs"><title>06 How to Write Comments in Go | How To Code in Go</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css integrity="sha256-gsXb0jRHzuC0wqo+0Izglh+qQOH6Nw7uT4yfAuDUa18=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/zh.search.min.49dd84c1863c020bc1e7dc2da56c6f5767094cc4a336b6ce9c015604b7f5c488.js integrity="sha256-Sd2EwYY8AgvB59wtpWxvV2cJTMSjNrbOnAFWBLf1xIg=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>How To Code in Go</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/>如何用 Go 编写你的第一个程序</a></li><li><a href=/docs/05-Understanding_the_GOPATH/>理解 GOPATH</a></li><li><a href=/docs/06-How_To_Write_Comments_in_Go/ class=active>如何在 Go 中写注释</a></li><li><a href=/docs/07-Understanding_Data_Types_in_Go/>理解 Go 的数据类型</a></li><li><a href=/docs/08-An_Introduction_to_Working_with_Strings_in_Go/>Go 中处理字符串的介绍</a></li><li><a href=/docs/09-How_To_Format_Strings_in_Go/>How To Format Strings in Go</a></li><li><a href=/docs/10-An_Introduction_to_the_Strings_Package_in_Go/>An Introduction to the Strings Package in Go</a></li><li><a href=/docs/11-How_To_Use_Variables_and_Constants_in_Go/>How To Use Variables and Constants in Go</a></li><li><a href=/docs/12-How_To_Convert_Data_Types_in_Go/>How To Convert Data Types in Go</a></li><li><a href=/docs/13-How_To_Do_Math_in_Go_with_Operators/>How To Do Math in Go with Operators</a></li><li><a href=/docs/14-Understanding_Boolean_Logic_in_Go/>Understanding Boolean Logic in Go</a></li><li><a href=/docs/15-Understanding_Maps_in_Go/>Understanding Maps in Go</a></li><li><a href=/docs/16-Understanding_Arrays_and_Slices_in_Go/>Understanding Arrays and Slices in Go</a></li><li><a href=/docs/17-Handling_Errors_in_Go_DigitalOcean/>Handling Errors in Go</a></li><li><a href=/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/>Creating Custom Errors in Go</a></li><li><a href=/docs/19-Handling_Panics_in_Go-_DigitalOcean/>Handling Panics in Go</a></li><li><a href=/docs/20-Importing_Packages_in_Go_DigitalOcean/>Importing Packages in Go</a></li><li><a href=/docs/21-How_To_Write_Packages_in_Go/>如何在 Go 中编写包</a></li><li><a href=/docs/22-Understanding_Package_Visibility_in_Go/>理解 Go 中包的可见性</a></li><li><a href=/docs/23-How_To_Write_Conditional_Statements_in_Go/>如何在 Go 中编写条件语句</a></li><li><a href=/docs/24-How_To_Write_Switch_Statements_in_Go/>如何在 Go 中编写 Switch 语句</a></li><li><a href=/docs/25_How_To_Construct_For_Loops_in_Go/>如何在 Go 中构造 for 循环</a></li><li><a href=/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/>在循环中使用 Break 和 Continue</a></li><li><a href=/docs/27_How_To_Define_and_Call_Functions_in_Go/>如何在 Go 中定义并调用函数</a></li><li><a href=/docs/28_How_To_Use_Variadic_Functions_in_Go/>如何在 Go 中使用可变参数函数</a></li><li><a href=/docs/29-Understanding_defer_in_Go/>了解 Go 中的 defer</a></li><li><a href=/docs/30_Understanding_init_in_Go/>了解 Go 中的 init</a></li><li><a href=/docs/31_Customizing_Go_Binaries_with_Build_Tags/>用构建标签定制 Go 二进制文件</a></li><li><a href=/docs/32_Understanding_Pointers_in_Go/>了解 Go 中的指针</a></li><li><a href=/docs/33_Defining_Structs_in_Go/>在 Go 中定义结构体</a></li><li><a href=/docs/34_Defining_Methods_in_Go/>在 Go 中定义方法</a></li><li><a href=/docs/35_How_To_Build_and_Install_Go_Programs/>如何构建和安装 Go 程序</a></li><li><a href=/docs/36_How_To_Use_Struct_Tags_in_Go/>如何在 Go 中使用结构体标签</a></li><li><a href=/docs/37-How_To_Use_Interfaces_in_Go/>如何在 Go 使用 interface</a></li><li><a href=/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/>在不同的操作系统和架构编译 Go 应用</a></li><li><a href=/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/>用 ldflags 设置 Go 应用程序的版本信息</a></li><li><a href=/docs/40-How_To_Use_the_Flag_Package_in_Go/>在 Go 里面如何使用 Flag 包</a></li></ul></li><li><p><strong>附录：资源</strong></p></li><li><p><a href=https://github.com/gocn/How-To-Code-in-Go><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>06 How to Write Comments in Go</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#介绍>介绍</a></li><li><a href=#注释语法>注释语法</a></li><li><a href=#注释块>注释块</a></li><li><a href=#内联注释>内联注释</a></li><li><a href=#注释测试代码>注释测试代码</a></li><li><a href=#结论>结论</a></li></ul></li></ul></nav></aside></header><article class=markdown><h1 id=如何在-go-中写注释>如何在 Go 中写注释
+<a class=anchor href=#%e5%a6%82%e4%bd%95%e5%9c%a8-go-%e4%b8%ad%e5%86%99%e6%b3%a8%e9%87%8a>#</a></h1><h3 id=介绍>介绍
+<a class=anchor href=#%e4%bb%8b%e7%bb%8d>#</a></h3><p>注释是存在于计算机程序中，被编译器和解释器忽略的代码行。在程序中包含注释使得代码对于人类来说更具可读性，因为它提供了一些关于程序的每个部分正在做什么的信息或解释。</p><p>根据你程序的目的，注释可以作为你自己的笔记或者提醒，或者它们可以是为了其他程序员能够理解你的代码在做什么而写的。</p><p>一般来说，在写或者更新程序的时候写评论是个不错的主意，因为以后很容易忘记你的思维过程，而且以后写的评论长期来看可能没那么有用。</p><h3 id=注释语法>注释语法
+<a class=anchor href=#%e6%b3%a8%e9%87%8a%e8%af%ad%e6%b3%95>#</a></h3><p>Go 中的注释以一组向前斜杠（<code>//</code>）开始，一直到行尾。在前向斜杠集合之后有一个空白符号是惯用的方式。</p><p>一般来说，评论看起来是这样的:</p><pre tabindex=0><code>// This is a comment
+</code></pre><p>注释不会执行，因此在运行程序时没有注释的指示。注释在源代码中供人阅读，而不是供计算机执行。</p><p>在一个 “Hello, World!” 的程序中，注释可能如下所示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// Print “Hello, World!” to console
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Hello, World!&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>在一个迭代切片的 <code>for</code> 循环时，注释可能如下所示：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// Define sharks variable as a slice of strings
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#a6e22e>sharks</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;hammerhead&#34;</span>, <span style=color:#e6db74>&#34;great white&#34;</span>, <span style=color:#e6db74>&#34;dogfish&#34;</span>, <span style=color:#e6db74>&#34;frilled&#34;</span>, <span style=color:#e6db74>&#34;bullhead&#34;</span>, <span style=color:#e6db74>&#34;requiem&#34;</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// For loop that iterates over sharks list and prints each string item
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>shark</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>sharks</span> {
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>shark</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>注释应该与注释代码的缩进相同。也就是说，一个没有缩进的函数定义将有一个没有缩进的注释，并且下面的每个缩进级别中，注释与所注释的代码对齐。</p><p>比如，下面是 <code>main</code> 函数如何注释，以及各个缩进级别的代码和注释：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span> <span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>const</span> <span style=color:#a6e22e>favColor</span> <span style=color:#66d9ef>string</span> = <span style=color:#e6db74>&#34;blue&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>guess</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// Create an input loop
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Ask the user to guess my favorite color
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Guess my favorite color:&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Try to read a line of input from the user. Print out the error 0
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Scanln</span>(<span style=color:#f92672>&amp;</span><span style=color:#a6e22e>guess</span>); <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%s\n&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Did they guess the correct color?
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>favColor</span> <span style=color:#f92672>==</span> <span style=color:#a6e22e>guess</span> {
+</span></span><span style=display:flex><span>			<span style=color:#75715e>// They guessed it!
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%q is my favorite color!\n&#34;</span>, <span style=color:#a6e22e>favColor</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>		<span style=color:#75715e>// Wrong! Have them guess again.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;Sorry, %q is not my favorite color. Guess again.\n&#34;</span>, <span style=color:#a6e22e>guess</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>编写注释是为了帮助程序员，无论是最初的程序员还是在项目中使用或合作的其他人。如果注释不能与代码库一起适当地维护和更新，那么对于编写与代码相矛盾或将与将来的代码相矛盾的注释，不如不包含注释。</p><p>在给代码注释时，你应该回答代码背后的 <em>原因</em>，而不是 <em>什么</em> 或 <em>怎么</em> 回事。除非代码特别复杂，否则查看代码通常可以回答是 <em>什么</em> 或者 <em>怎么</em> 的问题，这就是为什么注释通常是围绕 <em>为什么</em> 的原因。</p><h3 id=注释块>注释块
+<a class=anchor href=#%e6%b3%a8%e9%87%8a%e5%9d%97>#</a></h3><p>注释块可以用来解释更复杂的代码或那些读者可能并不熟悉的代码。</p><p>你可以用两种方式在 Go 中创建注释块。第一种方法是使用一组双向前斜杠，并在每行中重复它们。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#75715e>// First line of a block comment
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// Second line of a block comment
+</span></span></span></code></pre></div><p>第二种是使用开始标记（<code>/*</code>）和结束标记（<code>*/</code>）。为了记录代码，惯例方式是使用 <code>//</code> 语法。你只能使用 <code>/* ... */</code> 语法进行调试，我们将在本文后面讨论这个问题。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e>Everything here
+</span></span></span><span style=display:flex><span><span style=color:#75715e>will be considered
+</span></span></span><span style=display:flex><span><span style=color:#75715e>a block comment
+</span></span></span><span style=display:flex><span><span style=color:#75715e>*/</span>
+</span></span></code></pre></div><p>在这个例子中，注释块定义了 <code>MustGet()</code> 函数中发生的事情：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#75715e>// MustGet will retrieve a url and return the body of the page.
+</span></span></span><span style=display:flex><span><span style=color:#75715e>// If Get encounters any errors, it will panic.
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>MustGet</span>(<span style=color:#a6e22e>url</span> <span style=color:#66d9ef>string</span>) <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>resp</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>http</span>.<span style=color:#a6e22e>Get</span>(<span style=color:#a6e22e>url</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		panic(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#75715e>// don&#39;t forget to close the body
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>	<span style=color:#66d9ef>defer</span> <span style=color:#a6e22e>resp</span>.<span style=color:#a6e22e>Body</span>.<span style=color:#a6e22e>Close</span>()
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>body</span> []<span style=color:#66d9ef>byte</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>body</span>, <span style=color:#a6e22e>err</span> = <span style=color:#a6e22e>ioutil</span>.<span style=color:#a6e22e>ReadAll</span>(<span style=color:#a6e22e>resp</span>.<span style=color:#a6e22e>Body</span>); <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>		panic(<span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> string(<span style=color:#a6e22e>body</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>在 Go 中导出函数的开头经常会看到注释块; 这些注释也是生成代码文档的元素。当操作不那么直观，而需要完全解释时，也会使用注释块。除了记录函数之外，你应该尽量避免对代码进行过度注释，并相信其他程序员能够理解 Go，除非你是为特定的用户编写代码。</p><h3 id=内联注释>内联注释
+<a class=anchor href=#%e5%86%85%e8%81%94%e6%b3%a8%e9%87%8a>#</a></h3><p>内联注释出现在语句的同一行，位于代码本身之后。像其他注释一样，它们以一组向前斜杠开始。同样，不需要在前向斜杠后面加空格，但是惯例是这样做的。</p><p>一般来说，内联注释是这样的:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span>[<span style=color:#a6e22e>code</span>]  <span style=color:#75715e>// Inline comment about the code
+</span></span></span></code></pre></div><p>内联注释应该谨慎使用，但是对于解释代码中棘手或不明显的部分来说可能是有效的。如果你认为自己将来可能不记得正在编写的代码中的某一行，或者你正在与一个你认识的人合作，而这个人可能并不熟悉代码的所有方面，那么它们也会很有用。</p><p>例如，如果你在你的 Go 程序中没有使用大量的数学，你或者你的合作者可能不知道下面的代码创建了一个复杂的数字，所以你可能需要包含一个关于这个的内联注释:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>z</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>%</span> <span style=color:#ae81ff>2</span>  <span style=color:#75715e>// Get the modulus of x
+</span></span></span></code></pre></div><p>你也可以使用行内注释来解释做某事背后的原因，或者提供一些额外的信息，比如:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#a6e22e>x</span> <span style=color:#f92672>:=</span> <span style=color:#ae81ff>8</span>  <span style=color:#75715e>// Initialize x with an arbitrary number
+</span></span></span></code></pre></div><p>你应该只在必要的时候，并且当它们可以为阅读程序的人提供有用的指导时，使用内联注释。</p><h3 id=注释测试代码>注释测试代码
+<a class=anchor href=#%e6%b3%a8%e9%87%8a%e6%b5%8b%e8%af%95%e4%bb%a3%e7%a0%81>#</a></h3><p>除了使用注释作为记录代码的方式之外，还可以使用开始标记（<code>/*</code>）和结束标记（<code>*/</code>）来创建块注释。这允许你在测试或调试当前正在创建的程序时注释掉不想执行的代码。也就是说，当你在实现新代码后遇到错误时，你可能希望对其中的一些代码行进行注释，以查看是否能够解决这个确切的问题。</p><p>Using the <code>/*</code> and <code>*/</code> tags can also allow you to try alternatives while you’re determining how to set up your code. You can also use block comments to comment out code that is failing while you continue to work on other parts of your code.
+在决定如何设置代码时，使用 <code>/*</code> 和 <code>*/</code> 标记还可以让你尝试其他选择。你也可以使用注释块来注释失败的代码，同时继续处理代码的其他部分。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#75715e>// Function to add two numbers
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>addTwoNumbers</span>(<span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>sum</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>+</span> <span style=color:#a6e22e>y</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>sum</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>// Function to multiply two numbers
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>multiplyTwoNumbers</span>(<span style=color:#a6e22e>x</span>, <span style=color:#a6e22e>y</span> <span style=color:#66d9ef>int</span>) <span style=color:#66d9ef>int</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>product</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>x</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>y</span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>product</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#75715e>/*
+</span></span></span><span style=display:flex><span><span style=color:#75715e>		In this example, we&#39;re commenting out the addTwoNumbers
+</span></span></span><span style=display:flex><span><span style=color:#75715e>		function because it is failing, therefore preventing it from executing.
+</span></span></span><span style=display:flex><span><span style=color:#75715e>		Only the multiplyTwoNumbers function will run
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>		a := addTwoNumbers(3, 5)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>		fmt.Println(a)
+</span></span></span><span style=display:flex><span><span style=color:#75715e>
+</span></span></span><span style=display:flex><span><span style=color:#75715e>	*/</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>m</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>multiplyTwoNumbers</span>(<span style=color:#ae81ff>5</span>, <span style=color:#ae81ff>9</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>m</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p><strong>注意</strong>: 注释掉代码只能用于测试目的。不要在最终的程序中保留注释掉的代码片段。</p><p>使用 <code>/*</code> 和 <code>*/</code> 标记注释代码可以让你尝试不同的编程方法，并通过系统地注释和运行程序的各个部分来帮助你找到错误的源代码。</p><h3 id=结论>结论
+<a class=anchor href=#%e7%bb%93%e8%ae%ba>#</a></h3><p>在你的 Go 程序中使用注释有助于使你的程序对于人类来说更具可读性，包括未来的你自己。添加适当相关和有用的注释可以使其他人更容易地与你合作编程项目，并使代码的价值更加明显。</p><p>在 Go 中正确注释代码还可以让你用到 <a href=https://godoc.org/golang.org/x/tools/cmd/godoc>Godoc</a> 工具。Godoc 是一个从代码中提取注释并为 Go 程序生成文档的工具。</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#介绍>介绍</a></li><li><a href=#注释语法>注释语法</a></li><li><a href=#注释块>注释块</a></li><li><a href=#内联注释>内联注释</a></li><li><a href=#注释测试代码>注释测试代码</a></li><li><a href=#结论>结论</a></li></ul></li></ul></nav></div></aside></main></body></html>

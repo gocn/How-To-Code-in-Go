@@ -1,611 +1,272 @@
-<!DOCTYPE html>
-<html lang="zh" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="理解Go中包的可见性 #  介绍 #  当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="理解Go中包的可见性 # 介绍 # 当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 这里的可见性是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。
 在编写符合人体工程学的代码时，仔细控制包的可见性是很重要的，特别是在考虑到将来可能要对你的包进行修改时。如果你需要修复一个错误，提高性能，或改变功能，你会希望以一种不会破坏使用你的包的人的代码的方式进行改变。尽量减少破坏性修改的一个方法是只允许访问你的包中需要正常使用的部分。通过限制访问，你可以在内部对包进行修改，而减少影响其他开发者使用你的包的机会。
 在这篇文章中，将学习如何控制包的可见性，以及如何保护代码中只应在包内使用的部分。为了做到这一点，我们将创建一个基本的记录器来记录和调试信息，使用具有不同程度的项目可见性的包。
-前提条件 #  要遵循本文中的示例，你将需要：
- 按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构：  . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 #  不同于其他程序语言，如Java和Python使用访问修饰符如public、private或protected来指定范围不同，Go通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &ldquo;可见的&rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
-这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &ldquo;类型&rdquo;、&ldquo;变量&rdquo;、&ldquo;常量&rdquo;、&ldquo;函数&quot;等，在当前包外是可见的。
+前提条件 # 要遵循本文中的示例，你将需要：
+按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构： . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 # 不同于其他程序语言，如Java和Python使用访问修饰符如public、private或protected来指定范围不同，Go通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &ldquo;可见的&rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
+这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &ldquo;类型&rdquo;、&ldquo;变量&rdquo;、&ldquo;常量&rdquo;、&ldquo;函数&#34;等，在当前包外是可见的。
 让我们看看下面的代码，仔细注意一下大写字母。
-package greet  import &#34;fmt&#34;  var Greeting string  func Hello(name string) string { 	return fmt.Sprintf(Greeting, name) } 这段代码声明它是在greet包中。然后声明了两个符号，一个叫做 Greeting 的变量和一个叫做 Hello 的函数。因为它们都以大写字母开头，所以它们都被 &ldquo;可导出&rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
-定义包的可见性 #  为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个logging包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么级别上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：信息、警告或错误。">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
-<meta property="og:description" content="理解Go中包的可见性 #  介绍 #  当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
+package greet import &#34;fmt&#34; var Greeting string func Hello(name string) string { return fmt.Sprintf(Greeting, name) } 这段代码声明它是在greet包中。然后声明了两个符号，一个叫做 Greeting 的变量和一个叫做 Hello 的函数。因为它们都以大写字母开头，所以它们都被 &ldquo;可导出&rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
+定义包的可见性 # 为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个logging包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么级别上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：信息、警告或错误。
+首先，在你的 src 目录下，创建一个名为 logging 的目录来放置日志文件：
+mkdir logging 进入目录：
+cd logging 然后，使用nano这样的编辑器，创建一个名为logging."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="理解Go中包的可见性 # 介绍 # 当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 这里的可见性是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。
 在编写符合人体工程学的代码时，仔细控制包的可见性是很重要的，特别是在考虑到将来可能要对你的包进行修改时。如果你需要修复一个错误，提高性能，或改变功能，你会希望以一种不会破坏使用你的包的人的代码的方式进行改变。尽量减少破坏性修改的一个方法是只允许访问你的包中需要正常使用的部分。通过限制访问，你可以在内部对包进行修改，而减少影响其他开发者使用你的包的机会。
 在这篇文章中，将学习如何控制包的可见性，以及如何保护代码中只应在包内使用的部分。为了做到这一点，我们将创建一个基本的记录器来记录和调试信息，使用具有不同程度的项目可见性的包。
-前提条件 #  要遵循本文中的示例，你将需要：
- 按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构：  . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 #  不同于其他程序语言，如Java和Python使用访问修饰符如public、private或protected来指定范围不同，Go通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &ldquo;可见的&rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
-这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &ldquo;类型&rdquo;、&ldquo;变量&rdquo;、&ldquo;常量&rdquo;、&ldquo;函数&quot;等，在当前包外是可见的。
+前提条件 # 要遵循本文中的示例，你将需要：
+按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构： . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 # 不同于其他程序语言，如Java和Python使用访问修饰符如public、private或protected来指定范围不同，Go通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &ldquo;可见的&rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
+这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &ldquo;类型&rdquo;、&ldquo;变量&rdquo;、&ldquo;常量&rdquo;、&ldquo;函数&#34;等，在当前包外是可见的。
 让我们看看下面的代码，仔细注意一下大写字母。
-package greet  import &#34;fmt&#34;  var Greeting string  func Hello(name string) string { 	return fmt.Sprintf(Greeting, name) } 这段代码声明它是在greet包中。然后声明了两个符号，一个叫做 Greeting 的变量和一个叫做 Hello 的函数。因为它们都以大写字母开头，所以它们都被 &ldquo;可导出&rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
-定义包的可见性 #  为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个logging包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么级别上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：信息、警告或错误。" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.com/docs/22-Understanding_Package_Visibility_in_Go/" /><meta property="article:section" content="docs" />
-
-
-
-<title>22 Understanding Package Visibility in Go | How To Code in Go</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
-  <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
-  
-</head>
-<body dir="ltr">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <main class="container flex">
-    <aside class="book-menu">
-      <div class="book-menu-content">
-        
-  <nav>
-<h2 class="book-brand">
-  <a class="flex align-center" href="/"><span>How To Code in Go</span>
-  </a>
-</h2>
-
-
-<div class="book-search">
-  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
-  <div class="book-search-spinner hidden"></div>
-  <ul id="book-search-results"></ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-<li>
-<p><strong>开始学习</strong></p>
-<ul>
-<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
-<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
-<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
-<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
-<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
-<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
-<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
-<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
-<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
-<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
-<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
-<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
-<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
-<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
-<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
-<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
-<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
-<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
-<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/"class=active>理解 Go 中包的可见性</a></li>
-<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
-<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
-<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
-<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
-<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
-<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
-<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
-<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
-<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
-<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
-<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
-<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
-<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
-<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
-<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
-<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
-<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
-<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
-</ul>
-</li>
-<li>
-<p><strong>附录：资源</strong></p>
-</li>
-<li>
-<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
-</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-</nav>
-
-
-
-
-  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
-
-
- 
-      </div>
-    </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        
-  <div class="flex align-center justify-between">
-  <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
-  </label>
-
-  <strong>22 Understanding Package Visibility in Go</strong>
-
-  <label for="toc-control">
-    
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
-    
-  </label>
-</div>
-
-
-  
-  <aside class="hidden clearfix">
-    
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#介绍">介绍</a></li>
-      </ul>
-    </li>
-    <li><a href="#前提条件">前提条件</a></li>
-    <li><a href="#可导出与不可导出">可导出与不可导出</a></li>
-    <li><a href="#定义包的可见性">定义包的可见性</a></li>
-    <li><a href="#结构内的可见性">结构内的可见性</a></li>
-    <li><a href="#方法中的可见性">方法中的可见性</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
-
-  </aside>
-  
- 
-      </header>
-
-      
-      
-  <article class="markdown"><h1 id="理解go中包的可见性">
-  理解Go中包的可见性
-  <a class="anchor" href="#%e7%90%86%e8%a7%a3go%e4%b8%ad%e5%8c%85%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7">#</a>
-</h1>
-<h3 id="介绍">
-  介绍
-  <a class="anchor" href="#%e4%bb%8b%e7%bb%8d">#</a>
-</h3>
-<p>当创建一个<a href="https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go">Go中的包</a>时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过<a href="https://www.digitalocean.com/community/tutorials/importing-packages-in-go">导入包</a>，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。</p>
-<p>这里的<em>可见性</em>是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。</p>
-<p>在编写符合人体工程学的代码时，仔细控制包的可见性是很重要的，特别是在考虑到将来可能要对你的包进行修改时。如果你需要修复一个错误，提高性能，或改变功能，你会希望以一种不会破坏使用你的包的人的代码的方式进行改变。尽量减少破坏性修改的一个方法是只允许访问你的包中需要正常使用的部分。通过限制访问，你可以在内部对包进行修改，而减少影响其他开发者使用你的包的机会。</p>
-<p>在这篇文章中，将学习如何控制包的可见性，以及如何保护代码中只应在包内使用的部分。为了做到这一点，我们将创建一个基本的记录器来记录和调试信息，使用具有不同程度的项目可见性的包。</p>
-<h2 id="前提条件">
-  前提条件
-  <a class="anchor" href="#%e5%89%8d%e6%8f%90%e6%9d%a1%e4%bb%b6">#</a>
-</h2>
-<p>要遵循本文中的示例，你将需要：</p>
-<ul>
-<li>按照<a href="https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go">如何安装 Go 并设置本地编程环境</a>设置的 Go 工作区。 本教程将使用以下文件结构：</li>
-</ul>
-<pre tabindex="0"><code>.
+package greet import &#34;fmt&#34; var Greeting string func Hello(name string) string { return fmt.Sprintf(Greeting, name) } 这段代码声明它是在greet包中。然后声明了两个符号，一个叫做 Greeting 的变量和一个叫做 Hello 的函数。因为它们都以大写字母开头，所以它们都被 &ldquo;可导出&rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
+定义包的可见性 # 为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个logging包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么级别上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：信息、警告或错误。
+首先，在你的 src 目录下，创建一个名为 logging 的目录来放置日志文件：
+mkdir logging 进入目录：
+cd logging 然后，使用nano这样的编辑器，创建一个名为logging."><meta property="og:type" content="article"><meta property="og:url" content="https://example.com/docs/22-Understanding_Package_Visibility_in_Go/"><meta property="article:section" content="docs"><title>22 Understanding Package Visibility in Go | How To Code in Go</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css integrity="sha256-gsXb0jRHzuC0wqo+0Izglh+qQOH6Nw7uT4yfAuDUa18=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/zh.search.min.49dd84c1863c020bc1e7dc2da56c6f5767094cc4a336b6ce9c015604b7f5c488.js integrity="sha256-Sd2EwYY8AgvB59wtpWxvV2cJTMSjNrbOnAFWBLf1xIg=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>How To Code in Go</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/>如何用 Go 编写你的第一个程序</a></li><li><a href=/docs/05-Understanding_the_GOPATH/>理解 GOPATH</a></li><li><a href=/docs/06-How_To_Write_Comments_in_Go/>如何在 Go 中写注释</a></li><li><a href=/docs/07-Understanding_Data_Types_in_Go/>理解 Go 的数据类型</a></li><li><a href=/docs/08-An_Introduction_to_Working_with_Strings_in_Go/>Go 中处理字符串的介绍</a></li><li><a href=/docs/09-How_To_Format_Strings_in_Go/>How To Format Strings in Go</a></li><li><a href=/docs/10-An_Introduction_to_the_Strings_Package_in_Go/>An Introduction to the Strings Package in Go</a></li><li><a href=/docs/11-How_To_Use_Variables_and_Constants_in_Go/>How To Use Variables and Constants in Go</a></li><li><a href=/docs/12-How_To_Convert_Data_Types_in_Go/>How To Convert Data Types in Go</a></li><li><a href=/docs/13-How_To_Do_Math_in_Go_with_Operators/>How To Do Math in Go with Operators</a></li><li><a href=/docs/14-Understanding_Boolean_Logic_in_Go/>Understanding Boolean Logic in Go</a></li><li><a href=/docs/15-Understanding_Maps_in_Go/>Understanding Maps in Go</a></li><li><a href=/docs/16-Understanding_Arrays_and_Slices_in_Go/>Understanding Arrays and Slices in Go</a></li><li><a href=/docs/17-Handling_Errors_in_Go_DigitalOcean/>Handling Errors in Go</a></li><li><a href=/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/>Creating Custom Errors in Go</a></li><li><a href=/docs/19-Handling_Panics_in_Go-_DigitalOcean/>Handling Panics in Go</a></li><li><a href=/docs/20-Importing_Packages_in_Go_DigitalOcean/>Importing Packages in Go</a></li><li><a href=/docs/21-How_To_Write_Packages_in_Go/>如何在 Go 中编写包</a></li><li><a href=/docs/22-Understanding_Package_Visibility_in_Go/ class=active>理解 Go 中包的可见性</a></li><li><a href=/docs/23-How_To_Write_Conditional_Statements_in_Go/>如何在 Go 中编写条件语句</a></li><li><a href=/docs/24-How_To_Write_Switch_Statements_in_Go/>如何在 Go 中编写 Switch 语句</a></li><li><a href=/docs/25_How_To_Construct_For_Loops_in_Go/>如何在 Go 中构造 for 循环</a></li><li><a href=/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/>在循环中使用 Break 和 Continue</a></li><li><a href=/docs/27_How_To_Define_and_Call_Functions_in_Go/>如何在 Go 中定义并调用函数</a></li><li><a href=/docs/28_How_To_Use_Variadic_Functions_in_Go/>如何在 Go 中使用可变参数函数</a></li><li><a href=/docs/29-Understanding_defer_in_Go/>了解 Go 中的 defer</a></li><li><a href=/docs/30_Understanding_init_in_Go/>了解 Go 中的 init</a></li><li><a href=/docs/31_Customizing_Go_Binaries_with_Build_Tags/>用构建标签定制 Go 二进制文件</a></li><li><a href=/docs/32_Understanding_Pointers_in_Go/>了解 Go 中的指针</a></li><li><a href=/docs/33_Defining_Structs_in_Go/>在 Go 中定义结构体</a></li><li><a href=/docs/34_Defining_Methods_in_Go/>在 Go 中定义方法</a></li><li><a href=/docs/35_How_To_Build_and_Install_Go_Programs/>如何构建和安装 Go 程序</a></li><li><a href=/docs/36_How_To_Use_Struct_Tags_in_Go/>如何在 Go 中使用结构体标签</a></li><li><a href=/docs/37-How_To_Use_Interfaces_in_Go/>如何在 Go 使用 interface</a></li><li><a href=/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/>在不同的操作系统和架构编译 Go 应用</a></li><li><a href=/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/>用 ldflags 设置 Go 应用程序的版本信息</a></li><li><a href=/docs/40-How_To_Use_the_Flag_Package_in_Go/>在 Go 里面如何使用 Flag 包</a></li></ul></li><li><p><strong>附录：资源</strong></p></li><li><p><a href=https://github.com/gocn/How-To-Code-in-Go><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>22 Understanding Package Visibility in Go</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#介绍>介绍</a></li></ul></li><li><a href=#前提条件>前提条件</a></li><li><a href=#可导出与不可导出>可导出与不可导出</a></li><li><a href=#定义包的可见性>定义包的可见性</a></li><li><a href=#结构内的可见性>结构内的可见性</a></li><li><a href=#方法中的可见性>方法中的可见性</a></li><li><a href=#总结>总结</a></li></ul></nav></aside></header><article class=markdown><h1 id=理解go中包的可见性>理解Go中包的可见性
+<a class=anchor href=#%e7%90%86%e8%a7%a3go%e4%b8%ad%e5%8c%85%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7>#</a></h1><h3 id=介绍>介绍
+<a class=anchor href=#%e4%bb%8b%e7%bb%8d>#</a></h3><p>当创建一个<a href=https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go>Go中的包</a>时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过<a href=https://www.digitalocean.com/community/tutorials/importing-packages-in-go>导入包</a>，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。</p><p>这里的<em>可见性</em>是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。</p><p>在编写符合人体工程学的代码时，仔细控制包的可见性是很重要的，特别是在考虑到将来可能要对你的包进行修改时。如果你需要修复一个错误，提高性能，或改变功能，你会希望以一种不会破坏使用你的包的人的代码的方式进行改变。尽量减少破坏性修改的一个方法是只允许访问你的包中需要正常使用的部分。通过限制访问，你可以在内部对包进行修改，而减少影响其他开发者使用你的包的机会。</p><p>在这篇文章中，将学习如何控制包的可见性，以及如何保护代码中只应在包内使用的部分。为了做到这一点，我们将创建一个基本的记录器来记录和调试信息，使用具有不同程度的项目可见性的包。</p><h2 id=前提条件>前提条件
+<a class=anchor href=#%e5%89%8d%e6%8f%90%e6%9d%a1%e4%bb%b6>#</a></h2><p>要遵循本文中的示例，你将需要：</p><ul><li>按照<a href=https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go>如何安装 Go 并设置本地编程环境</a>设置的 Go 工作区。 本教程将使用以下文件结构：</li></ul><pre tabindex=0><code>.
 ├── bin 
 │ 
 └── src
     └── github.com
         └── gopherguides
-</code></pre><h2 id="可导出与不可导出">
-  可导出与不可导出
-  <a class="anchor" href="#%e5%8f%af%e5%af%bc%e5%87%ba%e4%b8%8e%e4%b8%8d%e5%8f%af%e5%af%bc%e5%87%ba">#</a>
-</h2>
-<p>不同于其他程序语言，如Java和<a href="https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3">Python</a>使用<em>访问修饰符</em>如<code>public</code>、<code>private</code>或<code>protected</code>来指定范围不同，Go通过其声明方式来决定一个项目是否<code>exported</code>和<code>unxported</code>。在这种情况下，导出一个项目会使它在当前包之外是 &ldquo;可见的&rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。</p>
-<p>这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &ldquo;类型&rdquo;、&ldquo;变量&rdquo;、&ldquo;常量&rdquo;、&ldquo;函数&quot;等，在当前包外是可见的。</p>
-<p>让我们看看下面的代码，仔细注意一下大写字母。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">greet</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">Greeting</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Hello</span>(<span style="color:#a6e22e">name</span> <span style="color:#66d9ef">string</span>) <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#a6e22e">Greeting</span>, <span style="color:#a6e22e">name</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码声明它是在<code>greet</code>包中。然后声明了两个符号，一个叫做 <code>Greeting</code> 的变量和一个叫做 <code>Hello</code> 的函数。因为它们都以大写字母开头，所以它们都被 &ldquo;可导出&rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。</p>
-<h2 id="定义包的可见性">
-  定义包的可见性
-  <a class="anchor" href="#%e5%ae%9a%e4%b9%89%e5%8c%85%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7">#</a>
-</h2>
-<p>为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个<code>logging</code>包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么<em>级别</em>上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：<code>信息</code>、<code>警告</code>或<code>错误</code>。</p>
-<p>首先，在你的 <code>src</code> 目录下，创建一个名为 <code>logging</code> 的目录来放置日志文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>mkdir logging
-</span></span></code></pre></div><p>进入目录：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd logging
-</span></span></code></pre></div><p>然后，使用nano这样的编辑器，创建一个名为<code>logging.go</code>的文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano logging.go
-</span></span></code></pre></div><p>在刚刚创建的<code>logging.go</code>文件中写入以下代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">logging</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">var</span> <span style="color:#a6e22e">debug</span> <span style="color:#66d9ef">bool</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Debug</span>(<span style="color:#a6e22e">b</span> <span style="color:#66d9ef">bool</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">debug</span> = <span style="color:#a6e22e">b</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Log</span>(<span style="color:#a6e22e">statement</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">debug</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s %s\n&#34;</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Format</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">RFC3339</span>), <span style="color:#a6e22e">statement</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码的第一行声明了一个名为 <code>logging</code> 的包。在这个包中，有两个 &ldquo;导出 &ldquo;的函数。<code>Debug</code>和<code>Log</code>。这些函数可以被任何其他导入<code>logging</code>的包所调用。还有一个名为<code>debug</code>的私有变量。这个变量只能从<code>logging</code>包内访问。值得注意的是，虽然函数<code>Debug</code>和变量<code>debug</code>的拼写相同，但函数是大写的，变量不是。这使得它们成为具有不同作用域的不同声明。</p>
-<p>保存并退出该文件。</p>
-<p>为了在我们代码的其他地方使用这个包，我们可以<a href="https://www.digitalocean.com/community/tutorials/importing-packages-in-go"><code>import</code>它到一个新的包</a>。我们将创建这个新的包，但需要一个新的目录来首先存储这些源文件。</p>
-<p>让我们离开<code>logging</code>目录，创建一个名为<code>cmd</code>的新目录，然后进入这个新目录：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ..
-</span></span><span style="display:flex;"><span>mkdir cmd
-</span></span><span style="display:flex;"><span>cd cmd
-</span></span></code></pre></div><p>在刚刚创建的<code>cmd</code>目录下创建一个名为<code>main.go</code>的文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano main.go
-</span></span></code></pre></div><p>现在我们可以添加以下代码：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">Debug</span>(<span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;This is a debug statement...&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>现在整个程序已经写好了。然而，在运行这个程序之前，我们还需要创建几个配置文件，以便我们的代码能够正常工作。Go使用<a href="https://blog.golang.org/using-go-modules">Go模块</a>来配置导入资源的软件包依赖性。Go模块是放置在你的包目录中的配置文件，它告诉编译器从哪里导入包。虽然对模块的学习超出了本文的范围，但我们可以只写几行配置来使这个例子在本地工作。</p>
-<p>在<code>cmd</code>目录下打开以下<code>go.mod</code>文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>nano go.mod
-</span></span></code></pre></div><p>然后在文件中放置以下内容：</p>
-<pre tabindex="0"><code>module github.com/gopherguides/cmd
+</code></pre><h2 id=可导出与不可导出>可导出与不可导出
+<a class=anchor href=#%e5%8f%af%e5%af%bc%e5%87%ba%e4%b8%8e%e4%b8%8d%e5%8f%af%e5%af%bc%e5%87%ba>#</a></h2><p>不同于其他程序语言，如Java和<a href=https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3>Python</a>使用<em>访问修饰符</em>如<code>public</code>、<code>private</code>或<code>protected</code>来指定范围不同，Go通过其声明方式来决定一个项目是否<code>exported</code>和<code>unxported</code>。在这种情况下，导出一个项目会使它在当前包之外是 &ldquo;可见的&rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。</p><p>这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &ldquo;类型&rdquo;、&ldquo;变量&rdquo;、&ldquo;常量&rdquo;、&ldquo;函数"等，在当前包外是可见的。</p><p>让我们看看下面的代码，仔细注意一下大写字母。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>greet</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>Greeting</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Hello</span>(<span style=color:#a6e22e>name</span> <span style=color:#66d9ef>string</span>) <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#a6e22e>Greeting</span>, <span style=color:#a6e22e>name</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这段代码声明它是在<code>greet</code>包中。然后声明了两个符号，一个叫做 <code>Greeting</code> 的变量和一个叫做 <code>Hello</code> 的函数。因为它们都以大写字母开头，所以它们都被 &ldquo;可导出&rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。</p><h2 id=定义包的可见性>定义包的可见性
+<a class=anchor href=#%e5%ae%9a%e4%b9%89%e5%8c%85%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7>#</a></h2><p>为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个<code>logging</code>包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么<em>级别</em>上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：<code>信息</code>、<code>警告</code>或<code>错误</code>。</p><p>首先，在你的 <code>src</code> 目录下，创建一个名为 <code>logging</code> 的目录来放置日志文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mkdir logging
+</span></span></code></pre></div><p>进入目录：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd logging
+</span></span></code></pre></div><p>然后，使用nano这样的编辑器，创建一个名为<code>logging.go</code>的文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nano logging.go
+</span></span></code></pre></div><p>在刚刚创建的<code>logging.go</code>文件中写入以下代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>logging</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>var</span> <span style=color:#a6e22e>debug</span> <span style=color:#66d9ef>bool</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Debug</span>(<span style=color:#a6e22e>b</span> <span style=color:#66d9ef>bool</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>debug</span> = <span style=color:#a6e22e>b</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Log</span>(<span style=color:#a6e22e>statement</span> <span style=color:#66d9ef>string</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> !<span style=color:#a6e22e>debug</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%s %s\n&#34;</span>, <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>().<span style=color:#a6e22e>Format</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>RFC3339</span>), <span style=color:#a6e22e>statement</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这段代码的第一行声明了一个名为 <code>logging</code> 的包。在这个包中，有两个 &ldquo;导出 &ldquo;的函数。<code>Debug</code>和<code>Log</code>。这些函数可以被任何其他导入<code>logging</code>的包所调用。还有一个名为<code>debug</code>的私有变量。这个变量只能从<code>logging</code>包内访问。值得注意的是，虽然函数<code>Debug</code>和变量<code>debug</code>的拼写相同，但函数是大写的，变量不是。这使得它们成为具有不同作用域的不同声明。</p><p>保存并退出该文件。</p><p>为了在我们代码的其他地方使用这个包，我们可以<a href=https://www.digitalocean.com/community/tutorials/importing-packages-in-go><code>import</code>它到一个新的包</a>。我们将创建这个新的包，但需要一个新的目录来首先存储这些源文件。</p><p>让我们离开<code>logging</code>目录，创建一个名为<code>cmd</code>的新目录，然后进入这个新目录：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd ..
+</span></span><span style=display:flex><span>mkdir cmd
+</span></span><span style=display:flex><span>cd cmd
+</span></span></code></pre></div><p>在刚刚创建的<code>cmd</code>目录下创建一个名为<code>main.go</code>的文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nano main.go
+</span></span></code></pre></div><p>现在我们可以添加以下代码：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>Debug</span>(<span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;This is a debug statement...&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>现在整个程序已经写好了。然而，在运行这个程序之前，我们还需要创建几个配置文件，以便我们的代码能够正常工作。Go使用<a href=https://blog.golang.org/using-go-modules>Go模块</a>来配置导入资源的软件包依赖性。Go模块是放置在你的包目录中的配置文件，它告诉编译器从哪里导入包。虽然对模块的学习超出了本文的范围，但我们可以只写几行配置来使这个例子在本地工作。</p><p>在<code>cmd</code>目录下打开以下<code>go.mod</code>文件：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nano go.mod
+</span></span></code></pre></div><p>然后在文件中放置以下内容：</p><pre tabindex=0><code>module github.com/gopherguides/cmd
 
 replace github.com/gopherguides/logging =&gt; ../logging
-</code></pre><p>这个文件的第一行告诉编译器，<code>cmd</code>包的文件路径是<code>github.com/gopherguides/cmd</code>。第二行告诉编译器，<code>github.com/gopherguides/logging</code>包可以在磁盘上的<code>.../logging</code>目录下找到。</p>
-<p>我们还需要一个<code>go.mod</code>文件用于我们的<code>logging</code>包。让我们回到<code>logging</code>目录中，创建一个<code>go.mod</code>文件。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ../logging
-</span></span><span style="display:flex;"><span>nano go.mod
-</span></span></code></pre></div><p>在文件中加入以下内容：</p>
-<pre tabindex="0"><code>module github.com/gopherguides/logging
-</code></pre><p>这告诉编译器，我们创建的<code>logging</code>包实际上是<code>github.com/gopherguides/logging</code>包。这使得在 <code>main</code> 包中导入该包成为可能，之前写了以下这一行：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">Debug</span>(<span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;This is a debug statement...&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>你现在应该有以下目录结构和文件布局：</p>
-<pre tabindex="0"><code>├── cmd
+</code></pre><p>这个文件的第一行告诉编译器，<code>cmd</code>包的文件路径是<code>github.com/gopherguides/cmd</code>。第二行告诉编译器，<code>github.com/gopherguides/logging</code>包可以在磁盘上的<code>.../logging</code>目录下找到。</p><p>我们还需要一个<code>go.mod</code>文件用于我们的<code>logging</code>包。让我们回到<code>logging</code>目录中，创建一个<code>go.mod</code>文件。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd ../logging
+</span></span><span style=display:flex><span>nano go.mod
+</span></span></code></pre></div><p>在文件中加入以下内容：</p><pre tabindex=0><code>module github.com/gopherguides/logging
+</code></pre><p>这告诉编译器，我们创建的<code>logging</code>包实际上是<code>github.com/gopherguides/logging</code>包。这使得在 <code>main</code> 包中导入该包成为可能，之前写了以下这一行：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>Debug</span>(<span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;This is a debug statement...&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>你现在应该有以下目录结构和文件布局：</p><pre tabindex=0><code>├── cmd
 │   ├── go.mod
 │   └── main.go
 └── logging
     ├── go.mod
     └── logging.go
-</code></pre><p>现在我们已经完成了所有的配置，可以用以下命令运行<code>cmd</code>包中的<code>main</code>程序：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-bash" data-lang="bash"><span style="display:flex;"><span>cd ../cmd
-</span></span><span style="display:flex;"><span>go run main.go
-</span></span></code></pre></div><p>你将得到类似以下的输出：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">2019-08-28T11:36:09-05:00 This is a debug statement...
-</code></pre><p>该程序将以RFC 3339格式打印出当前时间，后面是我们发送给记录器的任何语句。<a href="https://tools.ietf.org/html/rfc3339">RFC 3339</a>是一种时间格式，被设计用来表示互联网上的时间，通常用于日志文件。</p>
-<p>因为<code>Debug</code>和<code>Log</code>函数是从日志包中导出的，我们可以在<code>main</code>包中使用它们。然而，<code>logging</code>包中的<code>debug</code>变量没有被导出。试图引用一个未导出的声明将导致一个编译时错误。</p>
-<p>在<code>main.go</code>中添加错误操作的一行<code>fmt.Println(logging.debug)</code>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">Debug</span>(<span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;This is a debug statement...&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">debug</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>保存并运行该文件，你将收到一个类似于以下的错误：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">. . .
+</code></pre><p>现在我们已经完成了所有的配置，可以用以下命令运行<code>cmd</code>包中的<code>main</code>程序：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd ../cmd
+</span></span><span style=display:flex><span>go run main.go
+</span></span></code></pre></div><p>你将得到类似以下的输出：</p><pre tabindex=0><code class=language-Output data-lang=Output>2019-08-28T11:36:09-05:00 This is a debug statement...
+</code></pre><p>该程序将以RFC 3339格式打印出当前时间，后面是我们发送给记录器的任何语句。<a href=https://tools.ietf.org/html/rfc3339>RFC 3339</a>是一种时间格式，被设计用来表示互联网上的时间，通常用于日志文件。</p><p>因为<code>Debug</code>和<code>Log</code>函数是从日志包中导出的，我们可以在<code>main</code>包中使用它们。然而，<code>logging</code>包中的<code>debug</code>变量没有被导出。试图引用一个未导出的声明将导致一个编译时错误。</p><p>在<code>main.go</code>中添加错误操作的一行<code>fmt.Println(logging.debug)</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>Debug</span>(<span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;This is a debug statement...&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>debug</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>保存并运行该文件，你将收到一个类似于以下的错误：</p><pre tabindex=0><code class=language-Output data-lang=Output>. . .
 ./main.go:10:14: cannot refer to unexported name logging.debug
-</code></pre><p>现在我们已经了解了包中的 <code>exported</code> 和 <code>unexported</code> 项的行为，接下来我们将看看如何从 <code>structs</code> 中导出 <code>fields</code> 和 <code>methods</code>。</p>
-<h2 id="结构内的可见性">
-  结构内的可见性
-  <a class="anchor" href="#%e7%bb%93%e6%9e%84%e5%86%85%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7">#</a>
-</h2>
-<p>虽然在上一节中构建的记录器中的可见性方案可能对简单的程序有效，但它分享了太多的状态，在多个包中都是有用的。这是因为导出的变量可以被多个包所访问，这些包可以将变量修改成相互矛盾的状态。允许你的包的状态以这种方式被改变，使得你很难预测你的程序将如何表现。例如，在目前的设计中，一个包可以将<code>Debug</code>变量设置为<code>true</code>，而另一个包可以在同一实例中将其设置为<code>false</code>。这将产生一个问题，因为导入<code>logging</code>包的两个包都会受到影响。</p>
-<p>我们可以通过创建一个结构，然后把方法挂在它上面，使日志记录器隔离。这将允许我们创建一个日志记录器的<code>instance</code>实例，在每个使用它的包中独立使用。</p>
-<p>将<code>logging</code>包改为以下内容，以重构代码并隔离记录器：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">logging</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Logger</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">timeFormat</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">debug</span>      <span style="color:#66d9ef">bool</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">timeFormat</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">debug</span> <span style="color:#66d9ef">bool</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Logger</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Logger</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">timeFormat</span>: <span style="color:#a6e22e">timeFormat</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">debug</span>:      <span style="color:#a6e22e">debug</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Logger</span>) <span style="color:#a6e22e">Log</span>(<span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> !<span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">debug</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%s %s\n&#34;</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Format</span>(<span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">timeFormat</span>), <span style="color:#a6e22e">s</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>在这段代码中，我们创建了一个<code>Logger</code>结构。这个结构将存放未导出的状态，包括要打印出来的时间格式和<code>debug</code>变量设置为<code>true</code>或<code>false</code>。<code>New</code>函数设置初始状态来创建记录器，例如时间格式和调试状态。然后，它将内部给它的值存储到未导出的变量<code>timeFormat</code>和<code>debug</code>中。我们还在<code>Logger</code>类型上创建了一个名为<code>Log</code>的方法，该方法接收我们想要打印出来的语句。在<code>Log</code>方法内有一个对其本地方法变量<code>l</code>的引用，以获得对其内部字段的访问，如<code>l.timeFormat</code>和<code>l.debug</code>。</p>
-<p>这种方法将允许在许多不同的包中创建一个<code>Logger</code>，并独立于其他包的使用方式而使用它。</p>
-<p>为了在其他软件包中使用它，让我们把<code>cmd/main.go</code>改成下面的样子：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">RFC3339</span>, <span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;This is a debug statement...&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>运行这个程序将给你带来以下输出：</p>
-<pre tabindex="0"><code>Output
+</code></pre><p>现在我们已经了解了包中的 <code>exported</code> 和 <code>unexported</code> 项的行为，接下来我们将看看如何从 <code>structs</code> 中导出 <code>fields</code> 和 <code>methods</code>。</p><h2 id=结构内的可见性>结构内的可见性
+<a class=anchor href=#%e7%bb%93%e6%9e%84%e5%86%85%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7>#</a></h2><p>虽然在上一节中构建的记录器中的可见性方案可能对简单的程序有效，但它分享了太多的状态，在多个包中都是有用的。这是因为导出的变量可以被多个包所访问，这些包可以将变量修改成相互矛盾的状态。允许你的包的状态以这种方式被改变，使得你很难预测你的程序将如何表现。例如，在目前的设计中，一个包可以将<code>Debug</code>变量设置为<code>true</code>，而另一个包可以在同一实例中将其设置为<code>false</code>。这将产生一个问题，因为导入<code>logging</code>包的两个包都会受到影响。</p><p>我们可以通过创建一个结构，然后把方法挂在它上面，使日志记录器隔离。这将允许我们创建一个日志记录器的<code>instance</code>实例，在每个使用它的包中独立使用。</p><p>将<code>logging</code>包改为以下内容，以重构代码并隔离记录器：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>logging</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Logger</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>timeFormat</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>debug</span>      <span style=color:#66d9ef>bool</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>timeFormat</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>debug</span> <span style=color:#66d9ef>bool</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Logger</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Logger</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>timeFormat</span>: <span style=color:#a6e22e>timeFormat</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>debug</span>:      <span style=color:#a6e22e>debug</span>,
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>l</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Logger</span>) <span style=color:#a6e22e>Log</span>(<span style=color:#a6e22e>s</span> <span style=color:#66d9ef>string</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> !<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>debug</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%s %s\n&#34;</span>, <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>().<span style=color:#a6e22e>Format</span>(<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>timeFormat</span>), <span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>在这段代码中，我们创建了一个<code>Logger</code>结构。这个结构将存放未导出的状态，包括要打印出来的时间格式和<code>debug</code>变量设置为<code>true</code>或<code>false</code>。<code>New</code>函数设置初始状态来创建记录器，例如时间格式和调试状态。然后，它将内部给它的值存储到未导出的变量<code>timeFormat</code>和<code>debug</code>中。我们还在<code>Logger</code>类型上创建了一个名为<code>Log</code>的方法，该方法接收我们想要打印出来的语句。在<code>Log</code>方法内有一个对其本地方法变量<code>l</code>的引用，以获得对其内部字段的访问，如<code>l.timeFormat</code>和<code>l.debug</code>。</p><p>这种方法将允许在许多不同的包中创建一个<code>Logger</code>，并独立于其他包的使用方式而使用它。</p><p>为了在其他软件包中使用它，让我们把<code>cmd/main.go</code>改成下面的样子：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>RFC3339</span>, <span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;This is a debug statement...&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>运行这个程序将给你带来以下输出：</p><pre tabindex=0><code>Output
 2019-08-28T11:56:49-05:00 This is a debug statement...
-</code></pre><p>在这段代码中，我们通过调用导出的函数<code>New</code>创建了一个记录器的实例。将这个实例的引用存储在<code>logger</code>变量中。现在可以调用<code>logging.Log</code>来打印出语句。</p>
-<p>如果试图从<code>logger</code>中引用一个未导出的字段，如<code>timeFormat</code>字段，将收到一个编译时错误。尝试添加以下高亮行，并运行<code>cmd/main.go</code>。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">RFC3339</span>, <span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;This is a debug statement...&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">timeFormat</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这将给出如下错误信息：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">. . .
+</code></pre><p>在这段代码中，我们通过调用导出的函数<code>New</code>创建了一个记录器的实例。将这个实例的引用存储在<code>logger</code>变量中。现在可以调用<code>logging.Log</code>来打印出语句。</p><p>如果试图从<code>logger</code>中引用一个未导出的字段，如<code>timeFormat</code>字段，将收到一个编译时错误。尝试添加以下高亮行，并运行<code>cmd/main.go</code>。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>RFC3339</span>, <span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;This is a debug statement...&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>timeFormat</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这将给出如下错误信息：</p><pre tabindex=0><code class=language-Output data-lang=Output>. . .
 cmd/main.go:14:20: logger.timeFormat undefined (cannot refer to unexported field or method timeFormat)
-</code></pre><p>编译器认识到<code>logger.timeFormat</code>没有被导出，因此不能从<code>logging</code>包中检索到。</p>
-<h2 id="方法中的可见性">
-  方法中的可见性
-  <a class="anchor" href="#%e6%96%b9%e6%b3%95%e4%b8%ad%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7">#</a>
-</h2>
-<p>与结构字段相同，方法也可以被导出或未导出。</p>
-<p>为了说明这一点，让我们为日志器添加<em>级别</em>的日志记录。分级日志是一种对日志进行分类的方法，这样就可以在日志中搜索特定类型的事件。我们将在记录器中加入的级别是。</p>
-<ul>
-<li><code>info</code>级别，代表信息类型的事件，通知用户一个动作，如 &ldquo;程序开始&rdquo;，或 &ldquo;电子邮件发送&rdquo;。这些帮助我们调试和跟踪我们程序的一部分，看看是否有预期的行为发生。</li>
-<li><code>warning</code> 级别。这些类型的事件可以识别出一些不属于错误的意外情况，如 &ldquo;邮件发送失败，重试&rdquo;。它们帮助我们看到我们的程序中没有像我们预期的那样顺利进行的部分。</li>
-<li><code>error</code>级别，意味着程序遇到了问题，如 &ldquo;未找到文件&rdquo;。这往往会导致程序的运行失败。</li>
-</ul>
-<p>你也可能希望打开和关闭某些级别的日志记录，特别是当你的程序没有按照预期执行，你想调试程序的时候。我们将通过改变程序来增加这个功能，当<code>debug</code>被设置为<code>true</code>时，它将打印所有级别的信息。否则，如果它是<code>false</code>，它将只打印错误信息。</p>
-<p>通过对<code>logging/logging.go</code>进行以下修改来增加分级日志：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">logging</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;strings&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Logger</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">timeFormat</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">debug</span>      <span style="color:#66d9ef">bool</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">timeFormat</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">debug</span> <span style="color:#66d9ef">bool</span>) <span style="color:#f92672">*</span><span style="color:#a6e22e">Logger</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">Logger</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">timeFormat</span>: <span style="color:#a6e22e">timeFormat</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">debug</span>:      <span style="color:#a6e22e">debug</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Logger</span>) <span style="color:#a6e22e">Log</span>(<span style="color:#a6e22e">level</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">level</span> = <span style="color:#a6e22e">strings</span>.<span style="color:#a6e22e">ToLower</span>(<span style="color:#a6e22e">level</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">level</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;info&#34;</span>, <span style="color:#e6db74">&#34;warning&#34;</span>:
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">debug</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">level</span>, <span style="color:#a6e22e">s</span>)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">default</span>:
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">level</span>, <span style="color:#a6e22e">s</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">l</span> <span style="color:#f92672">*</span><span style="color:#a6e22e">Logger</span>) <span style="color:#a6e22e">write</span>(<span style="color:#a6e22e">level</span> <span style="color:#66d9ef">string</span>, <span style="color:#a6e22e">s</span> <span style="color:#66d9ef">string</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;[%s] %s %s\n&#34;</span>, <span style="color:#a6e22e">level</span>, <span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">Format</span>(<span style="color:#a6e22e">l</span>.<span style="color:#a6e22e">timeFormat</span>), <span style="color:#a6e22e">s</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>在这个例子中，我们为<code>Log</code>方法引入了一个新的参数。我们现在可以传入日志信息的<code>级别</code>。<code>Log</code>方法决定了它是什么级别的消息。如果是 <code>info</code> 或 <code>warning</code> 消息，并且 <code>debug</code> 字段是 <code>true</code>,，那么它就会写下该消息。否则，它将忽略该消息。如果是其他级别的信息，比如 <code>error</code>，它将写出该信息。</p>
-<p>大多数确定消息是否被打印出来的逻辑存在于<code>Log</code>方法中。我们还引入了一个未导出的方法，叫做 <code>write</code>。<code>write</code>方法是实际输出日志信息的方法。</p>
-<p>现在我们可以在其他软件包中使用这种分级日志，方法是将<code>cmd/main.go</code>改成下面的样子：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">RFC3339</span>, <span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;info&#34;</span>, <span style="color:#e6db74">&#34;starting up service&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;warning&#34;</span>, <span style="color:#e6db74">&#34;no tasks found&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#e6db74">&#34;exiting: no work performed&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>运行这个将返回：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">[info] 2019-09-23T20:53:38Z starting up service
+</code></pre><p>编译器认识到<code>logger.timeFormat</code>没有被导出，因此不能从<code>logging</code>包中检索到。</p><h2 id=方法中的可见性>方法中的可见性
+<a class=anchor href=#%e6%96%b9%e6%b3%95%e4%b8%ad%e7%9a%84%e5%8f%af%e8%a7%81%e6%80%a7>#</a></h2><p>与结构字段相同，方法也可以被导出或未导出。</p><p>为了说明这一点，让我们为日志器添加<em>级别</em>的日志记录。分级日志是一种对日志进行分类的方法，这样就可以在日志中搜索特定类型的事件。我们将在记录器中加入的级别是。</p><ul><li><code>info</code>级别，代表信息类型的事件，通知用户一个动作，如 &ldquo;程序开始&rdquo;，或 &ldquo;电子邮件发送&rdquo;。这些帮助我们调试和跟踪我们程序的一部分，看看是否有预期的行为发生。</li><li><code>warning</code> 级别。这些类型的事件可以识别出一些不属于错误的意外情况，如 &ldquo;邮件发送失败，重试&rdquo;。它们帮助我们看到我们的程序中没有像我们预期的那样顺利进行的部分。</li><li><code>error</code>级别，意味着程序遇到了问题，如 &ldquo;未找到文件&rdquo;。这往往会导致程序的运行失败。</li></ul><p>你也可能希望打开和关闭某些级别的日志记录，特别是当你的程序没有按照预期执行，你想调试程序的时候。我们将通过改变程序来增加这个功能，当<code>debug</code>被设置为<code>true</code>时，它将打印所有级别的信息。否则，如果它是<code>false</code>，它将只打印错误信息。</p><p>通过对<code>logging/logging.go</code>进行以下修改来增加分级日志：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>logging</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;strings&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Logger</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>timeFormat</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>debug</span>      <span style=color:#66d9ef>bool</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>timeFormat</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>debug</span> <span style=color:#66d9ef>bool</span>) <span style=color:#f92672>*</span><span style=color:#a6e22e>Logger</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>Logger</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>timeFormat</span>: <span style=color:#a6e22e>timeFormat</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>debug</span>:      <span style=color:#a6e22e>debug</span>,
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>l</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Logger</span>) <span style=color:#a6e22e>Log</span>(<span style=color:#a6e22e>level</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>s</span> <span style=color:#66d9ef>string</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>level</span> = <span style=color:#a6e22e>strings</span>.<span style=color:#a6e22e>ToLower</span>(<span style=color:#a6e22e>level</span>)
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>level</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;info&#34;</span>, <span style=color:#e6db74>&#34;warning&#34;</span>:
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>debug</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>write</span>(<span style=color:#a6e22e>level</span>, <span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>default</span>:
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>write</span>(<span style=color:#a6e22e>level</span>, <span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>l</span> <span style=color:#f92672>*</span><span style=color:#a6e22e>Logger</span>) <span style=color:#a6e22e>write</span>(<span style=color:#a6e22e>level</span> <span style=color:#66d9ef>string</span>, <span style=color:#a6e22e>s</span> <span style=color:#66d9ef>string</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;[%s] %s %s\n&#34;</span>, <span style=color:#a6e22e>level</span>, <span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>().<span style=color:#a6e22e>Format</span>(<span style=color:#a6e22e>l</span>.<span style=color:#a6e22e>timeFormat</span>), <span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>在这个例子中，我们为<code>Log</code>方法引入了一个新的参数。我们现在可以传入日志信息的<code>级别</code>。<code>Log</code>方法决定了它是什么级别的消息。如果是 <code>info</code> 或 <code>warning</code> 消息，并且 <code>debug</code> 字段是 <code>true</code>,，那么它就会写下该消息。否则，它将忽略该消息。如果是其他级别的信息，比如 <code>error</code>，它将写出该信息。</p><p>大多数确定消息是否被打印出来的逻辑存在于<code>Log</code>方法中。我们还引入了一个未导出的方法，叫做 <code>write</code>。<code>write</code>方法是实际输出日志信息的方法。</p><p>现在我们可以在其他软件包中使用这种分级日志，方法是将<code>cmd/main.go</code>改成下面的样子：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>RFC3339</span>, <span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;info&#34;</span>, <span style=color:#e6db74>&#34;starting up service&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;warning&#34;</span>, <span style=color:#e6db74>&#34;no tasks found&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;error&#34;</span>, <span style=color:#e6db74>&#34;exiting: no work performed&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>运行这个将返回：</p><pre tabindex=0><code class=language-Output data-lang=Output>[info] 2019-09-23T20:53:38Z starting up service
 [warning] 2019-09-23T20:53:38Z no tasks found
 [error] 2019-09-23T20:53:38Z exiting: no work performed
-</code></pre><p>在这个例子中，<code>cmd/main.go</code>成功使用了导出的<code>Log</code>方法。</p>
-<p>现在我们可以通过将<code>debug</code>切换为<code>false</code>来传递每个消息的`level&rsquo;：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">RFC3339</span>, <span style="color:#66d9ef">false</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;info&#34;</span>, <span style="color:#e6db74">&#34;starting up service&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;warning&#34;</span>, <span style="color:#e6db74">&#34;no tasks found&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#e6db74">&#34;exiting: no work performed&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>现在我们将看到，只有 <code>error</code> 级别的信息会被打印出来：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">[error] 2019-08-28T13:58:52-05:00 exiting: no work performed
-</code></pre><p>如果我们试图从<code>logging</code>包之外调用<code>write</code>方法，我们将收到一个编译时错误：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;github.com/gopherguides/logging&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">logging</span>.<span style="color:#a6e22e">New</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">RFC3339</span>, <span style="color:#66d9ef">true</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;info&#34;</span>, <span style="color:#e6db74">&#34;starting up service&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;warning&#34;</span>, <span style="color:#e6db74">&#34;no tasks found&#34;</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">Log</span>(<span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#e6db74">&#34;exiting: no work performed&#34;</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">logger</span>.<span style="color:#a6e22e">write</span>(<span style="color:#e6db74">&#34;error&#34;</span>, <span style="color:#e6db74">&#34;log this message...&#34;</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><pre tabindex="0"><code class="language-Output" data-lang="Output">cmd/main.go:16:8: logger.write undefined (cannot refer to unexported field or method logging.(*Logger).write)
-</code></pre><p>当编译器看到你试图引用另一个包中以小写字母开头的东西时，它知道这个东西没有被导出，因此抛出一个编译器错误。</p>
-<p>本教程中的记录器说明了如何编写代码，只暴露出希望其他包消费的部分。因为我们控制了包的哪些部分在包外是可见的，所以现在能够在未来进行修改而不影响任何依赖包的代码。例如，如果想只在<code>debug</code>为false时关闭<code>info</code>级别的消息，你可以在不影响你的API的任何其他部分的情况下做出这个改变。我们也可以安全地对日志信息进行修改，以包括更多的信息，如程序运行的目录。</p>
-<h2 id="总结">
-  总结
-  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
-</h2>
-<p>这篇文章展示了如何在包之间共享代码，同时也保护你的包的实现细节。这允许你输出一个简单的API，为了向后兼容而很少改变，但允许在你的包中根据需要私下改变，使其在未来更好地工作。这被认为是创建包和它们相应的API时的最佳做法。</p>
-<p>要了解更多关于Go中的包，请查看我们的<a href="https://www.digitalocean.com/community/tutorials/importing-packages-in-go">在Go中导入包</a>和<a href="https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go">如何在Go中编写包</a>文章，或者探索我们整个<a href="https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go">如何在Go中编码系列</a>。</p>
-</article>
- 
-      
-
-      <footer class="book-footer">
-        
-  <div class="flex flex-wrap justify-between">
-
-
-
-
-
-</div>
-
-
-
-  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
-
-
- 
-        
-      </footer>
-
-      
-  
-  <div class="book-comments">
-
-</div>
-  
- 
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
-    </div>
-
-    
-    <aside class="book-toc">
-      <div class="book-toc-content">
-        
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#介绍">介绍</a></li>
-      </ul>
-    </li>
-    <li><a href="#前提条件">前提条件</a></li>
-    <li><a href="#可导出与不可导出">可导出与不可导出</a></li>
-    <li><a href="#定义包的可见性">定义包的可见性</a></li>
-    <li><a href="#结构内的可见性">结构内的可见性</a></li>
-    <li><a href="#方法中的可见性">方法中的可见性</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
- 
-      </div>
-    </aside>
-    
-  </main>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+</code></pre><p>在这个例子中，<code>cmd/main.go</code>成功使用了导出的<code>Log</code>方法。</p><p>现在我们可以通过将<code>debug</code>切换为<code>false</code>来传递每个消息的`level&rsquo;：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>RFC3339</span>, <span style=color:#66d9ef>false</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;info&#34;</span>, <span style=color:#e6db74>&#34;starting up service&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;warning&#34;</span>, <span style=color:#e6db74>&#34;no tasks found&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;error&#34;</span>, <span style=color:#e6db74>&#34;exiting: no work performed&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>现在我们将看到，只有 <code>error</code> 级别的信息会被打印出来：</p><pre tabindex=0><code class=language-Output data-lang=Output>[error] 2019-08-28T13:58:52-05:00 exiting: no work performed
+</code></pre><p>如果我们试图从<code>logging</code>包之外调用<code>write</code>方法，我们将收到一个编译时错误：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;github.com/gopherguides/logging&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>logging</span>.<span style=color:#a6e22e>New</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>RFC3339</span>, <span style=color:#66d9ef>true</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;info&#34;</span>, <span style=color:#e6db74>&#34;starting up service&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;warning&#34;</span>, <span style=color:#e6db74>&#34;no tasks found&#34;</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>Log</span>(<span style=color:#e6db74>&#34;error&#34;</span>, <span style=color:#e6db74>&#34;exiting: no work performed&#34;</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>logger</span>.<span style=color:#a6e22e>write</span>(<span style=color:#e6db74>&#34;error&#34;</span>, <span style=color:#e6db74>&#34;log this message...&#34;</span>)
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><pre tabindex=0><code class=language-Output data-lang=Output>cmd/main.go:16:8: logger.write undefined (cannot refer to unexported field or method logging.(*Logger).write)
+</code></pre><p>当编译器看到你试图引用另一个包中以小写字母开头的东西时，它知道这个东西没有被导出，因此抛出一个编译器错误。</p><p>本教程中的记录器说明了如何编写代码，只暴露出希望其他包消费的部分。因为我们控制了包的哪些部分在包外是可见的，所以现在能够在未来进行修改而不影响任何依赖包的代码。例如，如果想只在<code>debug</code>为false时关闭<code>info</code>级别的消息，你可以在不影响你的API的任何其他部分的情况下做出这个改变。我们也可以安全地对日志信息进行修改，以包括更多的信息，如程序运行的目录。</p><h2 id=总结>总结
+<a class=anchor href=#%e6%80%bb%e7%bb%93>#</a></h2><p>这篇文章展示了如何在包之间共享代码，同时也保护你的包的实现细节。这允许你输出一个简单的API，为了向后兼容而很少改变，但允许在你的包中根据需要私下改变，使其在未来更好地工作。这被认为是创建包和它们相应的API时的最佳做法。</p><p>要了解更多关于Go中的包，请查看我们的<a href=https://www.digitalocean.com/community/tutorials/importing-packages-in-go>在Go中导入包</a>和<a href=https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go>如何在Go中编写包</a>文章，或者探索我们整个<a href=https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go>如何在Go中编码系列</a>。</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#介绍>介绍</a></li></ul></li><li><a href=#前提条件>前提条件</a></li><li><a href=#可导出与不可导出>可导出与不可导出</a></li><li><a href=#定义包的可见性>定义包的可见性</a></li><li><a href=#结构内的可见性>结构内的可见性</a></li><li><a href=#方法中的可见性>方法中的可见性</a></li><li><a href=#总结>总结</a></li></ul></nav></div></aside></main></body></html>

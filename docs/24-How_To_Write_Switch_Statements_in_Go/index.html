@@ -1,303 +1,105 @@
-<!DOCTYPE html>
-<html lang="zh" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="如何在Go中编写Switch语句 #  介绍 #  条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="如何在Go中编写Switch语句 # 介绍 # 条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
 我们可以用switch语句编写的所有内容也可以用if语句编写。在本教程中，我们将看几个例子，看看switch语句能做什么，它所取代的if语句，以及它最合适的应用场合。
-Switch语句的结构 #  Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
-package main  import &#34;fmt&#34;  func main() { 	flavors := []string{&#34;chocolate&#34;, &#34;vanilla&#34;, &#34;strawberry&#34;, &#34;banana&#34;}  	for _, flav := range flavors { 	if flav == &#34;strawberry&#34; { 	fmt.Println(flav, &#34;is my favorite!&#34;) 	continue 	}  	if flav == &#34;vanilla&#34; { 	fmt.Println(flav, &#34;is great!&#34;) 	continue 	}  	if flav == &#34;chocolate&#34; { 	fmt.">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
-<meta property="og:description" content="如何在Go中编写Switch语句 #  介绍 #  条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
+Switch语句的结构 # Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
+package main import &#34;fmt&#34; func main() { flavors := []string{&#34;chocolate&#34;, &#34;vanilla&#34;, &#34;strawberry&#34;, &#34;banana&#34;} for _, flav := range flavors { if flav == &#34;strawberry&#34; { fmt.Println(flav, &#34;is my favorite!&#34;) continue } if flav == &#34;vanilla&#34; { fmt.Println(flav, &#34;is great!&#34;) continue } if flav == &#34;chocolate&#34; { fmt.Println(flav, &#34;is great!&#34;) continue } fmt.Println(&#34;I've never tried&#34;, flav, &#34;before&#34;) } } 这将输出如下信息："><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="如何在Go中编写Switch语句 # 介绍 # 条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
 我们可以用switch语句编写的所有内容也可以用if语句编写。在本教程中，我们将看几个例子，看看switch语句能做什么，它所取代的if语句，以及它最合适的应用场合。
-Switch语句的结构 #  Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
-package main  import &#34;fmt&#34;  func main() { 	flavors := []string{&#34;chocolate&#34;, &#34;vanilla&#34;, &#34;strawberry&#34;, &#34;banana&#34;}  	for _, flav := range flavors { 	if flav == &#34;strawberry&#34; { 	fmt.Println(flav, &#34;is my favorite!&#34;) 	continue 	}  	if flav == &#34;vanilla&#34; { 	fmt.Println(flav, &#34;is great!&#34;) 	continue 	}  	if flav == &#34;chocolate&#34; { 	fmt." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.com/docs/24-How_To_Write_Switch_Statements_in_Go/" /><meta property="article:section" content="docs" />
-
-
-
-<title>24 How to Write Switch Statements in Go | How To Code in Go</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
-  <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
-  
-</head>
-<body dir="ltr">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <main class="container flex">
-    <aside class="book-menu">
-      <div class="book-menu-content">
-        
-  <nav>
-<h2 class="book-brand">
-  <a class="flex align-center" href="/"><span>How To Code in Go</span>
-  </a>
-</h2>
-
-
-<div class="book-search">
-  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
-  <div class="book-search-spinner hidden"></div>
-  <ul id="book-search-results"></ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-<li>
-<p><strong>开始学习</strong></p>
-<ul>
-<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
-<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
-<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
-<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
-<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
-<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
-<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
-<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
-<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
-<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
-<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
-<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
-<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
-<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
-<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
-<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
-<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
-<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
-<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
-<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
-<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/"class=active>如何在 Go 中编写 Switch 语句</a></li>
-<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
-<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
-<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
-<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
-<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
-<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
-<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
-<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
-<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
-<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
-<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
-<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
-<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/">如何在 Go 使用 interface</a></li>
-<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
-<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
-<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
-</ul>
-</li>
-<li>
-<p><strong>附录：资源</strong></p>
-</li>
-<li>
-<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
-</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-</nav>
-
-
-
-
-  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
-
-
- 
-      </div>
-    </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        
-  <div class="flex align-center justify-between">
-  <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
-  </label>
-
-  <strong>24 How to Write Switch Statements in Go</strong>
-
-  <label for="toc-control">
-    
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
-    
-  </label>
-</div>
-
-
-  
-  <aside class="hidden clearfix">
-    
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#介绍">介绍</a></li>
-      </ul>
-    </li>
-    <li><a href="#switch语句的结构">Switch语句的结构</a></li>
-    <li><a href="#通常的-switch-语句">通常的 Switch 语句</a></li>
-    <li><a href="#fallthrough">Fallthrough</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
-
-  </aside>
-  
- 
-      </header>
-
-      
-      
-  <article class="markdown"><h1 id="如何在go中编写switch语句">
-  如何在Go中编写Switch语句
-  <a class="anchor" href="#%e5%a6%82%e4%bd%95%e5%9c%a8go%e4%b8%ad%e7%bc%96%e5%86%99switch%e8%af%ad%e5%8f%a5">#</a>
-</h1>
-<h3 id="介绍">
-  介绍
-  <a class="anchor" href="#%e4%bb%8b%e7%bb%8d">#</a>
-</h3>
-<p><a href="https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go">条件语句</a>使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些<a href="https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables">变量</a>与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用<a href="https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements"><code>if</code>语句</a>就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。<code>switch</code>是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。</p>
-<p>我们可以用switch语句编写的所有内容也可以用<code>if</code>语句编写。在本教程中，我们将看几个例子，看看switch语句能做什么，它所取代的<code>if</code>语句，以及它最合适的应用场合。</p>
-<h2 id="switch语句的结构">
-  Switch语句的结构
-  <a class="anchor" href="#switch%e8%af%ad%e5%8f%a5%e7%9a%84%e7%bb%93%e6%9e%84">#</a>
-</h2>
-<p>Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 <code>if</code> 语句来完成这个任务。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">flavors</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;chocolate&#34;</span>, <span style="color:#e6db74">&#34;vanilla&#34;</span>, <span style="color:#e6db74">&#34;strawberry&#34;</span>, <span style="color:#e6db74">&#34;banana&#34;</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">flav</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">flavors</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">flav</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;strawberry&#34;</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;is my favorite!&#34;</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">flav</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;vanilla&#34;</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;is great!&#34;</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">flav</span> <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;chocolate&#34;</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;is great!&#34;</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;I&#39;ve never tried&#34;</span>, <span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;before&#34;</span>)
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这将输出如下信息：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">chocolate is great!
+Switch语句的结构 # Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
+package main import &#34;fmt&#34; func main() { flavors := []string{&#34;chocolate&#34;, &#34;vanilla&#34;, &#34;strawberry&#34;, &#34;banana&#34;} for _, flav := range flavors { if flav == &#34;strawberry&#34; { fmt.Println(flav, &#34;is my favorite!&#34;) continue } if flav == &#34;vanilla&#34; { fmt.Println(flav, &#34;is great!&#34;) continue } if flav == &#34;chocolate&#34; { fmt.Println(flav, &#34;is great!&#34;) continue } fmt.Println(&#34;I've never tried&#34;, flav, &#34;before&#34;) } } 这将输出如下信息："><meta property="og:type" content="article"><meta property="og:url" content="https://example.com/docs/24-How_To_Write_Switch_Statements_in_Go/"><meta property="article:section" content="docs"><title>24 How to Write Switch Statements in Go | How To Code in Go</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css integrity="sha256-gsXb0jRHzuC0wqo+0Izglh+qQOH6Nw7uT4yfAuDUa18=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/zh.search.min.49dd84c1863c020bc1e7dc2da56c6f5767094cc4a336b6ce9c015604b7f5c488.js integrity="sha256-Sd2EwYY8AgvB59wtpWxvV2cJTMSjNrbOnAFWBLf1xIg=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>How To Code in Go</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/>如何用 Go 编写你的第一个程序</a></li><li><a href=/docs/05-Understanding_the_GOPATH/>理解 GOPATH</a></li><li><a href=/docs/06-How_To_Write_Comments_in_Go/>如何在 Go 中写注释</a></li><li><a href=/docs/07-Understanding_Data_Types_in_Go/>理解 Go 的数据类型</a></li><li><a href=/docs/08-An_Introduction_to_Working_with_Strings_in_Go/>Go 中处理字符串的介绍</a></li><li><a href=/docs/09-How_To_Format_Strings_in_Go/>How To Format Strings in Go</a></li><li><a href=/docs/10-An_Introduction_to_the_Strings_Package_in_Go/>An Introduction to the Strings Package in Go</a></li><li><a href=/docs/11-How_To_Use_Variables_and_Constants_in_Go/>How To Use Variables and Constants in Go</a></li><li><a href=/docs/12-How_To_Convert_Data_Types_in_Go/>How To Convert Data Types in Go</a></li><li><a href=/docs/13-How_To_Do_Math_in_Go_with_Operators/>How To Do Math in Go with Operators</a></li><li><a href=/docs/14-Understanding_Boolean_Logic_in_Go/>Understanding Boolean Logic in Go</a></li><li><a href=/docs/15-Understanding_Maps_in_Go/>Understanding Maps in Go</a></li><li><a href=/docs/16-Understanding_Arrays_and_Slices_in_Go/>Understanding Arrays and Slices in Go</a></li><li><a href=/docs/17-Handling_Errors_in_Go_DigitalOcean/>Handling Errors in Go</a></li><li><a href=/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/>Creating Custom Errors in Go</a></li><li><a href=/docs/19-Handling_Panics_in_Go-_DigitalOcean/>Handling Panics in Go</a></li><li><a href=/docs/20-Importing_Packages_in_Go_DigitalOcean/>Importing Packages in Go</a></li><li><a href=/docs/21-How_To_Write_Packages_in_Go/>如何在 Go 中编写包</a></li><li><a href=/docs/22-Understanding_Package_Visibility_in_Go/>理解 Go 中包的可见性</a></li><li><a href=/docs/23-How_To_Write_Conditional_Statements_in_Go/>如何在 Go 中编写条件语句</a></li><li><a href=/docs/24-How_To_Write_Switch_Statements_in_Go/ class=active>如何在 Go 中编写 Switch 语句</a></li><li><a href=/docs/25_How_To_Construct_For_Loops_in_Go/>如何在 Go 中构造 for 循环</a></li><li><a href=/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/>在循环中使用 Break 和 Continue</a></li><li><a href=/docs/27_How_To_Define_and_Call_Functions_in_Go/>如何在 Go 中定义并调用函数</a></li><li><a href=/docs/28_How_To_Use_Variadic_Functions_in_Go/>如何在 Go 中使用可变参数函数</a></li><li><a href=/docs/29-Understanding_defer_in_Go/>了解 Go 中的 defer</a></li><li><a href=/docs/30_Understanding_init_in_Go/>了解 Go 中的 init</a></li><li><a href=/docs/31_Customizing_Go_Binaries_with_Build_Tags/>用构建标签定制 Go 二进制文件</a></li><li><a href=/docs/32_Understanding_Pointers_in_Go/>了解 Go 中的指针</a></li><li><a href=/docs/33_Defining_Structs_in_Go/>在 Go 中定义结构体</a></li><li><a href=/docs/34_Defining_Methods_in_Go/>在 Go 中定义方法</a></li><li><a href=/docs/35_How_To_Build_and_Install_Go_Programs/>如何构建和安装 Go 程序</a></li><li><a href=/docs/36_How_To_Use_Struct_Tags_in_Go/>如何在 Go 中使用结构体标签</a></li><li><a href=/docs/37-How_To_Use_Interfaces_in_Go/>如何在 Go 使用 interface</a></li><li><a href=/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/>在不同的操作系统和架构编译 Go 应用</a></li><li><a href=/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/>用 ldflags 设置 Go 应用程序的版本信息</a></li><li><a href=/docs/40-How_To_Use_the_Flag_Package_in_Go/>在 Go 里面如何使用 Flag 包</a></li></ul></li><li><p><strong>附录：资源</strong></p></li><li><p><a href=https://github.com/gocn/How-To-Code-in-Go><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>24 How to Write Switch Statements in Go</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#介绍>介绍</a></li></ul></li><li><a href=#switch语句的结构>Switch语句的结构</a></li><li><a href=#通常的-switch-语句>通常的 Switch 语句</a></li><li><a href=#fallthrough>Fallthrough</a></li><li><a href=#总结>总结</a></li></ul></nav></aside></header><article class=markdown><h1 id=如何在go中编写switch语句>如何在Go中编写Switch语句
+<a class=anchor href=#%e5%a6%82%e4%bd%95%e5%9c%a8go%e4%b8%ad%e7%bc%96%e5%86%99switch%e8%af%ad%e5%8f%a5>#</a></h1><h3 id=介绍>介绍
+<a class=anchor href=#%e4%bb%8b%e7%bb%8d>#</a></h3><p><a href=https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go>条件语句</a>使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些<a href=https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables>变量</a>与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用<a href=https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements><code>if</code>语句</a>就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。<code>switch</code>是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。</p><p>我们可以用switch语句编写的所有内容也可以用<code>if</code>语句编写。在本教程中，我们将看几个例子，看看switch语句能做什么，它所取代的<code>if</code>语句，以及它最合适的应用场合。</p><h2 id=switch语句的结构>Switch语句的结构
+<a class=anchor href=#switch%e8%af%ad%e5%8f%a5%e7%9a%84%e7%bb%93%e6%9e%84>#</a></h2><p>Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 <code>if</code> 语句来完成这个任务。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>flavors</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;chocolate&#34;</span>, <span style=color:#e6db74>&#34;vanilla&#34;</span>, <span style=color:#e6db74>&#34;strawberry&#34;</span>, <span style=color:#e6db74>&#34;banana&#34;</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>flav</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>flavors</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>flav</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;strawberry&#34;</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;is my favorite!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>flav</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;vanilla&#34;</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;is great!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>flav</span> <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;chocolate&#34;</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;is great!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;I&#39;ve never tried&#34;</span>, <span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;before&#34;</span>)
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这将输出如下信息：</p><pre tabindex=0><code class=language-Output data-lang=Output>chocolate is great!
 vanilla is great!
 strawberry is my favorite!
 I&#39;ve never tried banana before
-</code></pre><p>在<code>main</code>中，我们定义了一个<a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#slices">slice</a>的冰激凌口味。然后我们使用一个<a href="https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go"><code>for loop</code></a>来迭代它们。我们使用三个<code>if</code>语句来打印不同的信息，表明对不同冰淇淋口味的偏好。每个<code>if</code>语句必须使用<code>continue</code>语句来停止<code>for</code>循环的执行，这样就不会在最后打印出首选冰淇淋口味的默认信息。</p>
-<p>当我们添加新的偏好时，我们必须不断添加<code>if</code>语句来处理新的情况。重复的信息，如 &ldquo;香草&quot;和 &ldquo;巧克力&quot;的情况，必须有重复的<code>if</code>语句。对于我们代码的未来读者（包括我们自己）来说，<code>if</code>语句的重复性掩盖了它们所做的重要部分&ndash;将变量与多个值进行比较并采取不同的行动。另外，我们的回退信息与条件语句分开，使得它看起来不相关。转换器 &ldquo;语句可以帮助我们更好地组织这个逻辑。</p>
-<p><code>switch</code> 语句以 <code>switch</code> 关键字开始，在其最基本的形式下，后面是一些要进行比较的变量。之后是一对大括号（<code>{}</code>），其中可以出现多个<em>case子句</em>。case子句描述了当提供给switch语句的变量等于case子句所引用的值时，Go程序应该采取的行动。下面的例子将先前的例子转换为使用一个<code>switch</code>而不是多个<code>if</code>语句：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">flavors</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;chocolate&#34;</span>, <span style="color:#e6db74">&#34;vanilla&#34;</span>, <span style="color:#e6db74">&#34;strawberry&#34;</span>, <span style="color:#e6db74">&#34;banana&#34;</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">flav</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">flavors</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">flav</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;strawberry&#34;</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;is my favorite!&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;vanilla&#34;</span>, <span style="color:#e6db74">&#34;chocolate&#34;</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;is great!&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">default</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;I&#39;ve never tried&#34;</span>, <span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;before&#34;</span>)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>输出与之前相同：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">chocolate is great!
+</code></pre><p>在<code>main</code>中，我们定义了一个<a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#slices>slice</a>的冰激凌口味。然后我们使用一个<a href=https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go><code>for loop</code></a>来迭代它们。我们使用三个<code>if</code>语句来打印不同的信息，表明对不同冰淇淋口味的偏好。每个<code>if</code>语句必须使用<code>continue</code>语句来停止<code>for</code>循环的执行，这样就不会在最后打印出首选冰淇淋口味的默认信息。</p><p>当我们添加新的偏好时，我们必须不断添加<code>if</code>语句来处理新的情况。重复的信息，如 &ldquo;香草"和 &ldquo;巧克力"的情况，必须有重复的<code>if</code>语句。对于我们代码的未来读者（包括我们自己）来说，<code>if</code>语句的重复性掩盖了它们所做的重要部分&ndash;将变量与多个值进行比较并采取不同的行动。另外，我们的回退信息与条件语句分开，使得它看起来不相关。转换器 &ldquo;语句可以帮助我们更好地组织这个逻辑。</p><p><code>switch</code> 语句以 <code>switch</code> 关键字开始，在其最基本的形式下，后面是一些要进行比较的变量。之后是一对大括号（<code>{}</code>），其中可以出现多个<em>case子句</em>。case子句描述了当提供给switch语句的变量等于case子句所引用的值时，Go程序应该采取的行动。下面的例子将先前的例子转换为使用一个<code>switch</code>而不是多个<code>if</code>语句：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>flavors</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;chocolate&#34;</span>, <span style=color:#e6db74>&#34;vanilla&#34;</span>, <span style=color:#e6db74>&#34;strawberry&#34;</span>, <span style=color:#e6db74>&#34;banana&#34;</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>flav</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>flavors</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>flav</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;strawberry&#34;</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;is my favorite!&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;vanilla&#34;</span>, <span style=color:#e6db74>&#34;chocolate&#34;</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;is great!&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>default</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;I&#39;ve never tried&#34;</span>, <span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;before&#34;</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>输出与之前相同：</p><pre tabindex=0><code class=language-Output data-lang=Output>chocolate is great!
 vanilla is great!
 strawberry is my favorite!
 I&#39;ve never tried banana before
-</code></pre><p>我们再次在<code>main</code>中定义了一片冰淇淋的口味，并使用<code>range</code>语句来遍历每个口味。但是这一次，我们使用了一个<code>switch</code>语句来检查<code>flav</code>变量。我们使用两个<code>case'子句来表示偏好。我们不再需要</code>继续&rsquo;语句，因为只有一个<code>case</code>子句将被<code>switch</code>语句执行。我们还可以将&quot;巧克力&quot;和 &ldquo;香草&quot;条件的重复逻辑结合起来，在 <code>case</code>子句的声明中用逗号将其分开。<code>default</code>子句是我们的万能子句。它将对我们在 <code>switch</code> 语句中没有考虑到的任何口味运行。在这种情况下，&ldquo;香蕉&quot;将导致 <code>default</code> 的执行，打印出 &ldquo;I&rsquo;ve never tried banana before&quot;的信息。</p>
-<p>这种简化形式的<code>switch</code>语句解决了它们最常见的用途：将一个变量与多个替代品进行比较。它还为我们提供了便利，当我们想对多个不同的值采取相同的行动，以及在没有满足所列的条件时，通过使用所提供的<code>default</code>关键字采取一些其他行动。</p>
-<p>当这种简化的<code>switch</code>形式被证明太有局限性时，我们可以使用一种更通用的<code>switch</code>语句形式。</p>
-<h2 id="通常的-switch-语句">
-  通常的 Switch 语句
-  <a class="anchor" href="#%e9%80%9a%e5%b8%b8%e7%9a%84-switch-%e8%af%ad%e5%8f%a5">#</a>
-</h2>
-<p><code>switch</code>语句对于将更复杂的条件集合在一起以显示它们之间有某种联系是很有用的。这在将某些变量与一定范围的值进行比较时最常用，而不是像前面的例子中的特定值。下面的例子使用<code>if</code>语句实现了一个猜谜游戏，可以从<code>switch</code>语句中受益：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;math/rand&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;time&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Seed</span>(<span style="color:#a6e22e">time</span>.<span style="color:#a6e22e">Now</span>().<span style="color:#a6e22e">UnixNano</span>())
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">target</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">100</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">guess</span> <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Enter a guess: &#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanf</span>(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">guess</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Invalid guess: err:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">guess</span> &gt; <span style="color:#a6e22e">target</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Too high!&#34;</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">guess</span> &lt; <span style="color:#a6e22e">target</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Too low!&#34;</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;You win!&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">break</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>输出将取决于所选择的随机数和你玩游戏的程度。下面是一个例子会话的输出：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">Enter a guess: 10
+</code></pre><p>我们再次在<code>main</code>中定义了一片冰淇淋的口味，并使用<code>range</code>语句来遍历每个口味。但是这一次，我们使用了一个<code>switch</code>语句来检查<code>flav</code>变量。我们使用两个<code>case'子句来表示偏好。我们不再需要</code>继续&rsquo;语句，因为只有一个<code>case</code>子句将被<code>switch</code>语句执行。我们还可以将"巧克力"和 &ldquo;香草"条件的重复逻辑结合起来，在 <code>case</code>子句的声明中用逗号将其分开。<code>default</code>子句是我们的万能子句。它将对我们在 <code>switch</code> 语句中没有考虑到的任何口味运行。在这种情况下，&ldquo;香蕉"将导致 <code>default</code> 的执行，打印出 &ldquo;I&rsquo;ve never tried banana before"的信息。</p><p>这种简化形式的<code>switch</code>语句解决了它们最常见的用途：将一个变量与多个替代品进行比较。它还为我们提供了便利，当我们想对多个不同的值采取相同的行动，以及在没有满足所列的条件时，通过使用所提供的<code>default</code>关键字采取一些其他行动。</p><p>当这种简化的<code>switch</code>形式被证明太有局限性时，我们可以使用一种更通用的<code>switch</code>语句形式。</p><h2 id=通常的-switch-语句>通常的 Switch 语句
+<a class=anchor href=#%e9%80%9a%e5%b8%b8%e7%9a%84-switch-%e8%af%ad%e5%8f%a5>#</a></h2><p><code>switch</code>语句对于将更复杂的条件集合在一起以显示它们之间有某种联系是很有用的。这在将某些变量与一定范围的值进行比较时最常用，而不是像前面的例子中的特定值。下面的例子使用<code>if</code>语句实现了一个猜谜游戏，可以从<code>switch</code>语句中受益：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math/rand&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;time&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Seed</span>(<span style=color:#a6e22e>time</span>.<span style=color:#a6e22e>Now</span>().<span style=color:#a6e22e>UnixNano</span>())
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>target</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Intn</span>(<span style=color:#ae81ff>100</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>guess</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Enter a guess: &#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Scanf</span>(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>guess</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Invalid guess: err:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>guess</span> &gt; <span style=color:#a6e22e>target</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Too high!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>guess</span> &lt; <span style=color:#a6e22e>target</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Too low!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;You win!&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>break</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>输出将取决于所选择的随机数和你玩游戏的程度。下面是一个例子会话的输出：</p><pre tabindex=0><code class=language-Output data-lang=Output>Enter a guess: 10
 Too low!
 Enter a guess: 15
 Too low!
@@ -305,158 +107,66 @@ Enter a guess: 18
 Too high!
 Enter a guess: 17
 You win!
-</code></pre><p>我们的猜谜游戏需要一个随机数来比较猜测的结果，所以我们使用<code>math/rand</code>包中的<code>rand.Intn</code>函数。为了确保我们每次玩游戏都能得到不同的<code>target</code>值，我们使用<code>rand.Seed</code>来根据当前时间随机化随机数发生器。<code>rand.Intn</code>的参数<code>100</code>将给我们一个0-100范围内的数字。然后我们使用<code>for</code>循环来开始收集玩家的猜测。</p>
-<p><code>fmt.Scanf</code>函数为我们提供了一种方法来读取用户的输入到我们选择的变量中。它接受一个格式化的字符串动词，将用户的输入转换为我们期望的类型。这里的<code>%d</code>意味着我们期望一个 <code>int</code>，我们传递 <code>guess</code> 变量的地址，这样 <code>fmt.Scanf</code> 就能够设置该变量。在<a href="https://www.digitalocean.com/community/tutorials/handling-errors-in-go">处理任何解析错误</a>之后，我们使用两个<code>if</code>语句来比较用户的猜测和<code>target</code>值。它们返回的<code>string</code>和<code>bool</code>一起控制显示给玩家的信息，以及游戏是否会退出。</p>
-<p>这些 <code>if</code> 语句掩盖了一个事实，即变量被比较的数值范围都有某种联系。一眼就能看出我们是否遗漏了该范围的某些部分，这也是很困难的。下一个例子重构了前面的例子，用<code>switch</code>语句代替：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;math/rand&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">target</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">rand</span>.<span style="color:#a6e22e">Intn</span>(<span style="color:#ae81ff">100</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">var</span> <span style="color:#a6e22e">guess</span> <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Print</span>(<span style="color:#e6db74">&#34;Enter a guess: &#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">err</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Scanf</span>(<span style="color:#e6db74">&#34;%d&#34;</span>, <span style="color:#f92672">&amp;</span><span style="color:#a6e22e">guess</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">err</span> <span style="color:#f92672">!=</span> <span style="color:#66d9ef">nil</span> {
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Invalid guess: err:&#34;</span>, <span style="color:#a6e22e">err</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">continue</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">guess</span> &gt; <span style="color:#a6e22e">target</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Too high!&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#a6e22e">guess</span> &lt; <span style="color:#a6e22e">target</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;Too low!&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">default</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;You win!&#34;</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">return</span>
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这将产生类似以下的输出:</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">Enter a guess: 25
+</code></pre><p>我们的猜谜游戏需要一个随机数来比较猜测的结果，所以我们使用<code>math/rand</code>包中的<code>rand.Intn</code>函数。为了确保我们每次玩游戏都能得到不同的<code>target</code>值，我们使用<code>rand.Seed</code>来根据当前时间随机化随机数发生器。<code>rand.Intn</code>的参数<code>100</code>将给我们一个0-100范围内的数字。然后我们使用<code>for</code>循环来开始收集玩家的猜测。</p><p><code>fmt.Scanf</code>函数为我们提供了一种方法来读取用户的输入到我们选择的变量中。它接受一个格式化的字符串动词，将用户的输入转换为我们期望的类型。这里的<code>%d</code>意味着我们期望一个 <code>int</code>，我们传递 <code>guess</code> 变量的地址，这样 <code>fmt.Scanf</code> 就能够设置该变量。在<a href=https://www.digitalocean.com/community/tutorials/handling-errors-in-go>处理任何解析错误</a>之后，我们使用两个<code>if</code>语句来比较用户的猜测和<code>target</code>值。它们返回的<code>string</code>和<code>bool</code>一起控制显示给玩家的信息，以及游戏是否会退出。</p><p>这些 <code>if</code> 语句掩盖了一个事实，即变量被比较的数值范围都有某种联系。一眼就能看出我们是否遗漏了该范围的某些部分，这也是很困难的。下一个例子重构了前面的例子，用<code>switch</code>语句代替：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math/rand&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>target</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>rand</span>.<span style=color:#a6e22e>Intn</span>(<span style=color:#ae81ff>100</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>var</span> <span style=color:#a6e22e>guess</span> <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Print</span>(<span style=color:#e6db74>&#34;Enter a guess: &#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>err</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Scanf</span>(<span style=color:#e6db74>&#34;%d&#34;</span>, <span style=color:#f92672>&amp;</span><span style=color:#a6e22e>guess</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>err</span> <span style=color:#f92672>!=</span> <span style=color:#66d9ef>nil</span> {
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Invalid guess: err:&#34;</span>, <span style=color:#a6e22e>err</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>continue</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>switch</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>guess</span> &gt; <span style=color:#a6e22e>target</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Too high!&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> <span style=color:#a6e22e>guess</span> &lt; <span style=color:#a6e22e>target</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;Too low!&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>default</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;You win!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>return</span>
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这将产生类似以下的输出:</p><pre tabindex=0><code class=language-Output data-lang=Output>Enter a guess: 25
 Too low!
 Enter a guess: 28
 Too high!
 Enter a guess: 27
 You win!
-</code></pre><p>在这个版本的猜谜游戏中，我们用一个<code>switch</code>语句代替了<code>if</code>语句块。我们省略了<code>switch</code>的表达式参数，因为我们只对使用<code>switch</code>来收集条件语句感兴趣。每个<code>case</code>子句包含一个不同的表达式，将<code>guess</code>与<code>target</code>进行比较。与第一次用<code>switch</code>代替<code>if</code>语句类似，我们不再需要<code>continue</code>语句，因为只有一个<code>case</code>子句会被执行。最后，<code>default</code>子句处理<code>guess == target</code>的情况，因为我们已经用另外两个<code>case</code>子句覆盖了所有其他可能的值。</p>
-<p>在我们目前看到的例子中，正好有一个case语句将被执行。偶尔，你可能希望结合多个<code>case</code>子句的行为。<code>switch</code>语句提供了另一个实现这种行为的关键字。</p>
-<h2 id="fallthrough">
-  Fallthrough
-  <a class="anchor" href="#fallthrough">#</a>
-</h2>
-<p>有时你想重复使用另一个 <code>case</code> 子句包含的代码。在这种情况下，可以使用 <code>fallthrough</code> 关键字要求Go运行下一个 <code>case</code> 子句的主体。下面这个例子修改了我们之前的冰淇淋口味的例子，以更准确地反映我们对草莓冰淇淋的热情：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">flavors</span> <span style="color:#f92672">:=</span> []<span style="color:#66d9ef">string</span>{<span style="color:#e6db74">&#34;chocolate&#34;</span>, <span style="color:#e6db74">&#34;vanilla&#34;</span>, <span style="color:#e6db74">&#34;strawberry&#34;</span>, <span style="color:#e6db74">&#34;banana&#34;</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">for</span> <span style="color:#a6e22e">_</span>, <span style="color:#a6e22e">flav</span> <span style="color:#f92672">:=</span> <span style="color:#66d9ef">range</span> <span style="color:#a6e22e">flavors</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">switch</span> <span style="color:#a6e22e">flav</span> {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;strawberry&#34;</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;is my favorite!&#34;</span>)
-</span></span><span style="display:flex;"><span>			<span style="color:#66d9ef">fallthrough</span>
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">case</span> <span style="color:#e6db74">&#34;vanilla&#34;</span>, <span style="color:#e6db74">&#34;chocolate&#34;</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;is great!&#34;</span>)
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">default</span>:
-</span></span><span style="display:flex;"><span>			<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#e6db74">&#34;I&#39;ve never tried&#34;</span>, <span style="color:#a6e22e">flav</span>, <span style="color:#e6db74">&#34;before&#34;</span>)
-</span></span><span style="display:flex;"><span>		}
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>将得到如下输出：</p>
-<pre tabindex="0"><code class="language-Output" data-lang="Output">chocolate is great!
+</code></pre><p>在这个版本的猜谜游戏中，我们用一个<code>switch</code>语句代替了<code>if</code>语句块。我们省略了<code>switch</code>的表达式参数，因为我们只对使用<code>switch</code>来收集条件语句感兴趣。每个<code>case</code>子句包含一个不同的表达式，将<code>guess</code>与<code>target</code>进行比较。与第一次用<code>switch</code>代替<code>if</code>语句类似，我们不再需要<code>continue</code>语句，因为只有一个<code>case</code>子句会被执行。最后，<code>default</code>子句处理<code>guess == target</code>的情况，因为我们已经用另外两个<code>case</code>子句覆盖了所有其他可能的值。</p><p>在我们目前看到的例子中，正好有一个case语句将被执行。偶尔，你可能希望结合多个<code>case</code>子句的行为。<code>switch</code>语句提供了另一个实现这种行为的关键字。</p><h2 id=fallthrough>Fallthrough
+<a class=anchor href=#fallthrough>#</a></h2><p>有时你想重复使用另一个 <code>case</code> 子句包含的代码。在这种情况下，可以使用 <code>fallthrough</code> 关键字要求Go运行下一个 <code>case</code> 子句的主体。下面这个例子修改了我们之前的冰淇淋口味的例子，以更准确地反映我们对草莓冰淇淋的热情：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>flavors</span> <span style=color:#f92672>:=</span> []<span style=color:#66d9ef>string</span>{<span style=color:#e6db74>&#34;chocolate&#34;</span>, <span style=color:#e6db74>&#34;vanilla&#34;</span>, <span style=color:#e6db74>&#34;strawberry&#34;</span>, <span style=color:#e6db74>&#34;banana&#34;</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>for</span> <span style=color:#a6e22e>_</span>, <span style=color:#a6e22e>flav</span> <span style=color:#f92672>:=</span> <span style=color:#66d9ef>range</span> <span style=color:#a6e22e>flavors</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>switch</span> <span style=color:#a6e22e>flav</span> {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;strawberry&#34;</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;is my favorite!&#34;</span>)
+</span></span><span style=display:flex><span>			<span style=color:#66d9ef>fallthrough</span>
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>case</span> <span style=color:#e6db74>&#34;vanilla&#34;</span>, <span style=color:#e6db74>&#34;chocolate&#34;</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;is great!&#34;</span>)
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>default</span>:
+</span></span><span style=display:flex><span>			<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#e6db74>&#34;I&#39;ve never tried&#34;</span>, <span style=color:#a6e22e>flav</span>, <span style=color:#e6db74>&#34;before&#34;</span>)
+</span></span><span style=display:flex><span>		}
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>将得到如下输出：</p><pre tabindex=0><code class=language-Output data-lang=Output>chocolate is great!
 vanilla is great!
 strawberry is my favorite!
 strawberry is great!
 I&#39;ve never tried banana before
-</code></pre><p>正如我们之前看到的，我们定义了一个 <code>string</code> 片段来表示口味，并使用 <code>for</code> 循环来迭代。这里的 <code>switch</code> 语句与我们之前看到的语句相同，但是在 <code>case</code> 子句的末尾添加了 <code>fallthrough</code> 关键字，即 <code>strawberry</code>。这将使Go运行<code>case &quot;strawberry&quot;:</code>的主体，首先打印出字符串<code>strawberry is my favorite!</code>。当它遇到<code>fallthrough</code>时，它将运行下一个<code>case</code>子句的主体。这将导致<code>case &quot;vanilla&quot;, &quot;chocolate&quot;:</code>的主体运行，打印出<code>strawberry is great!</code>。</p>
-<p>Go开发人员不经常使用<code>fallthrough</code>关键字。通常情况下，通过使用<code>fallthrough</code>实现的代码重用，可以通过定义一个具有公共代码的函数来更好地获得。由于这些原因，一般不鼓励使用<code>fallthrough</code>。</p>
-<h2 id="总结">
-  总结
-  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
-</h2>
-<p><code>switch</code>语句帮助我们向阅读代码的其他开发者传达出彼此有某种联系。使我们在将来添加新的情况时更容易添加不同的行为，并有可能确保任何忘记的事情也能通过<code>default</code>子句得到正确处理。下次你发现自己写的多个<code>if</code>语句都涉及同一个变量时，试着用<code>switch</code>语句重写它&ndash;你会发现当需要考虑其他值时，它将更容易重写。</p>
-<p>如果你想了解更多关于Go编程语言的信息，请查看整个<a href="https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go">How To Code in Go系列</a></p>
-</article>
- 
-      
-
-      <footer class="book-footer">
-        
-  <div class="flex flex-wrap justify-between">
-
-
-
-
-
-</div>
-
-
-
-  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
-
-
- 
-        
-      </footer>
-
-      
-  
-  <div class="book-comments">
-
-</div>
-  
- 
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
-    </div>
-
-    
-    <aside class="book-toc">
-      <div class="book-toc-content">
-        
-  
-<nav id="TableOfContents">
-  <ul>
-    <li>
-      <ul>
-        <li><a href="#介绍">介绍</a></li>
-      </ul>
-    </li>
-    <li><a href="#switch语句的结构">Switch语句的结构</a></li>
-    <li><a href="#通常的-switch-语句">通常的 Switch 语句</a></li>
-    <li><a href="#fallthrough">Fallthrough</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
- 
-      </div>
-    </aside>
-    
-  </main>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+</code></pre><p>正如我们之前看到的，我们定义了一个 <code>string</code> 片段来表示口味，并使用 <code>for</code> 循环来迭代。这里的 <code>switch</code> 语句与我们之前看到的语句相同，但是在 <code>case</code> 子句的末尾添加了 <code>fallthrough</code> 关键字，即 <code>strawberry</code>。这将使Go运行<code>case "strawberry":</code>的主体，首先打印出字符串<code>strawberry is my favorite!</code>。当它遇到<code>fallthrough</code>时，它将运行下一个<code>case</code>子句的主体。这将导致<code>case "vanilla", "chocolate":</code>的主体运行，打印出<code>strawberry is great!</code>。</p><p>Go开发人员不经常使用<code>fallthrough</code>关键字。通常情况下，通过使用<code>fallthrough</code>实现的代码重用，可以通过定义一个具有公共代码的函数来更好地获得。由于这些原因，一般不鼓励使用<code>fallthrough</code>。</p><h2 id=总结>总结
+<a class=anchor href=#%e6%80%bb%e7%bb%93>#</a></h2><p><code>switch</code>语句帮助我们向阅读代码的其他开发者传达出彼此有某种联系。使我们在将来添加新的情况时更容易添加不同的行为，并有可能确保任何忘记的事情也能通过<code>default</code>子句得到正确处理。下次你发现自己写的多个<code>if</code>语句都涉及同一个变量时，试着用<code>switch</code>语句重写它&ndash;你会发现当需要考虑其他值时，它将更容易重写。</p><p>如果你想了解更多关于Go编程语言的信息，请查看整个<a href=https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go>How To Code in Go系列</a></p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#介绍>介绍</a></li></ul></li><li><a href=#switch语句的结构>Switch语句的结构</a></li><li><a href=#通常的-switch-语句>通常的 Switch 语句</a></li><li><a href=#fallthrough>Fallthrough</a></li><li><a href=#总结>总结</a></li></ul></nav></div></aside></main></body></html>

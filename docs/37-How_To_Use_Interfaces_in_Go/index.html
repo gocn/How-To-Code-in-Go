@@ -1,600 +1,308 @@
-<!DOCTYPE html>
-<html lang="zh" dir="ltr">
-<head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="如何在 Go 使用 interface #  简述 #  编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，继承是一种常见的方法，在 Java、C&#43;&#43;、C#等语言中都有使用。
+<!doctype html><html lang=zh dir=ltr><head><meta charset=utf-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="如何在 Go 使用 interface # 简述 # 编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，继承是一种常见的方法，在 Java、C++、C#等语言中都有使用。
 开发者们也可以通过组合实现这个设计目标。组合是一个将多个对象和数据类型组合到一个复杂的结构体中的方式。这个是 Go 用来促进代码复用，模块化和灵活性的方法。在 Go 中 intrerface 提供了一个方法用于构建复杂的组合，学习使用它们，将会使你创建通用的可重复使用的代码。
 在这篇文章中，我们将会学习如何构建那些有相同行为的自定义类型，用于复用代码。 我们还将学习如何为我们自己的自定义类型实现 interface，以满足在另一个包中定义的接口。
-定义一个行为 #  组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是fmt.Stringer 接口：
-type Stringer interface {  String() string } 第一行代码定义一个type叫Stringer。然后表明它是一个interface。就好像定义一个结构体，Go 使用大括号({})来囊括 interface 的定义。跟结构体的定义相比，我们只定义interface的行为，就是“这个类型可以做什么”
+定义一个行为 # 组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是fmt.Stringer 接口：
+type Stringer interface { String() string } 第一行代码定义一个type叫Stringer。然后表明它是一个interface。就好像定义一个结构体，Go 使用大括号({})来囊括 interface 的定义。跟结构体的定义相比，我们只定义interface的行为，就是“这个类型可以做什么”
 对这个Stringer接口的例子来说，唯一的行为就是String()这个方法。这个方法没有参数。
 接着，让我们看一些代码，这些代码有fmt.Stringer的行为：
-package main  import &#34;fmt&#34;  type Article struct { 	Title string 	Author string }  func (a Article) String() string { 	return fmt.">
-<meta name="theme-color" content="#FFFFFF">
-<meta name="color-scheme" content="light dark"><meta property="og:title" content="" />
-<meta property="og:description" content="如何在 Go 使用 interface #  简述 #  编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，继承是一种常见的方法，在 Java、C&#43;&#43;、C#等语言中都有使用。
+package main import &#34;fmt&#34; type Article struct { Title string Author string } func (a Article) String() string { return fmt.Sprintf(&#34;The %q article was written by %s.&#34;, a."><meta name=theme-color content="#FFFFFF"><meta name=color-scheme content="light dark"><meta property="og:title" content><meta property="og:description" content="如何在 Go 使用 interface # 简述 # 编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，继承是一种常见的方法，在 Java、C++、C#等语言中都有使用。
 开发者们也可以通过组合实现这个设计目标。组合是一个将多个对象和数据类型组合到一个复杂的结构体中的方式。这个是 Go 用来促进代码复用，模块化和灵活性的方法。在 Go 中 intrerface 提供了一个方法用于构建复杂的组合，学习使用它们，将会使你创建通用的可重复使用的代码。
 在这篇文章中，我们将会学习如何构建那些有相同行为的自定义类型，用于复用代码。 我们还将学习如何为我们自己的自定义类型实现 interface，以满足在另一个包中定义的接口。
-定义一个行为 #  组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是fmt.Stringer 接口：
-type Stringer interface {  String() string } 第一行代码定义一个type叫Stringer。然后表明它是一个interface。就好像定义一个结构体，Go 使用大括号({})来囊括 interface 的定义。跟结构体的定义相比，我们只定义interface的行为，就是“这个类型可以做什么”
+定义一个行为 # 组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是fmt.Stringer 接口：
+type Stringer interface { String() string } 第一行代码定义一个type叫Stringer。然后表明它是一个interface。就好像定义一个结构体，Go 使用大括号({})来囊括 interface 的定义。跟结构体的定义相比，我们只定义interface的行为，就是“这个类型可以做什么”
 对这个Stringer接口的例子来说，唯一的行为就是String()这个方法。这个方法没有参数。
 接着，让我们看一些代码，这些代码有fmt.Stringer的行为：
-package main  import &#34;fmt&#34;  type Article struct { 	Title string 	Author string }  func (a Article) String() string { 	return fmt." />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="https://example.com/docs/37-How_To_Use_Interfaces_in_Go/" /><meta property="article:section" content="docs" />
-
-
-
-<title>37 How to Use Interfaces in Go | How To Code in Go</title>
-<link rel="manifest" href="/manifest.json">
-<link rel="icon" href="/favicon.png" type="image/x-icon">
-<link rel="stylesheet" href="/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css" integrity="sha256-gsXb0jRHzuC0wqo&#43;0Izglh&#43;qQOH6Nw7uT4yfAuDUa18=" crossorigin="anonymous">
-  <script defer src="/flexsearch.min.js"></script>
-  <script defer src="/zh.search.min.00f4a6bb9fa5c16e66c137470112b7a67f2b0d7900ff7794f2e5241dfb837bb9.js" integrity="sha256-APSmu5&#43;lwW5mwTdHARK3pn8rDXkA/3eU8uUkHfuDe7k=" crossorigin="anonymous"></script>
-<!--
-Made with Book Theme
-https://github.com/alex-shpak/hugo-book
--->
-  
-</head>
-<body dir="ltr">
-  <input type="checkbox" class="hidden toggle" id="menu-control" />
-  <input type="checkbox" class="hidden toggle" id="toc-control" />
-  <main class="container flex">
-    <aside class="book-menu">
-      <div class="book-menu-content">
-        
-  <nav>
-<h2 class="book-brand">
-  <a class="flex align-center" href="/"><span>How To Code in Go</span>
-  </a>
-</h2>
-
-
-<div class="book-search">
-  <input type="text" id="book-search-input" placeholder="搜索" aria-label="搜索" maxlength="64" data-hotkeys="s/" />
-  <div class="book-search-spinner hidden"></div>
-  <ul id="book-search-results"></ul>
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-  <ul>
-<li>
-<p><strong>开始学习</strong></p>
-<ul>
-<li><a href="/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/">如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/">如何在 macOS 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/">如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li>
-<li><a href="/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/">如何用 Go 编写你的第一个程序</a></li>
-<li><a href="/docs/05-Understanding_the_GOPATH/">理解 GOPATH</a></li>
-<li><a href="/docs/06-How_To_Write_Comments_in_Go/">如何在 Go 中写注释</a></li>
-<li><a href="/docs/07-Understanding_Data_Types_in_Go/">理解 Go 的数据类型</a></li>
-<li><a href="/docs/08-An_Introduction_to_Working_with_Strings_in_Go/">Go 中处理字符串的介绍</a></li>
-<li><a href="/docs/09-How_To_Format_Strings_in_Go/">How To Format Strings in Go</a></li>
-<li><a href="/docs/10-An_Introduction_to_the_Strings_Package_in_Go/">An Introduction to the Strings Package in Go</a></li>
-<li><a href="/docs/11-How_To_Use_Variables_and_Constants_in_Go/">How To Use Variables and Constants in Go</a></li>
-<li><a href="/docs/12-How_To_Convert_Data_Types_in_Go/">How To Convert Data Types in Go</a></li>
-<li><a href="/docs/13-How_To_Do_Math_in_Go_with_Operators/">How To Do Math in Go with Operators</a></li>
-<li><a href="/docs/14-Understanding_Boolean_Logic_in_Go/">Understanding Boolean Logic in Go</a></li>
-<li><a href="/docs/15-Understanding_Maps_in_Go/">Understanding Maps in Go</a></li>
-<li><a href="/docs/16-Understanding_Arrays_and_Slices_in_Go/">Understanding Arrays and Slices in Go</a></li>
-<li><a href="/docs/17-Handling_Errors_in_Go_DigitalOcean/">Handling Errors in Go</a></li>
-<li><a href="/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/">Creating Custom Errors in Go</a></li>
-<li><a href="/docs/19-Handling_Panics_in_Go-_DigitalOcean/">Handling Panics in Go</a></li>
-<li><a href="/docs/20-Importing_Packages_in_Go_DigitalOcean/">Importing Packages in Go</a></li>
-<li><a href="/docs/21-How_To_Write_Packages_in_Go/">如何在 Go 中编写包</a></li>
-<li><a href="/docs/22-Understanding_Package_Visibility_in_Go/">理解 Go 中包的可见性</a></li>
-<li><a href="/docs/23-How_To_Write_Conditional_Statements_in_Go/">如何在 Go 中编写条件语句</a></li>
-<li><a href="/docs/24-How_To_Write_Switch_Statements_in_Go/">如何在 Go 中编写 Switch 语句</a></li>
-<li><a href="/docs/25_How_To_Construct_For_Loops_in_Go/">如何在 Go 中构造 for 循环</a></li>
-<li><a href="/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/">在循环中使用 Break 和 Continue</a></li>
-<li><a href="/docs/27_How_To_Define_and_Call_Functions_in_Go/">如何在 Go 中定义并调用函数</a></li>
-<li><a href="/docs/28_How_To_Use_Variadic_Functions_in_Go/">如何在 Go 中使用可变参数函数</a></li>
-<li><a href="/docs/29-Understanding_defer_in_Go/">了解 Go 中的 defer</a></li>
-<li><a href="/docs/30_Understanding_init_in_Go/">了解 Go 中的 init</a></li>
-<li><a href="/docs/31_Customizing_Go_Binaries_with_Build_Tags/">用构建标签定制 Go 二进制文件</a></li>
-<li><a href="/docs/32_Understanding_Pointers_in_Go/">了解 Go 中的指针</a></li>
-<li><a href="/docs/33_Defining_Structs_in_Go/">在 Go 中定义结构体</a></li>
-<li><a href="/docs/34_Defining_Methods_in_Go/">在 Go 中定义方法</a></li>
-<li><a href="/docs/35_How_To_Build_and_Install_Go_Programs/">如何构建和安装 Go 程序</a></li>
-<li><a href="/docs/36_How_To_Use_Struct_Tags_in_Go/">如何在 Go 中使用结构体标签</a></li>
-<li><a href="/docs/37-How_To_Use_Interfaces_in_Go/"class=active>如何在 Go 使用 interface</a></li>
-<li><a href="/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/">在不同的操作系统和架构编译 Go 应用</a></li>
-<li><a href="/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/">用 ldflags 设置 Go 应用程序的版本信息</a></li>
-<li><a href="/docs/40-How_To_Use_the_Flag_Package_in_Go/">在 Go 里面如何使用 Flag 包</a></li>
-</ul>
-</li>
-<li>
-<p><strong>附录：资源</strong></p>
-</li>
-<li>
-<p><a href="https://github.com/gocn/How-To-Code-in-Go"><strong>Fork on Github</strong></a></p>
-</li>
-</ul>
-
-
-
-
-
-
-
-
-
-
-</nav>
-
-
-
-
-  <script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script>
-
-
- 
-      </div>
-    </aside>
-
-    <div class="book-page">
-      <header class="book-header">
-        
-  <div class="flex align-center justify-between">
-  <label for="menu-control">
-    <img src="/svg/menu.svg" class="book-icon" alt="Menu" />
-  </label>
-
-  <strong>37 How to Use Interfaces in Go</strong>
-
-  <label for="toc-control">
-    
-    <img src="/svg/toc.svg" class="book-icon" alt="Table of Contents" />
-    
-  </label>
-</div>
-
-
-  
-  <aside class="hidden clearfix">
-    
-  
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#简述">简述</a></li>
-    <li><a href="#定义一个行为">定义一个行为</a></li>
-    <li><a href="#定义一个-interface">定义一个 interface</a></li>
-    <li><a href="#多行为-interface">多行为 interface</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
-
-  </aside>
-  
- 
-      </header>
-
-      
-      
-  <article class="markdown"><h1 id="如何在-go-使用-interface">
-  如何在 Go 使用 interface
-  <a class="anchor" href="#%e5%a6%82%e4%bd%95%e5%9c%a8-go-%e4%bd%bf%e7%94%a8-interface">#</a>
-</h1>
-<h2 id="简述">
-  简述
-  <a class="anchor" href="#%e7%ae%80%e8%bf%b0">#</a>
-</h2>
-<p>编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，<a href="https://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29"><em>继承</em></a>是一种常见的方法，在 Java、C++、C#等语言中都有使用。</p>
-<p>开发者们也可以通过<a href="https://en.wikipedia.org/wiki/Object_composition"><em>组合</em></a>实现这个设计目标。组合是一个将多个对象和数据类型组合到一个复杂的结构体中的方式。这个是 Go 用来促进代码复用，模块化和灵活性的方法。在 Go 中 intrerface 提供了一个方法用于构建复杂的组合，学习使用它们，将会使你创建通用的可重复使用的代码。</p>
-<p>在这篇文章中，我们将会学习如何构建那些有相同行为的自定义类型，用于复用代码。 我们还将学习如何为我们自己的自定义类型实现 interface，以满足在另一个包中定义的接口。</p>
-<h2 id="定义一个行为">
-  定义一个行为
-  <a class="anchor" href="#%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa%e8%a1%8c%e4%b8%ba">#</a>
-</h2>
-<p>组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是<a href="https://golang.org/pkg/fmt/#Stringer"><code>fmt.Stringer</code></a> 接口：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Stringer</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>    <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>第一行代码定义一个<code>type</code>叫<code>Stringer</code>。然后表明它是一个<code>interface</code>。就好像定义一个结构体，Go 使用大括号(<code>{}</code>)来囊括 interface 的定义。跟结构体的定义相比，我们只定义<code>interface</code>的<em>行为</em>，就是“这个类型可以做什么”</p>
-<p>对这个<code>Stringer</code>接口的例子来说，唯一的行为就是<code>String()</code>这个方法。这个方法没有参数。</p>
-<p>接着，让我们看一些代码，这些代码有<code>fmt.Stringer</code>的行为：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Article</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Title</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Author</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Article</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;The %q article was written by %s.&#34;</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Author</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Article</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Title</span>: <span style="color:#e6db74">&#34;Understanding Interfaces in Go&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Author</span>: <span style="color:#e6db74">&#34;Sammy Shark&#34;</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">String</span>())
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>第一件事是我们创建了一个新的类型叫做<code>Article</code>。这个类型有一个<code>Title</code>和一个<code>Author</code>字段，两个都是 string 的 <a href="https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go">数据类型</a>:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Article</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Title</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Author</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span></code></pre></div><p>接着，我们为 Article 类型定义了一个叫做 String 的 <a href="https://www.digitalocean.com/community/tutorials/defining-methods-in-go"><code>方法</code></a>。<code>String</code>方法将会返回一个用于表示<code>Article</code>类型的字符串：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Article</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;The %q article was written by %s.&#34;</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Author</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span></code></pre></div><p>然后，在我们的<code>main</code><a href="https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go">function</a>里，我们创建一个<code>Article</code>类型的实例，并且将它赋值给一个<a href="https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go">变量</a>叫<code>a</code>。我们给<code>Title</code>字段设置了一个值，为<code>&quot;理解Go中的Interfaces&quot;</code>，给<code>Author</code>字段赋值<code>&quot;Sammy Shark&quot;</code>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Article</span>{
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Title</span>: <span style="color:#e6db74">&#34;Understanding Interfaces in Go&#34;</span>,
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Author</span>: <span style="color:#e6db74">&#34;Sammy Shark&#34;</span>,
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span></code></pre></div><p>紧接着，我们通过调用<code>fmt.Println</code>并传入调用<code>a.String()</code>后的结果，打印出<code>String</code>方法的结果：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">String</span>())
-</span></span></code></pre></div><p>随后运行程序，你会发现如下输出：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Output
-</span></span><span style="display:flex;"><span>The &#34;Understanding Interfaces in Go&#34; article was written by Sammy Shark.
-</span></span></code></pre></div><p>至此，我们还没有使用 interface，但是我们创建了一个具备一个行为的类型。这个行为匹配<code>fmt.Stringer</code>接口。随后，让我们看看如何利用这种行为来使我们的代码更容易重复使用。</p>
-<h2 id="定义一个-interface">
-  定义一个 interface
-  <a class="anchor" href="#%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa-interface">#</a>
-</h2>
-<p>现在，我们已经用所需的行为定义了我们的类型，我们可以看看如何使用该行为。</p>
-<p>然而，在这之前，让我们看看如果我们想在一个函数中从<code>Article</code>类型中调用<code>String</code>方法，我们需要做什么：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Article</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Title</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Author</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Article</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;The %q article was written by %s.&#34;</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Author</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Article</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Title</span>: <span style="color:#e6db74">&#34;Understanding Interfaces in Go&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Author</span>: <span style="color:#e6db74">&#34;Sammy Shark&#34;</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">a</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Article</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">String</span>())
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这段代码中，我们添加了一个名为<code>Print</code>的新函数，该函数接收一个<code>Article</code>作为参数。请注意，<code>Print</code>函数唯一做的事情是调用<code>String</code>方法。正因为如此，我们则可以定义一个接口来传递给函数。</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Article</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Title</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Author</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Article</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;The %q article was written by %s.&#34;</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Author</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Stringer</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Article</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Title</span>: <span style="color:#e6db74">&#34;Understanding Interfaces in Go&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Author</span>: <span style="color:#e6db74">&#34;Sammy Shark&#34;</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">a</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">s</span> <span style="color:#a6e22e">Stringer</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">String</span>())
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>这里我们创建了一个 interface 叫做<code>Stringer</code>：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Stringer</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span></code></pre></div><p><code>Stringer</code>interface 只有一个方法，叫做<code>String()</code>，返回一个<code>string</code>。<a href="https://www.digitalocean.com/community/tutorials/defining-methods-in-go">method</a>是一个特殊的函数，在 Go 中被限定于一个特殊类型。不像函数，一个方法只能从它所定义的类型的实例中被调用。</p>
-<p>然后我们更新<code>Print</code>方法的签名来接收一个<code>Stringer</code>，而不是一个<code>Article</code>的具体类型。因为编译器知道<code>Stringer</code>接口定义了<code>String</code>方法，所以它只接收也有<code>String</code>方法的类型。</p>
-<p>现在我们可以对任何满足<code>Stringer</code>接口的东西使用<code>Print</code>方法。让我们创建另一个类型来证明这一点：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> <span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Article</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Title</span>  <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Author</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">a</span> <span style="color:#a6e22e">Article</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;The %q article was written by %s.&#34;</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">a</span>.<span style="color:#a6e22e">Author</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Book</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Title</span>  <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Author</span> <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Pages</span>  <span style="color:#66d9ef">int</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">b</span> <span style="color:#a6e22e">Book</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;The %q book was written by %s.&#34;</span>, <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">Title</span>, <span style="color:#a6e22e">b</span>.<span style="color:#a6e22e">Author</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Stringer</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">a</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Article</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Title</span>:  <span style="color:#e6db74">&#34;Understanding Interfaces in Go&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Author</span>: <span style="color:#e6db74">&#34;Sammy Shark&#34;</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">a</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">b</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Book</span>{
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Title</span>:  <span style="color:#e6db74">&#34;All About Go&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Author</span>: <span style="color:#e6db74">&#34;Jenny Dolphin&#34;</span>,
-</span></span><span style="display:flex;"><span>		<span style="color:#a6e22e">Pages</span>:  <span style="color:#ae81ff">25</span>,
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">b</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Print</span>(<span style="color:#a6e22e">s</span> <span style="color:#a6e22e">Stringer</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Println</span>(<span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">String</span>())
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>现在，我们添加了第二个类型叫<code>Book</code>。它同样也有定义<code>String</code>方法。这表示它也满足<code>Stringer</code>接口。因此，我们也可以传递它到<code>Print</code>函数：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Output
-</span></span><span style="display:flex;"><span>The &#34;Understanding Interfaces in Go&#34; article was written by Sammy Shark.
-</span></span><span style="display:flex;"><span>The &#34;All About Go&#34; book was written by Jenny Dolphin. It has 25 pages.
-</span></span></code></pre></div><p>到目前为止，我们已经演示了如何只使用一个 interface。然而，一个 interface 可以有不止一个行为的定义。接下来，我们将看到如何通过声明更多的方法来使我们的 interface 更加通用。</p>
-<h2 id="多行为-interface">
-  多行为 interface
-  <a class="anchor" href="#%e5%a4%9a%e8%a1%8c%e4%b8%ba-interface">#</a>
-</h2>
-<p>编写 Go 代码的核心原则之一是编写小而简洁的类型，并将它们组成更大，更复杂的类型。组合 interface 也是一样的。为了了解我们是如何建立一个 interface 的，我们先从只定义一个 interface 开始。我们将会定义 2 个形状，一个<code>Circle</code>和一个<code>Square</code>，然后他们都会定义一个方法叫<code>Area</code>。这个方法会返回它们对应形状的几何面积：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;math&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Circle</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Radius</span> <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#a6e22e">Circle</span>) <span style="color:#a6e22e">Area</span>() <span style="color:#66d9ef">float64</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Pi</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Pow</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Radius</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Square</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Width</span>  <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Height</span> <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#a6e22e">Square</span>) <span style="color:#a6e22e">Area</span>() <span style="color:#66d9ef">float64</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Width</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Height</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sizer</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Area</span>() <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Circle</span>{<span style="color:#a6e22e">Radius</span>: <span style="color:#ae81ff">10</span>}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Square</span>{<span style="color:#a6e22e">Height</span>: <span style="color:#ae81ff">10</span>, <span style="color:#a6e22e">Width</span>: <span style="color:#ae81ff">5</span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">s</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%+v is the smallest\n&#34;</span>, <span style="color:#a6e22e">l</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span> <span style="color:#a6e22e">Sizer</span>) <span style="color:#a6e22e">Sizer</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s1</span>.<span style="color:#a6e22e">Area</span>() &lt; <span style="color:#a6e22e">s2</span>.<span style="color:#a6e22e">Area</span>() {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s2</span>
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>因为每个类型都定义了<code>Area</code>方法，我们可以创建一个 interface 来定义这个行为。我们创建如下的<code>Sizer</code>interface:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sizer</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Area</span>() <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span></code></pre></div><p>然后定义一个函数叫做<code>Less</code>，传入 2 个<code>Sizer</code>并返回最小的那一个：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span> <span style="color:#a6e22e">Sizer</span>) <span style="color:#a6e22e">Sizer</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s1</span>.<span style="color:#a6e22e">Area</span>() &lt; <span style="color:#a6e22e">s2</span>.<span style="color:#a6e22e">Area</span>() {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s2</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span></code></pre></div><p>注意到我们不仅接收 2 个都为<code>Sizer</code>的类型，而且返回的结果也用<code>Sizer</code>。这意味着我们不再返回一个<code>Square</code>或者一个<code>Circle</code>，而是<code>Sizer</code>interface。</p>
-<p>最后，我们打印出哪一个是最小的面积：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Output
-</span></span><span style="display:flex;"><span>{Width:5 Height:10} is the smallest
-</span></span></code></pre></div><p>接着，让我们给每个类型添加另一个行为。这次我们添加<code>String()</code>方法，返回一个 string。这个满足<code>fmt.Stringer</code>interface:</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">package</span> <span style="color:#a6e22e">main</span>
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#f92672">import</span> (
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;fmt&#34;</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#e6db74">&#34;math&#34;</span>
-</span></span><span style="display:flex;"><span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Circle</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Radius</span> <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#a6e22e">Circle</span>) <span style="color:#a6e22e">Area</span>() <span style="color:#66d9ef">float64</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Pi</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">math</span>.<span style="color:#a6e22e">Pow</span>(<span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Radius</span>, <span style="color:#ae81ff">2</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">c</span> <span style="color:#a6e22e">Circle</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Circle {Radius: %.2f}&#34;</span>, <span style="color:#a6e22e">c</span>.<span style="color:#a6e22e">Radius</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Square</span> <span style="color:#66d9ef">struct</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Width</span>  <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Height</span> <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#a6e22e">Square</span>) <span style="color:#a6e22e">Area</span>() <span style="color:#66d9ef">float64</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Width</span> <span style="color:#f92672">*</span> <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Height</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> (<span style="color:#a6e22e">s</span> <span style="color:#a6e22e">Square</span>) <span style="color:#a6e22e">String</span>() <span style="color:#66d9ef">string</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Sprintf</span>(<span style="color:#e6db74">&#34;Square {Width: %.2f, Height: %.2f}&#34;</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Width</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Height</span>)
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Sizer</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Area</span>() <span style="color:#66d9ef">float64</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Shaper</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Sizer</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Stringer</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">c</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Circle</span>{<span style="color:#a6e22e">Radius</span>: <span style="color:#ae81ff">10</span>}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">PrintArea</span>(<span style="color:#a6e22e">c</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">s</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Square</span>{<span style="color:#a6e22e">Height</span>: <span style="color:#ae81ff">10</span>, <span style="color:#a6e22e">Width</span>: <span style="color:#ae81ff">5</span>}
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">PrintArea</span>(<span style="color:#a6e22e">s</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">l</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">c</span>, <span style="color:#a6e22e">s</span>)
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;%v is the smallest\n&#34;</span>, <span style="color:#a6e22e">l</span>)
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">Less</span>(<span style="color:#a6e22e">s1</span>, <span style="color:#a6e22e">s2</span> <span style="color:#a6e22e">Sizer</span>) <span style="color:#a6e22e">Sizer</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">if</span> <span style="color:#a6e22e">s1</span>.<span style="color:#a6e22e">Area</span>() &lt; <span style="color:#a6e22e">s2</span>.<span style="color:#a6e22e">Area</span>() {
-</span></span><span style="display:flex;"><span>		<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s1</span>
-</span></span><span style="display:flex;"><span>	}
-</span></span><span style="display:flex;"><span>	<span style="color:#66d9ef">return</span> <span style="color:#a6e22e">s2</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PrintArea</span>(<span style="color:#a6e22e">s</span> <span style="color:#a6e22e">Shaper</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;area of %s is %.2f\n&#34;</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Area</span>())
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>因为<code>Circle</code>和<code>Square</code>类型都同时实现了<code>Area</code>和<code>String</code>方法，我们现在可以创建另一个 interface 来描述这些更广泛的行为。为了实现这个，我们创建了一个 interface 叫做<code>Shaper</code>。这个<code>Shaper</code>将由<code>Sizer</code>interface 和<code>fmt.Stringer</code>interface 组成：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">type</span> <span style="color:#a6e22e">Shaper</span> <span style="color:#66d9ef">interface</span> {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">Sizer</span>
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Stringer</span>
-</span></span><span style="display:flex;"><span>}
-</span></span><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span></code></pre></div><p>**注意：**基于习惯，尝试以<code>er</code>结尾来给你的 interface 命名，例如<code>fmt.Stringer</code>，<code>io.Writer</code>等等。这也是为什么我们用<code>Shaper</code>来命名我们的 interface，而不是<code>Shape</code>。</p>
-<p>现在我们可以创建一个名为<code>PrintArea</code>的函数，该函数以<code>Shaper</code>为参数。这意味着我们可以对传入的值调用<code>Area</code>和<code>String</code>这两个方法：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-go" data-lang="go"><span style="display:flex;"><span><span style="color:#f92672">...</span>
-</span></span><span style="display:flex;"><span><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">PrintArea</span>(<span style="color:#a6e22e">s</span> <span style="color:#a6e22e">Shaper</span>) {
-</span></span><span style="display:flex;"><span>	<span style="color:#a6e22e">fmt</span>.<span style="color:#a6e22e">Printf</span>(<span style="color:#e6db74">&#34;area of %s is %.2f\n&#34;</span>, <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">String</span>(), <span style="color:#a6e22e">s</span>.<span style="color:#a6e22e">Area</span>())
-</span></span><span style="display:flex;"><span>}
-</span></span></code></pre></div><p>如果我们运行程序，将会收到如下输出：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-text" data-lang="text"><span style="display:flex;"><span>Output
-</span></span><span style="display:flex;"><span>area of Circle {Radius: 10.00} is 314.16
-</span></span><span style="display:flex;"><span>area of Square {Width: 5.00, Height: 10.00} is 50.00
-</span></span><span style="display:flex;"><span>Square {Width: 5.00, Height: 10.00} is the smallest
-</span></span></code></pre></div><p>我们现在已经看到了我们如何创建较小的 interface，并根据需要将它们建立成较大的 interface。虽然我们可以从较大的 interface 开始，并将其传递给我们所有的函数，但最好的做法是只将最小的 interface 发送给需要的函数。这通常会使代码更加清晰，因为任何接收特定的较小的 interface 的东西都只打算执行其定义的行为。</p>
-<p>例如，如果我们将<code>Shaper</code>传递给<code>Less</code>函数，我们可能会认为它要同时调用<code>Area</code>和<code>String</code>方法。然而，由于我们只打算调用<code>Area</code>方法，这使得<code>Less</code>函数很清楚，因为我们知道我们只能调用传递给它的任何参数的<code>Area</code>方法。</p>
-<h2 id="总结">
-  总结
-  <a class="anchor" href="#%e6%80%bb%e7%bb%93">#</a>
-</h2>
-<p>我们已经看到，创建较小的 interface 并将其构建为较大的 interface，可以让我们只分享我们需要的函数或方法。我们还了解到，我们可以从其他 interface 中组成我们的 interface，包括从其他包中定义的 interface，而不仅仅是我们的包。</p>
-</article>
- 
-      
-
-      <footer class="book-footer">
-        
-  <div class="flex flex-wrap justify-between">
-
-
-
-
-
-</div>
-
-
-
-  <script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script>
-
-
- 
-        
-      </footer>
-
-      
-  
-  <div class="book-comments">
-
-</div>
-  
- 
-
-      <label for="menu-control" class="hidden book-menu-overlay"></label>
-    </div>
-
-    
-    <aside class="book-toc">
-      <div class="book-toc-content">
-        
-  
-<nav id="TableOfContents">
-  <ul>
-    <li><a href="#简述">简述</a></li>
-    <li><a href="#定义一个行为">定义一个行为</a></li>
-    <li><a href="#定义一个-interface">定义一个 interface</a></li>
-    <li><a href="#多行为-interface">多行为 interface</a></li>
-    <li><a href="#总结">总结</a></li>
-  </ul>
-</nav>
-
-
- 
-      </div>
-    </aside>
-    
-  </main>
-
-  
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
+package main import &#34;fmt&#34; type Article struct { Title string Author string } func (a Article) String() string { return fmt.Sprintf(&#34;The %q article was written by %s.&#34;, a."><meta property="og:type" content="article"><meta property="og:url" content="https://example.com/docs/37-How_To_Use_Interfaces_in_Go/"><meta property="article:section" content="docs"><title>37 How to Use Interfaces in Go | How To Code in Go</title><link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png type=image/x-icon><link rel=stylesheet href=/book.min.82c5dbd23447cee0b4c2aa3ed08ce0961faa40e1fa370eee4f8c9f02e0d46b5f.css integrity="sha256-gsXb0jRHzuC0wqo+0Izglh+qQOH6Nw7uT4yfAuDUa18=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script>
+<script defer src=/zh.search.min.49dd84c1863c020bc1e7dc2da56c6f5767094cc4a336b6ce9c015604b7f5c488.js integrity="sha256-Sd2EwYY8AgvB59wtpWxvV2cJTMSjNrbOnAFWBLf1xIg=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>How To Code in Go</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul><li><p><strong>开始学习</strong></p><ul><li><a href=/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/>如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/>如何在 macOS 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/>如何在 Windows 10 上安装 Go 和设置本地编程环境</a></li><li><a href=/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/>如何用 Go 编写你的第一个程序</a></li><li><a href=/docs/05-Understanding_the_GOPATH/>理解 GOPATH</a></li><li><a href=/docs/06-How_To_Write_Comments_in_Go/>如何在 Go 中写注释</a></li><li><a href=/docs/07-Understanding_Data_Types_in_Go/>理解 Go 的数据类型</a></li><li><a href=/docs/08-An_Introduction_to_Working_with_Strings_in_Go/>Go 中处理字符串的介绍</a></li><li><a href=/docs/09-How_To_Format_Strings_in_Go/>How To Format Strings in Go</a></li><li><a href=/docs/10-An_Introduction_to_the_Strings_Package_in_Go/>An Introduction to the Strings Package in Go</a></li><li><a href=/docs/11-How_To_Use_Variables_and_Constants_in_Go/>How To Use Variables and Constants in Go</a></li><li><a href=/docs/12-How_To_Convert_Data_Types_in_Go/>How To Convert Data Types in Go</a></li><li><a href=/docs/13-How_To_Do_Math_in_Go_with_Operators/>How To Do Math in Go with Operators</a></li><li><a href=/docs/14-Understanding_Boolean_Logic_in_Go/>Understanding Boolean Logic in Go</a></li><li><a href=/docs/15-Understanding_Maps_in_Go/>Understanding Maps in Go</a></li><li><a href=/docs/16-Understanding_Arrays_and_Slices_in_Go/>Understanding Arrays and Slices in Go</a></li><li><a href=/docs/17-Handling_Errors_in_Go_DigitalOcean/>Handling Errors in Go</a></li><li><a href=/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/>Creating Custom Errors in Go</a></li><li><a href=/docs/19-Handling_Panics_in_Go-_DigitalOcean/>Handling Panics in Go</a></li><li><a href=/docs/20-Importing_Packages_in_Go_DigitalOcean/>Importing Packages in Go</a></li><li><a href=/docs/21-How_To_Write_Packages_in_Go/>如何在 Go 中编写包</a></li><li><a href=/docs/22-Understanding_Package_Visibility_in_Go/>理解 Go 中包的可见性</a></li><li><a href=/docs/23-How_To_Write_Conditional_Statements_in_Go/>如何在 Go 中编写条件语句</a></li><li><a href=/docs/24-How_To_Write_Switch_Statements_in_Go/>如何在 Go 中编写 Switch 语句</a></li><li><a href=/docs/25_How_To_Construct_For_Loops_in_Go/>如何在 Go 中构造 for 循环</a></li><li><a href=/docs/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/>在循环中使用 Break 和 Continue</a></li><li><a href=/docs/27_How_To_Define_and_Call_Functions_in_Go/>如何在 Go 中定义并调用函数</a></li><li><a href=/docs/28_How_To_Use_Variadic_Functions_in_Go/>如何在 Go 中使用可变参数函数</a></li><li><a href=/docs/29-Understanding_defer_in_Go/>了解 Go 中的 defer</a></li><li><a href=/docs/30_Understanding_init_in_Go/>了解 Go 中的 init</a></li><li><a href=/docs/31_Customizing_Go_Binaries_with_Build_Tags/>用构建标签定制 Go 二进制文件</a></li><li><a href=/docs/32_Understanding_Pointers_in_Go/>了解 Go 中的指针</a></li><li><a href=/docs/33_Defining_Structs_in_Go/>在 Go 中定义结构体</a></li><li><a href=/docs/34_Defining_Methods_in_Go/>在 Go 中定义方法</a></li><li><a href=/docs/35_How_To_Build_and_Install_Go_Programs/>如何构建和安装 Go 程序</a></li><li><a href=/docs/36_How_To_Use_Struct_Tags_in_Go/>如何在 Go 中使用结构体标签</a></li><li><a href=/docs/37-How_To_Use_Interfaces_in_Go/ class=active>如何在 Go 使用 interface</a></li><li><a href=/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/>在不同的操作系统和架构编译 Go 应用</a></li><li><a href=/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications/>用 ldflags 设置 Go 应用程序的版本信息</a></li><li><a href=/docs/40-How_To_Use_the_Flag_Package_in_Go/>在 Go 里面如何使用 Flag 包</a></li></ul></li><li><p><strong>附录：资源</strong></p></li><li><p><a href=https://github.com/gocn/How-To-Code-in-Go><strong>Fork on Github</strong></a></p></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu></label>
+<strong>37 How to Use Interfaces in Go</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><a href=#简述>简述</a></li><li><a href=#定义一个行为>定义一个行为</a></li><li><a href=#定义一个-interface>定义一个 interface</a></li><li><a href=#多行为-interface>多行为 interface</a></li><li><a href=#总结>总结</a></li></ul></nav></aside></header><article class=markdown><h1 id=如何在-go-使用-interface>如何在 Go 使用 interface
+<a class=anchor href=#%e5%a6%82%e4%bd%95%e5%9c%a8-go-%e4%bd%bf%e7%94%a8-interface>#</a></h1><h2 id=简述>简述
+<a class=anchor href=#%e7%ae%80%e8%bf%b0>#</a></h2><p>编写灵活的、可重复使用的、模块化的代码对于开发多功能的程序至关重要。以这种方式开发，可以避免在多个地方做同样的修改，从而确保代码更容易维护。如何完成这个目标，不同语言有不同的实现方法来完成这个目标。例如，<a href=https://en.wikipedia.org/wiki/Inheritance_%28object-oriented_programming%29><em>继承</em></a>是一种常见的方法，在 Java、C++、C#等语言中都有使用。</p><p>开发者们也可以通过<a href=https://en.wikipedia.org/wiki/Object_composition><em>组合</em></a>实现这个设计目标。组合是一个将多个对象和数据类型组合到一个复杂的结构体中的方式。这个是 Go 用来促进代码复用，模块化和灵活性的方法。在 Go 中 intrerface 提供了一个方法用于构建复杂的组合，学习使用它们，将会使你创建通用的可重复使用的代码。</p><p>在这篇文章中，我们将会学习如何构建那些有相同行为的自定义类型，用于复用代码。 我们还将学习如何为我们自己的自定义类型实现 interface，以满足在另一个包中定义的接口。</p><h2 id=定义一个行为>定义一个行为
+<a class=anchor href=#%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa%e8%a1%8c%e4%b8%ba>#</a></h2><p>组合实现的核心之一是使用 interface。一个 interface 定义一个类型的行为。Go 标准库中最常用的 interface 之一是<a href=https://golang.org/pkg/fmt/#Stringer><code>fmt.Stringer</code></a> 接口：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Stringer</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>    <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>第一行代码定义一个<code>type</code>叫<code>Stringer</code>。然后表明它是一个<code>interface</code>。就好像定义一个结构体，Go 使用大括号(<code>{}</code>)来囊括 interface 的定义。跟结构体的定义相比，我们只定义<code>interface</code>的<em>行为</em>，就是“这个类型可以做什么”</p><p>对这个<code>Stringer</code>接口的例子来说，唯一的行为就是<code>String()</code>这个方法。这个方法没有参数。</p><p>接着，让我们看一些代码，这些代码有<code>fmt.Stringer</code>的行为：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Article</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Author</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>a</span> <span style=color:#a6e22e>Article</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;The %q article was written by %s.&#34;</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Title</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Author</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Article</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Title</span>: <span style=color:#e6db74>&#34;Understanding Interfaces in Go&#34;</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Author</span>: <span style=color:#e6db74>&#34;Sammy Shark&#34;</span>,
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>第一件事是我们创建了一个新的类型叫做<code>Article</code>。这个类型有一个<code>Title</code>和一个<code>Author</code>字段，两个都是 string 的 <a href=https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go>数据类型</a>:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Article</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Author</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span></code></pre></div><p>接着，我们为 Article 类型定义了一个叫做 String 的 <a href=https://www.digitalocean.com/community/tutorials/defining-methods-in-go><code>方法</code></a>。<code>String</code>方法将会返回一个用于表示<code>Article</code>类型的字符串：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>a</span> <span style=color:#a6e22e>Article</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;The %q article was written by %s.&#34;</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Title</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Author</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span></code></pre></div><p>然后，在我们的<code>main</code><a href=https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go>function</a>里，我们创建一个<code>Article</code>类型的实例，并且将它赋值给一个<a href=https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go>变量</a>叫<code>a</code>。我们给<code>Title</code>字段设置了一个值，为<code>"理解Go中的Interfaces"</code>，给<code>Author</code>字段赋值<code>"Sammy Shark"</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Article</span>{
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span>: <span style=color:#e6db74>&#34;Understanding Interfaces in Go&#34;</span>,
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Author</span>: <span style=color:#e6db74>&#34;Sammy Shark&#34;</span>,
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span></code></pre></div><p>紧接着，我们通过调用<code>fmt.Println</code>并传入调用<code>a.String()</code>后的结果，打印出<code>String</code>方法的结果：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>String</span>())
+</span></span></code></pre></div><p>随后运行程序，你会发现如下输出：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-text data-lang=text><span style=display:flex><span>Output
+</span></span><span style=display:flex><span>The &#34;Understanding Interfaces in Go&#34; article was written by Sammy Shark.
+</span></span></code></pre></div><p>至此，我们还没有使用 interface，但是我们创建了一个具备一个行为的类型。这个行为匹配<code>fmt.Stringer</code>接口。随后，让我们看看如何利用这种行为来使我们的代码更容易重复使用。</p><h2 id=定义一个-interface>定义一个 interface
+<a class=anchor href=#%e5%ae%9a%e4%b9%89%e4%b8%80%e4%b8%aa-interface>#</a></h2><p>现在，我们已经用所需的行为定义了我们的类型，我们可以看看如何使用该行为。</p><p>然而，在这之前，让我们看看如果我们想在一个函数中从<code>Article</code>类型中调用<code>String</code>方法，我们需要做什么：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Article</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Author</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>a</span> <span style=color:#a6e22e>Article</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;The %q article was written by %s.&#34;</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Title</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Author</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Article</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Title</span>: <span style=color:#e6db74>&#34;Understanding Interfaces in Go&#34;</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Author</span>: <span style=color:#e6db74>&#34;Sammy Shark&#34;</span>,
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>a</span> <span style=color:#a6e22e>Article</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这段代码中，我们添加了一个名为<code>Print</code>的新函数，该函数接收一个<code>Article</code>作为参数。请注意，<code>Print</code>函数唯一做的事情是调用<code>String</code>方法。正因为如此，我们则可以定义一个接口来传递给函数。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Article</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Author</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>a</span> <span style=color:#a6e22e>Article</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;The %q article was written by %s.&#34;</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Title</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Author</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Stringer</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Article</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Title</span>: <span style=color:#e6db74>&#34;Understanding Interfaces in Go&#34;</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Author</span>: <span style=color:#e6db74>&#34;Sammy Shark&#34;</span>,
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Stringer</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>这里我们创建了一个 interface 叫做<code>Stringer</code>：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Stringer</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span></code></pre></div><p><code>Stringer</code>interface 只有一个方法，叫做<code>String()</code>，返回一个<code>string</code>。<a href=https://www.digitalocean.com/community/tutorials/defining-methods-in-go>method</a>是一个特殊的函数，在 Go 中被限定于一个特殊类型。不像函数，一个方法只能从它所定义的类型的实例中被调用。</p><p>然后我们更新<code>Print</code>方法的签名来接收一个<code>Stringer</code>，而不是一个<code>Article</code>的具体类型。因为编译器知道<code>Stringer</code>接口定义了<code>String</code>方法，所以它只接收也有<code>String</code>方法的类型。</p><p>现在我们可以对任何满足<code>Stringer</code>接口的东西使用<code>Print</code>方法。让我们创建另一个类型来证明这一点：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> <span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Article</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span>  <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Author</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>a</span> <span style=color:#a6e22e>Article</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;The %q article was written by %s.&#34;</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Title</span>, <span style=color:#a6e22e>a</span>.<span style=color:#a6e22e>Author</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Book</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Title</span>  <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Author</span> <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Pages</span>  <span style=color:#66d9ef>int</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>b</span> <span style=color:#a6e22e>Book</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;The %q book was written by %s.&#34;</span>, <span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>Title</span>, <span style=color:#a6e22e>b</span>.<span style=color:#a6e22e>Author</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Stringer</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>a</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Article</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Title</span>:  <span style=color:#e6db74>&#34;Understanding Interfaces in Go&#34;</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Author</span>: <span style=color:#e6db74>&#34;Sammy Shark&#34;</span>,
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>a</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>b</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Book</span>{
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Title</span>:  <span style=color:#e6db74>&#34;All About Go&#34;</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Author</span>: <span style=color:#e6db74>&#34;Jenny Dolphin&#34;</span>,
+</span></span><span style=display:flex><span>		<span style=color:#a6e22e>Pages</span>:  <span style=color:#ae81ff>25</span>,
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>b</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Print</span>(<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Stringer</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Println</span>(<span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>String</span>())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>现在，我们添加了第二个类型叫<code>Book</code>。它同样也有定义<code>String</code>方法。这表示它也满足<code>Stringer</code>接口。因此，我们也可以传递它到<code>Print</code>函数：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-text data-lang=text><span style=display:flex><span>Output
+</span></span><span style=display:flex><span>The &#34;Understanding Interfaces in Go&#34; article was written by Sammy Shark.
+</span></span><span style=display:flex><span>The &#34;All About Go&#34; book was written by Jenny Dolphin. It has 25 pages.
+</span></span></code></pre></div><p>到目前为止，我们已经演示了如何只使用一个 interface。然而，一个 interface 可以有不止一个行为的定义。接下来，我们将看到如何通过声明更多的方法来使我们的 interface 更加通用。</p><h2 id=多行为-interface>多行为 interface
+<a class=anchor href=#%e5%a4%9a%e8%a1%8c%e4%b8%ba-interface>#</a></h2><p>编写 Go 代码的核心原则之一是编写小而简洁的类型，并将它们组成更大，更复杂的类型。组合 interface 也是一样的。为了了解我们是如何建立一个 interface 的，我们先从只定义一个 interface 开始。我们将会定义 2 个形状，一个<code>Circle</code>和一个<code>Square</code>，然后他们都会定义一个方法叫<code>Area</code>。这个方法会返回它们对应形状的几何面积：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Circle</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Radius</span> <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>Circle</span>) <span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pi</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>Radius</span>, <span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Square</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Width</span>  <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Height</span> <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Square</span>) <span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Width</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Height</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Sizer</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>c</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Circle</span>{<span style=color:#a6e22e>Radius</span>: <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>s</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Square</span>{<span style=color:#a6e22e>Height</span>: <span style=color:#ae81ff>10</span>, <span style=color:#a6e22e>Width</span>: <span style=color:#ae81ff>5</span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>l</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Less</span>(<span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%+v is the smallest\n&#34;</span>, <span style=color:#a6e22e>l</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Less</span>(<span style=color:#a6e22e>s1</span>, <span style=color:#a6e22e>s2</span> <span style=color:#a6e22e>Sizer</span>) <span style=color:#a6e22e>Sizer</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>s1</span>.<span style=color:#a6e22e>Area</span>() &lt; <span style=color:#a6e22e>s2</span>.<span style=color:#a6e22e>Area</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s1</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s2</span>
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>因为每个类型都定义了<code>Area</code>方法，我们可以创建一个 interface 来定义这个行为。我们创建如下的<code>Sizer</code>interface:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Sizer</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span></code></pre></div><p>然后定义一个函数叫做<code>Less</code>，传入 2 个<code>Sizer</code>并返回最小的那一个：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Less</span>(<span style=color:#a6e22e>s1</span>, <span style=color:#a6e22e>s2</span> <span style=color:#a6e22e>Sizer</span>) <span style=color:#a6e22e>Sizer</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>s1</span>.<span style=color:#a6e22e>Area</span>() &lt; <span style=color:#a6e22e>s2</span>.<span style=color:#a6e22e>Area</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s1</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s2</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span></code></pre></div><p>注意到我们不仅接收 2 个都为<code>Sizer</code>的类型，而且返回的结果也用<code>Sizer</code>。这意味着我们不再返回一个<code>Square</code>或者一个<code>Circle</code>，而是<code>Sizer</code>interface。</p><p>最后，我们打印出哪一个是最小的面积：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-text data-lang=text><span style=display:flex><span>Output
+</span></span><span style=display:flex><span>{Width:5 Height:10} is the smallest
+</span></span></code></pre></div><p>接着，让我们给每个类型添加另一个行为。这次我们添加<code>String()</code>方法，返回一个 string。这个满足<code>fmt.Stringer</code>interface:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>package</span> <span style=color:#a6e22e>main</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#f92672>import</span> (
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;fmt&#34;</span>
+</span></span><span style=display:flex><span>	<span style=color:#e6db74>&#34;math&#34;</span>
+</span></span><span style=display:flex><span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Circle</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Radius</span> <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>Circle</span>) <span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pi</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>math</span>.<span style=color:#a6e22e>Pow</span>(<span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>Radius</span>, <span style=color:#ae81ff>2</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>c</span> <span style=color:#a6e22e>Circle</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;Circle {Radius: %.2f}&#34;</span>, <span style=color:#a6e22e>c</span>.<span style=color:#a6e22e>Radius</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Square</span> <span style=color:#66d9ef>struct</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Width</span>  <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Height</span> <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Square</span>) <span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Width</span> <span style=color:#f92672>*</span> <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Height</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> (<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Square</span>) <span style=color:#a6e22e>String</span>() <span style=color:#66d9ef>string</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Sprintf</span>(<span style=color:#e6db74>&#34;Square {Width: %.2f, Height: %.2f}&#34;</span>, <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Width</span>, <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Height</span>)
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Sizer</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Area</span>() <span style=color:#66d9ef>float64</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Shaper</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Sizer</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Stringer</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>main</span>() {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>c</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Circle</span>{<span style=color:#a6e22e>Radius</span>: <span style=color:#ae81ff>10</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>PrintArea</span>(<span style=color:#a6e22e>c</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>s</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Square</span>{<span style=color:#a6e22e>Height</span>: <span style=color:#ae81ff>10</span>, <span style=color:#a6e22e>Width</span>: <span style=color:#ae81ff>5</span>}
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>PrintArea</span>(<span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>l</span> <span style=color:#f92672>:=</span> <span style=color:#a6e22e>Less</span>(<span style=color:#a6e22e>c</span>, <span style=color:#a6e22e>s</span>)
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;%v is the smallest\n&#34;</span>, <span style=color:#a6e22e>l</span>)
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>Less</span>(<span style=color:#a6e22e>s1</span>, <span style=color:#a6e22e>s2</span> <span style=color:#a6e22e>Sizer</span>) <span style=color:#a6e22e>Sizer</span> {
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>if</span> <span style=color:#a6e22e>s1</span>.<span style=color:#a6e22e>Area</span>() &lt; <span style=color:#a6e22e>s2</span>.<span style=color:#a6e22e>Area</span>() {
+</span></span><span style=display:flex><span>		<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s1</span>
+</span></span><span style=display:flex><span>	}
+</span></span><span style=display:flex><span>	<span style=color:#66d9ef>return</span> <span style=color:#a6e22e>s2</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>PrintArea</span>(<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Shaper</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;area of %s is %.2f\n&#34;</span>, <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Area</span>())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>因为<code>Circle</code>和<code>Square</code>类型都同时实现了<code>Area</code>和<code>String</code>方法，我们现在可以创建另一个 interface 来描述这些更广泛的行为。为了实现这个，我们创建了一个 interface 叫做<code>Shaper</code>。这个<code>Shaper</code>将由<code>Sizer</code>interface 和<code>fmt.Stringer</code>interface 组成：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>type</span> <span style=color:#a6e22e>Shaper</span> <span style=color:#66d9ef>interface</span> {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>Sizer</span>
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Stringer</span>
+</span></span><span style=display:flex><span>}
+</span></span><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span></code></pre></div><p>**注意：**基于习惯，尝试以<code>er</code>结尾来给你的 interface 命名，例如<code>fmt.Stringer</code>，<code>io.Writer</code>等等。这也是为什么我们用<code>Shaper</code>来命名我们的 interface，而不是<code>Shape</code>。</p><p>现在我们可以创建一个名为<code>PrintArea</code>的函数，该函数以<code>Shaper</code>为参数。这意味着我们可以对传入的值调用<code>Area</code>和<code>String</code>这两个方法：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-go data-lang=go><span style=display:flex><span><span style=color:#f92672>...</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>func</span> <span style=color:#a6e22e>PrintArea</span>(<span style=color:#a6e22e>s</span> <span style=color:#a6e22e>Shaper</span>) {
+</span></span><span style=display:flex><span>	<span style=color:#a6e22e>fmt</span>.<span style=color:#a6e22e>Printf</span>(<span style=color:#e6db74>&#34;area of %s is %.2f\n&#34;</span>, <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>String</span>(), <span style=color:#a6e22e>s</span>.<span style=color:#a6e22e>Area</span>())
+</span></span><span style=display:flex><span>}
+</span></span></code></pre></div><p>如果我们运行程序，将会收到如下输出：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-text data-lang=text><span style=display:flex><span>Output
+</span></span><span style=display:flex><span>area of Circle {Radius: 10.00} is 314.16
+</span></span><span style=display:flex><span>area of Square {Width: 5.00, Height: 10.00} is 50.00
+</span></span><span style=display:flex><span>Square {Width: 5.00, Height: 10.00} is the smallest
+</span></span></code></pre></div><p>我们现在已经看到了我们如何创建较小的 interface，并根据需要将它们建立成较大的 interface。虽然我们可以从较大的 interface 开始，并将其传递给我们所有的函数，但最好的做法是只将最小的 interface 发送给需要的函数。这通常会使代码更加清晰，因为任何接收特定的较小的 interface 的东西都只打算执行其定义的行为。</p><p>例如，如果我们将<code>Shaper</code>传递给<code>Less</code>函数，我们可能会认为它要同时调用<code>Area</code>和<code>String</code>方法。然而，由于我们只打算调用<code>Area</code>方法，这使得<code>Less</code>函数很清楚，因为我们知道我们只能调用传递给它的任何参数的<code>Area</code>方法。</p><h2 id=总结>总结
+<a class=anchor href=#%e6%80%bb%e7%bb%93>#</a></h2><p>我们已经看到，创建较小的 interface 并将其构建为较大的 interface，可以让我们只分享我们需要的函数或方法。我们还了解到，我们可以从其他 interface 中组成我们的 interface，包括从其他包中定义的 interface，而不仅仅是我们的包。</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(n){const e=window.getSelection(),t=document.createRange();t.selectNodeContents(n),e.removeAllRanges(),e.addRange(t)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><a href=#简述>简述</a></li><li><a href=#定义一个行为>定义一个行为</a></li><li><a href=#定义一个-interface>定义一个 interface</a></li><li><a href=#多行为-interface>多行为 interface</a></li><li><a href=#总结>总结</a></li></ul></nav></div></aside></main></body></html>
