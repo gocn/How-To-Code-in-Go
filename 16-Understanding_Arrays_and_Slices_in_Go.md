@@ -1,100 +1,100 @@
-# Understanding Arrays and Slices in Go
+# 理解 Go 中的数组和切片
 
-## Introduction
+## 介绍
 
-In Go, _arrays_ and _slices_ are [data structures](https://en.wikipedia.org/wiki/Data_structure) that consist of an ordered sequence of elements. These data collections are great to use when you want to work with many related values. They enable you to keep data together that belongs together, condense your code, and perform the same methods and operations on multiple values at once.
+在 Go 中，数组和切片是[数据结构](https://en.wikipedia.org/wiki/Data_structure)，由元素的有序序列组成。当你想处理许多相关的值时，这些数据集合是很好的选择。它们可以让你把相同类型的数据放在一起，降低代码量，并同时对多个值执行相同的方法和操作。
 
-Although arrays and slices in Go are both ordered sequences of elements, there are significant differences between the two. An _array_ in Go is a [data structure](https://en.wikipedia.org/wiki/Data_structure) that consists of an ordered sequence of elements that has its capacity defined at creation time. Once an array has allocated its size, the size can no longer be changed. A _slice_, on the other hand, is a variable length version of an array, providing more flexibility for developers using these data structures. Slices constitute what you would think of as arrays in other languages.
+虽然 Go 中的数组和切片都是元素的有序序列，但两者之间有很大的区别。Go中的数组是一个[数据结构](https://en.wikipedia.org/wiki/Data_structure)，由一个有序的元素序列组成，其容量在创建时已经定义。一旦数组分配了它的大小，就不能再改变它的大小。另一方面，切片是数组的可变长度版本，为使用这些数据结构的开发者提供更多的灵活性。切片其实是你在其他语言中认为的数组。
 
-Given these differences, there are specific situations when you would use one over the other. If you are new to Go, determining when to use them can be confusing: Although the versatility of slices make them a more appropriate choice in most situations, there are specific instances in which arrays can optimize the performance of your program.
+鉴于这些差异，在一些特定的情况下，你会选择使用一个替代另一个。如果你是 Go 的新手，确定何时使用它们可能会让人困惑。尽管切片的多功能性使其在大多数情况下成为更合适的选择，但在一些特殊情况下，数组可以优化程序的性能。
 
-This article will cover arrays and slices in detail, which will provide you with the necessary information to make the appropriate choice when choosing between these data types. Furthermore, you’ll review the most common ways to declare and work with both arrays and slices. The tutorial will first provide a description of arrays and how to manipulate them, followed by an explanation of slices and how they differ.
+本文将详细介绍数组和切片，以便在这些数据类型之间做出适当的选择。此外，你将回顾声明和处理数组和切片的常用方法。本教程将首先提供对数组的描述以及如何操作它们，然后解释切片以及它们的区别。
 
-## Arrays
+## 数组
 
-Arrays are collection data structures with a set number of elements. Because the size of an array is static, the data structure only needs to allocate memory once, as opposed to a variable length data structure that must dynamically allocate memory so that it can become larger or smaller in the future. Although the fixed length of arrays can make them somewhat rigid to work with, the one-time memory allocation can increase the speed and performance of your program. Because of this, developers typically use arrays when optimizing programs in instances where the data structure will never need a variable amount of elements.
+数组是具有固定数量元素的数据结构。因为数组的大小是静态的，所以数据结构只需要分配一次内存，而可变长度的数据结构则必须动态地分配内存，以便将来可以变大或变小。尽管数组的固定长度会使它们在工作时有些僵硬，但一次性的内存分配可以提高程序的速度和性能。正因为如此，开发人员在优化程序时通常使用数组，在这种情况下，数据结构不需要可变数量的元素。
 
-## Defining an Array
+## 定义一个数组
 
-Arrays are defined by declaring the size of the array in brackets `[ ]`, followed by the data type of the elements. An array in Go must have all its elements be the same [data type](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go). After the data type, you can declare the individual values of the array elements in curly brackets `{ }`.
+数组的定义是在大括号 `[]` 中声明数组的大小，然后是各元素的数据类型。Go 中的数组必须使其所有元素都是相同的[数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go)。在数据类型之后，你可以用大括号 `{ }` 来声明数组元素的单个值。
 
-The following is the general schema for declaring an array:
+下面是声明一个数组的一般模式：
 
 ```go
 [capacity]data_type{element_values}
 ```
 
-**Note:** It is important to remember that every declaration of a new array creates a distinct type. So, although `[2]int` and `[3]int` both have integer elements, their differing lengths make their data types incompatible.
+**注意：** 重要的是要记住，每一个新数组的声明都会创建一个不同的类型。所以，尽管 `[2]int` 和 `[3]int` 都有整数元素，但它们不同的长度使得它们的数据类型不兼容。
 
-If you do not declare the values of the array’s elements, the default is zero-valued, which means that the elements of the array will be empty. For integers, this is represented by `0`, and for strings this is represented by an empty string.
+如果你不声明数组元素的值，默认为零值，这意味着数组的元素将是空的。对于整数，用 `0` 表示，对于字符串，用空字符串表示。
 
-For example, the following array `numbers` has three integer elements that do not yet have a value:
+例如，下面的数组 `numbers` 有三个整数元素，但还没有值：
 
 ```go
 var numbers [3]int
 ```
 
-If you printed `numbers`, you would receive the following output:
+如果你打印 `numbers`，会得到以下输出：
 
 ```go
 Output
 [0 0 0]
 ```
 
-If you would like to assign the values of the elements when you create the array, place the values in curly brackets. An array of strings with set values looks like this:
+如果你想在创建数组时指定元素的值，需要将这些值放在大括号里。一个有设定值的字符串数组看起来像这样：
 
 ```go
 [4]string{"blue coral", "staghorn coral", "pillar coral", "elkhorn coral"}
 ```
 
-You can store an array in a variable and print it out:
+可以将一个数组存储在一个变量中并打印出来：
 
 ```go
 coral := [4]string{"blue coral", "staghorn coral", "pillar coral", "elkhorn coral"}
 fmt.Println(coral)
 ```
 
-Running a program with the preceding lines would give you the following output:
+打印结果如下：
 
 ```go
 Output
 [blue coral staghorn coral pillar coral elkhorn coral]
 ```
 
-Notice that there is no delineation between the elements in the array when it is printed, making it difficult to tell where one element ends and another begins. Because of this, it is sometimes helpful to use the `fmt.Printf` function instead, which can format strings before printing them to the screen. Provide the `%q` verb with this command to instruct the function to put quotation marks around the values:
+请注意，当数组被打印出来时，数组中的元素之间没有划分，因此很难分辨一个元素在哪里结束，另一个元素在哪里开始。由于这个原因，有时使用 `fmt.Printf` 函数是很有帮助的，它可以在打印到屏幕前对字符串进行格式化。在该命令中提供 `%q` 谓词并加上引号：
 
 ```go
 fmt.Printf("%q\n", coral)
 ```
 
-This will result in the following:
+打印的结果如下：
 
 ```go
 Output
 ["blue coral" "staghorn coral" "pillar coral" "elkhorn coral"]
 ```
 
-Now each item is quoted. The `\n` verb instructs to the formatter to add a line return at the end.
+现在每个元素都有引号。`\n` 谓词指示格式化会在每行结束打印换行符。
 
-With a general idea of how to declare arrays and what they consist of, you can now move on to learning how to specify elements in an array with an index number.
+有了关于如何声明数组及其组成的概念，现在可以继续学习如何用索引号指定数组中的元素。
 
-## Indexing Arrays (and Slices)
+## 索引数组和切片
 
-Each element in an array (and also a slice) can be called individually through indexing. Each element corresponds to an index number, which is an `int` value starting from the index number `0` and counting up.
+数组中的每个元素（也包括切片）都可以通过索引单独调用。每个元素都对应着一个索引号，它是一个从索引号 `0` 开始向上计数的 `int` 值。
 
-We will use an array in the following examples, but you could use a slice as well, since they are identical in how you index both of them.
+在下面的例子中，我们将使用一个数组，但是你也可以使用一个切片，因为它们在索引方式上是相同的。
 
-For the array `coral`, the index breakdown looks like this:
+对于数组 `coral` 来说，索引看起来像这样。
 
 “blue coral” “staghorn coral” “pillar coral” “elkhorn coral”
 
 0 1 2 3
 
-The first element, the string `"blue coral"`, starts at index `0`, and the slice ends at index `3` with the element `"elkhorn coral"`.
+第一个元素，字符串 `"blue coral"`，从索引 `0` 开始，在索引为 `3` 的元素 `"elkhorn coral"`结束。
 
-Because each element in a slice or array has a corresponding index number, we’re able to access and manipulate them in the same ways we can with other sequential data types.
+因为切片或数组中的每个元素都有一个相应的索引号，我们能够以与其他顺序数据类型相同的方式访问和操作它们。
 
-Now we can call a discrete element of the slice by referring to its index number:
+现在我们可以通过引用索引号来调用切片 中的一个离散元素：
 
 ```go
 fmt.Println(coral[1])
@@ -105,7 +105,7 @@ Output
 staghorn coral
 ```
 
-The index numbers for this slice range from `0-3`, as shown in the previous table. So to call any of the elements individually, we would refer to the index numbers like this:
+这个切片的索引号范围是 `0-3`，如前表所示。所以要单独调用一个元素的话，我们要像这样引用索引号：
 
 ```go
 coral[0] = "blue coral"
@@ -114,7 +114,7 @@ coral[2] = "pillar coral"
 coral[3] = "elkhorn coral"
 ```
 
-If we call the array `coral` with an index number of any that is greater than `3`, it will be out of range as it will not be valid:
+我们调用数组 `coral` 的索引号如果大于 `3`，它就会超出范围并 panic，因为它是无效的：
 
 ```go
 fmt.Println(coral[18])
@@ -125,7 +125,7 @@ Output
 panic: runtime error: index out of range
 ```
 
-When indexing an array or slice, you must always use a positive number. Unlike some languages that let you index backwards with a negative number, doing that in Go will result in an error:
+当对数组或切片进行索引时，你必须始终使用正数。不像有些语言允许你用负数进行反向索引，在 Go 中这样做会导致错误：
 
 ```go
 fmt.Println(coral[-1])
@@ -136,7 +136,7 @@ Output
 invalid array index -1 (index must be non-negative)
 ```
 
-We can concatenate string elements in an array or slice with other strings using the `+` operator:
+我们可以使用 `+` 操作符将数组或切片中的字符串元素与其他字符串连接起来：
 
 ```go
 fmt.Println("Sammy loves " + coral[0])
@@ -147,21 +147,21 @@ Output
 Sammy loves blue coral    
 ```
 
-We were able to concatenate the string element at index number `0` with the string `"Sammy loves "`.
+我们能够将索引号为 `0` 的字符串元素与 `"Sammy loves"` 的字符串连接起来。
 
-With index numbers that correspond to elements within an array or a slice, we’re able to access each element discretely and work with those elements. To demonstrate this, we will next look at how to modify an element at a certain index.
+有了与数组或切片中的元素相对应的索引号，我们就能够单独访问每个元素，并对这些元素进行操作。为了证明这一点，我们接下来将看看如何修改某个索引的元素。
 
-## Modifying Elements
+## 修改元素
 
-We can use indexing to change elements within an array or slice by setting an index numbered element equal to a different value. This gives us greater control over the data in our slices and arrays, and will allow us to programmatically manipulate individual elements.
+我们可以使用索引号来给元素赋值来改变数组或切片中的元素。这使我们对切片和数组中的数据有了更大的控制，并将允许我们以编程方式操作单个元素。
 
-If we want to change the string value of the element at index `1` of the array `coral` from `"staghorn coral"` to `"foliose coral"`, we can do so like this:
+如果我们想把数组 `coral` 中索引为 `1` 的元素的字符串值从 `"staghorn coral"` 改为 `"foliose coral"`，我们可以这样做：
 
 ```go
 coral[1] = "foliose coral"
 ```
 
-Now when we print `coral`, the array will be different:
+现在，当我们打印 `coral` 时，数组将是不同的：
 
 ```go
 fmt.Printf("%q\n", coral)
@@ -172,225 +172,225 @@ Output
 ["blue coral" "foliose coral" "pillar coral" "elkhorn coral"]
 ```
 
-Now that you know how to manipulate individual elements of an array or a slice, let’s look at a couple of functions that will give you more flexibility when working with collection data types.
+现在你知道了如何操作数组或切片的单个元素，让我们来看看几个函数，它们将在处理集合数据类型时给你更多的灵活性。
 
-## Counting Elements with `len()`
+## 使用 `len` 计算元素个数
 
-In Go, `len()` is a built-in function made to help you work with arrays and slices. Like with strings, you can calculate the length of an array or slice by using `len()` and passing in the array or slice as a parameter.
+在 Go 中，`len()` 是一个内置函数，用来帮助你处理数组和切片。像处理字符串一样，你可以用数组或切片作为参数通过使用 `len()` 来计算一个数组或切片的长度。
 
-For example, to find how many elements are in the `coral` array, you would use:
+例如，要想知道 `coral` 数组中有多少个元素，你可以使用：
 
 ```go
 len(coral)
 ```
 
-If you print out the length for the array `coral`, you’ll receive the following output:
+如果你打印出数组 `coral` 的长度，你会收到以下输出：
 
 ```go
 Output
 4
 ```
 
-This gives the length of the array `4` in the `int` data type, which is correct because the array `coral` has four items:
+可以看到数据类型为 `int` 的数组长度为 `4`，这是正确的，因为数组 `coral` 有四个元素：
 
 ```go
 coral := [4]string{"blue coral", "foliose coral", "pillar coral", "elkhorn coral"}    
 ```
 
-If you create an array of integers with more elements, you could use the `len()` function on this as well:
+如果你创建一个有更多元素的整数数组，你也可以对其使用 `len()` 函数：
 
 ```go
 numbers := [13]int{0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}
 fmt.Println(len(numbers))
 ```
 
-This would result in the following output:
+得到的输出如下：
 
 ```go
 Output
 13
 ``` 
 
-Although these example arrays have relatively few items, the `len()` function is especially useful when determining how many elements are in very large arrays.
+尽管这些例子数组的元素相对较少，但在元素非常多的数组中 `len()` 函数特别有用。
 
-Next, we will cover how to add an element to a collection data type, and demonstrate how, because of the fixed length of arrays, appending these static data types will result in an error.
+接下来，我们将介绍如何向集合数据类型添加一个元素，并展示由于数组的固定长度，追加这些静态数据类型将导致错误。
 
-## Appending Elements with `append()`
+## 使用 `append()` 追加元素
 
-`append()` is a built-in method in Go that adds elements to a collection data type. However, this method will not work when used with an array. As mentioned before, the primary way in which arrays are different from slices is that the size of an array cannot be modified. This means that while you can change the values of elements in an array, you can’t make the array larger or smaller after it has been defined.
+`append()` 是 Go 中的一个内置方法，可以向集合数据类型添加元素。然而，当这个方法用于数组时，将无法工作。如前所述，数组与切片不同的是数组的大小不能被修改。这意味着，虽然你可以改变数组中元素的值，但在定义了数组后，你不能使其变大或变小。
 
-Let’s consider your `coral` array:
+让我们看看你的 `coral` 数组：
 
 ```go
 coral := [4]string{"blue coral", "foliose coral", "pillar coral", "elkhorn coral"}   
 ```
 
-Say you want to add the item `"black coral"` to this array. If you try to use the `append()` function with the array by typing:
+假设你想把 `"black coral"` 这个元素添加到这个数组中。如果你试图用 `append()` 函数在数组中输入：
 
 ```go
 coral = append(coral, "black coral")
 ```
 
-You will receive an error as your output:
+你将得到一个错误的输出：
 
 ```go
 Output
 first argument to append must be slice; have [4]string
 ```
 
-To fix this, let’s learn more about the slice data type, how to define a slice, and how to convert from an array to a slice.
+为了解决这个问题，我们进一步了解切片的数据类型，如何定义一个切片，以及如何从数组转换为切片。
 
-## Slices
+## 切片
 
-A _slice_ is a data type in Go that is a _mutable_, or changeable, ordered sequence of elements. Since the size of a slice is variable, there is a lot more flexibility when using them; when working with data collections that may need to expand or contract in the future, using a slice will ensure that your code does not run into errors when trying to manipulate the length of the collection. In most cases, this mutability is worth the possible memory re-allocation sometimes required by slices when compared to arrays. When you need to store a lot of elements or iterate over elements and you want to be able to readily modify those elements, you’ll likely want to work with the slice data type.
+切片是 Go 中的一种数据类型，它是一个可变的数据结构，有序的元素序列。由于切片的大小是可变的，所以在使用时有更大的灵活性；当处理可能需要扩容或缩容的数据集合时，使用切片可以确保你的代码在操作集合的长度时不会出现错误。在大多数情况下，与数组相比，这种可变性值得切片有时可能需要内存重新分配。当你需要存储大量的元素或对元素进行迭代，并且你希望能够随时修改这些元素时，切片数据类型是你的首选。
 
-### Defining a Slice
+### 定义一个切片
 
-Slices are defined by declaring the data type preceded by an empty set of square brackets (`[]`) and a list of elements between curly brackets (`{}`). You’ll notice that, as opposed to arrays that require an `int` in between the brackets to declare a specific length, a slice has nothing between the brackets, representing its variable length.
+切片的定义是通过声明数据类型，前面是一组空的方括号（`[]`）和大括号之间的元素列表（`{}`）。你会注意到，与需要在大括号之间加入 `int` 来声明特定长度的数组不同，一个切片在大括号之间没有任何东西来代表其可变长度。
 
-Let’s create a slice that contains elements of the string data type:
+我们来创建一个包含字符串数据类型元素的切片：
 
 ```go
 seaCreatures := []string{"shark", "cuttlefish", "squid", "mantis shrimp", "anemone"}
 ```
 
-When we print out the slice, we can see the elements that are in the slice:
+当我们打印出切片时，就可以看到切片中的元素：
 
 ```go
 fmt.Printf("%q\n", seaCreatures)
 ```
 
-This will result in the following:
+可以得到如下的输出：
 
 ```go
 Output
 ["shark" "cuttlefish" "squid" "mantis shrimp" "anemone"]
 ```
 
-If you would like to create a slice of a certain length without populating the elements of the collection yet, you can use the built-in `make()` function:
+如果你想在不填充元素的情况下创建一个特定长度的切片，你可以使用内置的 `make()` 函数：
 
 ```go
 oceans := make([]string, 3)
 ```
 
-If you printed this slice, you would get:
+打印切片将得到如下输出：
 
 ```go
 Output
 ["" "" ""]
 ```
 
-If you want to pre-allocate the memory for a certain capacity, you can pass in a third argument to `make()`:
+如果你想预先分配一定容量的内存，你可以向 `make()` 传入第三个参数：
 
 ```go
 oceans := make([]string, 3, 5)
 ```
 
-This would make a zeroed slice with a length of `3` and a pre-allocated capacity of `5` elements.
+这将给分配一个长度为 `3` 容量为 `5` 的零切片。
 
-You now know how to declare a slice. However, this does not yet solve the error we had with the `coral` array earlier. To use the `append()` function with `coral`, you will first have to learn how to slice out sections of an array.
+你现在知道如何声明一个切片了。然而，这还没有解决我们之前在 `coral` 数组中遇到的错误。要在 `coral` 中使用 `append()` 函数，你首先要学会如何在一个数组中切出部分内容。
 
-## Slicing Arrays into Slices
+## 将数组切片
 
-By using index numbers to determine beginning and endpoints, you can call a subsection of the values within an array. This is called _slicing_ the array, and you can do this by creating a range of index numbers separated by a colon, in the form of `[first_index:second_index]`. It is important to note however, that when slicing an array, the result is a slice, not an array.
+通过使用索引号来确定开始和结束点，你可以调用一个数组内的一个分片值。这被称为对数组进行切分，你可以通过创建一个由冒号分隔的索引号范围来实现，其形式为 `[first_index:second_index]`。然而，需要注意的是，当对一个数组进行切分时，其结果是一个切片，而不是一个数组。
 
-Let’s say you would like to just print the middle items of the `coral` array, without the first and last element. You can do this by creating a slice starting at index `1` and ending just before index `3`:
+假设你想只打印 `coral` 数组的中间项，而不打印第一个和最后一个元素。你可以通过创建一个从索引 `1` 开始，在索引 `3` 之前结束的分片来实现：
 
 ```go
 fmt.Println(coral[1:3])
 ```
 
-Running a program with this line would yield the following:
+运行程序会产生以下结果：
 
 ```go
 Output
 [foliose coral pillar coral]
 ```
 
-When creating a slice, as in `[1:3]`, the first number is where the slice starts (inclusive), and the second number is the sum of the first number and the total number of elements you would like to retrieve:
+当创建一个切片时，如 `[1:3]`，第一个数字是切片开始的地方（包含），第二个数字是第一个数字和你想检索的元素总数之和：
 
 ```go
 array[starting_index : (starting_index + length_of_slice)]
 ```
 
-In this instance, you called the second element (or index 1) as the starting point, and called two elements in total. This is how the calculation would look:
+在这个例子中，你调用第二个元素（或索引 1）作为起点，总共调用了两个元素。计算结果会是这样的：
 
 ```go
 array[1 : (1 + 2)]
 ```
 
-Which is how you arrived at this notation:
+所以我们可以得到下面的代码：
 
 ```go
 coral[1:3]
 ```
 
-If you want to set the beginning or end of the array as a starting or end point of the slice, you can omit one of the numbers in the `array[first_index:second_index]` syntax. For example, if you want to print the first three items of the array `coral` — which would be `"blue coral"`, `"foliose coral"`, and `"pillar coral"` — you can do so by typing:
+如果你想把数组的开始或结束作为切片的起点或终点，你可以省略 `array[first_index:second_index]` 语法中的一个数字。例如，如果你想打印数组 `coral` 的前三个元素--即 `"blue coral"`、`"foliose coral"` 和 `"pillar coral"` -- 你可以这么做：
 
 ```go
 fmt.Println(coral[:3])
 ```
 
-This will print:
+将输出：
 
 ```go
 Output
 [blue coral foliose coral pillar coral]
 ```
 
-This printed the beginning of the array, stopping right before index `3`.
+这就打印了数组的开头，在索引 `3` 之前就停止了。
 
-To include all the items at the end of an array, you would reverse the syntax:
+如果要包括数组末尾的所有元素，你可以反过来使用这个语法：
 
 ```go
 fmt.Println(coral[1:])
 ```
 
-This would give the following slice:
+这将得到以下切片：
 
 ```go
 Output
 [foliose coral pillar coral elkhorn coral]
 ```
 
-This section discussed calling individual parts of an array by slicing out subsections. Next, you’ll learn how to use slicing to convert entire arrays into slices.
+本节讨论了通过分片来调用数组的各个部分。接下来，你将学习如何使用分片将整个数组转换为切片。
 
-## Converting from an Array to a Slice
+## 数组转换为切片
 
-If you create an array and decide that you need it to have a variable length, you can convert it to a slice. To convert an array to a slice, use the slicing process you learned in the **Slicing Arrays into Slices** step of this tutorial, except this time select the entire slice by omitting both of the index numbers that would determine the endpoints:
+如果你创建了一个数组，并决定需要它有一个可变的长度，你可以把它转换为一个切片。要将一个数组转换为切片，使用你在本教程的**将数组切片**步骤中学到的切片过程，只是这次要省略决定端点的两个索引号，从而选择整个切片：
 
 ```go
 coral[:]
 ```
 
-Keep in mind that you can’t convert the variable `coral` to a slice itself, since once a variable is defined in Go, its type can’t be changed. To work around this, you can copy the entire contents of the array into a new variable as a slice:
+请记住，你不能将变量 `coral` 本身转换为一个切片，因为一旦在 Go 中定义了一个变量，它的类型就不能被改变。为了解决这个问题，你可以把数组的全部内容复制到一个新的变量中作为一个切片：
 
 ```go
 coralSlice := coral[:]
 ```
 
-If you printed `coralSlice`, you would receive the following output:
+如果你打印 `coralSlice`，你将得到以下输出：
 
 ```go
 Output
 [blue coral foliose coral pillar coral elkhorn coral]
 ```
 
-Now, try to add the `black coral` element like in the array section, using `append()` with the newly converted slice:
+现在，使用 `append()` 在新切片中添加 `black coral` 元素：
 
 ```go
 coralSlice = append(coralSlice, "black coral")
 fmt.Printf("%q\n", coralSlice)
 ```
 
-This will output the slice with the added element:
+这将输出添加了新元素的切片：
 
 ```go
 Output
 ["blue coral" "foliose coral" "pillar coral" "elkhorn coral" "black coral"]
 ```
 
-We can also add more than one element in a single `append()` statement:
+我们也可以在一条 `append()` 语句中添加一个以上的元素：
 
 ```go
 coralSlice = append(coralSlice, "antipathes", "leptopsammia")
@@ -401,7 +401,7 @@ Output
 ["blue coral" "foliose coral" "pillar coral" "elkhorn coral" "black coral" "antipathes" "leptopsammia"]
 ```
 
-To combine two slices together, you can use `append()`, but you must expand the second argument to append using the `...` expansion syntax:
+要将两个切片组合在一起，可以使用 `append()`，但必须使用 `...` 的扩展语法来扩展第二个参数进行追加。
 
 ```go
 moreCoral := []string{"massive coral", "soft coral"}
@@ -413,21 +413,21 @@ Output
 ["blue coral" "foliose coral" "pillar coral" "elkhorn coral" "black coral" "antipathes" "leptopsammia" "massive coral" "soft coral"]    
 ```
 
-Now that you have learned how to append an element to your slice, we will take a look at how to remove one.
+现在你已经学会了如何将一个元素追加到你的切片中，我们再来看看如何删除一个元素。
 
-### Removing an Element from a Slice
+### 从切片中删除元素
 
-Unlike other languages, Go does not provide any built-in functions to remove an element from a slice. Items need to be removed from a slice by slicing them out.
+与其他语言不同，Go 没有提供任何内置函数来从切片中删除元素。需要通过分片的方式从切片中删除元素。
 
-To remove an element, you must slice out the items before that element, slice out the items after that element, then append these two new slices together without the element that you wanted to remove.
+要删除一个元素，你必须切出该元素之前的元素，切出该元素之后的元素，然后将这两个新的切片加在一起，不包括你想删除的元素。
 
-If `i` is the index of the element to be removed, then the format of this process would look like the following:
+如果 `i` 是要删除的元素的索引，那么这个过程的格式看起来就像下面这样：
 
 ```go
 slice = append(slice[:i], slice[i+1:]...)
 ```
 
-From `coralSlice`, let’s remove the item `"elkhorn coral"`. This item is located at the index position of `3`.
+从 `coralSlice` 中，让我们删除 `"elkhorn coral"` 这个元素。它的索引为 `3`。
 
 ```go
 coralSlice := []string{"blue coral", "foliose coral", "pillar coral", "elkhorn coral", "black coral", "antipathes", "leptopsammia", "massive coral", "soft coral"}
@@ -441,9 +441,9 @@ fmt.Printf("%q\n", coralSlice)
 Output["blue coral" "foliose coral" "pillar coral" "black coral" "antipathes" "leptopsammia" "massive coral" "soft coral"]    
 ```
 
-Now the element at index position `3`, the string `"elkhorn coral"`, is no longer in our slice `coralSlice`.
+现在索引位置 `3` 的元素 `"elkhorn coral"`，已经不在我们的切片 `coralSlice` 中了。
 
-We can also delete a range with the same approach. Say we wanted to remove not only the item `"elkhorn coral"`, but `"black coral"` and `"antipathes"` as well. We can use a range in the expression to accomplish this:
+我们也可以用同样的方法删除一个范围。假设我们不仅想删除 `"elkhorn coral"` 这一项，还想删除 `"black coral"` 和 `"antipathes"`。我们可以在表达式中使用一个范围来完成这个任务：
 
 ```go
 coralSlice := []string{"blue coral", "foliose coral", "pillar coral", "elkhorn coral", "black coral", "antipathes", "leptopsammia", "massive coral", "soft coral"}
@@ -453,25 +453,25 @@ coralSlice = append(coralSlice[:3], coralSlice[6:]...)
 fmt.Printf("%q\n", coralSlice)
 ```
 
-This code will take out index `3`, `4`, and `5` from the slice:
+这段代码将从切片中取出索引 `3`、`4` 和 `5`：
 
 ```go
 Output["blue coral" "foliose coral" "pillar coral" "leptopsammia" "massive coral" "soft coral"]
 ```
 
-Now that you know how to add and remove elements from a slice, let’s look at how to measure the amount of data a slice can hold at any given time.
+现在你知道了如何从一个切片中添加和删除元素，让我们来看看如何衡量一个切片所能容纳的数据量。
 
-## Measuring the Capacity of a Slice with `cap()`
+## 使用 `cap()` 获取切片的容量
 
-Since slices have a variable length, the `len()`method is not the best option to determine the size of this data type. Instead, you can use the `cap()` function to learn the capacity of a slice. This will show you how many elements a slice can hold, which is determined by how much memory has already been allocated for the slice.
+由于切片的长度是可变的，`len()` 方法不是确定这种数据类型大小的最佳选择。相反，你可以使用 `cap()` 函数来了解一个切片的容量。这将告诉你一个切片可以容纳多少个元素，这是由已经为切片分配的内存的多少决定的。
 
-**Note:** Because the length and capacity of an array are always the same, the `cap()` function will not work on arrays.
+**注意：** 由于数组的长度和容量总是相同的，`cap()`函数对数组不起作用。
 
-A common use for `cap()` is to create a slice with a preset number of elements and then fill in those elements programmatically. This avoids potential unnecessary allocations that could occur by using `append()` to add elements beyond the capacity currently allocated for.
+`cap()` 的一个常见用途是创建一个有预设元素数量的切片，然后再填入元素。这就避免了潜在的不必要的内存分配，因为使用 `append()` 来添加超出当前分配容量的元素会导致内存重新分配。
 
-Let’s take the scenario where we want to make a list of numbers, `0` through `3`. We can use `append()` in a loop to do so, or we can pre-allocate the slice first and use `cap()` to loop through to fill the values.
+让我们来看看这样的场景：我们想做一个数字列表，`0` 到 `3`。我们可以在一个循环中使用 `append()` 来完成，或者我们可以先预分配切片，然后使用 `cap()` 来循环填充这些数值。
 
-First, we can look at using `append()`:
+首先，我们可以看看使用`append()`：
 
 ```go
 numbers := []int{}
@@ -486,9 +486,9 @@ Output
 [0 1 2 3]
 ```
 
-In this example, we created a slice, and then created a `for` loop that would iterate four times. Each iteration appended the current value of the loop variable `i` into the index of the `numbers` slice. However, this could lead to unnecessary memory allocations that could slow down your program. When adding to an empty slice, each time you make a call to append, the program checks the capacity of the slice. If the added element makes the slice exceed this capacity, the program will allocate additional memory to account for it. This creates additional overhead in your program and can result in a slower execution.
+在这个例子中，我们创建了一个切片，然后创建了一个 `for` 循环，这个循环会迭代四次。每次迭代都将循环变量 `i` 的当前值追加到 `numbers` 切片的索引中。然而，这可能会导致不必要的内存分配，使你的程序变慢。当添加到一个空切片时，每次你调用 append 时，程序都会检查切片的容量。如果添加的元素超过了这个容量，程序将分配额外的内存来存储它。这在你的程序中产生了额外的开销，并可能导致执行速度变慢。
 
-Now let’s populate the slice without using `append()` by pre-allocating a certain length/capacity:
+现在让我们在不使用 `append()` 的情况下，通过预先分配一定的长度/容量来填充切片:
 
 ```go
 numbers := make([]int, 4)
@@ -504,35 +504,35 @@ Output
 [0 1 2 3]
 ```
 
-In this example, we used `make()` to create a slice and had it pre-allocate `4` elements. We then used the `cap()` function in the loop to iterate through each zeroed element, filling each until it reached the pre-allocated capacity. In each loop, we placed the current value of the loop variable `i` into the index of the `numbers` slice.
+在这个例子中，我们使用 `make()` 来创建一个切片，并让它预先分配 `4` 个元素。然后我们在循环中使用 `cap()` 函数来迭代每个归零的元素，填充每个元素直到达到预先分配的容量。在每个循环中，我们将循环变量 `i` 的当前值放入 `numbers` 的索引中。
 
-While the `append()` and the `cap()` strategies are both functionally equivalent, the `cap()` example avoids any additional memory allocations that would have been needed using the `append()` function.
+虽然 `append()` 和 `cap()` 在功能上是等同的，但 `cap()` 的例子避免了使用 `append()` 函数所需的额外的内存分配。
 
-## Constructing Multidimensional Slices
+## 构建多维切片
 
-You can also define slices that consist of other slices as elements, with each bracketed list enclosed inside the larger brackets of the parent slice. Collections of slices like these are called _multidimensional slices_. These can be thought of as depicting multidimensional coordinates; for example, a collection of five slices that are each six elements long could represent a two-dimensional grid with a horizontal length of five and a vertical height of six.
+你也可以定义由切片作为元素的切片，每个括号内的列表都包含在父切片的大括号内。像这样的切片集合被称为多维切片。这些可以被认为是描述多维坐标的；例如，一个由五个切片组成的集合，每个切片有六个元素，可以代表一个水平长度为 5、垂直高度为 6 的二维网格。
 
-Let’s examine the following multidimensional slice:
+让我们来看看下面这个多维切片：
 
 ```go
 seaNames := [][]string{{"shark", "octopus", "squid", "mantis shrimp"}, {"Sammy", "Jesse", "Drew", "Jamie"}}    
 ```
 
-To access an element within this slice, we will have to use multiple indices, one for each dimension of the construct:
+要访问这个切片中的一个元素，我们必须使用多个索引，结构的每个维度都有一个索引：
 
 ```go
 fmt.Println(seaNames[1][0])
 fmt.Println(seaNames[0][0])    
 ```
 
-In the preceding code, we first identify the element at index `0` of the slice at index `1`, then we indicate the element at index `0` of the slice at index `0`. This will yield the following:
+在前面的代码中，我们首先打印索引为 `1` `0` 的元素，然后我们打印索引为 `0` `0` 的元素。这将产生以下结果：
 
 ```go
 OutputSammy
 shark
 ```
 
-The following are the index values for the rest of the individual elements:
+以下是其余各个元素的索引值：
 
 ```go
 seaNames[0][0] = "shark"
@@ -546,10 +546,10 @@ seaNames[1][2] = "Drew"
 seaNames[1][3] = "Jamie"
 ```
 
-When working with multidimensional slices, it is important to keep in mind that you’ll need to refer to more than one index number in order to access specific elements within the relevant nested slice.
+在处理多维切片时，重要的是要记住，你需要参考一个以上的索引号，以便访问嵌套切片中的特定元素。
 
-## Conclusion
+## 总结
 
-In this tutorial, you learned the foundations of working with arrays and slices in Go. You went through multiple exercises to demonstrate how arrays are fixed in length, whereas slices are variable in length, and discovered how this difference affects the situational uses of these data structures.
+在本教程中，你学到了在 Go 中使用数组和切片的基础。通过多个练习来证明数组的长度是固定的，而切片的长度是可变的，并发现这种差异是如何影响这些数据结构的用途场景。
 
-To continue studying data structures in Go, check out our article on [Understanding Maps in Go](https://www.digitalocean.com/community/tutorials/understanding-maps-in-go), or explore the entire [How To Code in Go](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go) series.
+要继续学习Go中的数据结构，请查看我们的文章[理解 Go 中的 map](https://www.digitalocean.com/community/tutorials/understanding-maps-in-go)，或探索整个[如何在 Go 中编码](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)系列。

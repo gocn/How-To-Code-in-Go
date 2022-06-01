@@ -1,43 +1,42 @@
-# Understanding Boolean Logic in Go
+# 了解 Go 中的布尔逻辑
 
-The Boolean data type (`bool`) can be one of two values, either **true** or **false**. Booleans are used in programming to make comparisons and to control the flow of the program.
+布尔数据类型（`bool`）可以是两个值中的一个，即**真**或**假**。布尔型数据在编程中被用来进行比较和控制程序的流程。
 
-Booleans represent the truth values that are associated with the logic branch of mathematics, which informs algorithms in computer science. Named for the mathematician George Boole, the word Boolean always begins with a capitalized `B`.
+Boolean 在 Go 中的数据类型是`bool`，全部小写。值 `true` 和 `false` 总是分别用小写的 `t` 和 `f`，因为它们是 Go 中的特殊值。
 
-The data type in Go for Boolean is `bool`, all lowercase. The values `true` and `false` will always be with a lowercase `t` and `f` respectively, as they are special values in Go.
+本教程将涵盖你需要了解 `bool` 数据类型如何工作的基础知识，包括布尔比较、逻辑运算符和真值表。
 
-This tutorial will cover the basics you’ll need to understand how the `bool` data type works, including Boolean comparison, logical operators, and truth tables.
+## 比较运算符
 
-## Comparison Operators
+在编程中，比较运算符被用来比较数值，并计算为一个单一的布尔值，即真或假。
 
-In programming, _comparison operators_ are used to compare values and evaluate down to a single Boolean value of either true or false.
+下表展示了布尔比较运算符。
 
-The table below shows Boolean comparison operators.
+运算符的含义
 
-Operator What it means  
+`==` 等于
 
-== Equal to  
+`!=` 不等于
 
-!= Not equal to  
+`<` 少于
 
-< Less than  
+`>` 大于 
 
-\> Greater than  
+`<=` 少于等于  
 
-<= Less than or equal to  
+`>=` 大于等于
 
-\>= Greater than or equal to
 
-To understand how these operators work, let’s assign two integers to two variables in a Go program:
+为了了解这些运算符的工作原理，我们在 Go 程序中把两个整数分配给两个变量：
 
 ```go
 x := 5
 y := 8
 ```
 
-In this example, since `x` has the value of `5`, it is less than `y` which has the value of `8`.
+在这个例子中，由于 `x` 的值是`5`，`y` 的值是 `8`，所以 `x` 小于 `y`。
 
-Using those two variables and their associated values, let’s go through the operators from the preceding table. In this program, you’ll ask Go to print out whether each comparison operator evaluates to either true or false. To help better understand this output, you’ll have Go also print a string to show you what it’s evaluating:
+使用这两个变量和它们的相关值，让我们回忆一下之前的运算符。在这个程序中，你用 Go 打印出每个比较运算符的值是真还是假。为了帮助更好地理解这个输出，Go 打印一个字符串来显示它正在计算的内容。
 
 ```go
 package main
@@ -67,20 +66,20 @@ x <= y: true
 x >= y: false
 ```
 
-Following mathematical logic, Go has evaluated the following from the expressions:
+遵循数学逻辑，Go 从表达式中计算了以下内容：
 
-*   Is 5 (`x`) equal to 8 (`y`)? **false**
-*   Is 5 not equal to 8? **true**
-*   Is 5 less than 8? **true**
-*   Is 5 greater than 8? **false**
-*   Is 5 less than or equal to 8? **true**
-*   Is 5 not less than or equal to 8? **false**
+* 5（`x`）等于 8（`y`）吗？**假**
+* 5 不等于 8 吗？**真**
+* 5 小于 8 吗？**真** 
+* 5 是否大于 8？**假**
+* 5 是否小于或等于 8？**真** 
+* 5 不小于或等于 8 吗？**假**
 
-Although integers were used here, you could substitute them with float values.
+虽然这里使用的是整数，但你可以用浮点数来代替。
 
-Strings can also be used with Boolean operators. They are case-sensitive unless you use an additional string method.
+字符串也可以和布尔运算符一起使用。它们是区分大小写的，除非你使用一个额外的字符串方法。
 
-You can look at how strings are compared in practice:
+你可以看一下字符串在实践中是如何比较的：
 
 ```go
 Sammy := "Sammy"
@@ -94,7 +93,7 @@ Output
 Sammy == sammy:  false
 ```
 
-The string `Sammy` is not equal to the string `sammy`, because they are not exactly the same; one starts with an uppercase `S` and the other with a lowercase `s`. But, if you add another variable that is assigned the value of `Sammy`, then they will evaluate to equal:
+字符串 `Sammy` 不等于字符串 `sammy`，因为它们不完全相同；一个以大写字母 `S` 开头，另一个以小写字母 `s` 开头。但是，如果你添加了另一个变量，该变量被分配了 `Sammy` 的值，那么它们的值将相等。
 
 ```go
 Sammy := "Sammy"
@@ -111,9 +110,9 @@ Sammy == sammy:  false
 Sammy == alsoSammy true
 ```
 
-You can also use the other comparison operators including `>` and `<` to compare two strings. Go will compare these strings lexicographically using the ASCII values of the characters.
+你还可以使用其他比较运算符，包括 `>` 和 `<` 来比较两个字符串。Go 将使用字符的 ASCII 值对这些字符串进行按字母顺序的比较。
 
-You can also evaluate Boolean values with comparison operators:
+你也可以用比较运算符计算布尔值：
 
 ```go
 t := true
@@ -127,28 +126,29 @@ Output
 t != f:  true
 ```    
 
-The preceding code block evaluated that `true` is not equal to `false`.
+前面的代码块计算了 `true` 不等于 `false`。
 
-Note the difference between the two operators `=` and `==`.
+注意两个运算符 `=` 和 `==` 之间的区别。
 
 ```go
 x = y   // Sets x equal to y
 x == y  // Evaluates whether x is equal to y
 ```
 
-The first `=` is the assignment operator, which will set one value equal to another. The second, `==`, is a comparison operator and will evaluate whether two values are equal.
+第一个 `=` 是赋值运算符，它将设置一个值等于另一个值。第二个 `==` 是一个比较运算符，将评估两个值是否相等。
 
-## Logical Operators
 
-There are two logical operators that are used to compare values. They evaluate expressions down to Boolean values, returning either `true` or `false`. These operators are `&&`, `||`, and `!`, and are defined in the list below:
+## 逻辑运算符
 
-*   **&&** (`x && y`) is the `and` operator. It is true if both statements are true.
-*   **||** (`x || y`) is the `or` operator. It is true if at least one statement is true.
-*   **!** (`!x`) is the `not` operator. It is true only if the statement is false.
+有两个逻辑运算符被用来比较数值。它们将表达式评估为布尔值，返回 `true` 或 `false`。这些运算符是 `&&`，`||`，和 `！`，下面的列表中为定义：
 
-Logical operators are typically used to evaluate whether two or more expressions are true or not true. For example, they can be used to determine if the grade is passing and that the student is registered in the course, and if both cases are true, then the student will be assigned a grade in the system. Another example would be to determine whether a user is a valid active customer of an online shop based on whether they have store credit or have made a purchase in the past 6 months.
+**&&** (`x && y`) 是 `and` 运算符。如果两个语句都是真，它就是真。  
+**||** (`x || y`) 是 `or` 运算符。如果至少有一个语句是真，它就是真。  
+**!** (`!x`)是 `not` 运算符。只有当语句为假时，它才为真。  
 
-To understand how logical operators work, let’s evaluate three expressions:
+逻辑运算符通常用于计算两个或多个表达式是真还是假。例如，它们可以用来确定成绩是否合格，以及学生是否在课程中注册，如果这两种情况都是真，那么该学生将在系统中被分配一个成绩。另一个例子是根据用户是否有商店信用或在过去6个月内有购买行为，来确定用户是否是一个网上商店的有效活跃客户。
+
+为了理解逻辑运算符的工作原理，我们来评估三个表达式：
 
 ```go
 fmt.Println((9 > 7) && (2 < 4))   // Both original expressions are true
@@ -163,13 +163,13 @@ true
 true
 ```
 
-In the first case, `fmt.Println((9 > 7) && (2 < 4))`, both `9 > 7` and `2 < 4` needed to evaluate to true since the `and` operator was used.
+在第一种情况下，`fmt.Println((9 > 7) && (2 < 4))`，`9 > 7` 和 `2 < 4` 都计算为真，因为使用了`and` 运算符。
 
-In the second case, `fmt.Println((8 == 8) || (6 != 6))`, since `8 == 8` evaluated to true, it did not make a difference that `6 != 6` evaluates to false because the `or` operator was used. If you had used the `and` operator, this would evaluate to false.
+在第二种情况下，`fmt.Println((8 == 8) || (6 != 6))`，由于`8 == 8` 为真，`6 != 6` 为假，因为使用了 `or` 运算符所以结果为真。如果你使用的是 `and` 运算符，那么这个结果将是假。
 
-In the third case, `fmt.Println(!(3 <= 1))`, the `not` operator negates the false value that `3 <=1` returns.
+在第三种情况下，`fmt.Println(!(3 <= 1))`，`not` 运算符否定了 `3 <=1` 返回的错误值。
 
-Let’s substitute floats for integers and aim for false evaluations:
+让我们用浮点数代替整数，并以假为目标：
 
 ```go
 fmt.Println((-0.2 > 1.4) && (0.8 < 3.1))  // One original expression is false
@@ -177,42 +177,42 @@ fmt.Println((7.5 == 8.9) || (9.2 != 9.2)) // Both original expressions are false
 fmt.Println(!(-5.7 <= 0.3))               // The original expression is true
 ```
 
-In this example:
+在这个例子中：
 
-*   `and` must have at least one false expression evaluate to false.
-*   `or` must have both expressions evaluate to false.
-*   `!` must have its inner expression be true for the new expression to evaluate to false.
+* `and` 必须至少有一个假则计算为假。
+* `or` 必须两个表达式都为假则计算为假。
+* `!` 必须使其内部表达式为真，新表达式才为假。
 
-If these results seem unclear to you, go through some [truth tables](#truth-tables) for further clarification.
+如果这些结果对你来说不清楚，可以通过一些[真值表](#truth-tables)来进一步澄清。
 
-You can also write compound statements using `&&`, `||`, and `!`:
+你也可以用 `&&`、`||` 和 `！` 来写复合语句：
 
 ```go
 !((-0.2 > 1.4) && ((0.8 < 3.1) || (0.1 == 0.1)))
 ```
 
-Take a look at the inner-most expression first: `(0.8 < 3.1) || (0.1 == 0.1)`. This expression evaluates to `true` because both mathematical statements are `true`.
+先看一下最里面的表达式：`(0.8 < 3.1) || (0.1 == 0.1)`。这个表达式计算为 `true`，因为两个数学语句都是 `true`。
 
-Next, Go takes the returned value `true` and combines it with the next inner expression: `(-0.2 > 1.4) && (true)`. This example returns `false` because the mathematical statement `-0.2 > 1.4` is false, and (`false`) and (`true`) returns `false`.
+接下来，Go 将返回值 `true` 与下一个内部表达式相结合：`(-0.2 > 1.4) && (true)`。这个例子返回`false`，因为数学语句 `-0.2 > 1.4` 是假，而（`false`）和（`true`）返回 `false`。
 
-Finally, we have the outer expression: `!(false)`, which evaluates to `true`, so the final returned value if we print this statement out is:
+最后，我们有一个外层表达式：`！(false)`，它的值是 `true`，所以如果我们把这个语句打印出来，最后的返回值是：
 
 ```go
 Output
 true
 ``` 
 
-The logical operators `&&`, `||`, and `!` evaluate expressions and return Boolean values.
+逻辑运算符 `&&`、`||` 和 `！` 用于计算并返回布尔值。
 
-## Truth Tables
+## 真值表
 
-There is a lot to learn about the logic branch of mathematics, but you can selectively learn some of it to improve your algorithmic thinking when programming.
+关于数学的逻辑分支，有很多东西需要学习，但你可以有选择地学习一些，以提高你编程时的算法思维。
 
-The following are truth tables for the comparison operator `==`, and each of the logic operators `&&`, `||` and `!`. While you may be able to reason them out, it can also be helpful to memorize them as that can make your programming decision-making process quicker.
+下面是比较运算符 `==`，以及每个逻辑运算符 `&&`，`||` 和 `！` 的真值表。虽然你可能能够推理出它们，但记住它们也是有帮助的，因为这可以使你的编程决策过程更快。
 
-`==` (equal) Truth Table
+`==` (equal) 真值表
 
-x == y Returns
+x == y 返回
 
 true == true true
 
@@ -222,9 +222,9 @@ false == true false
 
 false == false true
 
-`&&` (and) Truth Table
+`&&` (and) 真值表
 
-x and y Returns
+x and y 返回
 
 true and true true
 
@@ -234,9 +234,9 @@ false and true false
 
 false and false false
 
-`||` (or) Truth Table
+`||` (or) 真值表
 
-x or y Returns
+x or y 返回
 
 true or true true
 
@@ -246,21 +246,26 @@ false or true true
 
 false or false false
 
-`!` (not) Truth Table
+`!` (not) 真值表
 
-| not | x | Returns | | — | — | — | — | | not | true | false | | not | false | true |
+not x Returns
 
-Truth tables are common mathematical tables used in logic, and are useful to keep in mind when constructing algorithms (instructions) in computer programming.
+not true false
 
-## Using Boolean Operators for Flow Control
+not false true
 
-To control the stream and outcomes of a program in the form of flow control statements, you can use a _condition_ followed by a _clause_.
 
-A _condition_ evaluates down to a Boolean value of true or false, presenting a point where a decision is made in the program. That is, a condition would tell you if something evaluates to true or false.
+真值表是逻辑学中常用的数学表，在构建计算机编程中的算法（指令）时，真值表是很有用的，可以牢记在心。
 
-The _clause_ is the block of code that follows the _condition_ and dictates the outcome of the program. That is, it is the “do this” part of the construction “If `x` is `true`, then do this.”
+## 使用布尔运算符进行流程控制
 
-The code block below shows an example of comparison operators working in tandem with conditional statements to control the flow of a Go program:
+为了以流程控制语句的形式控制程序的流程和结果，你可以使用一个 _condition_ 和一个 _clause_ 。
+
+一个 _condition_ 计算出一个布尔值的真或假，提出了一个在程序中做出决定的点。也就是说，一个条件会告诉你某个东西的值是真还是假。
+
+_clause_ 是跟在 _condition_ 后面的代码块，它决定了程序的结果。也就是说，"如果 `x` 是 `true`，那就往下执行"。
+
+下面的代码块显示了一个比较运算符与条件语句协同工作的例子，以控制 Go 程序的流程：
 
 ```go
 if grade >= 65 {                 // Condition
@@ -270,10 +275,10 @@ if grade >= 65 {                 // Condition
 }
 ```
 
-This program will evaluate whether each student’s grade is passing or failing. In the case of a student with a grade of `83`, the first statement will evaluate to `true`, and the print statement of `Passing grade` will be triggered. In the case of a student with a grade of `59`, the first statement will evaluate to `false`, so the program will move on to execute the print statement tied to the else expression: `Failing grade`.
+这个程序将评估每个学生的成绩是合格还是不合格。如果一个学生的成绩是 `83`，第一条语句为 `true`，并且将触发 `Passing grade` 的打印语句。如果学生的成绩是 `59`，第一条语句为 `false`，所以程序将继续执行与 else 表达式相关的打印语句：`Failing grade`。
 
-Boolean operators present conditions that can be used to decide the eventual outcome of a program through flow control statements.
+布尔运算符提出的条件，可以通过流程控制语句来决定程序的最终结果。
 
-## Conclusion
+## 总结
 
-This tutorial went through comparison and logical operators belonging to the Boolean type, as well as truth tables and using Booleans for program flow control.
+本教程介绍了属于布尔类型的比较和逻辑运算符，以及真值表和使用布尔类型进行程序流程控制。
