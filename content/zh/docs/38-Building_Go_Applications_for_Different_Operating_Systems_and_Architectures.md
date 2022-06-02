@@ -1,11 +1,3 @@
-
-
-- 原文地址：[Building Go Applications for Different Operating Systems and Architectures | DigitalOcean](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures)
-- 原文作者：digitalocean
-- 本文永久链接：
-- 译者：[zxmfke](https://github.com/zxmfke)
-- 校对：[pseudoyu](https://github.com/pseudoyu)
-
 # 在不同的操作系统和架构编译 Go 应用
 
 在软件开发中，重要的是要考虑你想为之编译二进制的[操作系统](https://en.wikipedia.org/wiki/Operating_system)和底层处理器[架构](https://en.wikipedia.org/wiki/Microarchitecture)。因为在不同的操作系统/架构平台上运行一个二进制文件通常很慢或不可能，所以通常的做法是为许多不同的平台编译你最终的二进制文件，以最大化你的程序的受众。然而，这通常是很困难的，当你开发软件的平台和你想要部署的平台不是同一个的时候。例如，在过去，在 Windows 上开发一个程序并将其部署到 Linux 或 macOS 机器上，需要为每一个你想要的二进制文件的环境设置构建机器。你还需要保持你的工具同步，此外还有其他考虑因素，这些因素会增加成本，使协作测试和分布式更加困难。

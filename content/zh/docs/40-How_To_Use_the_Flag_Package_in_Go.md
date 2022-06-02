@@ -1,11 +1,3 @@
-
-
-- 原文地址：[How To Use the Flag Package in Go | DigitalOcean](https://www.digitalocean.com/community/tutorials/how-to-use-the-flag-package-in-go)
-- 原文作者：digitalocean
-- 本文永久链接：[How-To-Code-in-Go/40-How_To_Use_the_Flag_Package_in_Go.md at main · gocn/How-To-Code-in-Go (github.com)](https://github.com/gocn/How-To-Code-in-Go/blob/main/40-How_To_Use_the_Flag_Package_in_Go.md)
-- 译者：[zxmfke](https://github.com/zxmfke)
-- 校对：[pseudoyu](https://github.com/pseudoyu)
-
 # 在 Go 里面如何使用 Flag 包
 
 ### 简介
