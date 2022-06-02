@@ -1,18 +1,18 @@
 # 如何在 Go 中编写包
 
-一个包由同一目录下的 Go 文件组成的，并且在文件开头有相同的包声明。你可以从包中加入额外的功能，使你的程序更加复杂。有些包可以通过 Go 标准库获得，因此在安装 Go 时就已经安装了。其他的可以用 Go 的`go get`命令来安装。你也可以通过在同一目录下创建Go文件来建立你自己的Go包，你可以通过使用必要的包声明来分享代码。
+一个包由同一目录下的 Go 文件组成的，并且在文件开头有相同的包声明。你可以从包中加入额外的功能，使你的程序更加复杂。有些包可以通过 Go 标准库获得，因此在安装 Go 时就已经安装了。其他的可以用 Go 的`go get`命令来安装。你也可以通过在同一目录下创建 Go 文件来建立你自己的 Go 包，你可以通过使用必要的包声明来分享代码。
 
-本教程将指导你如何编写Go包，以便在其他编程文件中使用。
+本教程将指导你如何编写 Go 包，以便在其他编程文件中使用。
 ## 前提条件
 
-- 按照[如何安装和设置Go的本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)系列教程中的一个教程设置Go编程环境。按照本地编程环境教程中的步骤5创建你的Go工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。
-- 为了加深你对GOPATH的了解，请阅读文章[了解GOPATH](https://www.digitalocean.com/community/tutorials/understanding-the-gopath)。
+- 按照[如何安装和设置Go的本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)系列教程中的一个教程设置 Go 编程环境。按照本地编程环境教程中的步骤5创建你的 Go 工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。
+- 为了加深你对 GOPATH 的了解，请阅读文章[了解 GOPATH](https://www.digitalocean.com/community/tutorials/understanding-the-gopath)。
 
 ## 编写和导入软件包
 
-编写包就像编写任何其他Go文件一样，包可以包含函数、[类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go)和[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)的定义，然后可以在其他Go程序中使用。
+编写包就像编写任何其他 Go 文件一样，包可以包含函数、[类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go)和[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)的定义，然后可以在其他 Go 程序中使用。
 
-在我们创建一个新的包之前，我们需要进入我们的Go工作区。这通常是在我们的`gopath`下。对于这个例子，本教程中我们将把包称为`greet`。为了做到这一点，在我们的项目空间下的`gopath`中创建了一个名为`greet`的目录。当使用Github作为代码库，组织名称为`gopherguides`，想在此组织下创建`greet`包，那么我们的目录会是这样的：
+在我们创建一个新的包之前，我们需要进入我们的 Go 工作区。这通常是在我们的`gopath`下。对于这个例子，本教程中我们将把包称为`greet`。为了做到这一点，在我们的项目空间下的`gopath`中创建了一个名为`greet`的目录。当使用 Github 作为代码库，组织名称为`gopherguides`，想在此组织下创建`greet`包，那么我们的目录会是这样的：
 
 ```
 └── $GOPATH
@@ -240,7 +240,7 @@ The octopus's name is "Jesse" and is the color orange.
 
 ## 可导出代码
 
-你可能已经注意到，调用的`greet.go`文件中所有的声明都是大写的。Go没有像其他语言那样有`public`、`private`或`protected`修饰符的概念。外部可见性是由大写字母控制的。以大写字母开头的类型、变量、函数等等，在当前包之外是可以公开使用的。一个在其包外可见的符号被认为是 `可导出` 的。
+你可能已经注意到，调用的`greet.go`文件中所有的声明都是大写的。Go 没有像其他语言那样有`public`、`private`或`protected`修饰符的概念。外部可见性是由大写字母控制的。以大写字母开头的类型、变量、函数等等，在当前包之外是可以公开使用的。一个在其包外可见的符号被认为是 `可导出` 的。
 
 如果你给`Octopus`添加了一个名为`reset`的新方法，可以在`greet`包内调用它，但是不能在`main.go`文件中调用，因为调用者在`greet`包之外：
 

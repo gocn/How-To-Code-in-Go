@@ -1,4 +1,4 @@
-# 理解Go中包的可见性
+# 理解 Go 中包的可见性
 
 ### 介绍
 
@@ -27,7 +27,7 @@
 
 ## 可导出与不可导出
 
-不同于其他程序语言，如Java和[Python](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3)使用*访问修饰符*如`public`、`private`或`protected`来指定范围不同，Go通过其声明方式来决定一个项目是否`exported`和`unxported`。在这种情况下，导出一个项目会使它在当前包之外是 "可见的"。如果它没有被导出，它只能在它被定义的包内可见和使用。
+不同于其他程序语言，如 Java 和[Python](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-python-3)使用*访问修饰符*如`public`、`private`或`protected`来指定范围不同，Go 通过其声明方式来决定一个项目是否`exported`和`unxported`。在这种情况下，导出一个项目会使它在当前包之外是 "可见的"。如果它没有被导出，它只能在它被定义的包内可见和使用。
 
 这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 "类型"、"变量"、"常量"、"函数"等，在当前包外是可见的。
 
@@ -45,7 +45,7 @@ func Hello(name string) string {
 }
 ```
 
-这段代码声明它是在`greet`包中。然后声明了两个符号，一个叫做 `Greeting` 的变量和一个叫做 `Hello` 的函数。因为它们都以大写字母开头，所以它们都被 "可导出" 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
+这段代码声明它是在`greet`包中。然后声明了两个符号，一个叫做 `Greeting` 的变量和一个叫做 `Hello` 的函数。因为它们都以大写字母开头，所以它们都被 "可导出" 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的 API 设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
 
 ## 定义包的可见性
 
@@ -62,7 +62,7 @@ mkdir logging
 ```bash
 cd logging
 ```
-然后，使用nano这样的编辑器，创建一个名为`logging.go`的文件：
+然后，使用 nano 这样的编辑器，创建一个名为`logging.go`的文件：
 
 ```bash
 nano logging.go
@@ -127,7 +127,7 @@ func main() {
 }
 ```
 
-现在整个程序已经写好了。然而，在运行这个程序之前，我们还需要创建几个配置文件，以便我们的代码能够正常工作。Go使用[Go模块](https://blog.golang.org/using-go-modules)来配置导入资源的软件包依赖性。Go模块是放置在你的包目录中的配置文件，它告诉编译器从哪里导入包。虽然对模块的学习超出了本文的范围，但我们可以只写几行配置来使这个例子在本地工作。
+现在整个程序已经写好了。然而，在运行这个程序之前，我们还需要创建几个配置文件，以便我们的代码能够正常工作。Go 使用[Go 模块](https://blog.golang.org/using-go-modules)来配置导入资源的软件包依赖性。Go 模块是放置在你的包目录中的配置文件，它告诉编译器从哪里导入包。虽然对模块的学习超出了本文的范围，但我们可以只写几行配置来使这个例子在本地工作。
 
 在`cmd`目录下打开以下`go.mod`文件：
 
@@ -196,7 +196,7 @@ go run main.go
 2019-08-28T11:36:09-05:00 This is a debug statement...
 ```
 
-该程序将以RFC 3339格式打印出当前时间，后面是我们发送给记录器的任何语句。[RFC 3339](https://tools.ietf.org/html/rfc3339)是一种时间格式，被设计用来表示互联网上的时间，通常用于日志文件。
+该程序将以 RFC 3339 格式打印出当前时间，后面是我们发送给记录器的任何语句。[RFC 3339](https://tools.ietf.org/html/rfc3339)是一种时间格式，被设计用来表示互联网上的时间，通常用于日志文件。
 
 因为`Debug`和`Log`函数是从日志包中导出的，我们可以在`main`包中使用它们。然而，`logging`包中的`debug`变量没有被导出。试图引用一个未导出的声明将导致一个编译时错误。
 
@@ -462,10 +462,10 @@ cmd/main.go:16:8: logger.write undefined (cannot refer to unexported field or me
 
 当编译器看到你试图引用另一个包中以小写字母开头的东西时，它知道这个东西没有被导出，因此抛出一个编译器错误。
 
-本教程中的记录器说明了如何编写代码，只暴露出希望其他包消费的部分。因为我们控制了包的哪些部分在包外是可见的，所以现在能够在未来进行修改而不影响任何依赖包的代码。例如，如果想只在`debug`为false时关闭`info`级别的消息，你可以在不影响你的API的任何其他部分的情况下做出这个改变。我们也可以安全地对日志信息进行修改，以包括更多的信息，如程序运行的目录。
+本教程中的记录器说明了如何编写代码，只暴露出希望其他包消费的部分。因为我们控制了包的哪些部分在包外是可见的，所以现在能够在未来进行修改而不影响任何依赖包的代码。例如，如果想只在`debug`为 false 时关闭`info`级别的消息，你可以在不影响你的 API 的任何其他部分的情况下做出这个改变。我们也可以安全地对日志信息进行修改，以包括更多的信息，如程序运行的目录。
 
 ## 总结
 
-这篇文章展示了如何在包之间共享代码，同时也保护你的包的实现细节。这允许你输出一个简单的API，为了向后兼容而很少改变，但允许在你的包中根据需要私下改变，使其在未来更好地工作。这被认为是创建包和它们相应的API时的最佳做法。
+这篇文章展示了如何在包之间共享代码，同时也保护你的包的实现细节。这允许你输出一个简单的 API，为了向后兼容而很少改变，但允许在你的包中根据需要私下改变，使其在未来更好地工作。这被认为是创建包和它们相应的 API 时的最佳做法。
 
-要了解更多关于Go中的包，请查看我们的[在Go中导入包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)和[如何在Go中编写包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)文章，或者探索我们整个[如何在Go中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+要了解更多关于 Go 中的包，请查看我们的[在 Go 中导入包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)和[如何在 Go 中编写包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)文章，或者探索我们整个[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。

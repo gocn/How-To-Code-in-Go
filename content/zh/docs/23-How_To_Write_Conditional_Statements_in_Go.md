@@ -1,4 +1,4 @@
-# 如何在Go中编写条件语句
+# 如何在 Go 中编写条件语句
 
 ### 介绍
 
@@ -14,7 +14,7 @@
 
 通过评估条件，并根据是否满足这些条件来分配代码运行，我们就是在写条件代码。
 
-本教程将带你了解在Go编程语言中编写条件语句。
+本教程将带你了解在 Go 编程语言中编写条件语句。
 
 ## If 语句
 
@@ -147,7 +147,7 @@ Your balance is 0 or above.
 
 ## Else if 语句
 
-到目前为止，我们已经为条件语句提出了一个[布尔](https://www.digitalocean.com/community/tutorials/understanding-boolean-logic-in-go)选项，每个`if`语句的评估结果为真或假。在许多情况下，我们会希望一个程序能评估出两个以上的可能结果。为此，我们将使用**else if**语句，在Go中写成`else if`。`else if`或else if语句看起来和`if`语句一样，将评估另一个条件。
+到目前为止，我们已经为条件语句提出了一个[布尔](https://www.digitalocean.com/community/tutorials/understanding-boolean-logic-in-go)选项，每个`if`语句的评估结果为真或假。在许多情况下，我们会希望一个程序能评估出两个以上的可能结果。为此，我们将使用**else if**语句，在 Go 中写成`else if`。`else if`或 else if 语句看起来和`if`语句一样，将评估另一个条件。
 
 在银行账户程序中，我们可能希望在三种不同的情况下有三个离散的输出。
 
@@ -227,7 +227,7 @@ func main() {
 
 ## 嵌套的If语句
 
-一旦你对 `if`, `else if`, 和 `else`语句感到满意，你就可以转到嵌套条件语句。我们可以使用嵌套的`if`语句来处理这样的情况：如果第一个条件执行为真，我们想检查第二个条件。为此，我们可以在另一个if-else 语句中设置一个if-else 语句。让我们来看看嵌套的`if`语句的语法。
+一旦你对 `if`, `else if`, 和 `else`语句感到满意，你就可以转到嵌套条件语句。我们可以使用嵌套的`if`语句来处理这样的情况：如果第一个条件执行为真，我们想检查第二个条件。为此，我们可以在另一个 if-else 语句中设置一个 if-else 语句。让我们来看看嵌套的`if`语句的语法。
 
 ```go
 if statement1 { // outer if statement
@@ -260,7 +260,7 @@ if statement1 { // outer if statement
 > no
 > ```
 
-- 而如果`statement1`评估为false，嵌套的if-else语句将不会运行，所以`else`语句将单独运行，输出结果为：
+- 而如果`statement1`评估为 false，嵌套的 if-else 语句将不会运行，所以`else`语句将单独运行，输出结果为：
 
 > ```Output
 > false

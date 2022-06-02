@@ -193,7 +193,7 @@ func main() {
 
 在前面的代码中，`buf :=bytes.NewBufferString("one\ntwo\nthree\nfour\n")` 声明了一个包含一些数据的缓冲区。因为我们不知道缓冲区何时会完成读取，所以我们创建了一个没有子句的 `for` 循环。在 `for` 循环内部，我们使用 `line, err := buf.ReadString('\n')` 从缓冲区读取一行并检查从缓冲区读取是否有错误。如果有，我们解决错误，并[使用 `break` 关键字退出 for 循环](https://www.digitalocean.com/community/tutorials/using-break-and-continue-statements-when-working-with-loops-in-go)。有了`break`，您就不需要使用停止循环的条件。
 
-在本节中，我们学习了如何声明 ForClause 循环并使用它来迭代已知范围的值。我们还学习了如何使用 Condition循环进行迭代，直到满足特定条件。接下来，我们将了解 RangeClause 如何用于迭代顺序数据类型。
+在本节中，我们学习了如何声明 ForClause 循环并使用它来迭代已知范围的值。我们还学习了如何使用 Condition 循环进行迭代，直到满足特定条件。接下来，我们将了解 RangeClause 如何用于迭代顺序数据类型。
 
 ## 使用 RangeClause 循环遍历顺序数据类型
 

@@ -1,14 +1,14 @@
-# 如何在Go中编写Switch语句
+# 如何在 Go 中编写 Switch 语句
 
 ### 介绍
 
-[条件语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go)使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用[`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements)就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。`switch`是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
+[条件语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go)使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用[`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements)就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。`switch`是一个替代性的条件语句，对于传达你的 Go 程序在遇到不同选项时采取的行动很有用。
 
-我们可以用switch语句编写的所有内容也可以用`if`语句编写。在本教程中，我们将看几个例子，看看switch语句能做什么，它所取代的`if`语句，以及它最合适的应用场合。
+我们可以用 switch 语句编写的所有内容也可以用`if`语句编写。在本教程中，我们将看几个例子，看看 switch 语句能做什么，它所取代的`if`语句，以及它最合适的应用场合。
 
-## Switch语句的结构
+## Switch 语句的结构
 
-Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 `if` 语句来完成这个任务。
+Switch 通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 `if` 语句来完成这个任务。
 
 ```go
 package main
@@ -52,7 +52,7 @@ I've never tried banana before
 
 当我们添加新的偏好时，我们必须不断添加`if`语句来处理新的情况。重复的信息，如 "香草"和 "巧克力"的情况，必须有重复的`if`语句。对于我们代码的未来读者（包括我们自己）来说，`if`语句的重复性掩盖了它们所做的重要部分--将变量与多个值进行比较并采取不同的行动。另外，我们的回退信息与条件语句分开，使得它看起来不相关。转换器 "语句可以帮助我们更好地组织这个逻辑。
 
-`switch` 语句以 `switch` 关键字开始，在其最基本的形式下，后面是一些要进行比较的变量。之后是一对大括号（`{}`），其中可以出现多个*case子句*。case子句描述了当提供给switch语句的变量等于case子句所引用的值时，Go程序应该采取的行动。下面的例子将先前的例子转换为使用一个`switch`而不是多个`if`语句：
+`switch` 语句以 `switch` 关键字开始，在其最基本的形式下，后面是一些要进行比较的变量。之后是一对大括号（`{}`），其中可以出现多个*case 子句*。case 子句描述了当提供给 switch 语句的变量等于 case 子句所引用的值时，Go 程序应该采取的行动。下面的例子将先前的例子转换为使用一个`switch`而不是多个`if`语句：
 
 ```go
 package main
@@ -196,7 +196,7 @@ You win!
 
 在这个版本的猜谜游戏中，我们用一个`switch`语句代替了`if`语句块。我们省略了`switch`的表达式参数，因为我们只对使用`switch`来收集条件语句感兴趣。每个`case`子句包含一个不同的表达式，将`guess`与`target`进行比较。与第一次用`switch`代替`if`语句类似，我们不再需要`continue`语句，因为只有一个`case`子句会被执行。最后，`default`子句处理`guess == target`的情况，因为我们已经用另外两个`case`子句覆盖了所有其他可能的值。
 
-在我们目前看到的例子中，正好有一个case语句将被执行。偶尔，你可能希望结合多个`case`子句的行为。`switch`语句提供了另一个实现这种行为的关键字。
+在我们目前看到的例子中，正好有一个 case 语句将被执行。偶尔，你可能希望结合多个`case`子句的行为。`switch`语句提供了另一个实现这种行为的关键字。
 
 ## Fallthrough
 
@@ -234,12 +234,12 @@ strawberry is great!
 I've never tried banana before
 ```
 
-正如我们之前看到的，我们定义了一个 `string` 片段来表示口味，并使用 `for` 循环来迭代。这里的 `switch` 语句与我们之前看到的语句相同，但是在 `case` 子句的末尾添加了 `fallthrough` 关键字，即 `strawberry`。这将使Go运行`case "strawberry":`的主体，首先打印出字符串`strawberry is my favorite!`。当它遇到`fallthrough`时，它将运行下一个`case`子句的主体。这将导致`case "vanilla", "chocolate":`的主体运行，打印出`strawberry is great!`。
+正如我们之前看到的，我们定义了一个 `string` 片段来表示口味，并使用 `for` 循环来迭代。这里的 `switch` 语句与我们之前看到的语句相同，但是在 `case` 子句的末尾添加了 `fallthrough` 关键字，即 `strawberry`。这将使 Go 运行`case "strawberry":`的主体，首先打印出字符串`strawberry is my favorite!`。当它遇到`fallthrough`时，它将运行下一个`case`子句的主体。这将导致`case "vanilla", "chocolate":`的主体运行，打印出`strawberry is great!`。
 
-Go开发人员不经常使用`fallthrough`关键字。通常情况下，通过使用`fallthrough`实现的代码重用，可以通过定义一个具有公共代码的函数来更好地获得。由于这些原因，一般不鼓励使用`fallthrough`。
+Go 开发人员不经常使用`fallthrough`关键字。通常情况下，通过使用`fallthrough`实现的代码重用，可以通过定义一个具有公共代码的函数来更好地获得。由于这些原因，一般不鼓励使用`fallthrough`。
 
 ## 总结
 
 `switch`语句帮助我们向阅读代码的其他开发者传达出彼此有某种联系。使我们在将来添加新的情况时更容易添加不同的行为，并有可能确保任何忘记的事情也能通过`default`子句得到正确处理。下次你发现自己写的多个`if`语句都涉及同一个变量时，试着用`switch`语句重写它--你会发现当需要考虑其他值时，它将更容易重写。
 
-如果你想了解更多关于Go编程语言的信息，请查看整个[How To Code in Go系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)
+如果你想了解更多关于 Go 编程语言的信息，请查看整个[How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)
