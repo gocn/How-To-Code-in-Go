@@ -23,54 +23,46 @@ hugo server
 
 ## 目录
 
-1. How To Install Go and Set Up a Local Programming Environment on Ubuntu 18.04 | DigitalOcean
-2. How To Install Go and Set Up a Local Programming Environment on macOS | DigitalOcean
-3. How To Install Go and Set Up a Local Programming Environment on Windows 10 | DigitalOcean
-4. How To Write Your First Program in Go | DigitalOcean
-5. Understanding the GOPATH | DigitalOcean
-6. How To Write Comments in Go | DigitalOcean
-7. Understanding Data Types in Go | DigitalOcean
-8. An Introduction to Working with Strings in Go | DigitalOcean
-9. How To Format Strings in Go | DigitalOcean
-10. An Introduction to the Strings Package in Go | DigitalOcean
-11. How To Use Variables and Constants in Go | DigitalOcean
-12. How To Convert Data Types in Go | DigitalOcean
-13. How To Do Math in Go with Operators | DigitalOcean
-14. Understanding Boolean Logic in Go | DigitalOcean
-15. Understanding Maps in Go | DigitalOcean
-16. Understanding Arrays and Slices in Go | DigitalOcean
-17. Handling Errors in Go | DigitalOcean
-18. Creating Custom Errors in Go | DigitalOcean
-19. Handling Panics in Go | DigitalOcean
-20. Importing Packages in Go | DigitalOcean
-21. How To Write Packages in Go | DigitalOcean
-22. Understanding Package Visibility in Go | DigitalOcean
-23. How To Write Conditional Statements in Go | DigitalOcean
-24. How To Write Switch Statements in Go | DigitalOcean
-25. How To Construct For Loops in Go | DigitalOcean
-26. Using Break and Continue Statements When Working with Loops in Go | DigitalOcean
-27. How To Define and Call Functions in Go | DigitalOcean
-28. How To Use Variadic Functions in Go | DigitalOcean
-29. Understanding defer in Go | DigitalOcea
-30. Understanding init in Go | DigitalOcean
-31. Customizing Go Binaries with Build Tags | DigitalOcean
-32. Understanding Pointers in Go | DigitalOcean
-33. Defining Structs in Go | DigitalOcean
-34. Defining Methods in Go | DigitalOcean
-35. How To Build and Install Go Programs | DigitalOcean
-36. How To Use Struct Tags in Go | DigitalOcean
-37. How To Use Interfaces in Go | DigitalOcean
-38. Building Go Applications for Different Operating Systems and Architectures | DigitalOcean
-39. Using ldflags to Set Version Information for Go Applications | DigitalOcean
-40. How To Use the Flag Package in Go | DigitalOcean
-41. How to Use Go Modules | DigitalOcean
-42. How to Distribute Go Modules | DigitalOcean
-43. How to Use a Private Go Module in Your Own Project | DigitalOcean
-44. How To Run Multiple Functions Concurrently in Go | DigitalOcean
-45. How to Add Extra Information to Errors in Go | DigitalOcean
-46. How To Use Dates and Times in Go | DigitalOcean
-47. How To Use Contexts in Go | DigitalOcean
-48. How To Use JSON in Go | DigitalOcean
+1. 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境
+2. 如何在 macOS 上安装 Go 和设置本地编程环境
+3. 如何在 Windows 10 上安装 Go 和设置本地编程环境
+4. 如何用 Go 编写你的第一个程序
+5. 理解 GOPATH
+6. 如何在 Go 中写注释
+7. 理解 Go 的数据类型
+8. Go 中处理字符串的介绍
+9. 如何在 Go 中格式化字符串
+10. 介绍 Go 中的 Strings 包
+11. 如何在 Go 中使用变量和常量
+12. 如何在 Go 中转换数据类型
+13. 如何用运算符在 Go 中做数学计算
+14. 了解 Go 中的布尔逻辑
+15. 理解 Go 中的 Map
+16. 理解 Go 中的数组和切片
+17. 在 Go 中处理错误
+18. 在 Go 中创建自定义错误
+19. 在 Go 中处理恐慌
+20. 在 Go 中导入包
+21. 如何在 Go 中编写包
+22. 理解 Go 中包的可见性
+23. 如何在 Go 中编写条件语句
+24. 如何在 Go 中编写 Switch 语句
+25. 如何在 Go 中构造 for 循环
+26. 在循环中使用 Break 和 Continue
+27. 如何在 Go 中定义并调用函数
+28. 如何在 Go 中使用可变参数函数
+29. 了解 Go 中的 defer
+30. 了解 Go 中的 init
+31. 用构建标签定制 Go 二进制文件
+32. 了解 Go 中的指针
+33. 在 Go 中定义结构体
+34. 在 Go 中定义方法
+35. 如何构建和安装 Go 程序
+36. 如何在 Go 中使用结构体标签
+37. 如何在 Go 使用 interface
+38. 在不同的操作系统和架构编译 Go 应用
+39. 用 ldflags 设置 Go 应用程序的版本信息
+40. 在 Go 里面如何使用 Flag 包
 
 ## 授权
 
