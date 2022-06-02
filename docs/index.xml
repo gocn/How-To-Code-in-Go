@@ -54,75 +54,142 @@ var absoluteZero int = -459 fmt.Println(absoluteZero) Output -459 我们也可�
 使用反引号，如 ` bar `，将创建一个_原始_字符串。在原始字符串中，除了反引号之外，任何字符都可以出现在引号之间。下面是一个原始字符串的例子:
 `Say &amp;#34;hello&amp;#34; to Go!` 反斜杠在原始字符串中没有特殊含义。例如，\n 表示的是实际字符，以反斜杠 \ 和字母 n 的形式出现。不像解释的字符串文字，\n 会插入一个实际的新行。
 原始字符串也可用于创建多行字符串:
-`Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multi-core and networked machines, while its novel type system enables flexible and modular program construction.</description></item><item><title/><link>https://example.com/docs/09-How_To_Format_Strings_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/09-How_To_Format_Strings_in_Go/</guid><description>How To Format Strings in Go # As strings are often made up of written text, there are many instances when we may want to have greater control over how strings look to make them more readable for humans through punctuation, line breaks, and indentation.
-In this tutorial, we’ll go over some of the ways we can work with Go strings to make sure that all output text is formatted correctly.</description></item><item><title/><link>https://example.com/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</guid><description>An Introduction to the Strings Package in Go # Introduction # Go’s string package has several functions available to work with the string data type. These functions let us easily modify and manipulate strings. We can think of functions as being actions that we perform on elements of our code. Built-in functions are those that are defined in the Go programming language and are readily available for us to use.</description></item><item><title/><link>https://example.com/docs/11-How_To_Use_Variables_and_Constants_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/11-How_To_Use_Variables_and_Constants_in_Go/</guid><description>How To Use Variables and Constants in Go # Variables are an important programming concept to master. They are symbols that stand in for a value you’re using in a program.
-This tutorial will cover some variable basics and best practices for using them within the Go programs you create.
-Understanding Variables # In technical terms, a variable is assigning a storage location to a value that is tied to a symbolic name or identifier.</description></item><item><title/><link>https://example.com/docs/12-How_To_Convert_Data_Types_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/12-How_To_Convert_Data_Types_in_Go/</guid><description>How To Convert Data Types in Go # Introduction # In Go, data types are used to classify one particular type of data, determining the values that you can assign to the type and the operations you can perform on it. When programming, there are times when you will need to convert values between types in order to manipulate values in a different way. For example, you may need to concatenate numeric values with strings, or represent decimal places in numbers that were initialized as integer values.</description></item><item><title/><link>https://example.com/docs/13-How_To_Do_Math_in_Go_with_Operators/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/13-How_To_Do_Math_in_Go_with_Operators/</guid><description>How To Do Math in Go with Operators # Introduction # Numbers are common in programming. They are used to represent things such as: screen-size dimensions, geographic locations, money and points, the amount of time that passes in a video, positions of game avatars, colors through assigning numeric codes, and so on.
-Effectively performing mathematical operations in programming is an important skill to develop because of how frequently you’ll work with numbers.</description></item><item><title/><link>https://example.com/docs/14-Understanding_Boolean_Logic_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/14-Understanding_Boolean_Logic_in_Go/</guid><description>Understanding Boolean Logic in Go # The Boolean data type (bool) can be one of two values, either true or false. Booleans are used in programming to make comparisons and to control the flow of the program.
-Booleans represent the truth values that are associated with the logic branch of mathematics, which informs algorithms in computer science. Named for the mathematician George Boole, the word Boolean always begins with a capitalized B.</description></item><item><title/><link>https://example.com/docs/15-Understanding_Maps_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/15-Understanding_Maps_in_Go/</guid><description>Understanding Maps in Go # Most modern programming languages have the concept of a dictionary or a hash type. These types are commonly used to store data in pairs with a key that maps to a value.
-In Go, the map data type is what most programmers would think of as the dictionary type. It maps keys to values, making key-value pairs that are a useful way to store data in Go.</description></item><item><title/><link>https://example.com/docs/16-Understanding_Arrays_and_Slices_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/16-Understanding_Arrays_and_Slices_in_Go/</guid><description>Understanding Arrays and Slices in Go # Introduction # In Go, arrays and slices are data structures that consist of an ordered sequence of elements. These data collections are great to use when you want to work with many related values. They enable you to keep data together that belongs together, condense your code, and perform the same methods and operations on multiple values at once.
-Although arrays and slices in Go are both ordered sequences of elements, there are significant differences between the two.</description></item><item><title/><link>https://example.com/docs/17-Handling_Errors_in_Go_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/17-Handling_Errors_in_Go_DigitalOcean/</guid><description>健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。
+`Go is expressive, concise, clean, and efficient. Its concurrency mechanisms make it easy to write programs that get the most out of multi-core and networked machines, while its novel type system enables flexible and modular program construction.</description></item><item><title/><link>https://example.com/docs/09-How_To_Format_Strings_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/09-How_To_Format_Strings_in_Go/</guid><description>如何在 Go 中格式化字符串 # 由于字符串通常由书面文本组成，因此在许多情况下，我们可能希望更好的定制字符串的展示形式，以便通过定时、换行和缩进使其更易于阅读。
+在本教程中，我们将介绍一些使用 Go 字符串的方法，以确保所有输出文本的格式正确。
+字符串文字 # 我们先来看看 字符串文字 和 字符串值 的区别。 字符串文字是我们在计算机程序的源代码中看到的，包括引号。 当我们调用 fmt.Println 函数并运行程序时，我们会看到一个字符串值。
+在“Hello, World!” 程序中，字符串文字是 &amp;quot;Hello, World!&amp;quot; 而字符串值是 Hello, World! 不带引号。 字符串值是我们在运行 Go 程序时在终端窗口中看到的输出。
+但是某些字符串值可能需要包含引号，例如当我们引用某个资源时。由于字符串文字和字符串值不等价，因此通常需要为字符串文字添加额外的转换格式，以确保字符串值按照我们想要的方式显示。
+引号 # 因为我们可以在 Go 中使用反引号 (`` ) 或双引号 (&amp;quot;`)，所以我们很容易在反引号里使用双引号来括住字符串：
+`Sammy says, &amp;#34;Hello!&amp;#34;` 或者，要使用反引号，你可以将字符串括在双引号中：
+&amp;#34;Sammy likes the `fmt` package for formatting strings..&amp;#34; 在组合反引号和双引号的方式中，我们可以控制字符串中引号和反引号的显示方式。
+这里有个重点，在 Go 中使用反引号会创建一个 raw 字符串文字，而使用双引号会创建一个 interpreted 字符串文字。要了解有关差异的更多信息，请阅读 An Introduction to Working with Strings in Go 教程。</description></item><item><title/><link>https://example.com/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</guid><description>介绍 Go 中的 Strings 包 # 介绍 # Go 的 strings 包有几个函数可用于 [string 数据类型](https://www.digitalocean.com/community/tutorials/an -introduction-to-working-with-strings-in-go)。这些函数可以轻松地修改和操作字符串。我们可以将函数视为对代码元素执行的操作。内置函数是那些在 Go 编程语言中定义并且可供我们随时使用的函数。
+在本教程中，我们将回顾几个可用于在 Go 中处理字符串的不同函数。
+字符串大写和小写 # 函数 strings.ToUpper 和 strings.ToLower 将返回一个字符串，其中原始字符串的所有字母都转换为大写或小写字母。 因为字符串是不可变的数据类型，所以返回的字符串将是一个新字符串。 字符串中的任何非字母字符都不会更改。
+要将字符串 &amp;quot;Sammy Shark&amp;quot; 转换为全大写，你可以使用 strings.ToUpper 函数：
+ss := &amp;#34;Sammy Shark&amp;#34; fmt.Println(strings.ToUpper(ss)) Output SAMMY SHARK 要转换为小写：
+fmt.Println(strings.ToLower(ss)) Output sammy shark 由于你使用的是 strings 包，因此首先需要将其导入程序中。 要将字符串转换为大写和小写，整个程序如下：
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;strings&amp;#34; ) func main() { ss := &amp;#34;Sammy Shark&amp;#34; fmt.Println(strings.ToUpper(ss)) fmt.Println(strings.ToLower(ss)) } strings.</description></item><item><title/><link>https://example.com/docs/11-How_To_Use_Variables_and_Constants_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/11-How_To_Use_Variables_and_Constants_in_Go/</guid><description>如何在 Go 中使用变量和常量 # 变量 是一个需要掌握的重要编程概念。它们是代表你在程序中使用的值的符号。
+本教程将介绍一些变量基础知识和在你创建的 Go 程序中使用它们的最佳实践。
+理解变量 # 用术语来说，变量将存储位置分配给与符号名称或标识符相关的值。我们使用变量名来引用计算机程序中存储的值。
+我们可以将变量视为带有名称的标签，您可以将其绑定到值上。
+假设我们有一个整数 1032049348 ，我们希望将它存储在一个变量中，而不是一遍又一遍地不断地重新输入长数字。为了达到这个目的，我们可以使用一个容易记住的名字，比如变量 i。要将值存储在变量中，我们使用以下语法：
+i := 1032049348 我们可以把这个变量想象成一个与值绑定的标签。
+标签上写有变量名 i ，并与整数值 1032049348 相关联。
+i := 1032049348 是一个声明和赋值语句，由几个部分组成：
+变量名 (i) 变量声明赋值 (:=) 与变量名绑定的值（1032049348） Go 推断的数据类型 (int) 稍后我们将在下一节中看到如何显式设置类型。
+这些部分共同构成了将变量 i 设置为整数 1032049348 的值的语句。
+一旦我们设置一个等于某个值的变量，变量就会被初始化或创建出来。一旦我们这样做了，我们就可以使用变量而不是值了。
+一旦我们将 i 设置为 1032049348 ，我们可以使用 i 代替整数，所以让我们打印出来：
+package main import &amp;#34;fmt&amp;#34; func main() { i := 1032049348 fmt.Println(i) } Output 1032049348 我们还可以通过使用变量快速轻松地进行数学运算。使用i := 1032049348，我们可以使用以下语法减去整数值813：</description></item><item><title/><link>https://example.com/docs/12-How_To_Convert_Data_Types_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/12-How_To_Convert_Data_Types_in_Go/</guid><description>如何在 Go 中转换数据类型 # 介绍 # 在 Go 中，数据类型用于对一种特定类型的数据进行分类，确定可以分配给该类型的值以及可以对其执行的操作。在编程时，有时你需要在类型之间转换值以便以不同的方式操作值。例如，你可能需要将数值与字符串连接起来，或者在初始化为整数值的数字中表示小数位。用户生成的数据通常会自动分配为字符串数据类型，即使它由数字组成； 为了在此输入中执行数学运算，你必须将字符串转换为数字数据类型。
+由于 Go 是一种静态类型语言，数据类型绑定到变量 而不是值。这意味着，如果你将变量定义为 int，它只能是 int； 如果不转换变量的数据类型，就无法将一个 字符串 赋值给它。Go 中数据类型的静态特性使得学习转换它们的方法更加重要。
+本教程将指导你完成数字和字符串的转换，并提供示例以帮助你熟悉不同的用例。
+数字类型转换 # Go 有多种数字类型可供选择。它们主要分为两种类型：integers 和 floating-point numbers。
+在许多情况下，你可能希望在数字类型之间进行转换。在 不同大小的数字类型 之间进行转换有助于优化特定场景下的性能。如果你有来自代码另一部分的整数并想要对其进行除法，你可能需要将整数转换为浮点数以保持操作的精度。此外，时间相关的操作通常涉及整数转换。为了解决这些情况，Go 为大多数数字类型提供了内置的类型转换。
+整数类型之间的转换 # Go 有许多整数数据类型可供选择。何时使用另一种通常更多要考虑的是性能； 但是，有时你需要从一种整数类型转换为另一种整数类型。例如，Go 有时会自动生成数值为 int，这可能与你的输入值不匹配。如果你的输入值为 int64，则在将它们的数据类型转换为匹配之前，你将无法在同一数学表达式中使用 int 和 int64 。
+假设你有一个 int8 并且需要将其转换为 int32。你可以通过 int32() 类型转换来做到这一点：
+var index int8 = 15 var bigIndex int32 bigIndex = int32(index) fmt.Println(bigIndex) Output 15 此代码块将 index 定义为 int8 数据类型，将 bigIndex 定义为 int32 数据类型。要将 index 的值存储在 bigIndex 中，它将数据类型转换为 int32。这是通过 int32() 包装 index 变量来完成的。</description></item><item><title/><link>https://example.com/docs/13-How_To_Do_Math_in_Go_with_Operators/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/13-How_To_Do_Math_in_Go_with_Operators/</guid><description>如何用运算符在 Go 中做数学计算 # 介绍 # 数字在编程中很常见。它们被用来表示一些东西，如：屏幕大小的尺寸、地理位置、金钱和积分、视频中经过的时间、游戏头像的位置、通过分配数字代码表示的颜色等等。
+在编程中进行数学运算是一项重要的技能，因为你会经常与数字打交道。尽管对数学的理解肯定能帮助你成为一个更好的程序员，但它不是一个先决条件。如果你没有数学背景，试着把数学看作是完成你想实现的目标的工具，并作为提高你的逻辑思维能力的一种方式。
+我们将使用 Go 中最常用的两种数字数据类型，整数和浮点数。
+整数是可以是正数、负数或 0 的整数（&amp;hellip;，-1，0，1，&amp;hellip;）。 浮点数是包含小数点的实数，如 9.0 或 2.25 &amp;hellip; 本教程将回顾我们在 Go 中对数字数据类型可以使用的运算符。
+运算符 # 运算符是一个表示运算的符号或函数。例如，在数学中，加号或 + 是表示加法的运算符。
+在 Go 中，我们将看到一些熟悉的运算符，这些运算符是从数学中带来的。然而，我们将使用的其他运算符是计算机编程中特有的。
+下面是 Go 中与数学有关的运算符的快速参考表。在本教程中，我们将涵盖以下所有的运算。
+预算符的返回
+x + y 是 x 和 y 的总和
+x - y 是 x 和 y 之差
+-x 表示 x 为负数特性
++x' 表示 x&amp;rsquo; 为正数特性
+x * y 是 x 和 y 的积
+x / y 是 x 和 y 的商</description></item><item><title/><link>https://example.com/docs/14-Understanding_Boolean_Logic_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/14-Understanding_Boolean_Logic_in_Go/</guid><description>了解 Go 中的布尔逻辑 # 布尔数据类型（bool）可以是两个值中的一个，即真或假。布尔型数据在编程中被用来进行比较和控制程序的流程。
+Boolean 在 Go 中的数据类型是bool，全部小写。值 true 和 false 总是分别用小写的 t 和 f，因为它们是 Go 中的特殊值。
+本教程将涵盖你需要了解 bool 数据类型如何工作的基础知识，包括布尔比较、逻辑运算符和真值表。
+比较运算符 # 在编程中，比较运算符被用来比较数值，并计算为一个单一的布尔值，即真或假。
+下表展示了布尔比较运算符。
+运算符的含义
+== 等于
+!= 不等于
+&amp;lt; 少于
+&amp;gt; 大于
+&amp;lt;= 少于等于
+&amp;gt;= 大于等于
+为了了解这些运算符的工作原理，我们在 Go 程序中把两个整数分配给两个变量：
+x := 5 y := 8 在这个例子中，由于 x 的值是5，y 的值是 8，所以 x 小于 y。
+使用这两个变量和它们的相关值，让我们回忆一下之前的运算符。在这个程序中，你用 Go 打印出每个比较运算符的值是真还是假。为了帮助更好地理解这个输出，Go 打印一个字符串来显示它正在计算的内容。
+package main import &amp;#34;fmt&amp;#34; func main() { x := 5 y := 8 fmt.</description></item><item><title/><link>https://example.com/docs/15-Understanding_Maps_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/15-Understanding_Maps_in_Go/</guid><description>理解 Go 中的 Map # 大多数现代编程语言都有_字典_或_哈希_类型的概念。这些类型通常用于以成对的方式存储数据，其中的key映射到value。
+在 Go 中，map 数据类型就是大多数程序员认为的字典类型。它将键映射到值，形成键值对，是 Go 中存储数据的一种有效方式。一个 map 的构造是通过使用关键字 map，然后是方括号中的键数据类型 [ ]，接着是值数据类型。然后将键值对放在大括号的两侧 { } 中。
+map[key]value{} 通常在 Go 中使用 map 来保存相关数据，例如 ID 中包含的信息。一个有数据的 map 看起来像这样。
+map[string]string{&amp;#34;name&amp;#34;: &amp;#34;Sammy&amp;#34;, &amp;#34;animal&amp;#34;: &amp;#34;shark&amp;#34;, &amp;#34;color&amp;#34;: &amp;#34;blue&amp;#34;, &amp;#34;location&amp;#34;: &amp;#34;ocean&amp;#34;} 除了大括号外，整个 map 中还有冒号连接键值对。冒号左边的字是键。键值可以是 Go 中可比较的类型，如 strings、ints 等。
+示例 map 中的键是：
+&amp;quot;name&amp;quot; &amp;quot;animal&amp;quot; &amp;quot;color&amp;quot; &amp;quot;location&amp;quot; 冒号右边的字是值，值可以是任何数据类型。示例 map 中的值是：
+&amp;quot;Sammy&amp;quot; &amp;quot;shark&amp;quot; &amp;quot;blue&amp;quot; &amp;quot;ocean&amp;quot; 像其他数据类型一样，你可以将 map 存储在一个变量内，并将其打印出来：
+sammy := map[string]string{&amp;#34;name&amp;#34;: &amp;#34;Sammy&amp;#34;, &amp;#34;animal&amp;#34;: &amp;#34;shark&amp;#34;, &amp;#34;color&amp;#34;: &amp;#34;blue&amp;#34;, &amp;#34;location&amp;#34;: &amp;#34;ocean&amp;#34;} fmt.</description></item><item><title/><link>https://example.com/docs/16-Understanding_Arrays_and_Slices_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/16-Understanding_Arrays_and_Slices_in_Go/</guid><description>理解 Go 中的数组和切片 # 介绍 # 在 Go 中，数组和切片是数据结构，由元素的有序序列组成。当你想处理许多相关的值时，这些数据集合是很好的选择。它们可以让你把相同类型的数据放在一起，降低代码量，并同时对多个值执行相同的方法和操作。
+虽然 Go 中的数组和切片都是元素的有序序列，但两者之间有很大的区别。Go中的数组是一个数据结构，由一个有序的元素序列组成，其容量在创建时已经定义。一旦数组分配了它的大小，就不能再改变它的大小。另一方面，切片是数组的可变长度版本，为使用这些数据结构的开发者提供更多的灵活性。切片其实是你在其他语言中认为的数组。
+鉴于这些差异，在一些特定的情况下，你会选择使用一个替代另一个。如果你是 Go 的新手，确定何时使用它们可能会让人困惑。尽管切片的多功能性使其在大多数情况下成为更合适的选择，但在一些特殊情况下，数组可以优化程序的性能。
+本文将详细介绍数组和切片，以便在这些数据类型之间做出适当的选择。此外，你将回顾声明和处理数组和切片的常用方法。本教程将首先提供对数组的描述以及如何操作它们，然后解释切片以及它们的区别。
+数组 # 数组是具有固定数量元素的数据结构。因为数组的大小是静态的，所以数据结构只需要分配一次内存，而可变长度的数据结构则必须动态地分配内存，以便将来可以变大或变小。尽管数组的固定长度会使它们在工作时有些僵硬，但一次性的内存分配可以提高程序的速度和性能。正因为如此，开发人员在优化程序时通常使用数组，在这种情况下，数据结构不需要可变数量的元素。
+定义一个数组 # 数组的定义是在大括号 [] 中声明数组的大小，然后是各元素的数据类型。Go 中的数组必须使其所有元素都是相同的数据类型。在数据类型之后，你可以用大括号 { } 来声明数组元素的单个值。
+下面是声明一个数组的一般模式：
+[capacity]data_type{element_values} 注意： 重要的是要记住，每一个新数组的声明都会创建一个不同的类型。所以，尽管 [2]int 和 [3]int 都有整数元素，但它们不同的长度使得它们的数据类型不兼容。
+如果你不声明数组元素的值，默认为零值，这意味着数组的元素将是空的。对于整数，用 0 表示，对于字符串，用空字符串表示。
+例如，下面的数组 numbers 有三个整数元素，但还没有值：
+var numbers [3]int 如果你打印 numbers，会得到以下输出：
+Output [0 0 0] 如果你想在创建数组时指定元素的值，需要将这些值放在大括号里。一个有设定值的字符串数组看起来像这样：
+[4]string{&amp;#34;blue coral&amp;#34;, &amp;#34;staghorn coral&amp;#34;, &amp;#34;pillar coral&amp;#34;, &amp;#34;elkhorn coral&amp;#34;} 可以将一个数组存储在一个变量中并打印出来：
+coral := [4]string{&amp;#34;blue coral&amp;#34;, &amp;#34;staghorn coral&amp;#34;, &amp;#34;pillar coral&amp;#34;, &amp;#34;elkhorn coral&amp;#34;} fmt.</description></item><item><title/><link>https://example.com/docs/17-Handling_Errors_in_Go_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/17-Handling_Errors_in_Go_DigitalOcean/</guid><description>在 Go 中处理错误 # 健壮的代码需要对用户的不正确输入、网络连接错误和磁盘错误等意外情况做出正确的反应。错误处理是识别程序处于异常状态并且采取措施去记录供后期调试诊断信息的过程。
 相比于其他编程语言, 要求开发者使用专门的语法去处理错误, 在 Go 中将错误作为 error(Go 中的一个接口类型) 类型的值, 并且和其他类型的值一样作为函数返回值的一部分返回。要处理 Go 中的错误, 我们必须检查函数返回值中是否包含了错误信息, 并采取合适的措施去保护数据并告知用户或者操作人员发生错误。
 创建错误 # 在处理错误之前，我们需要先创建一些错误。标准库提供了两个内置函数来创建错误：errors.New 和 fmt.Errorf。这两个函数都允许您指定一条自定义错误消息，这些信息可以向用户展示具体错误信息的一部分。
 errors.New 只提供了一个字符串类型的参数, 用户在使用的时候可以自定义一个错误发生时具体需要展示的错误消息.
 尝试运行以下示例以查看由 errors.New 创建的错误并打印到标准输出：
-package main import ( &amp;#34;errors&amp;#34; &amp;#34;fmt&amp;#34; ) func main() { // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles err := errors.New(&amp;#34;barnacles&amp;#34;) // 将错误直接打印到标准错误输出 fmt.Println(&amp;#34;Sammy says:&amp;#34;, err) } # 这里是控制台的输出 # Output Sammy says: barnacles 我们使用标准库的 errors.New 函数创建了具体的消息是 &amp;quot;barnacles&amp;quot; 的错误。这里我们遵循了 Go 程序设计风格指南 使用小写了表示错误消息。
-最后，我们使用 fmt.Println 函数将我们的错误消息与&amp;quot;Sammy says:&amp;quot;相结合并且输出到控制台。
-fmt.Errorf 函数允许用户构建动态的错误消息。它的第一个参数是一个字符串，包含包含占位符值的错误消息，例如字符串的 %s 和整数的%d。fmt.</description></item><item><title/><link>https://example.com/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/</guid><description>介绍 # GO 标准库提供了errors.New and fmt.Errorf 这两种方法来在创建错误。但是这两种方法并不能满足你的用户或者后期调试时提供更加复杂的错误信息或者报告发生了什么。为了传递这种更复杂的错误信息并获得更多功能，我们可以实现标准库 error 接口类型。
+package main import ( &amp;#34;errors&amp;#34; &amp;#34;fmt&amp;#34; ) func main() { // 使用 errors.New() 创建一个错误, 具体的错误消息是: barnacles err := errors.New(&amp;#34;barnacles&amp;#34;) // 将错误直接打印到标准错误输出 fmt.Println(&amp;#34;Sammy says:&amp;#34;, err) } # 这里是控制台的输出 # Output Sammy says: barnacles 我们使用标准库的 errors.New 函数创建了具体的消息是 &amp;quot;barnacles&amp;quot; 的错误。这里我们遵循了 Go 程序设计风格指南 使用小写了表示错误消息。</description></item><item><title/><link>https://example.com/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean/</guid><description>在 Go 中创建自定义错误 # 介绍 # GO 标准库提供了errors.New and fmt.Errorf 这两种方法来在创建错误。但是这两种方法并不能满足你的用户或者后期调试时提供更加复杂的错误信息或者报告发生了什么。为了传递这种更复杂的错误信息并获得更多功能，我们可以实现标准库 error 接口类型。
 error 接口定义如下：
 type error interface { Error() string } 内置 软件包将 error 定义为具有单个 Error() 方法的接口，该接口将错误消息字符串作为返回。通过实现此方法，我们可以将定义的任何类型转换为自己的错误。
 让我们尝试运行以下示例以查看 error 接口的实现：
-package main import ( &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; ) // 定义一个 MyError 的接口体 type MyError struct{} // 实现 error 接口的 Error 方法 func (m *MyError) Error() string { return &amp;#34;boom&amp;#34; } // 定义 sayHello 函数 // 函数返回类型为 string 和 error func sayHello() (string, error) { // 由于 *MyError 实现了 error 接口 // 所以 &amp;amp;MyError{} 可以作为 error 对象返回 return &amp;#34;&amp;#34;, &amp;amp;MyError{} } func main() { s, err := sayHello() if err !</description></item><item><title/><link>https://example.com/docs/19-Handling_Panics_in_Go-_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/19-Handling_Panics_in_Go-_DigitalOcean/</guid><description>介绍 # 程序遇到的错误分为两个广泛的类别：程序员已经预料到的错误和程序员没有预料到的错误。我们在前两篇关于 错误处理 的文章中介绍过的 error 接口主要用于处理我们在编写 Go 程序时可能遇到的错误。error 接口甚至允许我们去确认在调用一个函数时发生罕见性错误的可能性，因此我们可以在这些情况下进行适当的响应。
+package main import ( &amp;#34;fmt&amp;#34; &amp;#34;os&amp;#34; ) // 定义一个 MyError 的接口体 type MyError struct{} // 实现 error 接口的 Error 方法 func (m *MyError) Error() string { return &amp;#34;boom&amp;#34; } // 定义 sayHello 函数 // 函数返回类型为 string 和 error func sayHello() (string, error) { // 由于 *MyError 实现了 error 接口 // 所以 &amp;amp;MyError{} 可以作为 error 对象返回 return &amp;#34;&amp;#34;, &amp;amp;MyError{} } func main() { s, err := sayHello() if err !</description></item><item><title/><link>https://example.com/docs/19-Handling_Panics_in_Go-_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/19-Handling_Panics_in_Go-_DigitalOcean/</guid><description>在 Go 中处理恐慌 # 介绍 # 程序遇到的错误分为两个广泛的类别：程序员已经预料到的错误和程序员没有预料到的错误。我们在前两篇关于 错误处理 的文章中介绍过的 error 接口主要用于处理我们在编写 Go 程序时可能遇到的错误。error 接口甚至允许我们去确认在调用一个函数时发生罕见性错误的可能性，因此我们可以在这些情况下进行适当的响应。
 Panics 属于第二类错误，这些错误是程序员意料之外的。这些意料之外的错误导致一个 GO 程序自发终止并退出运行。常见的错误通常是造成 panic 的原因。在本教程中，我们将研究哪些常见操作可以引起 panic ，我们还将看到避免这些 panic 的方法。我们还将使用 defer 语句与 recover 函数一起捕获 panic，以免 panic 有机会意外终止我们正在运行的 GO 程序。
 了解 panics # GO 中的某些操作会自动返回 panic 并停止程序的运行。常见的操作包括索引超出 数组 的容量，执行类型的断言，空指针上的调用方法，错误地使用互斥锁以及尝试使用已经关闭的 chanel 等等。这些情况中的大多数是由于编程时犯错而导致的，再加上编译器在编译程序时没有检测到这些错误。
 由于 panic 包含了有助于解决问题的细节，所以开发者通常会使用 panic 来标记在开发过程中犯了一个错误。
 由于越界引发的 panic # 当你尝试访问超出切片长度或数组容量之外的索引时，GO 运行时会产生 panic。
-下面的示例是尝试使用内置的 len 函数返回的切片的长度, 然后访问切片的最后一个元素时常见错误。尝试运行此代码以了解为什么这可能会引起panic：
-package main import ( &amp;#34;fmt&amp;#34; ) func main() { names := []string{ &amp;#34;lobster&amp;#34;, &amp;#34;sea urchin&amp;#34;, &amp;#34;sea cucumber&amp;#34;, } fmt.</description></item><item><title/><link>https://example.com/docs/20-Importing_Packages_in_Go_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/20-Importing_Packages_in_Go_DigitalOcean/</guid><description>介绍 # 有时，你的代码需要当前程序的基础上增加更多的功能。在这些情况下，你可以使用软件包来丰富你的程序。在 Go 中, 一个包表示磁盘上单个目录中的所有文件。包可以定义可以在其他 Go 文件或包中引用的函数、类型和接口。
+下面的示例是尝试使用内置的 len 函数返回的切片的长度, 然后访问切片的最后一个元素时常见错误。尝试运行此代码以了解为什么这可能会引起 panic：
+package main import ( &amp;#34;fmt&amp;#34; ) func main() { names := []string{ &amp;#34;lobster&amp;#34;, &amp;#34;sea urchin&amp;#34;, &amp;#34;sea cucumber&amp;#34;, } fmt.</description></item><item><title/><link>https://example.com/docs/20-Importing_Packages_in_Go_DigitalOcean/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/20-Importing_Packages_in_Go_DigitalOcean/</guid><description>在 Go 中导入包 # 介绍 # 有时，你的代码需要当前程序的基础上增加更多的功能。在这些情况下，你可以使用软件包来丰富你的程序。在 Go 中, 一个包表示磁盘上单个目录中的所有文件。包可以定义可以在其他 Go 文件或包中引用的函数、类型和接口。
 本教程将带你来完成软件包的安装, 导入和重命名。
 标准库包 # 标准库是 Go 附带的一组软件包。这些软件包包含许多用于编写现代软件的基本模块。例如， fmt 软件包包含用于格式和打印字符串的基本功能。 net/http 软件包包含允许开发人员创建 Web 服务，通过HTTP 协议发送和检索数据的功能，等等。
 为了利用软件包中的功能，你需要使用 import 语句访问软件包。import 语句由 import 关键字以及软件包的名称组成。
 例如，在 GO 程序中 random.go 文件。你可以导入 math/rand 包来生成随机数：
-import &amp;#34;math/rand&amp;#34; 当我们导入一个包时，我们把它在当前程序中作为一个单独namespace命名空间来使用。这意味着我们必须像 package.function 调用其中的函数。
+import &amp;#34;math/rand&amp;#34; 当我们导入一个包时，我们把它在当前程序中作为一个单独 namespace 命名空间来使用。这意味着我们必须像 package.function 调用其中的函数。
 实际上，math/rand 软件包的功能看起来像这些示例：
 rand.Int() 调用函数返回随机整数。 rand.Intn() 调用函数将随机元素从 0 返回到所提供的指定数字。 让我们创建一个 for 循环，以显示我们如何在随机过程中调用 math/rand 软件包的函数。
 random.go
-package main import &amp;#34;math/rand&amp;#34; func main() { for i := 0; i &amp;lt; 10; i++ { println(rand.</description></item><item><title/><link>https://example.com/docs/21-How_To_Write_Packages_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/21-How_To_Write_Packages_in_Go/</guid><description>如何在 Go 中编写包 # 一个包由同一目录下的 Go 文件组成的，并且在文件开头有相同的包声明。你可以从包中加入额外的功能，使你的程序更加复杂。有些包可以通过 Go 标准库获得，因此在安装 Go 时就已经安装了。其他的可以用 Go 的go get命令来安装。你也可以通过在同一目录下创建Go文件来建立你自己的Go包，你可以通过使用必要的包声明来分享代码。
-本教程将指导你如何编写Go包，以便在其他编程文件中使用。
-前提条件 # 按照如何安装和设置Go的本地编程环境系列教程中的一个教程设置Go编程环境。按照本地编程环境教程中的步骤5创建你的Go工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。 为了加深你对GOPATH的了解，请阅读文章了解GOPATH。 编写和导入软件包 # 编写包就像编写任何其他Go文件一样，包可以包含函数、类型和变量的定义，然后可以在其他Go程序中使用。
-在我们创建一个新的包之前，我们需要进入我们的Go工作区。这通常是在我们的gopath下。对于这个例子，本教程中我们将把包称为greet。为了做到这一点，在我们的项目空间下的gopath中创建了一个名为greet的目录。当使用Github作为代码库，组织名称为gopherguides，想在此组织下创建greet包，那么我们的目录会是这样的：
+package main import &amp;#34;math/rand&amp;#34; func main() { for i := 0; i &amp;lt; 10; i++ { println(rand.</description></item><item><title/><link>https://example.com/docs/21-How_To_Write_Packages_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/21-How_To_Write_Packages_in_Go/</guid><description>如何在 Go 中编写包 # 一个包由同一目录下的 Go 文件组成的，并且在文件开头有相同的包声明。你可以从包中加入额外的功能，使你的程序更加复杂。有些包可以通过 Go 标准库获得，因此在安装 Go 时就已经安装了。其他的可以用 Go 的go get命令来安装。你也可以通过在同一目录下创建 Go 文件来建立你自己的 Go 包，你可以通过使用必要的包声明来分享代码。
+本教程将指导你如何编写 Go 包，以便在其他编程文件中使用。
+前提条件 # 按照如何安装和设置Go的本地编程环境系列教程中的一个教程设置 Go 编程环境。按照本地编程环境教程中的步骤5创建你的 Go 工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。 为了加深你对 GOPATH 的了解，请阅读文章了解 GOPATH。 编写和导入软件包 # 编写包就像编写任何其他 Go 文件一样，包可以包含函数、类型和变量的定义，然后可以在其他 Go 程序中使用。
+在我们创建一个新的包之前，我们需要进入我们的 Go 工作区。这通常是在我们的gopath下。对于这个例子，本教程中我们将把包称为greet。为了做到这一点，在我们的项目空间下的gopath中创建了一个名为greet的目录。当使用 Github 作为代码库，组织名称为gopherguides，想在此组织下创建greet包，那么我们的目录会是这样的：
 └── $GOPATH └── src └── github.com └── gopherguides greet目录在gopherguides目录中：
 └── $GOPATH └── src └── github.com └── gopherguides └── greet 最后，我们可以添加我们目录中的第一个文件。通常的做法是，包中的 主要或 入口 文件是以目录名来命名的。在这种情况下，将在greet目录下创建一个名为greet.go的文件：
-└── $GOPATH └── src └── github.com └── gopherguides └── greet └── greet.go 创建了文件后，我们就可以开始编写我们想要重复使用或在不同项目中共享的代码。在本例中，我们将创建一个打印出 Hello World的 Hello 的函数。
-在文本编辑器中打开 greet.go 文件，增加如下代码：
-package greet import &amp;#34;fmt&amp;#34; func Hello() { fmt.</description></item><item><title/><link>https://example.com/docs/22-Understanding_Package_Visibility_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/22-Understanding_Package_Visibility_in_Go/</guid><description>理解Go中包的可见性 # 介绍 # 当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
+└── $GOPATH └── src └── github.</description></item><item><title/><link>https://example.com/docs/22-Understanding_Package_Visibility_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/22-Understanding_Package_Visibility_in_Go/</guid><description>理解 Go 中包的可见性 # 介绍 # 当创建一个Go中的包时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过导入包，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 这里的可见性是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。
 在编写符合人体工程学的代码时，仔细控制包的可见性是很重要的，特别是在考虑到将来可能要对你的包进行修改时。如果你需要修复一个错误，提高性能，或改变功能，你会希望以一种不会破坏使用你的包的人的代码的方式进行改变。尽量减少破坏性修改的一个方法是只允许访问你的包中需要正常使用的部分。通过限制访问，你可以在内部对包进行修改，而减少影响其他开发者使用你的包的机会。
 在这篇文章中，将学习如何控制包的可见性，以及如何保护代码中只应在包内使用的部分。为了做到这一点，我们将创建一个基本的记录器来记录和调试信息，使用具有不同程度的项目可见性的包。
 前提条件 # 要遵循本文中的示例，你将需要：
-按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构： . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 # 不同于其他程序语言，如Java和Python使用访问修饰符如public、private或protected来指定范围不同，Go通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &amp;ldquo;可见的&amp;rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
+按照如何安装 Go 并设置本地编程环境设置的 Go 工作区。 本教程将使用以下文件结构： . ├── bin │ └── src └── github.com └── gopherguides 可导出与不可导出 # 不同于其他程序语言，如 Java 和Python使用访问修饰符如public、private或protected来指定范围不同，Go 通过其声明方式来决定一个项目是否exported和unxported。在这种情况下，导出一个项目会使它在当前包之外是 &amp;ldquo;可见的&amp;rdquo;。如果它没有被导出，它只能在它被定义的包内可见和使用。
 这种外部可见性是通过将声明的项目的第一个字母大写来控制的。所有以大写字母开头的声明，如 &amp;ldquo;类型&amp;rdquo;、&amp;ldquo;变量&amp;rdquo;、&amp;ldquo;常量&amp;rdquo;、&amp;ldquo;函数&amp;quot;等，在当前包外是可见的。
 让我们看看下面的代码，仔细注意一下大写字母。
-package greet import &amp;#34;fmt&amp;#34; var Greeting string func Hello(name string) string { return fmt.Sprintf(Greeting, name) } 这段代码声明它是在greet包中。然后声明了两个符号，一个叫做 Greeting 的变量和一个叫做 Hello 的函数。因为它们都以大写字母开头，所以它们都被 &amp;ldquo;可导出&amp;rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的API设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
+package greet import &amp;#34;fmt&amp;#34; var Greeting string func Hello(name string) string { return fmt.Sprintf(Greeting, name) } 这段代码声明它是在greet包中。然后声明了两个符号，一个叫做 Greeting 的变量和一个叫做 Hello 的函数。因为它们都以大写字母开头，所以它们都被 &amp;ldquo;可导出&amp;rdquo; 的，可供任何外部程序使用。如前所述，精心设计一个限制访问的包将允许更好的 API 设计，并使内部更新你的包更容易，而不会破坏任何依赖此包的代码。
 定义包的可见性 # 为了仔细看看包的可见性在程序中是如何工作的，让我们创建一个logging包，记住哪些信息我们希望包外可见，哪些我们不希望它可见。这个日志包将负责把我们程序的任何信息记录到控制台。它还将查看我们在什么级别上进行的日志记录，一个级别描述了日志的类型，它将是三种状态之一：信息、警告或错误。
-首先，在你的 src 目录下，创建一个名为 logging 的目录来放置日志文件：
-mkdir logging 进入目录：
-cd logging 然后，使用nano这样的编辑器，创建一个名为logging.</description></item><item><title/><link>https://example.com/docs/23-How_To_Write_Conditional_Statements_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/23-How_To_Write_Conditional_Statements_in_Go/</guid><description>如何在Go中编写条件语句 # 介绍 # 条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。
+首先，在你的 src 目录下，创建一个名为 logging 的目录来放置日志文件：</description></item><item><title/><link>https://example.com/docs/23-How_To_Write_Conditional_Statements_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/23-How_To_Write_Conditional_Statements_in_Go/</guid><description>如何在 Go 中编写条件语句 # 介绍 # 条件性语句是每一种编程语言的组成部分。通过条件语句，我们可以让代码有时运行，有时不运行，这取决于当时程序的条件。
 当我们完全执行程序的每个语句时，我们并没有要求程序评估特定的条件。通过使用条件语句，程序可以确定某些条件是否被满足，然后被告知下一步该做什么。
 让我们来看看一些使用条件语句的例子。
 如果学生的考试成绩超过65%，报告她的成绩通过；如果没有，报告她的成绩不合格。 如果他的账户里有钱，就计算利息；如果没有，就收取罚款。 如果他们买了10个或更多的橙子，计算5%的折扣；如果他们买的少，就不买。 通过评估条件，并根据是否满足这些条件来分配代码运行，我们就是在写条件代码。
-本教程将带你了解在Go编程语言中编写条件语句。
+本教程将带你了解在 Go 编程语言中编写条件语句。
 If 语句 # 我们将从 if 语句开始，它将评估一个语句是真的还是假的，并且只在该语句为真的情况下运行代码。
 在一个纯文本编辑器中，打开一个文件，写入以下代码：
 package main import &amp;#34;fmt&amp;#34; func main() { grade := 70 if grade &amp;gt;= 65 { fmt.Println(&amp;#34;Passing grade&amp;#34;) } } 在这段代码中，我们有一个变量grade，并给它一个整数值70。然后我们使用if语句来评估变量grade是否大于或等于（&amp;gt;=）65。如果它确实满足这个条件，我们告诉程序打印出字符串 Passing grade。
 将程序保存为grade.go，并在终端窗口中用go run grade.go命令运行它。
 在这种情况下，70分的成绩*符合大于或等于65分的条件，因此，一旦你运行该程序，你将收到以下输出：
 Passing grade 现在让我们改变这个程序的结果，把grade变量的值改为60：
-package main import &amp;#34;fmt&amp;#34; func main() { grade := 60 if grade &amp;gt;= 65 { fmt.Println(&amp;#34;Passing grade&amp;#34;) } } 当我们保存并运行这个代码时，我们不会收到任何输出，因为条件*没有得到满足，我们也没有告诉程序执行另一条语句。
-再举一个例子，让我们计算一个银行账户余额是否低于0。让我们创建一个名为account.go的文件，并编写以下程序：</description></item><item><title/><link>https://example.com/docs/24-How_To_Write_Switch_Statements_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/24-How_To_Write_Switch_Statements_in_Go/</guid><description>如何在Go中编写Switch语句 # 介绍 # 条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的Go程序在遇到不同选项时采取的行动很有用。
-我们可以用switch语句编写的所有内容也可以用if语句编写。在本教程中，我们将看几个例子，看看switch语句能做什么，它所取代的if语句，以及它最合适的应用场合。
-Switch语句的结构 # Switch通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
-package main import &amp;#34;fmt&amp;#34; func main() { flavors := []string{&amp;#34;chocolate&amp;#34;, &amp;#34;vanilla&amp;#34;, &amp;#34;strawberry&amp;#34;, &amp;#34;banana&amp;#34;} for _, flav := range flavors { if flav == &amp;#34;strawberry&amp;#34; { fmt.Println(flav, &amp;#34;is my favorite!&amp;#34;) continue } if flav == &amp;#34;vanilla&amp;#34; { fmt.Println(flav, &amp;#34;is great!&amp;#34;) continue } if flav == &amp;#34;chocolate&amp;#34; { fmt.Println(flav, &amp;#34;is great!&amp;#34;) continue } fmt.Println(&amp;#34;I&amp;#39;ve never tried&amp;#34;, flav, &amp;#34;before&amp;#34;) } } 这将输出如下信息：</description></item><item><title/><link>https://example.com/docs/25_How_To_Construct_For_Loops_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/25_How_To_Construct_For_Loops_in_Go/</guid><description>如何在 Go 中构造 for 循环 # 介绍 # 在计算机编程中，循环 是在满足某些条件之前循环重复执行一段代码的代码结构。在计算机编程中使用循环可以让您自动并重复地执行类似的任务。想象一下，如果您有一个需要处理的文件列表，或者您想计算一篇文章的行数。您就可以在代码中使用循环来解决这样的问题。
+package main import &amp;#34;fmt&amp;#34; func main() { grade := 60 if grade &amp;gt;= 65 { fmt.Println(&amp;#34;Passing grade&amp;#34;) } } 当我们保存并运行这个代码时，我们不会收到任何输出，因为条件*没有得到满足，我们也没有告诉程序执行另一条语句。</description></item><item><title/><link>https://example.com/docs/24-How_To_Write_Switch_Statements_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/24-How_To_Write_Switch_Statements_in_Go/</guid><description>如何在 Go 中编写 Switch 语句 # 介绍 # 条件语句使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些变量与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用if语句就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。switch是一个替代性的条件语句，对于传达你的 Go 程序在遇到不同选项时采取的行动很有用。
+我们可以用 switch 语句编写的所有内容也可以用if语句编写。在本教程中，我们将看几个例子，看看 switch 语句能做什么，它所取代的if语句，以及它最合适的应用场合。
+Switch 语句的结构 # Switch 通常用于描述当一个变量被分配到特定值时程序所采取的行动。下面的例子演示了我们如何使用 if 语句来完成这个任务。
+package main import &amp;#34;fmt&amp;#34; func main() { flavors := []string{&amp;#34;chocolate&amp;#34;, &amp;#34;vanilla&amp;#34;, &amp;#34;strawberry&amp;#34;, &amp;#34;banana&amp;#34;} for _, flav := range flavors { if flav == &amp;#34;strawberry&amp;#34; { fmt.Println(flav, &amp;#34;is my favorite!&amp;#34;) continue } if flav == &amp;#34;vanilla&amp;#34; { fmt.Println(flav, &amp;#34;is great!&amp;#34;) continue } if flav == &amp;#34;chocolate&amp;#34; { fmt.</description></item><item><title/><link>https://example.com/docs/25_How_To_Construct_For_Loops_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/25_How_To_Construct_For_Loops_in_Go/</guid><description>如何在 Go 中构造 for 循环 # 介绍 # 在计算机编程中，循环 是在满足某些条件之前循环重复执行一段代码的代码结构。在计算机编程中使用循环可以让您自动并重复地执行类似的任务。想象一下，如果您有一个需要处理的文件列表，或者您想计算一篇文章的行数。您就可以在代码中使用循环来解决这样的问题。
 在 Go 中，for 循环是基于循环计数器或循环变量实现代码的重复执行。与其他具有多个循环结构（例如 while ， do 等 ）的编程语言不同，Go 只有 for 循环。这有助于使您的代码更清晰和更具可读性，因为您不必担心会有多种策略来实现相同的循环结构。在开发过程中，这种强可读性和低认知负担也将使您的代码比其他语言更不容易出错。
 在本教程中，您将了解 Go 中 for 循环是如何工作的，包括其使用的三个主要变体。我们将首先展示如何创建不同类型的 for 循环，然后介绍如何在 Go 中遍历顺序数据类型。最后，我们将解释如何使用嵌套循环。
 声明 ForClause 和 Condition 循环 # 为了适应各种用例，在 Go 中创建 for 循环有三种不同的方法，每种方法都有自己的功能。这些是使用 Condition、ForClause 或 RangeClause 创建 for 循环。在本节中，我们将解释如何声明和使用 ForClause 和 Condition 变体。
@@ -138,14 +205,14 @@ fmt.Println() 会将对象打印到标准输出（最可能在您的终端）。
 在本教程中，我们将介绍如何定义您自己的函数以在您的项目中使用。
 定义一个函数 # 让我们从经典的“Hello, World!”程序开始理解函数。
 我们将在一个文本编辑器中创建一个新的文本文件，然后调用程序 hello.go。然后，我们将在里面定义函数。
-Go中使用 func 关键字来定义函数。然后是您选择的名称和一组括号，其中包含函数将采用的任何参数（它们可以为空）。函数代码行用大括号 {} 括起来。
+Go 中使用 func 关键字来定义函数。然后是您选择的名称和一组括号，其中包含函数将采用的任何参数（它们可以为空）。函数代码行用大括号 {} 括起来。
 在这种情况下，我们将定义一个名为 hello() 的函数：
 func hello() {} 这就是用于创建函数的初始语句。
 基于此，我们将添加第二行来提供函数功能的说明。我们将打印 Hello, World! 到控制台：
 func hello() { fmt.Println(&amp;#34;Hello, World!&amp;#34;) } 现在我们的函数已经完全定义好了，但是如果我们此时运行程序，什么都不会发生，因为我们没有调用函数。
 因此，在我们的 main() 代码块中，来调用 hello() 函数：
 package main import &amp;#34;fmt&amp;#34; func main() { hello() } func hello() { fmt.Println(&amp;#34;Hello, World!&amp;#34;) } 现在，让我们运行程序：
-$ go run hello.go 您将收到以下输出：</description></item><item><title/><link>https://example.com/docs/28_How_To_Use_Variadic_Functions_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/28_How_To_Use_Variadic_Functions_in_Go/</guid><description>如何在 Go 中使用可变参数函数 # 介绍 # 可变参数函数 是可以接受零个、一个或多个值作为单个参数的函数。虽然可变参数函数并不常见，但它们能够使您的代码更清晰、更具可读性。
+$ go run hello.</description></item><item><title/><link>https://example.com/docs/28_How_To_Use_Variadic_Functions_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://example.com/docs/28_How_To_Use_Variadic_Functions_in_Go/</guid><description>如何在 Go 中使用可变参数函数 # 介绍 # 可变参数函数 是可以接受零个、一个或多个值作为单个参数的函数。虽然可变参数函数并不常见，但它们能够使您的代码更清晰、更具可读性。
 可变参数函数其实很常见。最常见的是fmt包中的 Println。
 func Println(a ...interface{}) (n int, err error) 参数前面带有一组省略号 ( ... )的函数被视为可变参数函数。省略号表示提供的参数可以是零个、一个或多个。对于fmt.Println包，它声明参数a是可变参数。
 让我们创建一个使用 fmt.Println 函数并传入零个、一个或多个值的程序：
