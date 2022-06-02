@@ -1,6 +1,6 @@
 # 理解 Go 中包的可见性
 
-### 介绍
+## 介绍
 
 当创建一个[Go中的包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过[导入包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 

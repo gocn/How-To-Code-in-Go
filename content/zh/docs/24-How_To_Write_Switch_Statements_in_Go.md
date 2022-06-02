@@ -1,6 +1,6 @@
 # 如何在 Go 中编写 Switch 语句
 
-### 介绍
+## 介绍
 
 [条件语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go)使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用[`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements)就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。`switch`是一个替代性的条件语句，对于传达你的 Go 程序在遇到不同选项时采取的行动很有用。
 
