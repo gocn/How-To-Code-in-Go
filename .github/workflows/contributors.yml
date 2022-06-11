@@ -1,9 +1,9 @@
 on:
     push:
         branches:
-            - hugo-builder
+            - main
 
-name: Contributes
+name: contributes
 
 jobs:
     contrib-readme-en-job:
