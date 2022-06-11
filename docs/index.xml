@@ -62,7 +62,8 @@ var absoluteZero int = -459 fmt.Println(absoluteZero) Output -459 我们也可�
 引号 # 因为我们可以在 Go 中使用反引号 (`` ) 或双引号 (&amp;quot;`)，所以我们很容易在反引号里使用双引号来括住字符串：
 `Sammy says, &amp;#34;Hello!&amp;#34;` 或者，要使用反引号，你可以将字符串括在双引号中：
 &amp;#34;Sammy likes the `fmt` package for formatting strings..&amp;#34; 在组合反引号和双引号的方式中，我们可以控制字符串中引号和反引号的显示方式。
-这里有个重点，在 Go 中使用反引号会创建一个 raw 字符串文字，而使用双引号会创建一个 interpreted 字符串文字。要了解有关差异的更多信息，请阅读 An Introduction to Working with Strings in Go 教程。</description></item><item><title/><link>https://gocn.github.io/How-To-Code-in-Go/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/How-To-Code-in-Go/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</guid><description>介绍 Go 中的 Strings 包 # 介绍 # Go 的 strings 包有几个函数可用于 string 数据类型。这些函数可以轻松地修改和操作字符串。我们可以将函数视为对代码元素执行的操作。内置函数是那些在 Go 编程语言中定义并且可供我们随时使用的函数。
+这里有个重点，在 Go 中使用反引号会创建一个 raw 字符串文字，而使用双引号会创建一个 interpreted 字符串文字。要了解有关差异的更多信息，请阅读 Go 中处理字符串的介绍 教程。
+转义字符 # 格式化字符串的另一种方法是使用转义字符。转义字符用于告诉代码后面的字符具有特殊含义。转义字符都以反斜杠 (\) 开头，并结合字符串中的另一个字符以某种方式格式化给定的字符串。</description></item><item><title/><link>https://gocn.github.io/How-To-Code-in-Go/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/How-To-Code-in-Go/docs/10-An_Introduction_to_the_Strings_Package_in_Go/</guid><description>介绍 Go 中的 Strings 包 # 介绍 # Go 的 strings 包有几个函数可用于 string 数据类型。这些函数可以轻松地修改和操作字符串。我们可以将函数视为对代码元素执行的操作。内置函数是那些在 Go 编程语言中定义并且可供我们随时使用的函数。
 在本教程中，我们将回顾几个可用于在 Go 中处理字符串的不同函数。
 字符串大写和小写 # 函数 strings.ToUpper 和 strings.ToLower 将返回一个字符串，其中原始字符串的所有字母都转换为大写或小写字母。 因为字符串是不可变的数据类型，所以返回的字符串将是一个新字符串。 字符串中的任何非字母字符都不会更改。
 要将字符串 &amp;quot;Sammy Shark&amp;quot; 转换为全大写，你可以使用 strings.ToUpper 函数：
@@ -232,7 +233,7 @@ package main import &amp;#34;fmt&amp;#34; func main() { // defer statement is ex
 尽管 init() 是一个有用的工具，但它有时会使代码难以阅读，因为难以找到的 init() 实例会大大影响代码的运行顺序。正因为如此，对于刚接触 Go 的开发者来说，了解这个函数的方方面面是非常重要的，这样他们在写代码时就能确保以可读的方式使用 init()。
 在本教程中，你将学习 init() 如何用于设置和初始化特定包的变量、一次性计算，以及注册一个包以便与另一个包一起使用。
 先决条件 # 对于本文中的一些例子，你将需要：
-按照 [如何安装 Go 和设置本地编程环境]（https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go）设置的 Go 工作空间。本教程将使用以下文件结构： . ├── bin │ └── src └── github.com └── gopherguides 定义 init() # 只要你定义一个 init() 函数，Go 就会在该包的其他东西之前加载并运行它。为了证明这一点，本节将介绍如何定义一个 init() 函数，并展示对包的运行的影响。
+按照 如何安装 Go 和设置本地编程环境设置的 Go 工作空间。本教程将使用以下文件结构： . ├── bin │ └── src └── github.com └── gopherguides 定义 init() # 只要你定义一个 init() 函数，Go 就会在该包的其他东西之前加载并运行它。为了证明这一点，本节将介绍如何定义一个 init() 函数，并展示对包的运行的影响。
 首先，让我们以下面这个没有 init() 函数的代码为例：
 package main import &amp;#34;fmt&amp;#34; var weekday string func main() { fmt.Printf(&amp;#34;Today is %s&amp;#34;, weekday) } 在这个程序中，我们声明了一个全局变量，叫做 weekday。默认情况下，weekday 的值是一个空字符串。</description></item><item><title/><link>https://gocn.github.io/How-To-Code-in-Go/docs/31-Customizing_Go_Binaries_with_Build_Tags/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://gocn.github.io/How-To-Code-in-Go/docs/31-Customizing_Go_Binaries_with_Build_Tags/</guid><description>用构建标签定制 Go 二进制文件 # 简介 # 在 Go 中，构建标签 或 构建约束 是添加到一段代码中的标识符，它决定了该文件在 build 过程中何时应被包含在一个包中。这允许你从同一源代码中构建不同版本的 Go 应用程序，并以快速和有组织的方式在它们之间进行切换。许多开发者使用构建标签来改善构建跨平台兼容的应用程序的工作流程，例如需要修改代码以考虑不同操作系统之间的差异的程序。构建标签还可用于集成测试，允许你在集成代码和带有Mock 服务的代码之间快速切换，并用于应用程序内不同级别的功能集。
 让我们以不同的客户功能集的问题为例。在编写一些应用程序时，你可能想控制在二进制文件中包括哪些功能，例如一个提供免费、专业和企业级别的应用程序。当客户在这些应用程序中增加他们的订阅级别时，更多的功能将被解锁并可用。为了解决这个问题，你可以维护独立的项目，并试图通过使用 import 语句来保持它们的同步性。虽然这种方法可行，但随着时间的推移，它将变得乏味和容易出错。另一种方法是使用构建标签。
