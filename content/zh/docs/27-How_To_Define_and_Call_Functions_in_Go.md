@@ -15,7 +15,7 @@ Go 附带了强大的标准库，其中包含许多预定义的函数。您可�
 
 ## 定义一个函数
 
-让我们从经典的[“Hello, World!”程序](https://www.digitalocean.com/community/tutorials/how-to-write-your-first-program-in-go)开始理解函数。
+让我们从经典的[“Hello, World!”程序]({{< relref "/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean.md" >}})开始理解函数。
 
 我们将在一个文本编辑器中创建一个新的文本文件，然后调用程序 `hello.go`。然后，我们将在里面定义函数。
 
@@ -80,7 +80,7 @@ func main() {
 }
 ```
 
-函数可以比我们定义的 `hello()` 函数更复杂。我们可以在函数中使用[`for`循环](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go)、[条件语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go)等。
+函数可以比我们定义的 `hello()` 函数更复杂。我们可以在函数中使用[`for`循环]({{< relref "/docs/25-How_To_Construct_For_Loops_in_Go.md" >}})、[条件语句]({{< relref "/docs/23-How_To_Write_Conditional_Statements_in_Go.md" >}})等。
 
 例如，以下函数使用条件语句检查 `name` 变量的输入是否包含元音，并使用 `for` 循环遍历 `name` 字符串中的字母。
 
@@ -120,7 +120,7 @@ func names() {
 
 到目前为止，我们已经研究了带有空括号且不带参数的函数，但我们是可以在函数定义中的括号内定义参数的。
 
-_参数_ 是函数定义中的命名实体，指定函数可以接受的参数。在 Go 中，您必须为每个参数指定[数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go)。
+_参数_ 是函数定义中的命名实体，指定函数可以接受的参数。在 Go 中，您必须为每个参数指定[数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}})。
 
 让我们创建一个将单词重复指定次数的程序。它将接受一个 `string` 类型的 `word` 参数和一个用于重复单词的次数的 `int` 类型参数 `reps`。
 
@@ -346,4 +346,4 @@ invalid value of -1 provided for reps. value must be greater than 0.
 
 函数是在程序中执行操作指令的代码块，有助于使我们的代码更好地可重用和模块化。
 
-要了解有关如何使您的代码更模块化的更多信息，您可以阅读我们关于[如何在 Go 中编写包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)的指南。
+要了解有关如何使您的代码更模块化的更多信息，您可以阅读我们关于[如何在 Go 中编写包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})的指南。

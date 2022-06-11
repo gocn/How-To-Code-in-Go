@@ -2,7 +2,7 @@
 
 ## 简介
 
-结构，或称结构体，被用来将多个信息聚合在一个单元中。这些[信息集合](https://www.digitalocean.com/community/tutorials/defining-structs-in-go)被用来描述更高层次的概念，例如由 `Street`、`City`、`State` 和 `PostalCode` 组成的 `Address`。当你从数据库或 API 等系统中读取这些信息时，你可以使用结构体标签来控制这些信息如何被分配到结构体的字段中。结构体标签是附加在结构体字段上的小块元数据，为与该结构体一起工作的其他 Go 代码提供指示。
+结构，或称结构体，被用来将多个信息聚合在一个单元中。这些[信息集合]({{< relref "/docs/33-Defining_Structs_in_Go.md" >}})被用来描述更高层次的概念，例如由 `Street`、`City`、`State` 和 `PostalCode` 组成的 `Address`。当你从数据库或 API 等系统中读取这些信息时，你可以使用结构体标签来控制这些信息如何被分配到结构体的字段中。结构体标签是附加在结构体字段上的小块元数据，为与该结构体一起工作的其他 Go 代码提供指示。
 
 ## 结构体标签是怎么样的
 

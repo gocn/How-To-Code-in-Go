@@ -2,7 +2,7 @@
 
 ## 介绍
 
-当创建一个[Go中的包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过[导入包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
+当创建一个[Go中的包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过[导入包]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 
 这里的*可见性*是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。
 
@@ -14,7 +14,7 @@
 
 要遵循本文中的示例，你将需要：
 
-- 按照[如何安装 Go 并设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置的 Go 工作区。 本教程将使用以下文件结构：
+- 按照[如何安装 Go 并设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})设置的 Go 工作区。 本教程将使用以下文件结构：
 
 ```
 .
@@ -97,7 +97,7 @@ func Log(statement string) {
 
 保存并退出该文件。
 
-为了在我们代码的其他地方使用这个包，我们可以[`import`它到一个新的包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)。我们将创建这个新的包，但需要一个新的目录来首先存储这些源文件。
+为了在我们代码的其他地方使用这个包，我们可以[`import`它到一个新的包]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})。我们将创建这个新的包，但需要一个新的目录来首先存储这些源文件。
 
 让我们离开`logging`目录，创建一个名为`cmd`的新目录，然后进入这个新目录：
 
@@ -468,4 +468,4 @@ cmd/main.go:16:8: logger.write undefined (cannot refer to unexported field or me
 
 这篇文章展示了如何在包之间共享代码，同时也保护你的包的实现细节。这允许你输出一个简单的 API，为了向后兼容而很少改变，但允许在你的包中根据需要私下改变，使其在未来更好地工作。这被认为是创建包和它们相应的 API 时的最佳做法。
 
-要了解更多关于 Go 中的包，请查看我们的[在 Go 中导入包](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)和[如何在 Go 中编写包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)文章，或者探索我们整个[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+要了解更多关于 Go 中的包，请查看我们的[在 Go 中导入包]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})和[如何在 Go 中编写包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})文章，或者探索我们整个[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。

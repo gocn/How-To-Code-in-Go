@@ -2,9 +2,9 @@
 
 ## 介绍
 
-程序遇到的错误分为两个广泛的类别：程序员已经预料到的错误和程序员没有预料到的错误。我们在前两篇关于 [错误处理](https://www.digitalocean.com/community/tutorials/handling-errors-in-go) 的文章中介绍过的 `error` 接口主要用于处理我们在编写 Go 程序时可能遇到的错误。`error` 接口甚至允许我们去确认在调用一个函数时发生罕见性错误的可能性，因此我们可以在这些情况下进行适当的响应。
+程序遇到的错误分为两个广泛的类别：程序员已经预料到的错误和程序员没有预料到的错误。我们在前两篇关于 [错误处理]({{< relref "/docs/12-How_To_Convert_Data_Types_in_Go.md" >}}) 的文章中介绍过的 `error` 接口主要用于处理我们在编写 Go 程序时可能遇到的错误。`error` 接口甚至允许我们去确认在调用一个函数时发生罕见性错误的可能性，因此我们可以在这些情况下进行适当的响应。
 
-Panics 属于第二类错误，这些错误是程序员意料之外的。这些意料之外的错误导致一个 GO 程序自发终止并退出运行。常见的错误通常是造成 panic 的原因。在本教程中，我们将研究哪些常见操作可以引起 panic ，我们还将看到避免这些 panic 的方法。我们还将使用 [`defer`](https://www.digitalocean.com/community/tutorials/understanding-defer-in-go) 语句与 `recover` 函数一起捕获 panic，以免 panic 有机会意外终止我们正在运行的 GO 程序。
+Panics 属于第二类错误，这些错误是程序员意料之外的。这些意料之外的错误导致一个 GO 程序自发终止并退出运行。常见的错误通常是造成 panic 的原因。在本教程中，我们将研究哪些常见操作可以引起 panic ，我们还将看到避免这些 panic 的方法。我们还将使用 [`defer`]({{< relref "/docs/29-Understanding_defer_in_Go.md" >}}) 语句与 `recover` 函数一起捕获 panic，以免 panic 有机会意外终止我们正在运行的 GO 程序。
 
 ## 了解 panics
 

@@ -10,7 +10,7 @@ _可变参数函数_ 是可以接受零个、一个或多个值作为单个参�
 func Println(a ...interface{}) (n int, err error)
 ```
 
-参数前面带有一组省略号 ( `...` )的[函数](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)被视为可变参数函数。省略号表示提供的参数可以是零个、一个或多个。对于`fmt.Println`包，它声明参数`a`是可变参数。
+参数前面带有一组省略号 ( `...` )的[函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})被视为可变参数函数。省略号表示提供的参数可以是零个、一个或多个。对于`fmt.Println`包，它声明参数`a`是可变参数。
 
 让我们创建一个使用 `fmt.Println` 函数并传入零个、一个或多个值的程序：
 

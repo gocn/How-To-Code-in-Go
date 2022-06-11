@@ -5,7 +5,7 @@
 
 在 Go 中，`for` 循环是基于循环计数器或循环变量实现代码的重复执行。与其他具有多个循环结构（例如 `while` ， `do` 等 ）的编程语言不同，Go 只有 `for` 循环。这有助于使您的代码更清晰和更具可读性，因为您不必担心会有多种策略来实现相同的循环结构。在开发过程中，这种强可读性和低认知负担也将使您的代码比其他语言更不容易出错。
 
-在本教程中，您将了解 Go 中 `for` 循环是如何工作的，包括其使用的三个主要变体。我们将首先展示如何创建不同类型的 `for` 循环，然后介绍如何[在 Go 中遍历顺序数据类型](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go)。最后，我们将解释如何使用嵌套循环。
+在本教程中，您将了解 Go 中 `for` 循环是如何工作的，包括其使用的三个主要变体。我们将首先展示如何创建不同类型的 `for` 循环，然后介绍如何[在 Go 中遍历顺序数据类型]({{< relref "/docs/16-Understanding_Arrays_and_Slices_in_Go.md" >}})。最后，我们将解释如何使用嵌套循环。
 
 ## 声明 ForClause 和 Condition 循环
 
@@ -191,13 +191,13 @@ func main() {
 }
 ```
 
-在前面的代码中，`buf :=bytes.NewBufferString("one\ntwo\nthree\nfour\n")` 声明了一个包含一些数据的缓冲区。因为我们不知道缓冲区何时会完成读取，所以我们创建了一个没有子句的 `for` 循环。在 `for` 循环内部，我们使用 `line, err := buf.ReadString('\n')` 从缓冲区读取一行并检查从缓冲区读取是否有错误。如果有，我们解决错误，并[使用 `break` 关键字退出 for 循环](https://www.digitalocean.com/community/tutorials/using-break-and-continue-statements-when-working-with-loops-in-go)。有了`break`，您就不需要使用停止循环的条件。
+在前面的代码中，`buf :=bytes.NewBufferString("one\ntwo\nthree\nfour\n")` 声明了一个包含一些数据的缓冲区。因为我们不知道缓冲区何时会完成读取，所以我们创建了一个没有子句的 `for` 循环。在 `for` 循环内部，我们使用 `line, err := buf.ReadString('\n')` 从缓冲区读取一行并检查从缓冲区读取是否有错误。如果有，我们解决错误，并[使用 `break` 关键字退出 for 循环]({{< relref "/docs/26-Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go.md" >}})。有了`break`，您就不需要使用停止循环的条件。
 
 在本节中，我们学习了如何声明 ForClause 循环并使用它来迭代已知范围的值。我们还学习了如何使用 Condition 循环进行迭代，直到满足特定条件。接下来，我们将了解 RangeClause 如何用于迭代顺序数据类型。
 
 ## 使用 RangeClause 循环遍历顺序数据类型
 
-在 Go 中，使用 `for` 循环来迭代连续或集合数据类型（如[切片、数组](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go)和[字符串](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)）的元素是很常见的。为了更容易做到这一点，我们可以使用带有 _RangeClause_ 语法的 `for` 循环。虽然您可以使用 ForClause 语法遍历顺序数据类型，但 RangeClause 更简洁且更易于阅读。
+在 Go 中，使用 `for` 循环来迭代连续或集合数据类型（如[切片、数组]({{< relref "/docs/16-Understanding_Arrays_and_Slices_in_Go.md" >}})和[字符串]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})）的元素是很常见的。为了更容易做到这一点，我们可以使用带有 _RangeClause_ 语法的 `for` 循环。虽然您可以使用 ForClause 语法遍历顺序数据类型，但 RangeClause 更简洁且更易于阅读。
 
 在我们研究使用 RangeClause 之前，让我们看看如何使用 ForClause 语法遍历切片：
 
@@ -393,7 +393,7 @@ m
 y
 ```
 
-当遍历 [map](https://www.digitalocean.com/community/tutorials/understanding-maps-in-go) 时，`range`将返回**键**和**值**：
+当遍历 [map]({{< relref "/docs/15-Understanding_Maps_in_Go.md" >}}) 时，`range`将返回**键**和**值**：
 ```go
 package main
 

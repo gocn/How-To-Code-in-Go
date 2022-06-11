@@ -47,7 +47,7 @@ func main() {
 }
 ```
 
-第一件事是我们创建了一个新的类型叫做`Article`。这个类型有一个`Title`和一个`Author`字段，两个都是 string 的 [数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go):
+第一件事是我们创建了一个新的类型叫做`Article`。这个类型有一个`Title`和一个`Author`字段，两个都是 string 的 [数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}}):
 
 ```go
 ...
@@ -58,7 +58,7 @@ type Article struct {
 ...
 ```
 
-接着，我们为 Article 类型定义了一个叫做 String 的 [`方法`](https://www.digitalocean.com/community/tutorials/defining-methods-in-go)。`String`方法将会返回一个用于表示`Article`类型的字符串：
+接着，我们为 Article 类型定义了一个叫做 String 的 [`方法`]({{< relref "/docs/34-Defining_Methods_in_Go.md" >}})。`String`方法将会返回一个用于表示`Article`类型的字符串：
 
 ```go
 ...
@@ -68,7 +68,7 @@ func (a Article) String() string {
 ...
 ```
 
-然后，在我们的`main`[function](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)里，我们创建一个`Article`类型的实例，并且将它赋值给一个[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go)叫`a`。我们给`Title`字段设置了一个值，为`"理解Go中的Interfaces"`，给`Author`字段赋值`"Sammy Shark"`：
+然后，在我们的`main`[function]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})里，我们创建一个`Article`类型的实例，并且将它赋值给一个[变量]({{< relref "/docs/11-How_To_Use_Variables_and_Constants_in_Go.md" >}})叫`a`。我们给`Title`字段设置了一个值，为`"理解Go中的Interfaces"`，给`Author`字段赋值`"Sammy Shark"`：
 
 ```go
 ...
@@ -171,7 +171,7 @@ type Stringer interface {
 ...
 ```
 
-`Stringer`interface 只有一个方法，叫做`String()`，返回一个`string`。[method](https://www.digitalocean.com/community/tutorials/defining-methods-in-go)是一个特殊的函数，在 Go 中被限定于一个特殊类型。不像函数，一个方法只能从它所定义的类型的实例中被调用。
+`Stringer`interface 只有一个方法，叫做`String()`，返回一个`string`。[method]({{< relref "/docs/34-Defining_Methods_in_Go.md" >}})是一个特殊的函数，在 Go 中被限定于一个特殊类型。不像函数，一个方法只能从它所定义的类型的实例中被调用。
 
 然后我们更新`Print`方法的签名来接收一个`Stringer`，而不是一个`Article`的具体类型。因为编译器知道`Stringer`接口定义了`String`方法，所以它只接收也有`String`方法的类型。
 

@@ -7,7 +7,7 @@
 
 ## Break 语句
 
-在 Go 中， `break` 语句终止当前循环的执行。`break`几乎总是与[条件`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go)配对。
+在 Go 中， `break` 语句终止当前循环的执行。`break`几乎总是与[条件`if`语句]({{< relref "/docs/23-How_To_Write_Conditional_Statements_in_Go.md" >}})配对。
 
 让我们看一个在循环中使用`break`语句的示例：
 

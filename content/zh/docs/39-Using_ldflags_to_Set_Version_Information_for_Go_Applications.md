@@ -2,7 +2,7 @@
 
 ## 简介
 
-当把应用程序部署到生产环境中时，用版本信息和其他元数据构建二进制文件将改善你的监控、日志和调试过程，增加识别信息来帮助跟踪随着时间推移后，应用程序的构建信息。这种版本信息通常包括高度动态的数据，如构建时间、构建二进制文件的机器或用户、[版本控制系统（VCS）](https://www.atlassian.com/git/tutorials/what-is-version-control)的提交 ID，等其他更多信息。因为这些值是不断变化的，将这些数据直接编码到源代码中，并在每次新的构建之前进行修改，是很繁琐的，而且容易出错：源文件可能会移动，[变量/常量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go)在整个开发过程中可能会随着切换文件而改动，打断构建过程。
+当把应用程序部署到生产环境中时，用版本信息和其他元数据构建二进制文件将改善你的监控、日志和调试过程，增加识别信息来帮助跟踪随着时间推移后，应用程序的构建信息。这种版本信息通常包括高度动态的数据，如构建时间、构建二进制文件的机器或用户、[版本控制系统（VCS）](https://www.atlassian.com/git/tutorials/what-is-version-control)的提交 ID，等其他更多信息。因为这些值是不断变化的，将这些数据直接编码到源代码中，并在每次新的构建之前进行修改，是很繁琐的，而且容易出错：源文件可能会移动，[变量/常量]({{< relref "/docs/11-How_To_Use_Variables_and_Constants_in_Go.md" >}})在整个开发过程中可能会随着切换文件而改动，打断构建过程。
 
 在 Go 中解决这个问题的一个方法是在使用`go build`命令时加上`-ldflags`，在构建时将动态信息插入二进制文件中，而不需要修改源代码。在这个标志中，`ld`代表[*linker*](https://en.wikipedia.org/wiki/Linker_(computing))，这个程序将编译后的源代码的不同部分连接成最终的二进制文件。`ldflags`就代表*linker 的标志*。之所以这样说，是因为它向底层的 Go 工具链 linker[`cmd/link`](https://golang.org/cmd/link)传递了一个标志，允许你在构建时从命令行中改变导入的包的值。
 
@@ -12,7 +12,7 @@
 
 为了接下去在文章中的例子，你需要：
 
-- 按照[如何安装 Go 和设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置 Go 的 workspace。
+- 按照[如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})设置 Go 的 workspace。
 
 ## 构建你的范例应用程序
 
@@ -52,7 +52,7 @@ func main() {
 }
 ```
 
-在`main()`函数内，你宣告了`Version`变量，然后打印[string](https://www.digitalocean.com/community/tutorials/an-introduction-to-working-with-strings-in-go)类型的`Version`：紧跟着 tab 的字符，`\t`，然后是声明的变量。
+在`main()`函数内，你宣告了`Version`变量，然后打印[string]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})类型的`Version`：紧跟着 tab 的字符，`\t`，然后是声明的变量。
 
 现在，参数`Version`被定义为`development`，将作为 app 的默认版本。稍后，你将会修改这个值来符合官方版本编号，根据[semantic versioning format](https://semver.org/)来定义。
 
@@ -80,7 +80,7 @@ Version:	 development
 go build -ldflags="-flag"
 ```
 
-在这个例子中，我们向作为`go build`的一部分运行的`go tool link`命令传递了`flag`。这个命令在传递给`ldflags`的内容周围使用双引号，以避免其中字符串被分开，或者被命令行翻译为与我们想要的不同的字符。从这里，你可以传入[许多不同的`linker`标志](https://golang.org/cmd/link/)。为了本教程中的目的，我们将使用`-X`标志在链接时将信息写入变量，跟着的是参数的[package](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)路径和它的新值：
+在这个例子中，我们向作为`go build`的一部分运行的`go tool link`命令传递了`flag`。这个命令在传递给`ldflags`的内容周围使用双引号，以避免其中字符串被分开，或者被命令行翻译为与我们想要的不同的字符。从这里，你可以传入[许多不同的`linker`标志](https://golang.org/cmd/link/)。为了本教程中的目的，我们将使用`-X`标志在链接时将信息写入变量，跟着的是参数的[package]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})路径和它的新值：
 
 ```bash
 go build -ldflags="-X 'package_path.variable_name=new_value'"

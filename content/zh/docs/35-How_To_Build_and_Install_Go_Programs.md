@@ -12,11 +12,11 @@
 
 要遵循本文的例子，你将需要：
 
-- 按照[如何安装 Go 与设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)设置的 Go 工作区。
+- 按照[如何安装 Go 与设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})设置的 Go 工作区。
 
 ## 第 1 步 - 设置和运行 Go 二进制文件
 
-首先，创建一个应用程序，作为演示 Go 工具链的例子。要做到这一点，你将使用[如何用 Go 写第一个程序](https://www.digitalocean.com/community/tutorials/how-to-write-your-first-program-in-go)教程中的经典程序 "Hello, World!"。
+首先，创建一个应用程序，作为演示 Go 工具链的例子。要做到这一点，你将使用[如何用 Go 写第一个程序]({{< relref "/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean.md" >}})教程中的经典程序 "Hello, World!"。
 
 在你的 `src` 目录下创建一个名为 `greeter` 的目录：
 
@@ -114,7 +114,7 @@ greeter  main.go  go.mod
 注：在Windows上，你的可执行文件将是 greeter.exe。
 ```
 
-默认情况下，`go build` 将为当前[平台和架构](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures#possible-platforms-for-goos-and-goarch)生成一个可执行文件。例如，如果在 `linux/386` 系统上构建，可执行文件将与任何其他 `linux/386` 系统兼容，即使并没有安装 Go。Go 支持为其他平台和架构进行构建，你可以在我们的[为不同操作系统和架构构建 Go 应用程序](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures)文章中了解更多信息。
+默认情况下，`go build` 将为当前[平台和架构](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures#possible-platforms-for-goos-and-goarch)生成一个可执行文件。例如，如果在 `linux/386` 系统上构建，可执行文件将与任何其他 `linux/386` 系统兼容，即使并没有安装 Go。Go 支持为其他平台和架构进行构建，你可以在我们的[为不同操作系统和架构构建 Go 应用程序]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})文章中了解更多信息。
 
 现在，你已经创建了你的可执行文件，运行它以确保二进制文件已被正确构建。在 macOS 或 Linux 上，运行以下命令：
 
@@ -203,7 +203,7 @@ Output
 $HOME/go
 ```
 
-由于 `go install` 会将生成的可执行文件放入 `$GOPATH` 的一个子目录，名为 `bin`，这个目录必须被添加到 `$PATH` 环境变量中。这在先决条件文章[如何安装 Go 和设置本地编程环境](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go)的**创建 Go 工作空间**步骤中有所涉及。
+由于 `go install` 会将生成的可执行文件放入 `$GOPATH` 的一个子目录，名为 `bin`，这个目录必须被添加到 `$PATH` 环境变量中。这在先决条件文章[如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})的**创建 Go 工作空间**步骤中有所涉及。
 
 设置好 `$GOPATH/bin` 目录后，切回你的 `greeter` 目录：
 
@@ -259,4 +259,4 @@ Hello, World!
 
 在本教程中，你演示了 Go 工具链是如何从源代码中轻松构建可执行二进制文件的。这些二进制文件可以分发到其他系统上运行，甚至是那些没有 Go 工具链和环境的系统。你还使用 `go install` 自动构建并将程序作为可执行文件安装在系统的 `$PATH` 中。有了 `go build` 和 `go install`，你现在可以随意分享和使用你的应用程序。
 
-现在你了解了 `go build` 的基础知识，你可以通过[用 Build 标签定制 Go 二进制文件](https://www.digitalocean.com/community/tutorials/customizing-go-binaries-with-build-tags)教程来探索如何制作模块化的源代码，或者通过[为不同的操作系统和架构构建 Go 应用程序](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures)来探索如何为不同的平台构建。如果你想了解更多关于 Go 编程语言的信息，请查看整个[How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+现在你了解了 `go build` 的基础知识，你可以通过[用 Build 标签定制 Go 二进制文件]({{< relref "/docs/31-Customizing_Go_Binaries_with_Build_Tags.md" >}})教程来探索如何制作模块化的源代码，或者通过[为不同的操作系统和架构构建 Go 应用程序]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})来探索如何为不同的平台构建。如果你想了解更多关于 Go 编程语言的信息，请查看整个[How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。

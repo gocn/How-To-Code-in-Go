@@ -2,7 +2,7 @@
 
 ## 介绍
 
-[条件语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go)使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用[`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements)就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。`switch`是一个替代性的条件语句，对于传达你的 Go 程序在遇到不同选项时采取的行动很有用。
+[条件语句]({{< relref "/docs/23-How_To_Write_Conditional_Statements_in_Go.md" >}})使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用[`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements)就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。`switch`是一个替代性的条件语句，对于传达你的 Go 程序在遇到不同选项时采取的行动很有用。
 
 我们可以用 switch 语句编写的所有内容也可以用`if`语句编写。在本教程中，我们将看几个例子，看看 switch 语句能做什么，它所取代的`if`语句，以及它最合适的应用场合。
 
@@ -48,7 +48,7 @@ strawberry is my favorite!
 I've never tried banana before
 ```
 
-在`main`中，我们定义了一个[slice](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#slices)的冰激凌口味。然后我们使用一个[`for loop`](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go)来迭代它们。我们使用三个`if`语句来打印不同的信息，表明对不同冰淇淋口味的偏好。每个`if`语句必须使用`continue`语句来停止`for`循环的执行，这样就不会在最后打印出首选冰淇淋口味的默认信息。
+在`main`中，我们定义了一个[slice](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#slices)的冰激凌口味。然后我们使用一个[`for loop`]({{< relref "/docs/25-How_To_Construct_For_Loops_in_Go.md" >}})来迭代它们。我们使用三个`if`语句来打印不同的信息，表明对不同冰淇淋口味的偏好。每个`if`语句必须使用`continue`语句来停止`for`循环的执行，这样就不会在最后打印出首选冰淇淋口味的默认信息。
 
 当我们添加新的偏好时，我们必须不断添加`if`语句来处理新的情况。重复的信息，如 "香草"和 "巧克力"的情况，必须有重复的`if`语句。对于我们代码的未来读者（包括我们自己）来说，`if`语句的重复性掩盖了它们所做的重要部分--将变量与多个值进行比较并采取不同的行动。另外，我们的回退信息与条件语句分开，使得它看起来不相关。转换器 "语句可以帮助我们更好地组织这个逻辑。
 
@@ -146,7 +146,7 @@ You win!
 
 我们的猜谜游戏需要一个随机数来比较猜测的结果，所以我们使用`math/rand`包中的`rand.Intn`函数。为了确保我们每次玩游戏都能得到不同的`target`值，我们使用`rand.Seed`来根据当前时间随机化随机数发生器。`rand.Intn`的参数`100`将给我们一个0-100范围内的数字。然后我们使用`for`循环来开始收集玩家的猜测。
 
-`fmt.Scanf`函数为我们提供了一种方法来读取用户的输入到我们选择的变量中。它接受一个格式化的字符串动词，将用户的输入转换为我们期望的类型。这里的`%d`意味着我们期望一个 `int`，我们传递 `guess` 变量的地址，这样 `fmt.Scanf` 就能够设置该变量。在[处理任何解析错误](https://www.digitalocean.com/community/tutorials/handling-errors-in-go)之后，我们使用两个`if`语句来比较用户的猜测和`target`值。它们返回的`string`和`bool`一起控制显示给玩家的信息，以及游戏是否会退出。
+`fmt.Scanf`函数为我们提供了一种方法来读取用户的输入到我们选择的变量中。它接受一个格式化的字符串动词，将用户的输入转换为我们期望的类型。这里的`%d`意味着我们期望一个 `int`，我们传递 `guess` 变量的地址，这样 `fmt.Scanf` 就能够设置该变量。在[处理任何解析错误]({{< relref "/docs/17-Handling_Errors_in_Go_DigitalOcean.md" >}})之后，我们使用两个`if`语句来比较用户的猜测和`target`值。它们返回的`string`和`bool`一起控制显示给玩家的信息，以及游戏是否会退出。
 
 这些 `if` 语句掩盖了一个事实，即变量被比较的数值范围都有某种联系。一眼就能看出我们是否遗漏了该范围的某些部分，这也是很困难的。下一个例子重构了前面的例子，用`switch`语句代替：
 

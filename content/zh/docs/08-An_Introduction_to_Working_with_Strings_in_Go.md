@@ -113,7 +113,7 @@ invalid operation: "Sammy" + 27 (mismatched types string and int)
 
 ## 在变量中保存字符串 
 
-**[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-in-go)**是在程序中可以用来保存数据的符号。你可以将它们看作是一个可以在其中填充一些数据或值的空盒子。字符串是数据，因此你可以使用它们来填充变量。将字符串声明为变量可以使得在 Go 程序中处理字符串更加容易。
+**[变量]({{< relref "/docs/11-How_To_Use_Variables_and_Constants_in_Go.md" >}})**是在程序中可以用来保存数据的符号。你可以将它们看作是一个可以在其中填充一些数据或值的空盒子。字符串是数据，因此你可以使用它们来填充变量。将字符串声明为变量可以使得在 Go 程序中处理字符串更加容易。
 
 要在变量中存储字符串，只需将一个变量分配给字符串。在下面的例子中，`s` 被声明为变量:
 

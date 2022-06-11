@@ -1,7 +1,7 @@
 # 了解 Go 中的 init
 ## 简介
 
-在 Go 中，预定义的 `init()` 函数设置了一段代码，在你的包的任何其他部分之前运行。这段代码将在[包被导入](https://www.digitalocean.com/community/tutorials/importing-packages-in-go)后立即执行，当你需要你的应用程序在一个特定的状态下初始化时，例如你有一个特定的配置或一组资源，你的应用程序需要用它来启动。它也可以在*导入副作用*时使用，这是一种通过导入特定包来设置程序状态的技术。这经常被用于 `register` 一个包和另一个包，以确保程序考虑任务的正确代码。
+在 Go 中，预定义的 `init()` 函数设置了一段代码，在你的包的任何其他部分之前运行。这段代码将在[包被导入]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})后立即执行，当你需要你的应用程序在一个特定的状态下初始化时，例如你有一个特定的配置或一组资源，你的应用程序需要用它来启动。它也可以在*导入副作用*时使用，这是一种通过导入特定包来设置程序状态的技术。这经常被用于 `register` 一个包和另一个包，以确保程序考虑任务的正确代码。
 
 尽管 `init()` 是一个有用的工具，但它有时会使代码难以阅读，因为难以找到的 `init()` 实例会大大影响代码的运行顺序。正因为如此，对于刚接触 Go 的开发者来说，了解这个函数的方方面面是非常重要的，这样他们在写代码时就能确保以可读的方式使用 `init()`。
 
@@ -11,7 +11,7 @@
 
 对于本文中的一些例子，你将需要：
 
-* 按照 [如何安装 Go 和设置本地编程环境]（https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go）设置的 Go 工作空间。本教程将使用以下文件结构：
+* 按照 [如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})设置的 Go 工作空间。本教程将使用以下文件结构：
 ```shell
 .
 ├── bin 
@@ -40,7 +40,7 @@ func main() {
 }
 ```
 
-在这个程序中，我们声明了一个全局[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go)，叫做 `weekday`。默认情况下，`weekday` 的值是一个空字符串。
+在这个程序中，我们声明了一个全局[变量]({{< relref "/docs/11-How_To_Use_Variables_and_Constants_in_Go.md" >}})，叫做 `weekday`。默认情况下，`weekday` 的值是一个空字符串。
 
 让我们运行这段代码：
 
@@ -85,7 +85,7 @@ Today is Monday
 
 ## 导入时初始化软件包
 
-首先，我们将写一些代码，从[切片](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go)中选择一个随机的生物并打印出来。然而，我们不会在初始程序中使用 `init()`。这将更好地展示我们的问题，以及 `init()` 将如何解决我们的问题。
+首先，我们将写一些代码，从[切片]({{< relref "/docs/16-Understanding_Arrays_and_Slices_in_Go.md" >}})中选择一个随机的生物并打印出来。然而，我们不会在初始程序中使用 `init()`。这将更好地展示我们的问题，以及 `init()` 将如何解决我们的问题。
 
 在你的 `src/github.com/gopherguides/ `目录中，用以下命令创建一个名为 `creature` 的文件夹。
 
@@ -517,4 +517,4 @@ func decode(reader io.Reader) image.Rectangle {
 
 在本教程中，我们了解到 `init()` 函数是在你的包中的其他代码被加载之前加载的，它可以为一个包执行特定的任务，如初始化一个期望的状态。我们还了解到，编译器执行多个 `init()` 语句的顺序取决于编译器加载源文件的顺序。如果你想了解更多关于 `init()` 的信息，请查看官方的[Golang 文档](https://golang.org/doc/effective_go.html#init)，或者阅读[Go 社区中关于该函数的讨论](https://github.com/golang/go/issues/25885)。
 
-你可以通过我们的[如何在 Go 中定义和调用函数](https://www.digitalocean.com/community/tutorials/how-to-define-and-call-functions-in-go)文章阅读更多关于函数的信息，或者探索[整个 Go 中如何编程系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+你可以通过我们的[如何在 Go 中定义和调用函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})文章阅读更多关于函数的信息，或者探索[整个 Go 中如何编程系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。

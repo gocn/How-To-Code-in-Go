@@ -123,7 +123,7 @@ GO 工具链带有 `go get` 命令。此命令使你可以将第三方软件包�
 go get github.com/gobuffalo/flect
 ```
 
-在这种情况下，使用 `go get` 工具将在 GitHub 上找到软件包，并将其安装到你的 [`$Gopath`](https://www.digitalocean.com/community/tutorials/understanding-the-gopath) 中。
+在这种情况下，使用 `go get` 工具将在 GitHub 上找到软件包，并将其安装到你的 [`$Gopath`]({{< relref "/docs/05-Understanding_the_GOPATH.md" >}}) 中。
 
 对于此示例，代码将安装在此目录中：
 
@@ -223,4 +223,4 @@ import (
 
 当我们导入软件包时，我们可以调用未内置的功能。有些软件包是随着 GO 安装的标准库的一部分，有些软件包将通过 `go get` 来安装。
 
-使用软件包可以使我们在利用现有代码时使程序更加健壮和强大。我们还可以为自己和其他程序员 [创建自己的软件包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go)，以便将来使用。
+使用软件包可以使我们在利用现有代码时使程序更加健壮和强大。我们还可以为自己和其他程序员 [创建自己的软件包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})，以便将来使用。

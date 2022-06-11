@@ -468,4 +468,4 @@ my string
 
 本 Go 教程主要演示了如何通过内置方法将几种重要的数据类型转换为其他数据类型。能够在 Go 中转换数据类型将允许你执行诸如接受用户输入和跨不同数字类型进行数学运算之类的事情。稍后，当你使用 Go 编写接受来自许多不同来源（如数据库和 API）的数据的程序时，你将使用这些转换方法来确保你可以对数据进行操作。你还可以通过将数据转换为更小的数据类型来优化存储。
 
-如果你想深入分析 Go 中的数据类型，请查看我们的 [了解 Go 中的数据类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go) 文章。
+如果你想深入分析 Go 中的数据类型，请查看我们的 [理解 Go 中的数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}}) 文章。
