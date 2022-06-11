@@ -1,100 +1,154 @@
 # How-To-Code-in-Go
-How To Code in Go
 
-https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go
+[《How-To-Code-in-Go》](https://github.com/gocn/How-To-Code-in-Go)采用 [Hugo](https://gohugo.io) 发布。欢迎大家通过 [issue](https://github.com/gocn/How-To-Code-in-Go/issues) 提供建议，也可以通过 [pull requests](https://github.com/gocn/How-To-Code-in-Go/pulls) 来共同参与贡献。
 
-1. How To Install Go and Set Up a Local Programming Environment on Ubuntu 18.04 | DigitalOcean
+贡献者（按昵称首字母排序）:
 
-2. How To Install Go and Set Up a Local Programming Environment on macOS | DigitalOcean
+> [astaxie](https://github.com/astaxie) | [Cluas](https://github.com/Cluas) | [cvley](https://github.com/cvley) | [Fivezh](https://github.com/fivezh) | [iddunk](https://github.com/iddunk) | [lsj1342](https://github.com/lsj1342) | [watermelon](https://github.com/watermelo) | [小超人](https://github.com/ddikvy) | [Xiaomin Zheng](https://github.com/zxmfke) | [Yu Zhang](https://github.com/pseudoyu) | [朱亚光](https://github.com/zhuyaguang)
 
-3. How To Install Go and Set Up a Local Programming Environment on Windows 10 | DigitalOcean
+安装完 `hugo` 之后，需要先同步主题文件
 
-4. How To Write Your First Program in Go | DigitalOcean
+```bash
+git submodule update --init --recursive
+```
 
-5. Understanding the GOPATH | DigitalOcean
+同步完成后，可在根目录执行以下指令来测试网站：
 
-6. How To Write Comments in Go | DigitalOcean
+```bash
+hugo server
+```
 
-7. Understanding Data Types in Go | DigitalOcean
+文档在 `content/zh/docs` 目录下，修改后可以通过 pull requests 提交。
 
-8. An Introduction to Working with Strings in Go | DigitalOcean
+## 目录
 
-9. How To Format Strings in Go | DigitalOcean
+1. 如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境
+2. 如何在 macOS 上安装 Go 和设置本地编程环境
+3. 如何在 Windows 10 上安装 Go 和设置本地编程环境
+4. 如何用 Go 编写你的第一个程序
+5. 理解 GOPATH
+6. 如何在 Go 中写注释
+7. 理解 Go 的数据类型
+8. Go 中处理字符串的介绍
+9. 如何在 Go 中格式化字符串
+10. 介绍 Go 中的 Strings 包
+11. 如何在 Go 中使用变量和常量
+12. 如何在 Go 中转换数据类型
+13. 如何用运算符在 Go 中做数学计算
+14. 了解 Go 中的布尔逻辑
+15. 理解 Go 中的 Map
+16. 理解 Go 中的数组和切片
+17. 在 Go 中处理错误
+18. 在 Go 中创建自定义错误
+19. 在 Go 中处理恐慌
+20. 在 Go 中导入包
+21. 如何在 Go 中编写包
+22. 理解 Go 中包的可见性
+23. 如何在 Go 中编写条件语句
+24. 如何在 Go 中编写 Switch 语句
+25. 如何在 Go 中构造 for 循环
+26. 在循环中使用 Break 和 Continue
+27. 如何在 Go 中定义并调用函数
+28. 如何在 Go 中使用可变参数函数
+29. 了解 Go 中的 defer
+30. 了解 Go 中的 init
+31. 用构建标签定制 Go 二进制文件
+32. 了解 Go 中的指针
+33. 在 Go 中定义结构体
+34. 在 Go 中定义方法
+35. 如何构建和安装 Go 程序
+36. 如何在 Go 中使用结构体标签
+37. 如何在 Go 使用 interface
+38. 在不同的操作系统和架构编译 Go 应用
+39. 用 ldflags 设置 Go 应用程序的版本信息
+40. 在 Go 里面如何使用 Flag 包
 
-10. An Introduction to the Strings Package in Go | DigitalOcean
+## 授权
 
-11. How To Use Variables and Constants in Go | DigitalOcean
+The articles in 《How-To-Code-in-Go》 are licensed under a [Creative Commons Attribution-ShareAlike 4.0 International License](http://creativecommons.org/licenses/by-sa/4.0/).
 
-12. How To Convert Data Types in Go | DigitalOcean
+## 贡献者
 
-13. How To Do Math in Go with Operators | DigitalOcean
-
-14. Understanding Boolean Logic in Go | DigitalOcean
-
-15. Understanding Maps in Go | DigitalOcean
-
-16. Understanding Arrays and Slices in Go | DigitalOcean
-
-17. Handling Errors in Go | DigitalOcean
-
-18. Creating Custom Errors in Go | DigitalOcean
-
-19. Handling Panics in Go | DigitalOcean
-
-20. Importing Packages in Go | DigitalOcean
-
-21. How To Write Packages in Go | DigitalOcean
-
-22. Understanding Package Visibility in Go | DigitalOcean
-
-23. How To Write Conditional Statements in Go | DigitalOcean
-
-24. How To Write Switch Statements in Go | DigitalOcean
-
-25. How To Construct For Loops in Go | DigitalOcean
-
-26. Using Break and Continue Statements When Working with Loops in Go | DigitalOcean
-
-27. How To Define and Call Functions in Go | DigitalOcean
-
-28. How To Use Variadic Functions in Go | DigitalOcean
-
-29. Understanding defer in Go | DigitalOcean
-
-30. Understanding init in Go | DigitalOcean
-
-31. Customizing Go Binaries with Build Tags | DigitalOcean
-
-32. Understanding Pointers in Go | DigitalOcean
-
-33. Defining Structs in Go | DigitalOcean
-
-34. Defining Methods in Go | DigitalOcean
-
-35. How To Build and Install Go Programs | DigitalOcean
-
-36. How To Use Struct Tags in Go | DigitalOcean
-
-37. How To Use Interfaces in Go | DigitalOcean
-
-38. Building Go Applications for Different Operating Systems and Architectures | DigitalOcean
-
-39. Using ldflags to Set Version Information for Go Applications | DigitalOcean
-
-40. How To Use the Flag Package in Go | DigitalOcean
-
-41. How to Use Go Modules | DigitalOcean
-
-42. How to Distribute Go Modules | DigitalOcean
-
-43. How to Use a Private Go Module in Your Own Project | DigitalOcean
-
-44. How To Run Multiple Functions Concurrently in Go | DigitalOcean
-
-45. How to Add Extra Information to Errors in Go | DigitalOcean
-
-46. How To Use Dates and Times in Go | DigitalOcean
-
-47. How To Use Contexts in Go | DigitalOcean
-
-48. How To Use JSON in Go | DigitalOcean
+<!-- readme: collaborators,contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/astaxie">
+            <img src="https://avatars.githubusercontent.com/u/233907?v=4" width="100;" alt="astaxie"/>
+            <br />
+            <sub><b>Astaxie</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/fivezh">
+            <img src="https://avatars.githubusercontent.com/u/1311319?v=4" width="100;" alt="fivezh"/>
+            <br />
+            <sub><b>Fivezh</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/cvley">
+            <img src="https://avatars.githubusercontent.com/u/1499514?v=4" width="100;" alt="cvley"/>
+            <br />
+            <sub><b>Cvley</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/zhuyaguang">
+            <img src="https://avatars.githubusercontent.com/u/8857976?v=4" width="100;" alt="zhuyaguang"/>
+            <br />
+            <sub><b>朱亚光</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Cluas">
+            <img src="https://avatars.githubusercontent.com/u/10056928?v=4" width="100;" alt="Cluas"/>
+            <br />
+            <sub><b>Cluas</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/watermelo">
+            <img src="https://avatars.githubusercontent.com/u/14182114?v=4" width="100;" alt="watermelo"/>
+            <br />
+            <sub><b>Watermelon</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/zxmfke">
+            <img src="https://avatars.githubusercontent.com/u/19350643?v=4" width="100;" alt="zxmfke"/>
+            <br />
+            <sub><b>Xiaomin Zheng</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/lsj1342">
+            <img src="https://avatars.githubusercontent.com/u/43659912?v=4" width="100;" alt="lsj1342"/>
+            <br />
+            <sub><b>刘思家</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/iddunk">
+            <img src="https://avatars.githubusercontent.com/u/46773769?v=4" width="100;" alt="iddunk"/>
+            <br />
+            <sub><b>Iddunk</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/djikvy">
+            <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="djikvy"/>
+            <br />
+            <sub><b>小超人</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/pseudoyu">
+            <img src="https://avatars.githubusercontent.com/u/69753389?v=4" width="100;" alt="pseudoyu"/>
+            <br />
+            <sub><b>Yu Zhang</b></sub>
+        </a>
+    </td></tr>
+</table>
+<!-- readme: collaborators,contributors -end -->
