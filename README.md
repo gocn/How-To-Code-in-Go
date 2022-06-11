@@ -70,4 +70,85 @@ The articles in 《How-To-Code-in-Go》 are licensed under a [Creative Commons A
 ## 贡献者
 
 <!-- readme: collaborators,contributors -start -->
+<table>
+<tr>
+    <td align="center">
+        <a href="https://github.com/astaxie">
+            <img src="https://avatars.githubusercontent.com/u/233907?v=4" width="100;" alt="astaxie"/>
+            <br />
+            <sub><b>Astaxie</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/fivezh">
+            <img src="https://avatars.githubusercontent.com/u/1311319?v=4" width="100;" alt="fivezh"/>
+            <br />
+            <sub><b>Fivezh</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/cvley">
+            <img src="https://avatars.githubusercontent.com/u/1499514?v=4" width="100;" alt="cvley"/>
+            <br />
+            <sub><b>Cvley</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/zhuyaguang">
+            <img src="https://avatars.githubusercontent.com/u/8857976?v=4" width="100;" alt="zhuyaguang"/>
+            <br />
+            <sub><b>朱亚光</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/Cluas">
+            <img src="https://avatars.githubusercontent.com/u/10056928?v=4" width="100;" alt="Cluas"/>
+            <br />
+            <sub><b>Cluas</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/watermelo">
+            <img src="https://avatars.githubusercontent.com/u/14182114?v=4" width="100;" alt="watermelo"/>
+            <br />
+            <sub><b>Watermelon</b></sub>
+        </a>
+    </td></tr>
+<tr>
+    <td align="center">
+        <a href="https://github.com/zxmfke">
+            <img src="https://avatars.githubusercontent.com/u/19350643?v=4" width="100;" alt="zxmfke"/>
+            <br />
+            <sub><b>Xiaomin Zheng</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/lsj1342">
+            <img src="https://avatars.githubusercontent.com/u/43659912?v=4" width="100;" alt="lsj1342"/>
+            <br />
+            <sub><b>刘思家</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/iddunk">
+            <img src="https://avatars.githubusercontent.com/u/46773769?v=4" width="100;" alt="iddunk"/>
+            <br />
+            <sub><b>Iddunk</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/djikvy">
+            <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="djikvy"/>
+            <br />
+            <sub><b>小超人</b></sub>
+        </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/pseudoyu">
+            <img src="https://avatars.githubusercontent.com/u/69753389?v=4" width="100;" alt="pseudoyu"/>
+            <br />
+            <sub><b>Yu Zhang</b></sub>
+        </a>
+    </td></tr>
+</table>
 <!-- readme: collaborators,contributors -end -->
