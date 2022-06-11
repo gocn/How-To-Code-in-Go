@@ -1,6 +1,6 @@
 # hugo server --themesDir ...
 
-baseURL: https://example.com/
+baseURL: https://gocn.github.io/How-To-Code-in-Go/
 title: How To Code in Go
 theme: hugo-book
 
@@ -11,35 +11,35 @@ defaultContentLanguageInSubdir: true
 PygmentsCodeFences: true
 
 languages:
-  zh:
-    languageCode: zh
-    languageName: 中文
-    contentDir: content/zh
-    weight: 1
+    zh:
+        languageCode: zh
+        languageName: 中文
+        contentDir: content/zh
+        weight: 1
 
-  # en:
-  #   languageCode: en-US
-  #   languageName: English
-  #   contentDir: content/en
-  #   weight: 2
+    # en:
+    #   languageCode: en-US
+    #   languageName: English
+    #   contentDir: content/en
+    #   weight: 2
 
 # Book configuration
 disablePathToLower: true
 
 params:
-  Description: How To Code in Go
+    Description: How To Code in Go
 
-  # show or hide table of contents for page
-  BookShowToC: true
+    # show or hide table of contents for page
+    BookShowToC: true
 
-  # Set bundle to render side menu
-  # if not specified file structure and weights will be used
-  BookMenuBundle: /menu
+    # Set bundle to render side menu
+    # if not specified file structure and weights will be used
+    BookMenuBundle: /menu
 
-  # specify section of content to render as menu
-  # if bookMenuBundle is not set, 'docs' is value by default
-  BookSection: docs
+    # specify section of content to render as menu
+    # if bookMenuBundle is not set, 'docs' is value by default
+    BookSection: docs
 
-  # Enable "Edit this page" links for 'doc' page type.
-  # Disabled by default. Uncomment to enable.
-  BookEditURL: https://github.com/gocn/How-To-Code-in-Go/edit/main/content/zh/
+    # Enable "Edit this page" links for 'doc' page type.
+    # Disabled by default. Uncomment to enable.
+    BookEditURL: https://github.com/gocn/How-To-Code-in-Go/edit/main/content/zh/
