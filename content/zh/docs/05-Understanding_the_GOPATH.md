@@ -14,7 +14,7 @@
 
 想要了解更多关于设置 `$GOPATH` 变量的信息，可以参考 Go [文档](https://golang.org/doc/code.html#Workspaces)。
 
-此外，[本系列教程](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go) 简单介绍了安装 Go 和设置 Go 开发环境的方法。
+此外，[本系列教程]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}}) 简单介绍了安装 Go 和设置 Go 开发环境的方法。
 
 ## `$GOPATH` 不是 `$GOROOT`
 
@@ -28,7 +28,7 @@
 
 在一个 Go Workspace 或者 `GOPATH` 中，有三个目录: `bin`、 `pkg` 和 `src`。这些目录中的每一个对于 Go 工具链都有特殊的意义。
 
-```
+```text
 .
 ├── bin
 ├── pkg
@@ -43,13 +43,13 @@
 
 例如，如果我们不在 `$PATH` 中添加 `$GOPATH/bin` 来执行一个程序，我们需要运行:
 
-```
-$ $GOPATH/bin/myapp
+```text
+$GOPATH/bin/myapp
 ```
 
 当 `$GOPATH/bin` 被添加到 `$PATH` 时，我们可以像这样进行同样的调用:
 
-```
+```text
 $ myapp
 ```
 
@@ -57,13 +57,13 @@ $ myapp
 
 在 `src` 目录是我们放置所有的 `.go` 文件，或源代码的地方。这不应与 Go 工具使用的源代码混淆，后者位于 `$GOROOT` 中。在编写 Go 应用程序、包和库时，我们将把这些文件放在 `$GOPATH/src/path/to/code` 下。
 
-## 包是什么？
+## 什么是包
 
 Go 代码是以包的形式组织的。包表示磁盘上单个目录中的所有文件。一个目录只能包含来自同一包的某些文件。包与所有用户编写的 Go 源文件一起存储在 `$GOPATH/src` 目录下。我们可以通过导入不同的软件包来理解软件包解析。
 
 如果我们的代码是 `$GOPATH/src/blue/red`，那么它的包名应该是 `red`。
 
-```
+```go
 import "blue/red"
 ```
 
@@ -73,13 +73,13 @@ import "blue/red"
 
 例如，我们可以使用下面的导入路径来导入 [https://github.com/gobuffalo/buffalo](https://github.com/gobuffalo/buffalo) 的源代码:
 
-```
+```go
 import "github.com/gobuffalo/buffalo"
 ```
 
 因此，这个源代码应该位于磁盘上的下列位置:
 
-```
+```test
 $GOPATH/src/github.com/gobuffalo/buffalo
 ```
 
@@ -87,6 +87,6 @@ $GOPATH/src/github.com/gobuffalo/buffalo
 
 在这篇文章中，我们讨论了 `GOPATH` 作为一个文件夹的集合，Go 期望我们的源代码保存在里面，以及这些文件夹是什么，它们包含什么。我们讨论了如何通过设置 `$GOPATH` 环境变量，将默认的 `$HOME/go` 位置改为用户选择的位置。最后，我们讨论了 Go 如何在该文件夹结构中搜索包。
 
-在 Go 1.11中引入的 [Go Modules](https://github.com/golang/Go/wiki/Modules)旨在取代 Go Workspaces 和 `GOPATH`。虽然建议开始使用模块，但是有些环境(如公司环境)，可能还没有准备好使用模块。
+在 Go 1.11 中引入的 [Go Modules](https://github.com/golang/Go/wiki/Modules)旨在取代 Go Workspaces 和 `GOPATH`。虽然建议开始使用模块，但是有些环境(如公司环境)，可能还没有准备好使用模块。
 
 `GOPATH` 是 Go 设置中比较棘手的一个方面，但是一旦设置好了，我们通常会忘记它。

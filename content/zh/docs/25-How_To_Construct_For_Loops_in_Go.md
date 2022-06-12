@@ -1,5 +1,6 @@
 # 如何在 Go 中构造 for 循环
-### 介绍
+
+## 介绍
 
 在计算机编程中，_循环_ 是在满足某些条件之前循环重复执行一段代码的代码结构。在计算机编程中使用循环可以让您自动并重复地执行类似的任务。想象一下，如果您有一个需要处理的文件列表，或者您想计算一篇文章的行数。您就可以在代码中使用循环来解决这样的问题。
 
@@ -13,7 +14,7 @@
 
 让我们先看看如何在 ForClause 中使用 `for` 循环。
 
-_ForClause循环_ 被定义为有一个 _初始语句_，后跟一个 _条件_，然后是一个 _后置语句_。它们按以下语法排列：
+_ForClause 循环_ 被定义为有一个 _初始语句_，后跟一个 _条件_，然后是一个 _后置语句_。它们按以下语法排列：
 
 ```go
 for [ Initial Statement ] ; [ Condition ] ; [ Post Statement ] {
@@ -139,7 +140,7 @@ Output
 10
 ```
 
-您也可以从语法中不使用初始语句和后置语句，而只使用条件。这就是所谓的 _Condition循环_：
+您也可以从语法中不使用初始语句和后置语句，而只使用条件。这就是所谓的 _Condition 循环_：
 
 ```go
 i := 0
@@ -244,7 +245,7 @@ func main() {
 }
 ```
 
-在这种情况下，我们打印出列表中的每个项。虽然我们使用了变量 `i` 和 `shark` ，但我们可以将变量称为任何其他[有效的变量名](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#naming-variables-rules-and-style)，我们会得到相同的输出：
+在这种情况下，我们打印出列表中的每个项。虽然我们使用了变量 `i` 和 `shark` ，但我们可以将变量称为任何其他[有效的变量名](https://gocn.github.io/How-To-Code-in-Go/docs/11-How_To_Use_Variables_and_Constants_in_Go/#%E5%91%BD%E5%90%8D%E5%8F%98%E9%87%8F%E8%A7%84%E5%88%99%E5%92%8C%E6%A0%B7%E5%BC%8F)，我们会得到相同的输出：
 
 ```shell
 Output
@@ -424,7 +425,7 @@ animal: shark
 
 就像其他编程语言一样，在 Go 中循环也是可以嵌套的。_嵌套_ 是当我们在一个结构内又使用了一个结构。在这种情况下，嵌套循环是发生在另一个循环中的循环。当您希望对数据集的每个元素执行循环操作时，这些可能很有用。
 
-嵌套循环在结构上类似于[嵌套`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#nested-if-statements)。它的构造如下：
+嵌套循环在结构上类似于[嵌套`if`语句](https://gocn.github.io/How-To-Code-in-Go/docs/23-How_To_Write_Conditional_Statements_in_Go/#%E5%B5%8C%E5%A5%97%E7%9A%84if%E8%AF%AD%E5%8F%A5)。它的构造如下：
 
 ```go
 for {
@@ -542,4 +543,4 @@ Output
 
 ## 结论
 
-在本教程中，我们学习了如何声明和使用 `for` 循环来解决 Go 中的重复任务。我们还学习了 `for` 循环的三种不同变体以及何时使用它们。要了解有关 `for` 循环以及如何控制它们的流程的更多信息，请阅读[在 Go 中使用循环时的 Break 和 Continue 语句](https://github.com/gocn/How-To-Code-in-Go/blob/main/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go.md)。
+在本教程中，我们学习了如何声明和使用 `for` 循环来解决 Go 中的重复任务。我们还学习了 `for` 循环的三种不同变体以及何时使用它们。要了解有关 `for` 循环以及如何控制它们的流程的更多信息，请阅读[在 Go 中使用循环时的 Break 和 Continue 语句]({{< relref "/docs/26-Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go.md" >}})。

@@ -72,7 +72,7 @@ func sayHello(names ...string) {
 
 我们创建了一个 `sayHello` 函数，它只接受一个名为`names`，该参数是可变参数，因为我们在数据类型之前放置了一个省略号 (`...`)： `...string`。这告诉 Go 这个函数可以接受零个、一个或多个参数。
 
-`sayHello` 函数将 `names` 参数作为 [`slice`](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#slices) 接收。由于数据类型是 [`string`](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#strings)，因此 `names` 可以将参数视为字符串切片 ( `[]string` ) 。我们可以使用[`range`](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go#looping-through-sequential-data-types-with-rangeclause)运算符创建一个循环并遍历字符串切片。
+`sayHello` 函数将 `names` 参数作为 [`slice`](https://gocn.github.io/How-To-Code-in-Go/docs/16-Understanding_Arrays_and_Slices_in_Go/#%E5%88%87%E7%89%87) 接收。由于数据类型是 [`string`](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E5%AD%97%E7%AC%A6%E4%B8%B2)，因此 `names` 可以将参数视为字符串切片 ( `[]string` ) 。我们可以使用[`range`](https://gocn.github.io/How-To-Code-in-Go/docs/25-How_To_Construct_For_Loops_in_Go/#%E4%BD%BF%E7%94%A8-rangeclause-%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E9%A1%BA%E5%BA%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)运算符创建一个循环并遍历字符串切片。
 
 如果我们运行程序，我们将得到以下输出：
 
@@ -111,7 +111,7 @@ func sayHello(names ...string) {
 }
 ```
 
-现在，通过使用[`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements)，如果没有传递任何值，则 `names` 长度将为 `0`，我们将打印出`nobody to greet`：
+现在，通过使用[`if`语句](https://gocn.github.io/How-To-Code-in-Go/docs/23-How_To_Write_Conditional_Statements_in_Go/#if-%E8%AF%AD%E5%8F%A5)，如果没有传递任何值，则 `names` 长度将为 `0`，我们将打印出`nobody to greet`：
 
 ```shell
 Output
@@ -385,4 +385,4 @@ Sammy
 -   当输入参数的数量未知或调用时会发生变化。
 -   使您的代码更具可读性。
 
-要了解有关创建和调用函数的更多信息，您可以阅读[如何在 Go 中定义和调用函数](https://github.com/gocn/How-To-Code-in-Go/blob/main/27_How_To_Define_and_Call_Functions_in_Go.md)。
+要了解有关创建和调用函数的更多信息，您可以阅读[如何在 Go 中定义和调用函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})。

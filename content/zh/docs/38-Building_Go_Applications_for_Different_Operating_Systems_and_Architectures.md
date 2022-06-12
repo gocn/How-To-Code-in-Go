@@ -177,7 +177,7 @@ const (
 
 虽然`PathSeparator`的值在这里是`\\`，但代码将呈现 Windows 文件路径所需的单一反斜杠（`\`），因为第一个反斜杠只需要作为转义字符。
 
-请注意，与 Unix 文件不同，它的顶部没有构建标签。这是因为`GOOS`和`GOARCH`可以通过在文件后缀加上分隔符和环境变量的值来作为参数传递给`go build`，这个我们将会在[使用 GOOS 和 GOARCH 文件后缀名](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures#using-goos-and-goarch-filename-suffixes)做更多的研究。这里，`path_windows.go`的`_windows`部分使文件的行为就像它在文件的顶部有 build 标签`//+build windows`。因为这个，但你程序在 windows 上运行时，它将使用`path_windows.go`代码片段中的`PathSeparator`和`PathListSeparator`常量。
+请注意，与 Unix 文件不同，它的顶部没有构建标签。这是因为`GOOS`和`GOARCH`可以通过在文件后缀加上分隔符和环境变量的值来作为参数传递给`go build`，这个我们将会在[使用 GOOS 和 GOARCH 文件后缀名](https://gocn.github.io/How-To-Code-in-Go/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/#%E4%BD%BF%E7%94%A8goos%E5%92%8Cgoarch%E6%96%87%E4%BB%B6%E5%90%8D%E5%90%8E%E7%BC%80)做更多的研究。这里，`path_windows.go`的`_windows`部分使文件的行为就像它在文件的顶部有 build 标签`//+build windows`。因为这个，但你程序在 windows 上运行时，它将使用`path_windows.go`代码片段中的`PathSeparator`和`PathListSeparator`常量。
 
 To return to the command line, quit `less` by pressing `q`.
 

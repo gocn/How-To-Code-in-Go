@@ -2,7 +2,7 @@
 
 ## 介绍
 
-GO 标准库提供了[`errors.New` and `fmt.Errorf`](https://www.digitalocean.com/community/tutorials/handling-errors-in-go#creating-errors) 这两种方法来在创建错误。但是这两种方法并不能满足你的用户或者后期调试时提供更加复杂的错误信息或者报告发生了什么。为了传递这种更复杂的错误信息并获得更多功能，我们可以实现标准库 `error` 接口类型。
+GO 标准库提供了[`errors.New`and`fmt.Errorf`](https://gocn.github.io/How-To-Code-in-Go/docs/17-Handling_Errors_in_Go_DigitalOcean/#%E5%88%9B%E5%BB%BA%E9%94%99%E8%AF%AF) 这两种方法来在创建错误。但是这两种方法并不能满足你的用户或者后期调试时提供更加复杂的错误信息或者报告发生了什么。为了传递这种更复杂的错误信息并获得更多功能，我们可以实现标准库 `error` 接口类型。
 
 `error` 接口定义如下：
 

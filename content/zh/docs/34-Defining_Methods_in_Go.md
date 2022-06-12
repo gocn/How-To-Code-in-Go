@@ -330,4 +330,4 @@ Go 编译器很好心地告诉我们，`Shark` 确实有一个 `Dive` 方法，�
 
 在 Go 中声明方法与定义接收不同类型变量的函数本质上没有区别。同样，[使用指针]({{< relref "/docs/32-Understanding_Pointers_in_Go.md" >}})规则也适用。Go 为这种极其常见的函数定义提供了一些便利，并将这些方法收集到可以通过接口类型进行要求的方法集中。有效地使用方法可以让你在代码中使用接口来提高可测试性，并为你的代码的未来读者留下更好的结构。
 
-如果你想了解更多关于 Go 编程语言的一般信息，请查看我们的 [How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+如果你想了解更多关于 Go 编程语言的一般信息，请查看我们的 [How To Code in Go 系列](https://gocn.github.io/How-To-Code-in-Go/)。

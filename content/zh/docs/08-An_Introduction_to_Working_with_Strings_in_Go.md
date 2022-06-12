@@ -12,7 +12,7 @@ _字符串_是由一个或多个字符(字母、数字、符号)组成的序列�
 
 使用反引号，如 `` ` `` ```bar``` `` ` ``，将创建一个_原始_字符串。在原始字符串中，除了反引号之外，任何字符都可以出现在引号之间。下面是一个原始字符串的例子:
 
-```
+```go
 `Say "hello" to Go!`
 ```
 
@@ -20,7 +20,7 @@ _字符串_是由一个或多个字符(字母、数字、符号)组成的序列�
 
 原始字符串也可用于创建多行字符串:
 
-```
+```Go
 `Go is expressive, concise, clean, and efficient.
 Its concurrency mechanisms make it easy to write programs
 that get the most out of multi-core and networked machines,
@@ -50,8 +50,8 @@ interpreted language.`
 fmt.Println("Let's print out this string.")
 ```
 
-```
-Output
+```text
+output
 Let's print out this string.
 ```
 
@@ -77,8 +77,8 @@ _拼接_意味着把字符串收尾连接起来，创建一个新的字符串。
 fmt.Println("Sammy" + "Shark")
 ```
 
-```
-Output
+```text
+output
 SammyShark
 ```
 
@@ -88,8 +88,8 @@ SammyShark
 fmt.Println("Sammy " + "Shark")
 ```
 
-```
-Output
+```text
+output
 Sammy Shark
 ```
 
@@ -101,8 +101,8 @@ fmt.Println("Sammy" + 27)
 
 你将会收到下面的错误：
 
-```
-Output
+```text
+output
 cannot convert "Sammy" (type untyped string) to type int
 invalid operation: "Sammy" + 27 (mismatched types string and int)
 ```
@@ -131,8 +131,8 @@ fmt.Println(s)
 
 你将获得下面的输出：
 
-```
-Output
+```text
+output
 Sammy likes declaring strings.
 ```
 

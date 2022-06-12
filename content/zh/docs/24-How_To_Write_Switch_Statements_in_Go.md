@@ -2,7 +2,7 @@
 
 ## 介绍
 
-[条件语句]({{< relref "/docs/23-How_To_Write_Conditional_Statements_in_Go.md" >}})使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些[变量](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#understanding-variables)与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用[`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#if-statements)就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。`switch`是一个替代性的条件语句，对于传达你的 Go 程序在遇到不同选项时采取的行动很有用。
+[条件语句]({{< relref "/docs/23-How_To_Write_Conditional_Statements_in_Go.md" >}})使程序员有能力指导他们的程序在某个条件为真时采取某些行动，在条件为假时采取另一种行动。经常，我们想把一些[变量](https://gocn.github.io/How-To-Code-in-Go/docs/11-How_To_Use_Variables_and_Constants_in_Go/#%E7%90%86%E8%A7%A3%E5%8F%98%E9%87%8F)与多个可能的值进行比较，在每种情况下采取不同的行动。仅仅使用[`if`语句](https://gocn.github.io/How-To-Code-in-Go/docs/23-How_To_Write_Conditional_Statements_in_Go/#if-%E8%AF%AD%E5%8F%A5)就可以做到这一点。然而，编写软件不仅是为了让事情顺利进行，也是为了向未来的自己和其他开发者传达你的意图。`switch`是一个替代性的条件语句，对于传达你的 Go 程序在遇到不同选项时采取的行动很有用。
 
 我们可以用 switch 语句编写的所有内容也可以用`if`语句编写。在本教程中，我们将看几个例子，看看 switch 语句能做什么，它所取代的`if`语句，以及它最合适的应用场合。
 
@@ -48,7 +48,7 @@ strawberry is my favorite!
 I've never tried banana before
 ```
 
-在`main`中，我们定义了一个[slice](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#slices)的冰激凌口味。然后我们使用一个[`for loop`]({{< relref "/docs/25-How_To_Construct_For_Loops_in_Go.md" >}})来迭代它们。我们使用三个`if`语句来打印不同的信息，表明对不同冰淇淋口味的偏好。每个`if`语句必须使用`continue`语句来停止`for`循环的执行，这样就不会在最后打印出首选冰淇淋口味的默认信息。
+在`main`中，我们定义了一个[slice](https://gocn.github.io/How-To-Code-in-Go/docs/12-How_To_Convert_Data_Types_in_Go/)的冰激凌口味。然后我们使用一个[`for loop`]({{< relref "/docs/25-How_To_Construct_For_Loops_in_Go.md" >}})来迭代它们。我们使用三个`if`语句来打印不同的信息，表明对不同冰淇淋口味的偏好。每个`if`语句必须使用`continue`语句来停止`for`循环的执行，这样就不会在最后打印出首选冰淇淋口味的默认信息。
 
 当我们添加新的偏好时，我们必须不断添加`if`语句来处理新的情况。重复的信息，如 "香草"和 "巧克力"的情况，必须有重复的`if`语句。对于我们代码的未来读者（包括我们自己）来说，`if`语句的重复性掩盖了它们所做的重要部分--将变量与多个值进行比较并采取不同的行动。另外，我们的回退信息与条件语句分开，使得它看起来不相关。转换器 "语句可以帮助我们更好地组织这个逻辑。
 
@@ -200,7 +200,7 @@ You win!
 
 ## Fallthrough
 
-有时你想重复使用另一个 `case` 子句包含的代码。在这种情况下，可以使用 `fallthrough` 关键字要求Go运行下一个 `case` 子句的主体。下面这个例子修改了我们之前的冰淇淋口味的例子，以更准确地反映我们对草莓冰淇淋的热情：
+有时你想重复使用另一个 `case` 子句包含的代码。在这种情况下，可以使用 `fallthrough` 关键字要求 Go 运行下一个 `case` 子句的主体。下面这个例子修改了我们之前的冰淇淋口味的例子，以更准确地反映我们对草莓冰淇淋的热情：
 
 ```go
 package main
@@ -242,4 +242,4 @@ Go 开发人员不经常使用`fallthrough`关键字。通常情况下，通过�
 
 `switch`语句帮助我们向阅读代码的其他开发者传达出彼此有某种联系。使我们在将来添加新的情况时更容易添加不同的行为，并有可能确保任何忘记的事情也能通过`default`子句得到正确处理。下次你发现自己写的多个`if`语句都涉及同一个变量时，试着用`switch`语句重写它--你会发现当需要考虑其他值时，它将更容易重写。
 
-如果你想了解更多关于 Go 编程语言的信息，请查看整个[How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)
+如果你想了解更多关于 Go 编程语言的信息，请查看整个[How To Code in Go 系列](https://gocn.github.io/How-To-Code-in-Go/)

@@ -40,8 +40,8 @@ shark + 8
 fmt.Println(-459)
 ```
 
-```
-Output
+```text
+output
 -459
 ```
 
@@ -52,8 +52,8 @@ var absoluteZero int = -459
 fmt.Println(absoluteZero)
 ```
 
-```
-Output
+```text
+output
 -459
 ```
 
@@ -64,8 +64,8 @@ sum := 116 - 68
 fmt.Println(sum)
 ```
 
-```
-Output
+```text
+output
 48
 ```
 
@@ -83,8 +83,8 @@ _浮点数_ 或 _float_ 用于表示不能表示为整数的[实数](https://en.
 fmt.Println(-459.67)
 ```
 
-```
-Output
+```text
+output
 -459.67
 ```
 
@@ -95,8 +95,8 @@ absoluteZero := -459.67
 fmt.Println(absoluteZero)
 ```
 
-```
-Output
+```text
+output
 -459.67
 ```
 
@@ -107,8 +107,8 @@ var sum = 564.0 + 365.24
 fmt.Println(sum)
 ```
 
-```
-Output
+```text
+output
 929.24
 ```
 
@@ -128,7 +128,7 @@ Output
 
 Go 具有以下与架构无关的整数类型:
 
-```
+```text
 uint8       unsigned  8-bit integers (0 to 255)
 uint16      unsigned 16-bit integers (0 to 65535)
 uint32      unsigned 32-bit integers (0 to 4294967295)
@@ -141,7 +141,7 @@ int64       signed 64-bit integers (-9223372036854775808 to 9223372036854775807)
 
 浮点数和复数的大小也是变化的：
 
-```
+```text
 float32     IEEE-754 32-bit floating-point numbers
 float64     IEEE-754 64-bit floating-point numbers
 complex64   complex numbers with float32 real and imaginary parts
@@ -150,7 +150,7 @@ complex128  complex numbers with float64 real and imaginary parts
 
 还有一些数字类型的别名，通过分配有用的名称来表示特定的数据类型：
 
-```
+```text
 byte        alias for uint8
 rune        alias for int32
 ```
@@ -161,7 +161,7 @@ rune        alias for int32
 
 此外，Go 还有以下特定实现的类型:
 
-```
+```text
 uint     unsigned, either 32 or 64 bits
 int      signed, either 32 or 64 bits
 uintptr  unsigned integer large enough to store the uninterpreted bits of a pointer value 
@@ -198,15 +198,15 @@ func main() {
 
 编译后的运行结果如下：
 
-```
-Output
+```text
+output
 4294967295
 ```
 
 如果我们在运行时对该值加 `1`，它将会被折叠为 `0`：
 
-```
-Output
+```text
+output
 0
 ```
 
@@ -228,8 +228,8 @@ func main() {
 
 因为编译器可以确定它会溢出值，它现在会抛出一个错误:
 
-```
-Outputprog.go:6:36: constant 4294967296 overflows uint32
+```text
+outputprog.go:6:36: constant 4294967296 overflows uint32
 ```
 
 理解数据的边界将帮助你避免将来程序中可能出现的错误。
@@ -268,8 +268,8 @@ fmt.Println(myBool)
 
 因为 `5` 小于 `8`， 我们将会得到下面的输出结果：
 
-```
-Output
+```text
+output
 false
 ```
 
@@ -290,8 +290,8 @@ a := `Say "hello" to Go!`
 fmt.Println(a)
 ```
 
-```
-Output
+```text
+output
 Say "hello" to Go!
 ```
 
@@ -304,8 +304,8 @@ fmt.Println(a)
 
 因为反斜杠在字符串文字中没有特殊含义，它实际上会打印出 `\n` 的值，而不是创建一个新的行:
 
-```
-Output
+```text
+output
 Say "hello" to Go!\n
 ```
 
@@ -319,8 +319,8 @@ quote on either side.`
 fmt.Println(a)
 ```
 
-```
-Output
+```text
+output
 This string is on 
 multiple lines
 within a single back 
@@ -338,8 +338,8 @@ a := "Say \"hello\" to Go!"
 fmt.Println(a)
 ```
 
-```
-Output
+```text
+output
 Say "hello" to Go!
 ```
 
@@ -379,8 +379,8 @@ func main() {
 
 在前面，我们提到了 rune 是 `int32` 的别名，可以由一到四个字节组成。`世` 字符需要三个字节来定义，当通过 UTF-8 字符串进行循环时，索引也会相应地移动。这就是当它被打印出来时 `i` 不是顺序的原因。
 
-```
-Output0: H
+```text
+output0: H
 1: e
 2: l
 3: l
@@ -469,8 +469,8 @@ coral := [3]string{"blue coral", "staghorn coral", "pillar coral"}
 fmt.Println(coral)
 ```
 
-```
-Output
+```text
+output
 [blue coral staghorn coral pillar coral]
 ```
 
@@ -514,8 +514,8 @@ fmt.Println(seaCreatures)
 
 输出将和我们创建的列表完全一样：
 
-```
-Output
+```text
+output
 [shark cuttlefish squid mantis shrimp]
 ```
 
@@ -532,8 +532,8 @@ seaCreatures = append(seaCreatures, "seahorse")
 fmt.Println(seaCreatures)
 ```
 
-```
-Output
+```text
+output
 [shark cuttlefish squid mantis shrimp seahorse]
 ```
 
@@ -543,7 +543,7 @@ Output
 
 _map_是 Go 内建的哈希或字典类型。 Map 使用 _键_ _值_对来存储数据。在编程中快速通过索引或在 Go 中通过键来查找值时非常有用。比如，你可能会用 map 按用户 ID 为索引来保存用户。键可以是用户 ID，用户对象可以是值。map 可以用 `map` 关键字，接着把键的数据类型放在 `[]` 中括号里，后面是值的数据类型，且键值对放在大括号中。
 
-```
+```go
 map[key]value{}
 ```
 
@@ -564,8 +564,8 @@ sammy := map[string]string{"name": "Sammy", "animal": "shark", "color": "blue", 
 fmt.Println(sammy)
 ```
 
-```
-Output
+```text
+output
 map[animal:shark color:blue location:ocean name:Sammy]
 ```
 
@@ -575,8 +575,8 @@ map[animal:shark color:blue location:ocean name:Sammy]
 fmt.Println(sammy["color"])
 ```
 
-```
-Output
+```text
+output
 blue
 ```
 

@@ -4,19 +4,19 @@
 
 在 Go 中，数据类型用于对一种特定类型的数据进行分类，确定可以分配给该类型的值以及可以对其执行的操作。在编程时，有时你需要在类型之间转换值以便以不同的方式操作值。例如，你可能需要将数值与字符串连接起来，或者在初始化为整数值的数字中表示小数位。用户生成的数据通常会自动分配为字符串数据类型，即使它由数字组成； 为了在此输入中执行数学运算，你必须将字符串转换为数字数据类型。
 
-由于 Go 是一种静态类型语言，[数据类型绑定到变量](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#declaring-data-types-for-variables ) 而不是值。这意味着，如果你将变量定义为 `int`，它只能是 `int`； 如果不转换变量的数据类型，就无法将一个 `字符串` 赋值给它。Go 中数据类型的静态特性使得学习转换它们的方法更加重要。
+由于 Go 是一种静态类型语言，[数据类型绑定到变量](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E5%A3%B0%E6%98%8E%E5%8F%98%E9%87%8F%E7%9A%84%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B) 而不是值。这意味着，如果你将变量定义为 `int`，它只能是 `int`； 如果不转换变量的数据类型，就无法将一个 `字符串` 赋值给它。Go 中数据类型的静态特性使得学习转换它们的方法更加重要。
 
 本教程将指导你完成数字和字符串的转换，并提供示例以帮助你熟悉不同的用例。
 
 ## 数字类型转换
 
-Go 有多种数字类型可供选择。它们主要分为两种类型：[integers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers) 和 [floating-point numbers](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers)。
+Go 有多种数字类型可供选择。它们主要分为两种类型：[integers](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%95%B4%E6%95%B0) 和 [floating-point numbers](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%B5%AE%E7%82%B9%E6%95%B0)。
 
-在许多情况下，你可能希望在数字类型之间进行转换。在 [不同大小的数字类型](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types) 之间进行转换有助于优化特定场景下的性能。如果你有来自代码另一部分的整数并想要对其进行除法，你可能需要将整数转换为浮点数以保持操作的精度。此外，时间相关的操作通常涉及整数转换。为了解决这些情况，Go 为大多数数字类型提供了内置的*类型转换*。
+在许多情况下，你可能希望在数字类型之间进行转换。在 [不同大小的数字类型](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A4%A7%E5%B0%8F) 之间进行转换有助于优化特定场景下的性能。如果你有来自代码另一部分的整数并想要对其进行除法，你可能需要将整数转换为浮点数以保持操作的精度。此外，时间相关的操作通常涉及整数转换。为了解决这些情况，Go 为大多数数字类型提供了内置的*类型转换*。
 
 ### 整数类型之间的转换
 
-Go 有许多整数数据类型可供选择。何时使用另一种通常更多要考虑的是[性能](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#picking-numeric-data-types)； 但是，有时你需要从一种整数类型转换为另一种整数类型。例如，Go 有时会自动生成数值为 `int`，这可能与你的输入值不匹配。如果你的输入值为 `int64`，则在将它们的数据类型转换为匹配之前，你将无法在同一数学表达式中使用 `int` 和 `int64` 。
+Go 有许多整数数据类型可供选择。何时使用另一种通常更多要考虑的是[性能](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E9%80%89%E6%8B%A9%E6%95%B0%E5%80%BC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B)； 但是，有时你需要从一种整数类型转换为另一种整数类型。例如，Go 有时会自动生成数值为 `int`，这可能与你的输入值不匹配。如果你的输入值为 `int64`，则在将它们的数据类型转换为匹配之前，你将无法在同一数学表达式中使用 `int` 和 `int64` 。
 
 假设你有一个 `int8` 并且需要将其转换为 `int32`。你可以通过 `int32()` 类型转换来做到这一点：
 
@@ -69,7 +69,7 @@ Output
 64
 ```
 
-Keep in mind that when converting integers you could potentially exceed the maximum value of the data type and [*wraparound*](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#overflow-vs-wraparound):请记住，在转换整数时，你可能会超过数据类型的最大值和 [*wraparound*](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#overflow-vs-wraparound)：
+Keep in mind that when converting integers you could potentially exceed the maximum value of the data type and [*wraparound*](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%BA%A2%E5%87%BA-vs-%E6%8A%98%E5%8F%A0):请记住，在转换整数时，你可能会超过数据类型的最大值和 [*wraparound*](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%BA%A2%E5%87%BA-vs-%E6%8A%98%E5%8F%A0)：
 
 ```go
 var big int64 = 129

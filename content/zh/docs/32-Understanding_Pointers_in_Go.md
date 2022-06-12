@@ -240,7 +240,7 @@ func changeCreature(creature *Creature) {
 
 ## 空指针
 
-Go 中的所有变量都有一个[零值](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values)。即使对指针来说也是如此。如果你声明了一个类型的指针，但是没有赋值，那么零值将是 `nil`。`nil` 是一种表示变量 "没有被初始化" 的方式。
+Go 中的所有变量都有一个[零值](https://gocn.github.io/How-To-Code-in-Go/docs/11-How_To_Use_Variables_and_Constants_in_Go/#%E9%9B%B6%E5%80%BC)。即使对指针来说也是如此。如果你声明了一个类型的指针，但是没有赋值，那么零值将是 `nil`。`nil` 是一种表示变量 "没有被初始化" 的方式。
 
 在下面的程序中，我们定义了一个指向 `Creature` 类型的指针，但是我们从来没有实例化过 `Creature` 的实际实例，也没有将它的地址分配给 `creature` 指针变量。该值将是 `nil`，因此我们不能引用任何定义在 `Creature` 类型上的字段或方法：
 

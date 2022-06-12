@@ -1,5 +1,6 @@
 # 在循环中使用 Break 和 Continue
-### 介绍
+
+## 介绍
 
 在 Go 中使用 **for 循环**可以让您以有效的方式自动化重复任务。
 
@@ -49,7 +50,7 @@ Exiting program
 
 ### 嵌套循环
 
-要记住，`break` 语句只会停止调用它的最内层循环的执行。如果您有一组嵌套循环，如果需要的话，您将需要为每个循环设置break。
+要记住，`break` 语句只会停止调用它的最内层循环的执行。如果您有一组嵌套循环，如果需要的话，您将需要为每个循环设置 break。
 
 ```go
 package main
@@ -107,7 +108,7 @@ Exiting program
 
 与 `break` 语句一样，`continue` 语句通常与  `if`  条件语句一起使用。
 
-使用与前面的[Break 语句](https://www.digitalocean.com/community/tutorials/how-to-use-break-and-continue-statements-when-working-with-loops-in-go#break-statement)部分相同的 `for` 循环程序，这里我们将使用 `continue` 语句而不是 `break` 语句：
+使用与前面的[Break 语句](https://gocn.github.io/How-To-Code-in-Go/docs/26-Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/#break-%E8%AF%AD%E5%8F%A5)部分相同的 `for` 循环程序，这里我们将使用 `continue` 语句而不是 `break` 语句：
 
 ```go
 package main

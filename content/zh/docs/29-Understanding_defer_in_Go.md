@@ -330,5 +330,5 @@ func fileCopy(source string, destination string) error {
 
 ## 总结
 
-在这篇文章中，我们了解了 `defer` 语句，以及如何使用它来确保我们在程序中正确清理系统资源。正确地清理系统资源将使你的程序使用更少的内存，表现更好。要了解更多关于 `defer` 的使用，请阅读处理恐慌的文章，或者探索我们整个[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+在这篇文章中，我们了解了 `defer` 语句，以及如何使用它来确保我们在程序中正确清理系统资源。正确地清理系统资源将使你的程序使用更少的内存，表现更好。要了解更多关于 `defer` 的使用，请阅读处理恐慌的文章，或者探索我们整个[如何在 Go 中编码系列](https://gocn.github.io/How-To-Code-in-Go/)。
 
