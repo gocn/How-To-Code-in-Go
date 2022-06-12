@@ -17,9 +17,9 @@ Hello, Sammy! I'm Go!
 
 在开始本教程之前，你需要一个本地的 Go 开发环境。你可以按照下面其中一个教程在你的计算机上进行设置：
 
--   [如何在 macOS 上安装 Go 和设置本地编程环境]({{< relref "/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean.md" >}})
--   [如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})
--   [如何在 Windows 10 上安装 Go 和设置本地编程环境]({{< relref "/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean.md" >}})
+-   [如何在 macOS 上安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/02-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_macOS_DigitalOcean/)
+-   [如何在 Ubuntu 18.04 上安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/)
+-   [如何在 Windows 10 上安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/03-How_To_Install_Go_and_Set_Up_a_Local_Programming_Environment_on_Windows_10_DigitalOcean/)
 
 ## 第一步 — 编写最基本的 “Hello, World!” 程序
 
