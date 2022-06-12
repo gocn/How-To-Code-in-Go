@@ -385,4 +385,4 @@ Sammy
 -   当输入参数的数量未知或调用时会发生变化。
 -   使您的代码更具可读性。
 
-要了解有关创建和调用函数的更多信息，您可以阅读[如何在 Go 中定义和调用函数](https://github.com/gocn/How-To-Code-in-Go/blob/main/27_How_To_Define_and_Call_Functions_in_Go.md)。
+要了解有关创建和调用函数的更多信息，您可以阅读[如何在 Go 中定义和调用函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})。

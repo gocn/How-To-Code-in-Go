@@ -543,4 +543,4 @@ Output
 
 ## 结论
 
-在本教程中，我们学习了如何声明和使用 `for` 循环来解决 Go 中的重复任务。我们还学习了 `for` 循环的三种不同变体以及何时使用它们。要了解有关 `for` 循环以及如何控制它们的流程的更多信息，请阅读[在 Go 中使用循环时的 Break 和 Continue 语句](https://github.com/gocn/How-To-Code-in-Go/blob/main/26_Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go.md)。
+在本教程中，我们学习了如何声明和使用 `for` 循环来解决 Go 中的重复任务。我们还学习了 `for` 循环的三种不同变体以及何时使用它们。要了解有关 `for` 循环以及如何控制它们的流程的更多信息，请阅读[在 Go 中使用循环时的 Break 和 Continue 语句]({{< relref "/docs/26-Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go.md" >}})。
