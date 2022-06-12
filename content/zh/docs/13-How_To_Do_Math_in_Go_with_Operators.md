@@ -8,8 +8,8 @@
 
 我们将使用 Go 中最常用的两种数字[数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}})，整数和浮点数。
 
-* [整数](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#integers)是可以是正数、负数或 0 的整数（...，`-1`，`0`，`1`，...）。
-* [浮点数](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#floating-point-numbers)是包含小数点的实数，如 `9.0` 或 `2.25` ...
+* [整数](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%95%B4%E6%95%B0)是可以是正数、负数或 0 的整数（...，`-1`，`0`，`1`，...）。
+* [浮点数](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%B5%AE%E7%82%B9%E6%95%B0)是包含小数点的实数，如 `9.0` 或 `2.25` ...
 
 本教程将回顾我们在 Go 中对数字数据类型可以使用的运算符。
 
@@ -121,7 +121,7 @@ Output
 43.67
 ``` 
 
-在 Go 中，我们只能对相同的数据类型使用运算符。我们不能把一个 `int` 和一个 [`float64`](https://www.digitalocean.com/community/tutorials/understanding-data-types-in-go#sizes-of-numeric-types) 加在一起：
+在 Go 中，我们只能对相同的数据类型使用运算符。我们不能把一个 `int` 和一个 [`float64`](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%A4%A7%E5%B0%8F) 加在一起：
 
 ```go
 i := 7

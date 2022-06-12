@@ -2,7 +2,7 @@
 
 ## 简介
 
-到目前为止，在我们的 [How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)中，你已经使用了[`go run`](https://www.digitalocean.com/community/tutorials/how-to-write-your-first-program-in-go#step-2---running-a-go-program) 命令来自动编译你的源代码并生成可执行文件。虽然这个命令对于在命令行上测试你的代码很有用，但是分发或部署你的应用程序则需要将你的代码构建成一个可共享的二进制可执行文件，或者一个包含机器字节码的单一文件来运行你的应用程序。要做到这一点，你可以使用 Go 工具链来构建和安装你的程序。
+到目前为止，在我们的 [How To Code in Go 系列](https://gocn.github.io/How-To-Code-in-Go/)中，你已经使用了[`go run`](https://gocn.github.io/How-To-Code-in-Go/docs/04-How_To_Write_Your_First_Program_in_Go_DigitalOcean/#%E7%AC%AC%E4%BA%8C%E6%AD%A5--%E8%BF%90%E8%A1%8C-go-%E7%A8%8B%E5%BA%8F) 命令来自动编译你的源代码并生成可执行文件。虽然这个命令对于在命令行上测试你的代码很有用，但是分发或部署你的应用程序则需要将你的代码构建成一个可共享的二进制可执行文件，或者一个包含机器字节码的单一文件来运行你的应用程序。要做到这一点，你可以使用 Go 工具链来构建和安装你的程序。
 
 在 Go 中，将源代码转译成二进制可执行文件的过程被称为构建。一旦这个可执行文件被构建，它将不仅包含你的应用程序，还包含在目标平台上执行二进制文件所需的所有支持代码。这意味着 Go 二进制文件不需要 Go 工具链等系统依赖就可以在新系统上运行。将这些可执行文件放在自己系统的可执行文件路径中，就可以在系统的任何地方运行程序，这与把程序安装到你的操作系统上是一样的。
 
@@ -114,7 +114,7 @@ greeter  main.go  go.mod
 注：在Windows上，你的可执行文件将是 greeter.exe。
 ```
 
-默认情况下，`go build` 将为当前[平台和架构](https://www.digitalocean.com/community/tutorials/building-go-applications-for-different-operating-systems-and-architectures#possible-platforms-for-goos-and-goarch)生成一个可执行文件。例如，如果在 `linux/386` 系统上构建，可执行文件将与任何其他 `linux/386` 系统兼容，即使并没有安装 Go。Go 支持为其他平台和架构进行构建，你可以在我们的[为不同操作系统和架构构建 Go 应用程序]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})文章中了解更多信息。
+默认情况下，`go build` 将为当前[平台和架构](https://gocn.github.io/How-To-Code-in-Go/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures/#goos%E5%92%8Cgoarch%E5%8F%AF%E8%83%BD%E6%94%AF%E6%8C%81%E7%9A%84%E5%B9%B3%E5%8F%B0)生成一个可执行文件。例如，如果在 `linux/386` 系统上构建，可执行文件将与任何其他 `linux/386` 系统兼容，即使并没有安装 Go。Go 支持为其他平台和架构进行构建，你可以在我们的[为不同操作系统和架构构建 Go 应用程序]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})文章中了解更多信息。
 
 现在，你已经创建了你的可执行文件，运行它以确保二进制文件已被正确构建。在 macOS 或 Linux 上，运行以下命令：
 
@@ -259,4 +259,4 @@ Hello, World!
 
 在本教程中，你演示了 Go 工具链是如何从源代码中轻松构建可执行二进制文件的。这些二进制文件可以分发到其他系统上运行，甚至是那些没有 Go 工具链和环境的系统。你还使用 `go install` 自动构建并将程序作为可执行文件安装在系统的 `$PATH` 中。有了 `go build` 和 `go install`，你现在可以随意分享和使用你的应用程序。
 
-现在你了解了 `go build` 的基础知识，你可以通过[用 Build 标签定制 Go 二进制文件]({{< relref "/docs/31-Customizing_Go_Binaries_with_Build_Tags.md" >}})教程来探索如何制作模块化的源代码，或者通过[为不同的操作系统和架构构建 Go 应用程序]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})来探索如何为不同的平台构建。如果你想了解更多关于 Go 编程语言的信息，请查看整个[How To Code in Go 系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+现在你了解了 `go build` 的基础知识，你可以通过[用 Build 标签定制 Go 二进制文件]({{< relref "/docs/31-Customizing_Go_Binaries_with_Build_Tags.md" >}})教程来探索如何制作模块化的源代码，或者通过[为不同的操作系统和架构构建 Go 应用程序]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})来探索如何为不同的平台构建。如果你想了解更多关于 Go 编程语言的信息，请查看整个[How To Code in Go 系列](https://gocn.github.io/How-To-Code-in-Go/)。

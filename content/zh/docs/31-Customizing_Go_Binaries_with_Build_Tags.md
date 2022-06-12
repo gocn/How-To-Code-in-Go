@@ -56,7 +56,7 @@ func main() {
   }
 }
 ```
-在这个文件中，我们创建了一个程序，声明了一个名为 `features` 的[切片](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#slices)，它容纳了两个[字符串]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})，代表我们免费版本的应用程序的特征。应用程序中的 `main()` 函数使用一个 `for` [循环](https://www.digitalocean.com/community/tutorials/how-to-construct-for-loops-in-go#looping-through-sequential-data-types-with-rangeclause) `range` 遍历  `features` 切片，并将所有可用的功能打印到屏幕上。
+在这个文件中，我们创建了一个程序，声明了一个名为 `features` 的[切片](https://gocn.github.io/How-To-Code-in-Go/docs/16-Understanding_Arrays_and_Slices_in_Go/#%E5%88%87%E7%89%87)，它容纳了两个[字符串]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})，代表我们免费版本的应用程序的特征。应用程序中的 `main()` 函数使用一个 `for` [循环](https://gocn.github.io/How-To-Code-in-Go/docs/25-How_To_Construct_For_Loops_in_Go/#%E4%BD%BF%E7%94%A8-rangeclause-%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E9%A1%BA%E5%BA%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B) `range` 遍历  `features` 切片，并将所有可用的功能打印到屏幕上。
 
 保存并退出该文件。现在这个文件已经保存了，在文章的其余部分，我们将不再需要编辑它。相反，我们将使用构建标签来改变我们将从中构建的二进制文件的功能特性。
 
@@ -375,7 +375,7 @@ go build -tags "enterprise pro"
 
 在本教程中，你使用构建标签来控制你的哪些代码被编译到二进制中。首先，你声明了构建标签并使用它们与 `go build`，然后你用布尔逻辑组合了多个标签。然后，你建立了一个程序，代表了免费版、专业版和企业版的不同功能集，显示了构建标签对项目的强大控制能力。
 
-如果你想了解更多关于构建标签的信息，请看一下 [Golang 的相关文档](https://golang.org/pkg/go/build/#hdr-Build_Constraints)，或者继续探索我们的[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+如果你想了解更多关于构建标签的信息，请看一下 [Golang 的相关文档](https://golang.org/pkg/go/build/#hdr-Build_Constraints)，或者继续探索我们的[如何在 Go 中编码系列](https://gocn.github.io/How-To-Code-in-Go/)。
 
  
 

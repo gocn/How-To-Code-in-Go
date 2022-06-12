@@ -290,7 +290,7 @@ func loopFive() {
 
 这里我们设置一个 `for` 循环，循环运行 `25` 次。但是，在 `for` 循环内部，我们有一个条件语句来检查 `i` 的值是否等于 `5`。如果等于，我们将 `return` 进行返回。因为我们在 `loopFive` 函数中，所以函数中的任何一个 `return` 都会退出函数。所以，我们永远不会到达该函数的最后一行来打印 `This line will not execute.`语句。
 
-在 `for` 循环内使用了 `return` 语句来结束函数，因此循环外的行将不会运行。相反，如果我们使用了[`break`语句](https://www.digitalocean.com/community/tutorials/how-to-use-break-and-continue-statements-when-working-with-loops-in-go#break-statement)，那么此时只有循环会退出，最后 `fmt.Println()` 一行会被运行。
+在 `for` 循环内使用了 `return` 语句来结束函数，因此循环外的行将不会运行。相反，如果我们使用了[`break`语句](https://gocn.github.io/How-To-Code-in-Go/docs/26-Using_Break_and_Continue_Statements_When_Working_with_Loops_in_Go/#break-%E8%AF%AD%E5%8F%A5)，那么此时只有循环会退出，最后 `fmt.Println()` 一行会被运行。
 
 `return` 语句能够退出一个函数，并且如果在函数签名中指定，则会返回一个值。
 

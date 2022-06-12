@@ -8,7 +8,7 @@ Panics 属于第二类错误，这些错误是程序员意料之外的。这些�
 
 ## 了解 panics
 
-GO 中的某些操作会自动返回 panic 并停止程序的运行。常见的操作包括索引超出 [数组](https://www.digitalocean.com/community/tutorials/understanding-arrays-and-slices-in-go#arrays) 的容量，执行类型的断言，空指针上的调用方法，错误地使用互斥锁以及尝试使用已经关闭的 chanel 等等。这些情况中的大多数是由于编程时犯错而导致的，再加上编译器在编译程序时没有检测到这些错误。
+GO 中的某些操作会自动返回 panic 并停止程序的运行。常见的操作包括索引超出 [数组](https://gocn.github.io/How-To-Code-in-Go/docs/16-Understanding_Arrays_and_Slices_in_Go/#%E6%95%B0%E7%BB%84) 的容量，执行类型的断言，空指针上的调用方法，错误地使用互斥锁以及尝试使用已经关闭的 chanel 等等。这些情况中的大多数是由于编程时犯错而导致的，再加上编译器在编译程序时没有检测到这些错误。
 
 由于 panic 包含了有助于解决问题的细节，所以开发者通常会使用 panic 来标记在开发过程中犯了一个错误。
 

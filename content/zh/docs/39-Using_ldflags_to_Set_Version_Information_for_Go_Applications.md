@@ -86,7 +86,7 @@ go build -ldflags="-flag"
 go build -ldflags="-X 'package_path.variable_name=new_value'"
 ```
 
-在引号内，现在有`X`选项和一个[键值对](https://www.digitalocean.com/community/tutorials/understanding-maps-in-go#keys-and-values)，代表要改变的变量和它的新值。`.`字符将包路径和变量名称分开，单引号用于避免键值对被断开。
+在引号内，现在有`X`选项和一个[键值对](https://gocn.github.io/How-To-Code-in-Go/docs/15-Understanding_Maps_in_Go/#%E9%94%AE%E5%92%8C%E5%80%BC)，代表要改变的变量和它的新值。`.`字符将包路径和变量名称分开，单引号用于避免键值对被断开。
 
 要在你的示例程序中替换`Version`变量，使用最后一个命令块中的语法，传入一个新的值并建立新的二进制。
 

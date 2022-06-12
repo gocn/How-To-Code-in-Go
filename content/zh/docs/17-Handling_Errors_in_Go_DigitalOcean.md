@@ -201,7 +201,7 @@ Capitalized name: SAMMY
 
 当函数的调用者为 `name` 参数提供一个空字符串时， `capitalize` 函数将返回错误。当 `name` 参数不是空字符串时，`capledize()` 调用 `strings.ToTitle` 函数将 `name` 参数转为大写并返回为 `nil` 的错误值。
 
-这个例子遵循一些微妙的规约，这些规约是 Go 代码的典型特征，但 GO 编译器并没有强制执行。当函数返回多个值（包括错误）时，规约我们将 `error` 类型作为最后一项。具有多个返回值的函数返回错误时，通常约定 GO 代码还将每个不是 `error` 类型的值设置为零值。比如字符串的零值空字符串，整数为 0，一个用于结构类型的空结构，以及用 `nil` 表示接口和指针类型的零值。我们在有关 [变量和常数的教程](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#zero-values) 中更详细地介绍零值。
+这个例子遵循一些微妙的规约，这些规约是 Go 代码的典型特征，但 GO 编译器并没有强制执行。当函数返回多个值（包括错误）时，规约我们将 `error` 类型作为最后一项。具有多个返回值的函数返回错误时，通常约定 GO 代码还将每个不是 `error` 类型的值设置为零值。比如字符串的零值空字符串，整数为 0，一个用于结构类型的空结构，以及用 `nil` 表示接口和指针类型的零值。我们在有关 [变量和常数的教程](https://gocn.github.io/How-To-Code-in-Go/docs/11-How_To_Use_Variables_and_Constants_in_Go/#%E9%9B%B6%E5%80%BC) 中更详细地介绍零值。
 
 ### 简化重复的代码
 

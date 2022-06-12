@@ -14,7 +14,7 @@
 
 想要了解更多关于设置 `$GOPATH` 变量的信息，可以参考 Go [文档](https://golang.org/doc/code.html#Workspaces)。
 
-此外，[本系列教程](https://www.digitalocean.com/community/tutorial_series/how-to-install-and-set-up-a-local-programming-environment-for-go) 简单介绍了安装 Go 和设置 Go 开发环境的方法。
+此外，[本系列教程]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}}) 简单介绍了安装 Go 和设置 Go 开发环境的方法。
 
 ## `$GOPATH` 不是 `$GOROOT`
 

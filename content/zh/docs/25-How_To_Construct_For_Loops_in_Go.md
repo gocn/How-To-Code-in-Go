@@ -1,5 +1,6 @@
 # 如何在 Go 中构造 for 循环
-### 介绍
+
+## 介绍
 
 在计算机编程中，_循环_ 是在满足某些条件之前循环重复执行一段代码的代码结构。在计算机编程中使用循环可以让您自动并重复地执行类似的任务。想象一下，如果您有一个需要处理的文件列表，或者您想计算一篇文章的行数。您就可以在代码中使用循环来解决这样的问题。
 
@@ -244,7 +245,7 @@ func main() {
 }
 ```
 
-在这种情况下，我们打印出列表中的每个项。虽然我们使用了变量 `i` 和 `shark` ，但我们可以将变量称为任何其他[有效的变量名](https://www.digitalocean.com/community/tutorials/how-to-use-variables-and-constants-in-go#naming-variables-rules-and-style)，我们会得到相同的输出：
+在这种情况下，我们打印出列表中的每个项。虽然我们使用了变量 `i` 和 `shark` ，但我们可以将变量称为任何其他[有效的变量名](https://gocn.github.io/How-To-Code-in-Go/docs/11-How_To_Use_Variables_and_Constants_in_Go/#%E5%91%BD%E5%90%8D%E5%8F%98%E9%87%8F%E8%A7%84%E5%88%99%E5%92%8C%E6%A0%B7%E5%BC%8F)，我们会得到相同的输出：
 
 ```shell
 Output
@@ -424,7 +425,7 @@ animal: shark
 
 就像其他编程语言一样，在 Go 中循环也是可以嵌套的。_嵌套_ 是当我们在一个结构内又使用了一个结构。在这种情况下，嵌套循环是发生在另一个循环中的循环。当您希望对数据集的每个元素执行循环操作时，这些可能很有用。
 
-嵌套循环在结构上类似于[嵌套`if`语句](https://www.digitalocean.com/community/tutorials/how-to-write-conditional-statements-in-go#nested-if-statements)。它的构造如下：
+嵌套循环在结构上类似于[嵌套`if`语句](https://gocn.github.io/How-To-Code-in-Go/docs/23-How_To_Write_Conditional_Statements_in_Go/#%E5%B5%8C%E5%A5%97%E7%9A%84if%E8%AF%AD%E5%8F%A5)。它的构造如下：
 
 ```go
 for {

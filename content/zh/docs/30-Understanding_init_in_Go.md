@@ -116,7 +116,7 @@ func Random() string {
 }
 ```
 
-这个文件定义了一个叫做 `creatures` 的变量，它有一组初始化为数值的海洋生物。它还有一个[exported](https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go#exported-and-unexported-items) `Random` 函数，将从 `creatures` 变量中返回一个随机值。
+这个文件定义了一个叫做 `creatures` 的变量，它有一组初始化为数值的海洋生物。它还有一个[exported](https://gocn.github.io/How-To-Code-in-Go/docs/22-Understanding_Package_Visibility_in_Go/#%E5%8F%AF%E5%AF%BC%E5%87%BA%E4%B8%8E%E4%B8%8D%E5%8F%AF%E5%AF%BC%E5%87%BA) `Random` 函数，将从 `creatures` 变量中返回一个随机值。
 
 保存并退出这个文件。
 
@@ -517,4 +517,4 @@ func decode(reader io.Reader) image.Rectangle {
 
 在本教程中，我们了解到 `init()` 函数是在你的包中的其他代码被加载之前加载的，它可以为一个包执行特定的任务，如初始化一个期望的状态。我们还了解到，编译器执行多个 `init()` 语句的顺序取决于编译器加载源文件的顺序。如果你想了解更多关于 `init()` 的信息，请查看官方的[Golang 文档](https://golang.org/doc/effective_go.html#init)，或者阅读[Go 社区中关于该函数的讨论](https://github.com/golang/go/issues/25885)。
 
-你可以通过我们的[如何在 Go 中定义和调用函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})文章阅读更多关于函数的信息，或者探索[整个 Go 中如何编程系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+你可以通过我们的[如何在 Go 中定义和调用函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})文章阅读更多关于函数的信息，或者探索[整个 Go 中如何编程系列](https://gocn.github.io/How-To-Code-in-Go/)。

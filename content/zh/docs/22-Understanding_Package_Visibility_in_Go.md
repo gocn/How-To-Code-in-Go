@@ -468,4 +468,4 @@ cmd/main.go:16:8: logger.write undefined (cannot refer to unexported field or me
 
 这篇文章展示了如何在包之间共享代码，同时也保护你的包的实现细节。这允许你输出一个简单的 API，为了向后兼容而很少改变，但允许在你的包中根据需要私下改变，使其在未来更好地工作。这被认为是创建包和它们相应的 API 时的最佳做法。
 
-要了解更多关于 Go 中的包，请查看我们的[在 Go 中导入包]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})和[如何在 Go 中编写包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})文章，或者探索我们整个[如何在 Go 中编码系列](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)。
+要了解更多关于 Go 中的包，请查看我们的[在 Go 中导入包]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})和[如何在 Go 中编写包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})文章，或者探索我们整个[如何在 Go 中编码系列](https://gocn.github.io/How-To-Code-in-Go/)。
