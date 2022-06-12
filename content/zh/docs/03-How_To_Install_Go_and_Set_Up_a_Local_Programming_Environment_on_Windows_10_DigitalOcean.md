@@ -47,13 +47,13 @@ Set-ExecutionPolicy -Scope CurrentUser
 
 然后 PowerShell 将提示你为你提供一个可执行策略。 输入以下内容来使用`RemoteSigned` 策略：
 
-```
+```text
 RemoteSigned
 ```
 
  一旦你按了回车键，系统会要求你确认对执行政策的更改。 输入字母 `y` 以使更改生效。 你可以通过询问机器上的当前权限来确认这是否生效：
 
-```
+```text
 Get-ExecutionPolicy -List
 ```
 
@@ -168,14 +168,14 @@ See the log for details (C:\ProgramData\chocolatey\logs\chocolatey.log).
 
 安装完成后，你可以确认下 Go 是否已安装。 要查看更改，请以管理员身份关闭并重新打开 PowerShell，然后检查本地计算机上可用的 Go 版本：
 
-```
+```bash
 go version
 ```
 
 你将得到类似以下内容的输出：
 
-```
-Output
+```text
+output
 go version go1.12.1 windows/amd643.7.0
 ```
 
@@ -219,19 +219,19 @@ Go 语言的工作区在其根目录下包含两个目录：
 
 使用下面命令导航到 `$HOME` 目录：
 
-```
+```bash
 cd $HOME
 ```
 
 接下来，为你的 Go 工作区创建目录结构：
 
-```
+```bash
 mkdir go/bin, go/src
 ```
 
 以上命令将确保下面的目录结构各就各位：
 
-```
+```text
 └── $HOME
     └── go
         ├── bin
@@ -248,8 +248,8 @@ $env:GOPATH
 
 你应该会看到以下输出，其中  `sammy` 代替了你的用户名：
 
-```
-Output
+```text
+output
 C:\Users\sammy\go
 ```
 
@@ -263,19 +263,19 @@ setx PATH "$($env:path);$GOPATH\bin"
 
 现在你已经创建了工作区的根目录并设置了 `$GOPATH` 环境变量，你可以根据以下目录结构创建你未来的项目。 此示例假设你使用 `github.com` 作为仓库：
 
-```
+```text
 $GOPATH/src/github.com/username/project
 ```
 
 例如，如果你正在开发  [`https://github.com/digitalocean/godo`](https://github.com/digitalocean/godo)  项目，它将存储在以下目录中：
 
-```
+```text
 $GOPATH/src/github.com/digitalocean/godo
 ```
 
 该项目结构使项目可以通过 `go get` 工具使用。它也有助于以后的可读性。 你可以通过使用 `go get` 命令并获取 `godo` 库来验证这一点：
 
-```
+```bash
 go get github.com/digitalocean/godo
 ```
 
@@ -283,14 +283,14 @@ go get github.com/digitalocean/godo
 
 你可以通过列出目录来检查下看看是否成功下载了 `godo`包：
 
-```
+```bash
 ls $env:GOPATH/src/github.com/digitalocean/godo
 ```
 
 你应该看到类似下面这样的输出：
 
-```
-Output    
+```text
+output    
     Directory: C:\Users\sammy\go\src\github.com\digitalocean\godo
 
 
@@ -318,7 +318,7 @@ d-----        4/10/2019   2:59 PM                util
 
 在你的 home 目录，打开一个命令行文本编辑器，例如 `nano`，然后创建一个新文件：
 
-```
+```bash
 nano hello.go
 ```
 
@@ -341,14 +341,14 @@ func main() {
 
 退出 `nano` 返回 shell 之后，运行程序：
 
-```
+```bash
 go run hello.go
 ```
 
 你刚刚创建的 hello.go 程序应该会在 PowerShell 产生以下输出：
 
-```
-Output
+```text
+output
 Hello, World!
 ```
 

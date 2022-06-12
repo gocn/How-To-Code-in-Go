@@ -2,7 +2,7 @@
 
 ## 介绍
 
-当创建一个[Go中的包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过[导入包]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
+当创建一个[Go 中的包]({{< relref "/docs/21-How_To_Write_Packages_in_Go.md" >}})时，最终的目标通常是让其他开发者可以使用这个包，无论是高阶包还是整个程序。通过[导入包]({{< relref "/docs/20-Importing_Packages_in_Go_DigitalOcean.md" >}})，你的这段代码可以作为其他更复杂的工具的构建模块。然而，只有某些包是可以导入的。这是由包的可见性决定的。
 
 这里的*可见性*是指一个包或其他构造可以被引用的文件空间。例如，如果我们在一个函数中定义一个变量，那么这个变量的可见性（范围）只在定义它的那个函数中。同样，如果你在一个包中定义了一个变量，你可以让它只在该包中可见，或允许它在包外也可见。
 
@@ -16,7 +16,7 @@
 
 - 按照[如何安装 Go 并设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})设置的 Go 工作区。 本教程将使用以下文件结构：
 
-```
+```text
 .
 ├── bin 
 │ 
@@ -137,7 +137,7 @@ nano go.mod
 
 然后在文件中放置以下内容：
 
-```
+```go
 module github.com/gopherguides/cmd
 
 replace github.com/gopherguides/logging => ../logging
@@ -154,7 +154,7 @@ nano go.mod
 
 在文件中加入以下内容：
 
-```
+```go
 module github.com/gopherguides/logging
 ```
 
@@ -174,7 +174,7 @@ func main() {
 
 你现在应该有以下目录结构和文件布局：
 
-```
+```text
 ├── cmd
 │   ├── go.mod
 │   └── main.go
@@ -285,8 +285,8 @@ func main() {
 
 运行这个程序将给你带来以下输出：
 
-```
-Output
+```text
+output
 2019-08-28T11:56:49-05:00 This is a debug statement...
 ```
 

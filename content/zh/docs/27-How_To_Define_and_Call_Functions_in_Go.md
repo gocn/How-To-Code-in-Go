@@ -335,8 +335,8 @@ func repeat(word string, reps int) (string, error) {
 
 运行程序将产生以下输出：
 
-```
-Output
+```text
+output
 invalid value of -1 provided for reps. value must be greater than 0.
 ```
 

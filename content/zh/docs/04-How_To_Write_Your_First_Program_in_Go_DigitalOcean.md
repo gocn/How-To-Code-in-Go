@@ -6,8 +6,8 @@
 
 本教程将引导你在 Go 中创建此程序。 但是，为了使程序更有趣，你将修改传统的 “Hello, World!” 程序，以便它可以询问用户的姓名。 然后，你将在回复中使用该姓名。 完成本教程后，你将拥有一个运行起来如下所示的程序：
 
-```
-Output
+```text
+output
 Please enter your name.
 Sammy
 Hello, Sammy! I'm Go!
@@ -25,7 +25,7 @@ Hello, Sammy! I'm Go!
 
 为了编写 Hello, World!” 程序，请打开一个命令行文本编辑器，例如 `nano`，然后创建一个新文件：
 
-```
+```bash
 nano hello.go
 ```
 
@@ -60,14 +60,14 @@ func main() {
 
 你的 “Hello, World!” 程序写好之后，你就可以运行程序了。你可以用 `go`  命令然后后面跟着你刚刚创建的文件名。
 
-```
+```bash
 go run hello.go
 ```
 
 程序执行后会显示以下输出：
 
-```
-Output
+```text
+output
 Hello, World!
 ```
 
@@ -89,14 +89,13 @@ Go 应用程序需要一个 `main` 包和一个确切的 **唯一** `main()` 函
 
 不要修改现有程序，而是使用 `nano` 编辑器创建一个名为 `greeting.go` 的新程序：
 
-```
+```bash
 nano greeting.go
 ```
 
 首先，添加这段代码，提示用户输入他们的姓名：
 
 ```go
-greeting.go
 package main
 
 import (
@@ -112,8 +111,7 @@ func main() {
 
 现在添加下面高亮行代码来存储用户的输入：
 
-```
-greeting.go
+```go
 package main
 
 import (
@@ -130,8 +128,7 @@ func main() {
 
 然后添加下面高亮行代码来捕捉用户的输入：
 
-```
-greeting.go
+```go
 package main
 
 import (
@@ -151,8 +148,7 @@ func main() {
 
 最后，在程序中添加以下高亮行来打印输出：
 
-```
-greeting.go
+```go
 package main
 
 import (
@@ -173,8 +169,8 @@ func main() {
 
 现在运行程序。 系统将提示你输入你的姓名，因此请输入并按 `ENTER`。 输出可能不完全符合你的预期：
 
-```
-Output
+```text
+output
 Please enter your name.
 Sammy
 Hi, Sammy
@@ -187,14 +183,13 @@ Hi, Sammy
 
 在你的编辑器里面打开 `greeting.go`
 
-```
+```bash
 nano greeting.go
 ```
 
 在你的程序里定位到下面这一行：
 
-```
-greeting.go
+```go
 ...
 fmt.Scanln(&name)
 ...
@@ -202,8 +197,7 @@ fmt.Scanln(&name)
 
 在其后面增加下面一行：
 
-```
-greeting.go
+```go
 name = strings.TrimSpace(name)
 ```
 
@@ -213,8 +207,7 @@ name = strings.TrimSpace(name)
 
 在你的程序找到下面这几行代码：
 
-```
-greeting.go
+```go
 import (
 	"fmt"
 )
@@ -222,8 +215,7 @@ import (
 
 增加下面几行来导入  `strings` 包：
 
-```
-greeting.go
+```go
 import (
 "fmt"
 "strings"
@@ -233,7 +225,6 @@ import (
 你的程序现在包含了以下代码：
 
 ```go
-greeting.go
 package main
 
 import (
@@ -254,14 +245,14 @@ func main() {
 
 再次运行程序：
 
-```
+```bash
 go run greeting.go
 ```
 
 这一次，在你输入你的名字并按 `ENTER` 后，你会得到预期的输出：
 
-```
-Output
+```text
+output
 Please enter your name.
 Sammy
 Hi, Sammy! I'm Go!

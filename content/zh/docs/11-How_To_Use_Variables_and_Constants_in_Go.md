@@ -219,7 +219,7 @@ var d bool = false
 
 按照这些规则，让我们看看有效和无效的变量名：
 
-| Valid有效  | Invalid无效 | 无效原因         |
+| Valid 有效  | Invalid 无效 | 无效原因         |
 | ---------- | ----------- | ---------------- |
 | `userName` | `user-name` | 不允许使用连字符 |
 | `name4`    | `4name`     | 不能以数字开头   |
@@ -568,7 +568,7 @@ Output
 invalid operation: hours * leapYear (mismatched types int and int32)
 ```
 
-在这种情况下，`hours` 被推断为 `int`，而 `leapYear` 被显式声明为 `int32`。因为 Go 是一种强类型语言，所以 `int` 和 `int32` 不兼容数学运算。要将它们相乘，你需要 [将其中一个转换为 `int32` 或 `int`](https://gocn.github.io/How-To-Code-in-Go/docs/12-How_To_Convert_Data_Types_in_Go/#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)。
+在这种情况下，`hours` 被推断为 `int`，而 `leapYear` 被显式声明为 `int32`。因为 Go 是一种强类型语言，所以 `int` 和 `int32` 不兼容数学运算。要将它们相乘，你需要 [将其中一个转换为`int32`或`int`](https://gocn.github.io/How-To-Code-in-Go/docs/12-How_To_Convert_Data_Types_in_Go/#%E6%95%B0%E5%AD%97%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2)。
 
 ## 结论
 

@@ -34,12 +34,12 @@ xcode-select -p
 
 下面的输出表明 Xcode 已经安装了：
 
-```
-Output
+```text
+output
 /Library/Developer/CommandLineTools
 ```
 
-如果收到错误信息，请在你的网络浏览器中安装[来自 App Store 的Xcode]([https://itunes.apple.com/us/app/xcode/id497799835?mt=12&ign-mpt=uo%3D2](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&ign-mpt=uo%3D2))  并接受默认选项。
+如果收到错误信息，请在你的网络浏览器中安装[来自 App Store 的 Xcode]([https://itunes.apple.com/us/app/xcode/id497799835?mt=12&ign-mpt=uo%3D2](https://itunes.apple.com/us/app/xcode/id497799835?mt=12&ign-mpt=uo%3D2))  并接受默认选项。
 
  安装完 Xcode 后，返回终端窗口。接下来，你需要安装 Xcode 的单独命令行工具应用，可以通过输入以下命令：
 
@@ -104,8 +104,8 @@ brew doctor
 
 如果此时不需要更新，终端将输出以下内容：
 
-```
-Output
+```text
+output
 Your system is ready to brew.
 ```
 
@@ -125,8 +125,8 @@ brew search golang
 
 终端会输出一个你可以安装的列表：
 
-```
-Output
+```text
+output
 golang golang-migrate
 ```
 
@@ -260,8 +260,8 @@ echo $PATH
 
 你将看到你的  `$GOPATH/bin` 显示在你的主目录中。如果你以  `sammy` 身份登录，你将在路径中看到 `/Users/sammy/go/bin`。
 
-```
-Output
+```text
+output
 /Users/sammy/go/bin:/usr/local/sbin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
 ```
 

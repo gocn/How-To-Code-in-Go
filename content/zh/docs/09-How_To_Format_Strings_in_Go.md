@@ -49,8 +49,8 @@
 fmt.Println("Sammy says, \"Hello!\"")
 ```
 
-```
-Output
+```text
+output
 Sammy says, "Hello!"
 ```
 
@@ -62,8 +62,8 @@ Sammy says, "Hello!"
 fmt.Println("This string\nspans multiple\nlines.")
 ```
 
-```
-Output
+```text
+output
 This string
 spans multiple
 lines.
