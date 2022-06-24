@@ -137,8 +137,8 @@ The articles in 《How-To-Code-in-Go》 are licensed under a [Creative Commons A
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/djikvy">
-            <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="djikvy"/>
+        <a href="https://github.com/dijkvy">
+            <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="dijkvy"/>
             <br />
             <sub><b>小超人</b></sub>
         </a>
