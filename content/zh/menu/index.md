@@ -46,7 +46,7 @@ headless: true
   - [41. 如何使用 Go 模块]({{< relref "/docs/41-How_to_Use_Go_Modules.md" >}})
   - [42. 如何分发 Go 模块]({{< relref "/docs/42-How_to_Distribute_Go_Modules.md" >}})
   - [43. 如何在自己的项目中使用私有的Go模块]({{< relref "/docs/43-How_to_Use_a_Private_Go_Module_in_Your_Own_Project.md" >}})
-  
+  - [44. 如何在 Go 中并发运行多个函数]({{< relref "/docs/44-How_To_Run_Multiple_Functions_Concurrently_in_Go.md" >}})
 - **附录：资源**
 
 - [**Fork on Github**](https://github.com/gocn/How-To-Code-in-Go)
