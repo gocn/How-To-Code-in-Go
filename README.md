@@ -149,6 +149,13 @@ The articles in 《How-To-Code-in-Go》 are licensed under a [Creative Commons A
             <br />
             <sub><b>Yu Zhang</b></sub>
         </a>
+    </td>
+    <td align="center">
+        <a href="https://github.com/aFlyBird0">
+            <img src="https://avatars.githubusercontent.com/u/36830265?v=4" width="100;" alt="aFlyBird0"/>
+            <br />
+            <sub><b>Bird</b></sub>
+        </a>
     </td></tr>
 </table>
 <!-- readme: collaborators,contributors -end -->
