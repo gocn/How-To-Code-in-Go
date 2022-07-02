@@ -43,6 +43,7 @@ headless: true
   - [38. 在不同的操作系统和架构编译 Go 应用]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})
   - [39. 用 ldflags 设置 Go 应用程序的版本信息]({{< relref "/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications.md" >}})
   - [40. 在 Go 里面如何使用 Flag 包]({{< relref "/docs/40-How_To_Use_the_Flag_Package_in_Go.md" >}})
+  - [44. 如何在 Go 中并发运行多个函数]({{< relref "/docs/44-How_To_Run_Multiple_Functions_Concurrently_in_Go.md" >}})
 
 - **附录：资源**
 
