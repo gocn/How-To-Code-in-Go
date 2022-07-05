@@ -1,38 +1,38 @@
-# How to Distribute Go Modules
+# 如何分发 Go 模块
 
-### Introduction
+## 简介
 
-Many modern programming languages allow developers to distribute ready-made libraries for others to use in their programs, and Go is no exception. While some languages use a central repository to install these libraries, Go distributes them from the same version control repository used to create the libraries. Go also uses a versioning system called [semantic versioning](https://semver.org/) to show users when and what kinds of changes have been made. This helps users know whether a newer version of a module is safe to quickly upgrade to and helps ensure their software continues to work with the module going forward.
+许多现代编程语言允许开发人员分发现成的库，供他人在其程序中使用，Go 也不例外。虽然有些语言使用中央存储库来安装这些库，但 Go 从用于创建库的同一版本控制存储库中分发这些库。Go 还使用了一个称为[语义版本管理](https://semver.org/)的版本管理系统，向用户显示何时以及何种修改。这可以帮助用户知道一个模块的较新版本是否安全，可以快速升级到新版本，并有助于确保他们的软件继续与该模块一起工作下去。
 
-In this tutorial, you will create and publish a new module, learn to use semantic versioning, and publish a semantic version of your module.
+在本教程中，你将创建并发布一个新的模块，学习使用语义版本管理，并发布模块的语义版本。
 
-## Prerequisites
+## 前期准备
 
--   Go version 1.16 or greater installed. To set this up, follow the [How To Install Go](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04) tutorial for your operating system.
--   An understanding of Go modules, which you can find in the [How To Use Go Modules](https://www.digitalocean.com/community/tutorials/how-to-use-go-modules) tutorial.
--   Familiarity with Git, which you can get by following [How To Use Git: A Reference Guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-git-a-reference-guide).
--   An empty public GitHub repository named `pubmodule` for your published module. To get started, follow the [GitHub documentation for creating a repository](https://docs.github.com/en/get-started/quickstart/create-a-repo).
+-   安装1.16 或更高版本的 Go。如何安装 Go ，请根据你的操作系统遵循 [如何安装Go](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04) 教程。
+-   理解 Go 的模块，你可以参考[如何使用Go模块](https://www.digitalocean.com/community/tutorials/how-to-use-go-modules)的教程。
+- 熟悉Git，你可以参考 [How To Use Git: A Reference Guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-git-a-reference-guide) 。
+- 一个空的 GitHub 公共仓库，名为`pubmodule`，用于你发布的模块。开始使用前，请遵循 [GitHub 创建仓库的文档](https://docs.github.com/en/get-started/quickstart/create-a-repo)。
 
-## Creating a Module to Publish
+## 创建一个要发布的模块
 
-Unlike many other programming languages, a Go module is distributed directly from the source code repository it lives in instead of an independent package repository. This makes it easier for users to find modules referenced in their code and for module maintainers to publish new versions of their module. In this section, you’ll create a new module, which you will then publish to make it available for other users.
+与许多其他编程语言不同，Go 模块直接从其所在的源代码库中发布，而不是从独立的软件包库中发布。这使用户更容易找到他们代码中引用的模块，也使模块维护者更容易发布他们模块的新版本。在本节中，你将创建一个新的模块，然后将其发布给其他用户使用。
 
-To start creating your module, you’ll use `git clone` on the empty repository you created as part of the prerequisites to download the initial repository. This repository can be cloned anywhere you’d like on your computer, but many developers tend to have a directory for their projects. In this tutorial, you’ll use a directory named `projects`.
+为了开始创建你的模块，作为先决条件的一部分，你将在你创建的空仓库上使用 `git clone` 下载初始仓库。这个版本库可以在你的电脑上的任何地方克隆，但许多开发者倾向于为他们的项目设置一个目录。在本教程中，你将使用一个名为 `projects` 的目录。
 
-Make the `projects` directory and navigate to it:
+创建 `projects` 目录并进入：
 
 ```
 mkdir projects
 cd projects
 ```
 
-From the `projects` directory, run `git clone` to clone your repository to your computer:
+在 `projects` 目录下，运行 `git clone` 将你的版本库克隆到你的电脑上：
 
 ```
 git clone git@github.com:your_github_username/pubmodule.git
 ```
 
-Cloning the module will download your empty module into the `pubmodule` directory inside your `projects` directory. You may get a warning that you’ve cloned an empty repository, but this isn’t anything to worry about:
+克隆模块将下载你的空模块到你的 `projects` 目录下的 `pubmodule` 目录。你可能会得到一个警告，说你克隆了一个空的版本库，但这并不值得担心：
 
 ```
 Output
@@ -40,34 +40,34 @@ Cloning into 'pubmodule'...
 warning: You appear to have cloned an empty repository.
 ```
 
-Next, change into the directory you downloaded:
+接下来，进入到你下载到目录：
 
 ```
 cd pubmodule
 ```
 
-Once you’re in the module’s directory, you’ll use `go mod init` to create your new module and pass in the repository’s location as the module name. Ensuring the module name matches the repository location is important because this is how the `go` tool finds where to download your module when it’s used in other projects:
+一旦你进入了模块目录，你将使用 `go mod init` 来创建你的新模块，并将版本库的位置作为模块名称传入。确保模块名称与版本库的位置一致是很重要的，因为当你的模块在其他项目中使用时，`go` 工具会找到下载的位置。
 
 ```
 go mod init github.com/your_github_username/pubmodule
 ```
 
-Go will confirm your module is created by letting you know it’s created the `go.mod` file:
+Go 会确认你的模块已经创建，让你知道它已经创建了 `go.mod` 文件:
 
 ```
 Output
 go: creating new go.mod: module github.com/your_github_username/pubmodule
 ```
 
-Lastly, use your favorite text editor, such as `nano`, to create and open a file with the same name as your repository: `pubmodule.go`.
+最后，使用你喜欢的文本编辑器，如 `nano` ，创建并打开一个与你的版本库同名的文件：`pubmodule.go`。
 
 ```
 nano pubmodule.go
 ```
 
-The name of this file can be anything, but using the same name as the package makes it easier to know where to start when working with an unfamiliar package. The package name itself, though, should be the same as your repository name. This way, when someone references a method or type from your package, it matches the repository, such as `pubmodule.MyFunction`. This will make it easier for them to know where the package came from in case they need to refer to it later.
+这个文件的名字可以是任何东西，但使用与软件包相同的名字，可以使你在处理一个不熟悉的软件包时更容易知道从哪里开始。不过，包的名字本身应该与你的版本库名称相同。这样，当有人从你的包中引用一个方法或类型时，就会与版本库相匹配，如 `pubmodule.MyFunction` 。这将使他们更容易知道这个包来自哪里，以备他们以后需要参考。
 
-Next, add a `Hello` method to your package that will return the string `Hello, You!`. This will be the function available to anyone importing your package:
+接下来，给你的包添加一个 `Hello` 方法，它将返回字符串 `Hello, You!` 。这将是任何导入你的包的人都可以使用的功能。
 
 projects/pubmodule/pubmodule.go
 
@@ -79,19 +79,19 @@ func Hello() string {
 }
 ```
 
-You’ve now created a new module using `go mod init` with a module name that matches your remote repository (`github.com/your_github_username/pubmodule`). You’ve also added a file named `pubmodule.go` to your module with a function called `Hello` that users of your module can call. Next, you’ll publish your module to make it available to others.
+你现在使用 `go mod init` 创建了一个新模块，模块名称与你的远程仓库（`github.com/your_github_username/pubmodule`）一致。你还为你的模块添加了一个名为 `pubmodule.go` 的文件，其中有一个名为 `Hello` 的函数，模块的用户可以调用。接下来，你将发布你的模块，使其对其他人可用。
 
-## Publishing the Module
+## 发布模块
 
-Once you’ve created a local module and you’re ready to make it available to other users, it’s time to publish your module. Since Go modules are distributed from the same code repositories they’re stored in, you’ll commit your code to your local Git repository and push it to your repository at `github.com/your_github_username/pubmodule`.
+一旦你创建了一个本地模块，并准备将其提供给其他用户，就该发布你的模块了。由于 Go 模块是从它们所存放的代码库中发布的，你要把你的代码提交到你的本地Git仓库，然后推送到你的仓库`github.com/your_github_username/pubmodule`。
 
-Before you commit your code to your local Git repository, it’s a good idea to make sure you won’t be committing any files you don’t expect to commit, which would then be published publicly when you push the code to GitHub. Using the `git status` command inside the `pubmodule` directory will show you all the files and changes that will be committed:
+在提交代码到本地 Git 仓库之前，最好先确定不会提交任何你不期望提交的文件，这些文件在你推送代码到 GitHub 时就会公开发布。在 `pubmodule` 目录下使用 `git status` 命令会显示所有将要提交的文件和修改：
 
 ```
 git status
 ```
 
-The output will look similar to this:
+输出结果将类似于这样:
 
 ```
 Output
@@ -105,16 +105,16 @@ go.mod
 pubmodule.go
 ```
 
-You should see the `go.mod` file the `go mod init` command created, and the `pubmodule.go` file you created the `Hello` function in. Depending on how you created your repository, you may have a different branch name than this output. Most commonly, the names will be either `main` or `master`.
+你应该看到 `go mod init ` 命令创建的 `go.mod ` 文件，以及你创建 `Hello ` 函数的 `pubmodule.go ` 文件。根据你创建版本库的方式，你可能有一个与此输出不同的分支名称。最常见的是，名字是 `main ` 或 `master`。
 
-When you’re sure you have only the files you’re looking for, you can then stage the files with `git add` and commit them to the repository with `git commit`:
+当你确定只有你要找的文件时，你就可以用 `git add` 将文件阶段性提交，用 `git commit` 将它们提交到版本库:
 
 ```
 git add .
 git commit -m "Initial Commit"
 ```
 
-The output will look similar to this:
+输出结果将类似于这样：
 
 ```
 Output
@@ -126,11 +126,13 @@ Output
 
 Finally, use the `git push` command to push your module to the GitHub repository:
 
+最后，使用 `git push` 命令将你的模块推送到 GitHub 仓库：
+
 ```
 git push
 ```
 
-The output will look similar to this:
+输出结果将类似于这样：
 
 ```
 Output
@@ -144,27 +146,27 @@ To github.com:your_github_username/pubmodule.git
  * [new branch]      main -> main
 ```
 
-After running the `git push` command, your module will be pushed to your repository and will now be available for anyone else to use. If you don’t have any versions published, Go will use the code in your repository’s default branch as the code for your module. It doesn’t matter if your default branch is named `main`, `master`, or something else, only what your repository’s default branch is set to.
+运行 `git push` 命令后，你的模块将被推送到你的仓库，可以供其他人使用了。如果你没有发布任何版本，Go 将使用你的仓库的默认分支中的代码作为你的模块的代码。你的默认分支是否被命名为 `main`、`master ` 或其他名称并不重要，重要的是你的版本库的默认分支被设置为什么。
 
-In this section, you took the local Go module you created and published it to your GitHub repository to make it available for other people to use. While you now have a published module, another part of maintaining a public module is ensuring users of your module can use a stable version of it. You’ll likely want to make changes and add features to your module going forward, but if you make those changes without using versions in your module, you could accidentally break the code of someone using your module. To solve this problem, you can add versions to your module when you reach a new milestone in development. When adding new versions, though, be sure to choose a meaningful version number so your users know whether it’s safe for them to upgrade right away or not.
+在这一节中，你把你创建的本地 Go 模块发布到 GitHub 仓库，让其他人可以使用。虽然你现在有了一个发布的模块，但维护公共模块的另一个部分是确保使用你模块的用户可以使用它的稳定版本。你很可能想在未来对你的模块进行修改和添加功能，但如果你在模块中不使用版本而进行这些修改，你可能会意外地破坏使用你的模块的人的代码。为了解决这个问题，当你在开发中达到一个新的里程碑时，你可以向你的模块添加版本。不过在添加新的版本时，一定要选择一个有意义的版本号，这样你的用户就能知道他们是否可以马上升级，是否安全。
 
-## Semantic Versioning
+## 语义版本管理
 
-A meaningful version number gives your users an idea of how much the public interface, or API, they interact with has changed. Go conveys these changes through a versioning scheme known as [semantic versioning](https://semver.org/), or “SemVer” for short. (Semantic versioning uses the version string to convey meaning about code changes, which is where Semantic Versioning gets its name.) Go’s module system follows SemVer to determine which versions are newer than the version you’re currently using, as well as whether a newer version of a module is safe to upgrade to automatically.
+一个有意义的版本号可以让您的用户了解他们所交互的公共接口或API发生了多大的变化。Go 通过一种被称为 [semantic versioning](https://semver.org/) ，或简称为 `SemVer` 的版本方案来传达这些变化。(语义版本管理使用版本字符串来传达关于代码变化的意义，这就是语义版本管理的名字来源)。Go 的模块系统遵循 SemVer 来确定哪些版本比你当前使用的版本要新，以及某个模块的较新版本是否可以自动升级为安全版本。
 
-Semantic versioning gives each number in a version string a meaning. A typical version in SemVer contains three primary numbers: the major version, the minor version, and the patch version. Each of these numbers is combined with a `.` to form the version, such as `1.2.3`. The numbers are ordered with the major version first, the minor version second, and the patch version last. This way, when looking at a version, you can see which one is newer because the number in a specific spot is higher than previous versions. For example, the version `2.2.3` is newer than `1.2.3` because the major version is higher. Likewise, the version `1.4.3` is newer than `1.2.10` because the minor version is higher. Even though `10` is higher than `3` in the patch version, the minor version `4` is higher than `2` so that version takes precedence. When a number in the version string increases, all the other parts of the version following it reset to `0`. For example, increasing the minor version of `1.3.10` would result in `1.4.0` and increasing the major version of `2.4.1` would result in `3.0.0`.
+语义版本管理为版本字符串中的每个数字赋予了意义。SemVer 中的典型版本包含三个主要数字：主版本、次版本和补丁版本。这些数字中的每一个都与". "组合在一起，形成版本，例如 `1.2.3` 。这些数字的顺序是：主要版本在前，次要版本在后，补丁版本在最后。这样，当看一个版本时，你可以看到哪个版本是较新的，因为特定位置的数字比以前的版本要高。例如，`2.2.3 ` 版本比 `1.2.3` 版本要新，因为主要版本更高。同样地，版本 `1.4.3`比 `1.2.10` 新，因为次要版本更高。尽管在补丁版本中 `10` 比 `3` 高，但次要版本 `4` 比 `2` 高，所以该版本优先。当版本字符串中的一个数字增加时，所有跟在它后面的其他版本部分都会重置为`0`。例如，增加次要版本 `1.3.10` 会导致 `1.4.0` ，增加主要版本 `2.4.1` 会导致 `3.0.0` 。
 
-Using these rules allows Go to determine which version of a module to use when you run `go get`. As an example, suppose you have a project using version `1.4.3` of the module, `github.com/your_github_username/pubmodule`. If you depend on `pubmodule` being stable, you may only want to automatically upgrade the patch version (the `.3`). If you run the command `go get -u=patch github.com/your_github_username/pubmodule`, Go would see that you want to upgrade the patch version of the module and would only look for new versions with `1.4` as the major and minor part of the version.
+使用这些规则可以让 Go 在运行 `go get` 时决定使用哪个版本的模块。举个例子，假设你有一个项目使用 `1.4.3`版本的模块，`github.com/your_github_username/pubmodule`。如果你依赖 `pubmodule` 是稳定的，你可能只想自动升级补丁版本（即 `.3` ）。如果你运行命令 `go get -u=patch github.com/your_github_username/pubmodule` ，Go 会看到你想升级模块的补丁版本，并且只会寻找以`1.4`作为版本主要和次要部分的新版本。
 
-When creating a new release of your module, it’s important to consider how the public API of your module has changed. Each part of a semantic version string conveys the scope of API change to both you and your users. These types of changes typically fall into three different categories, lining up with each component of the version. The smallest changes increase the patch version, medium-sized changes increase the minor version, and the largest changes increase the major version. Using these categories to determine which version number to increase will help you avoid breaking your own code and the code of anyone else who relies on your module.
+在创建你的模块的新版本时，重要的是要考虑你的模块的公共 API 是如何变化的。语义版本字符串的每一部分都向你和你的用户传达了 API 变化的范围。这些类型的变化通常分为三个不同的类别，与版本的每个组成部分排成一列。最小的变化会增加补丁版本，中等规模的变化会增加次要版本，而最大的变化则会增加主要版本。使用这些类别来决定增加哪个版本号将帮助你避免破坏你自己的代码和其他依赖你的模块的人的代码。
 
-### Major Version Numbers
+## 主要版本号
 
-The first number in a SemVer version is the major version number (`1.4.3`). The major version number is the most important number to consider when releasing a new version of your module. A major version change is used to signal backward-incompatible changes to your public API. A backward-incompatible change would be any change in your module that would cause someone’s program to break if they upgraded without making any other changes. Breaking could mean anything from a failure to build because a function name has changed, or a change in how the library works that results in the same method returning `"v1"` instead of `"1"`. This is only for your public API, though, meaning any exported types or methods someone else could use. If the version only includes improvements a user of your library would not notice, it doesn’t need a major version change. A way to remember which changes fit into this category might be that anything considered an “update” or a “delete” would be a major version increase.
+SemVer 版本中的第一个数字是主版本号（`1.4.3` ）。主版本号是模块发布新版本时，需要考虑的最重要数字。一个主要的版本变化是用来表示你的公共 API 向后不兼容的变化。一个向后不兼容的变化是指你的模块中的任何变化，如果他们在没有做任何其他改变的情况下升级，会导致别人的程序崩溃。破坏可能意味着任何事情，包括因为函数名称改变而无法构建，或者因为库的工作方式改变而导致同一方法返回 `v1`而不是 `1`。但这只适用于你的公共 API，也就是说，任何出口的类型或方法，别人都可以使用。如果这个版本只包括你的库的用户不会注意到的改进，它不需要一个主要的版本变化。记住哪些变化符合这个类别的方法是，任何被认为是 "更新 "或 "删除 "的东西都是一个主要的版本增加。
 
-**Note:** Unlike the other types of numbers in SemVer, the major version `0` has an additional special significance. The major version `0` is considered the “in development” version. Any SemVer with a major version `0` is not considered stable and anything can change in the API at any time. When you create a new module it’s best to start with major version `0` and only update minor and patch versions until you’ve finished initial development of your module. Once your module’s public API is done changing and considered stable for your users, it’s time to start with version `1.0.0`.
+**注意：**与 SemVer 中其他类型的数字不同，主要版本 `0` 有一个额外的特殊意义。主版本 `0` 被认为是 "开发中 "的版本。任何主版本为 `0` 的 SemVer 都不被认为是稳定的，任何东西都可能在 API 中发生变化。当你创建一个新模块时，最好从主版本 `0` 开始，只更新次版本和补丁版本，直到你完成模块的初步开发。一旦你的模块的公共 API完成了变化，并被认为对你的用户来说是稳定的，那么就可以从 `1.0.0` 版本开始。
 
-Take the following code as an example of what a major version change might look like. You have a function called `UserAddress` that currently accepts a `string` as a parameter and returns a `string`:
+以下面的代码为例，说明一个主要的版本变化可能是什么样子的。你有一个叫做 `UserAddress` 的函数，目前接受一个`string` 作为参数，并返回一个`string`：
 
 ```go
 func UserAddress(username string) string {
@@ -172,7 +174,7 @@ func UserAddress(username string) string {
 }
 ```
 
-While the function currently returns a `string`, you may determine it would be better for you and your users if the function returned a `struct` like `*Address`. This way you can include additional data already split apart, such as a postal code:
+虽然该函数目前返回一个 `字符串`，但你可能认为如果该函数返回一个 `结构体`，如 `*Address`，对你和你的用户来说会更好。这样你就可以包括已经拆开的额外数据，如邮政编码：
 
 ```go
 type Address struct {
@@ -185,9 +187,9 @@ func UserAddress(username string) *Address {
 }
 ```
 
-This would be an example of a major version change because it would require your users to make changes to their own code in order to use it. The same would be true if you decided to remove `UserAddress` completely because your users would need to update their code to use the replacement.
+这将是一个主要版本变化的例子，因为它需要你的用户对他们自己的代码进行修改才能使用它。如果你决定完全删除`UserAddress` 也是如此，因为你的用户需要更新他们的代码来使用这个替换。
 
-Another example of a major version change would be adding a new parameter to the `UserAddress` function, even if it still returns a `string`:
+另一个主要版本变化的例子是给 `UserAddress` 函数添加一个新的参数，即使它仍然返回一个`字符串`：
 
 ```go
 func UserAddress(username string, uppercase bool) string {
@@ -195,15 +197,15 @@ func UserAddress(username string, uppercase bool) string {
 }
 ```
 
-Since this change also requires your users to update their code if they’re using the `UserAddress` function, it would also require a major version increase.
+由于这一变化也需要你的用户更新他们的代码，如果他们使用 `UserAddress` 函数的话，这也需要一个主要的版本增加。
 
-Not all changes you make to your code will be as drastic, though. Sometimes you’ll make changes to your public API that add new functions or values, but that don’t change any existing ones.
+不过，并不是所有你对你的代码所做的改变都会如此剧烈。有时你会对你的公共 API 进行修改，增加新的函数或值，但不改变任何现有的。
 
-### Minor Version Numbers
+## 次要版本号
 
-The second number in a SemVer version is the minor version number (`1.4.3`). A minor version change is used to signal backward-compatible changes to your public API. A backward-compatible change would be any change that doesn’t affect code or projects currently using your module. Similar to the major version number, this only affects your public API. A way to remember which changes fit in this category might be anything considered an “addition”, but not an “update”.
+SemVer 版本中的第二个数字是次要版本号（`1.4.3`）。次要版本的变化是用来表示你的公共 API 向后兼容的变化。向后兼容的变化是指任何不影响目前使用你的模块的代码或项目的变化。与主要版本号类似，这只影响你的公共 API。一个记住哪些变化符合这个类别的方法是，可能是任何被认为是 "增加"，但不是 "更新 "的东西。
 
-Using the same example from the major version number, imagine you have a method named `UserAddress` that returns a `string`:
+使用主要版本号的同一个例子，设想你有一个名为 `UserAddress` 的方法，返回一个 `字符串`：
 
 ```go
 func UserAddress(username string) string {
@@ -211,7 +213,7 @@ func UserAddress(username string) string {
 }
 ```
 
-This time, though, instead of updating `UserAddress` to return `*Address`, you decide to add a completely new method named `UserAddressDetail`:
+不过这一次，你没有更新`UserAddress`以返回 `*Address` ，而是决定添加一个全新的方法，名为`UserAddressDetail`：
 
 ```go
 type Address struct {
@@ -228,21 +230,21 @@ func UserAddressDetail(username string) *Address {
 }
 ```
 
-Adding this new `UserAddressDetail` function doesn’t require changes by your users if they update to this version of your module, so it would be considered a minor version number increase. They can continue using `UserAddress` and would only need to update their code if they’d rather include the additional information from `UserAddressDetail`.
+添加这个新的`UserAddressDetail`功能不需要你的用户在更新到这个版本的模块时进行修改，所以这将被视为一个小的版本号增加。他们可以继续使用 `UserAddress`，如果他们愿意包括 `UserAddressDetail`  的额外信息，只需要更新他们的代码。
 
-Public API changes likely aren’t the only time you’ll release a new version of your module, though. Bugs are an inevitable part of software development and the patch version number is there to cover up those holes.
+不过，公共 API 的变化可能不是你发布新版本模块的唯一时机。漏洞是软件开发中不可避免的一部分，补丁版本号是为了掩盖这些漏洞。
 
-### Patch Version Numbers
+## 补丁版本号
 
-The patch version number is the last number in a SemVer version (`1.4.3`). A patch version change is any change that **doesn’t affect** the module’s **public API**. Changes that don’t affect a module’s public API tend to be things like bug fixes or security fixes. Using the `UserAddress` function from the previous examples again, suppose a release of your module is missing part of an address in the `string` the function returns. If you release a new version of your module to fix that bug, it would only increase the patch version. The release wouldn’t include any changes to how a user uses the `UserAddress` public API, only the correctness of the data returned.
+补丁版本号是 SemVer 版本中的最后一个数字（`1.4.3`）。补丁版本的变化是任何**不影响**模块的**公共 API **的变化。不影响模块的公共 API 的变化往往是诸如错误修复或安全修复。再次使用前面例子中的 `UserAddress ` 函数，假设你发布的模块在函数返回的 `字符串` 中缺少部分地址。如果你发布一个新版本的模块来修复这个错误，它只会增加补丁的版本。这个版本不会包括对用户如何使用 `UserAddress` 公共 API 的任何改变，只包括返回数据的正确性。
 
-As you’ve seen in this section, carefully choosing a new version number is an important way to earn the trust of your users. Using semantic versioning shows users the amount of work required to update to a new version, and you won’t accidentally surprise them with an update that breaks their program. After considering the changes you’ve made to your module and determining the next version number to use, you can publish the new version and make it available to your users.
+正如你在本节中所看到的，谨慎地选择新的版本号是赢得用户信任的一个重要方法。使用语义版本号可以向用户展示更新到新版本所需的工作量，而且你不会意外地用一个破坏他们程序的更新来给他们带来惊喜。在考虑了你对你的模块所做的修改，并确定了要使用的下一个版本号之后，你就可以发布新的版本，让你的用户使用。
 
-## Publishing a New Module Version
+## 发布一个新的模块版本
 
-Before you publish a new version of your module, you’ll need to update your module with the changes you’re planning to make. Without any changes, you won’t be able to determine which part of the semantic version to increase. For the module in this tutorial, you’ll add a new `Goodbye` method to complement the `Hello` method, and then you’ll publish that new version for users to use.
+在你发布新版本的模块之前，你需要用你计划进行的改动来更新你的模块。如果没有任何改动，你将无法确定要增加语义版本的哪一部分。对于本教程中的模块，你将增加一个新的`Goodbye`方法来补充`Hello` 方法，然后你将发布这个新版本供用户使用。
 
-First, open the `pubmodule.go` file and add the new `Goodbye` method to your public API:
+首先，打开`pubmodule.go`文件，将新的 `Goodbye` 方法添加到你的公共API：
 
 pubmodule/pubmodule.go
 
@@ -258,13 +260,13 @@ func Goodbye() string {
 }
 ```
 
-Once you’ve saved your change, you’ll want to check which changes are expected to be committed by running `git status`:
+一旦你保存了你的改动，你可以通过运行 `git status` 来检查哪些改动会被提交：
 
 ```
 git status
 ```
 
-The output will look similar to this, showing that the only change in your module is the method you added to `pubmodule.go`:
+输出结果将与此类似，显示你的模块中唯一的变化是你在 `pubmodule.go` 中添加的方法。
 
 ```
 Output
@@ -279,14 +281,14 @@ modified:   pubmodule.go
 no changes added to commit (use "git add" and/or "git commit -a")
 ```
 
-Next, add the change to the staged files and commit the change to your local repository with `git add` and `git commit`:
+接下来，将修改添加到暂存文件中，并通过 `git add` 和 `git commit` 将修改提交到本地仓库：
 
 ```
 git add .
 git commit -m "Add Goodbye method"
 ```
 
-The output will look similar to this:
+输出结果将与此类似：
 
 ```
 Output
@@ -294,15 +296,15 @@ Output
  1 file changed, 4 insertions(+)
 ```
 
-After the changes are committed, you’ll need to push them to your GitHub repository. In a larger software project, or when working with other developers on a project, this step would commonly be slightly different. When doing development on a new feature, a developer would create a Git branch to put changes in until the new feature is stable and ready to be released. Once that happens, another developer would review the changes in the branch to add a second pair of eyes that might catch issues the first developer may have missed. Once the review is finished, the branch would then be merged into the default branch (such as `master` or `main`). Between releases, the default branch would accumulate these types of changes until it’s time to publish a new release.
+提交修改后，你需要把它们推送到你的 GitHub 仓库。在一个较大的软件项目中，或者在与其他开发者合作的项目中，这一步骤通常会略有不同。当开发一个新功能时，一个开发者会创建一个 Git 分支，将修改放入其中，直到新功能稳定并准备发布。一旦如此，另一个开发者就会审查该分支中的修改，以增加第二双眼睛，发现第一个开发者可能错过的问题。一旦审查完成，该分支就会被合并到默认分支（如`master`或`main`）。在两次发布之间，默认分支将积累这些类型的变化，直到发布新版本的时候。
 
-Since your module here doesn’t go through this process, pushing the changes you’ve made to the repository will simulate the accumulation of changes instead:
+由于你的模块没有经历这个过程，推送你所做的修改到版本库将模拟修改的积累：
 
 ```
 git push
 ```
 
-The output will look similar to this:
+输出结果将类似于这样：
 
 ```
 Output
@@ -316,27 +318,27 @@ To github.com:your_github_username/pubmodule.git
    931071d..3235010  main -> main
 ```
 
-The output shows the new code is ready for users to use in the default branch.
+输出显示新代码已经准备好供用户在默认分支中使用。
 
-Up to this point, everything you’ve done has been the same as initially publishing your module. However, now an important part of releasing a new version comes up: choosing a new version number.
+到此为止，你所做的一切都与最初发布模块时一样。然而，现在发布新版本的一个重要部分出现了：选择一个新的版本号。
 
-If you look at the changes you’ve made to the module, the only change to the public API (or really any change) is adding the `Goodbye` method to your module. Since a user could update from the previous version, which only had the `Hello` function, without making changes on their part, this change would be a backward-compatible change. In semantic versioning, a backward-compatible change to the public API would mean an increase in the minor version number. This is the first version of your module being published, though, so there’s no previous version to increase. If you consider `0.0.0` to be “no version” then incrementing the minor version would lead you to version `0.1.0`, the next version of your module.
+如果你看一下你对模块所做的改动，对公共 API 的唯一改动（或者说是任何改动）是给你的模块添加了 `Goodbye` 方法。由于用户可以从只有 `Hello` 功能的上一个版本中进行更新，而不需要在自己身上做任何改动，因此这种改动将是一种向后兼容的改动。在语义版本管理中，对公共 API 的向后兼容的改变意味着增加次要版本号。不过，这是你的模块所发布的第一个版本，所以没有以前的版本可以增加。如果你认为 `0.0.0` 是 "无版本"，那么增加次要版本将导致你的模块的下一个版本为`0.1.0`。
 
-Now that you have a version number to give to the release of your module, you can use it, paired with Git tags, to publish a new version. When developers use Git to keep track of their source code, even in languages other than Go, a common convention is to use Git’s tags to keep track of which code was released for a specific version. This way, if they ever need to make changes to an old version, they can use the tag. Since Go is already downloading modules from the source repositories, it takes advantage of this practice by using those same version tags.
+现在你有了一个版本号来发布你的模块，你可以用它和 Git 标签配对来发布一个新的版本。当开发者使用 Git 来记录他们的源代码时，即使是 Go 以外的语言，一个常见的惯例是使用 Git 的标签来记录某个特定版本的代码被发布。这样，如果他们需要对旧版本进行修改，就可以使用该标签。由于 Go 已经从源码库中下载了模块，它通过使用这些相同的版本标签来利用这种做法。
 
-To publish a new version of your own module using these tags, you will tag the code you’re releasing with the `git tag` command. As an argument to the `git tag` command, you’ll also need to provide the version tag. To create the version tag, start with the prefix `v`, for version, and add your SemVer immediately after it. In the case of your module, your final verison tag would be `v0.1.0`. Now, run `git tag` to tag your module with the version tag:
+要使用这些标签发布你自己模块的新版本，你可以用 `git tag` 命令来标记你要发布的代码。作为 `git tag`命令的一个参数，你还需要提供版本标签。要创建版本标签，以前缀 `v` 开始，代表版本，然后紧接着添加你的SemVer。就你的模块而言，你的最终版本标签将是`v0.1.0` 。现在，运行 `git tag` 来给你的模块加上版本标签：
 
 ```
 git tag v0.1.0
 ```
 
-Once the version tag is added locally, you’ll still need to push the tag to your GitHub repository, which you can do using `git push` with `origin`:
+一旦版本标签被添加到本地，你仍然需要将该标签推送到你的 GitHub 仓库，你可以使用 `git push` 和 `origin` 来完成。
 
 ```
 git push origin v0.1.0
 ```
 
-After the `git push` command succeeds, you’ll see that a new tag, `v0.1.0`, has been created:
+在 `git push` 命令成功后，你会看到一个新的标签，`v0.1.0`，已经被创建：
 
 ```
 Output
@@ -345,16 +347,16 @@ To github.com:your_github_username/pubmodule.git
  * [new tag]         v0.1.0 -> v0.1.0
 ```
 
-The output above shows that your tag has been pushed and your GitHub repository has a new `v0.1.0` tag available for users of your module to reference.
+上面的输出显示你的标签已经被推送，你的 GitHub 仓库有一个新的 `v0.1.0` 标签供你的模块用户参考。
 
-Now that you’ve published a new version of your module with `git tag`, whenever a user runs `go get` to get the latest version of your module, it will no longer download a version based on the latest commit hash from the default branch. Once a module has a released version, the `go` tool will start using those versions to determine the best way to update the module. Paired with semantic versioning, this allows you to iterate and improve your modules while also providing your users with a consistent and stable experience.
+现在你已经用`git tag`发布了新版本的模块，每当用户运行`go get`获取你的模块的最新版本时，它将不再基于默认分支的最新提交哈希值下载版本。一旦一个模块有了发布的版本，`go` 工具将开始使用这些版本来决定更新模块的最佳方式。与语义上的版本控制相搭配，这使你能够迭代和改进你的模块，同时也为你的用户提供了一致和稳定的体验。
 
-## Conclusion
+## 总结
 
-In this tutorial, you created a public Go module and published it to a GitHub repository so that other people can use it. You also used semantic versioning to determine the best version number for your module. Finally, you expanded your module’s functionality and, using semantic versioning, published the new version with the confidence that you won’t be breaking programs that depend on it.
+在本教程中，你创建了一个公共 Go 模块，并将其发布到 GitHub 仓库中，以便其他人可以使用。你还使用语义版本学来确定你的模块的最佳版本号。最后，你扩展了你的模块的功能，并使用语义版本管理，发布了新的版本，相信你再也不会破坏依赖它的程序了。
 
-If you’d like more information on semantic versioning, including how to add information other than numbers to your version, the [Semantic Versioning website](https://semver.org/) goes into great detail. The Go documentation also has a [module version numbering](https://golang.org/doc/modules/version-numbers) page that explains how Go specifically uses SemVer.
+如果你想了解有关语义版本管理的更多信息，包括如何为你的版本添加数字以外的信息，[Semantic Versioning website](https://semver.org/) 有很详细的介绍。Go 文档中也有一个 [module version numbering](https://golang.org/doc/modules/version-numbers) 页面，解释了 Go 如何具体使用SemVer。
 
-For more information on Go modules, the Go project has [a series of blog posts](https://blog.golang.org/using-go-modules) detailing how Go tools interact with and understand modules. The Go project also has a very detailed and technical reference for Go modules in the [Go Modules Reference](https://golang.org/ref/mod).
+关于 Go 模块的更多信息，Go 项目有[一系列博文](https://blog.golang.org/using-go-modules)，详细介绍了 Go 工具如何与模块互动和理解模块。Go 项目还在[Go模块参考](https://golang.org/ref/mod)中为 Go 模块提供了非常详细的技术参考。
 
-This tutorial is also part of the [DigitalOcean](https://www.digitalocean.com/) [How to Code in Go](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go) series. The series covers a number of Go topics, from installing Go for the first time to how to use the language itself.
+本教程也是[DigitalOcean](https://www.digitalocean.com/) [How to Code in Go](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go)系列的一部分。该系列涵盖了许多 Go 主题，从首次安装 Go 到如何使用该语言本身。
