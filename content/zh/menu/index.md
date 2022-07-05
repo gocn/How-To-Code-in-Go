@@ -43,7 +43,10 @@ headless: true
   - [38. 在不同的操作系统和架构编译 Go 应用]({{< relref "/docs/38-Building_Go_Applications_for_Different_Operating_Systems_and_Architectures.md" >}})
   - [39. 用 ldflags 设置 Go 应用程序的版本信息]({{< relref "/docs/39-Using_ldflags_to_Set_Version_Information_for_Go_Applications.md" >}})
   - [40. 在 Go 里面如何使用 Flag 包]({{< relref "/docs/40-How_To_Use_the_Flag_Package_in_Go.md" >}})
-
+  - [41. 如何使用 Go 模块]({{< relref "/docs/41-How_to_Use_Go_Modules.md" >}})
+  - [42. 如何分发 Go 模块]({{< relref "/docs/42-How_to_Distribute_Go_Modules.md" >}})
+  - [43. 如何在自己的项目中使用私有的Go模块]({{< relref "/docs/43-How_to_Use_a_Private_Go_Module_in_Your_Own_Project.md" >}})
+  
 - **附录：资源**
 
 - [**Fork on Github**](https://github.com/gocn/How-To-Code-in-Go)
