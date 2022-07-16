@@ -1,69 +1,69 @@
-# How to Add Extra Information to Errors in Go
+# 如何在 Go 中给错误添加额外信息
 
-## Introduction
+## 介绍
 
-When a function in Go fails, the function will return a value using the `error` interface to allow the caller to handle that failure. In many cases, developers will use the [`fmt.Errorf`](https://pkg.go.dev/fmt#Errorf) function in the [`fmt`](https://pkg.go.dev/fmt) package to return these values. Prior to Go 1.13, though, a downside of using this function is that you would lose information about any errors that may have caused the error to be returned. To solve this, developers would either use packages to provide a way to “wrap” errors inside other errors or create custom errors by implementing the `Error() string` method on one of their `struct` error types. Sometimes it can be tedious to create these `struct` types if you have a number of errors that don’t need to be handled explicitly by the callers, though, so in Go 1.13, the language added features to make it easier to handle these cases.
+当 Go 的函数失败时，通常会使用 `error` 接口返回一个值，以使调用者能够处理该失败。在很多情况下，开发者会使用 [`fmt`](https://pkg.go.dev/fmt#Errorf) 包中的[`fmt.Errorf`](https://pkg.go.dev/fmt#Errorf) 函数来返回这些值。不过在Go 1.13之前，使用这个函数的一个缺点是，你会失去真正的可能导致错误被返回的信息。为了解决这个问题，开发者要么使用某些第三方库来提供一种"包装"其他错误的方法，要么通过在他们的结构体错误类型中实现`Error()string` 方法来创建自定义错误。有时，如果你有一些不需要被调用者明确处理的错误，创建这些结构体类型会很繁琐。所以，Go 在1.13版中增加了一些特性，使其更容易处理这些情况。
 
-One feature is the ability to wrap errors using the `fmt.Errorf` function with an `error` value that can be unwrapped later to access the wrapped errors. This builds the error-wrapping functionality into the Go standard library, so there’s no longer any need to use a third-party library.
+其中一个特性是使用 `fmt.Errorf` 函数，传入 `error` 值来包装错误，后续可以解除包装来访问被包装的实际错误。这将错误包装的特性内置在了 Go 标准库中，不再需要使用第三方库。
 
-Additionally, the functions [`errors.Is`](https://pkg.go.dev/errors#Is) and [`errors.As`](https://pkg.go.dev/errors#As) make it easier to determine if a specific error is wrapped anywhere inside a given error, and will also give you access to that specific error directly without needing to unwrap all the errors yourself.
+此外，函数 [`errors.Is`](https://pkg.go.dev/errors#Is) 和 [`errors.As`](https://pkg.go.dev/errors#As) 可以更容易地判断某个特定的错误是否被包装在某个特定的错误里面，也让你能够直接访问那个特定的错误而不需要自己解开所有的错误。
 
-In this tutorial, you’ll create a program that uses these functions to include additional information in errors returned from your functions, and then create your own custom error `struct` that supports the wrapping and unwrapping functionality.
+在本教程中，你将创建一个程序，使用这些函数，在你函数返回的错误中添加额外信息。然后创建你自己的自定义错误结构体，支持包装和解包功能。
 
-## Prerequisites
+## 先决条件
 
-To follow this tutorial, you will need:
+为了更顺畅地阅读本教程，你需要：
 
--   Go version 1.13 or greater installed. To set this up, follow the [How To Install Go](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04) tutorial for your operating system.
--   (Optional) Reading [Handling Errors in Go](https://www.digitalocean.com/community/tutorials/handling-errors-in-go) may be helpful in this tutorial for a more in-depth explanation of error handling, but this tutorial will also cover some of the same topics at a higher level.
--   (Optional) This tutorial expands upon the [Creating Custom Errors in Go](https://www.digitalocean.com/community/tutorials/creating-custom-errors-in-go) tutorial with features added to Go since the original tutorial. Reading the previous tutorial is helpful, but is not strictly required.
+* Go 版本 >= 1.13。你可以按照 [如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}}) 来安装 Go。
+* （可选）阅读 [Go 的错误处理]({{< relref "/docs/17-Handling_Errors_in_Go_DigitalOcean.md" >}}) 有助于加深对本教程的理解，但本教程也在更高的层次上覆盖了此文章的部分内容。
+* （可选）本教程在 [在 Go 中创建自定义错误]({{< relref "/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean.md" >}}) 的基础上，拓展介绍了 Go 加入的新特性。阅读之前的教程有助于理解本教程，但不是必须的。
 
-## Returning and Handling Errors in Go
+## 用 Go 返回被处理错误
 
-When an error occurs in a program, it’s good practice to handle those errors so your users never see them — but to handle the errors, you need to know about them first. In Go, you can handle errors in your program by returning information about the error from your functions using a special `interface` type, the `error` interface. Using the `error` interface allows any Go type to be returned as an `error` value as long as that type has an `Error() string` method defined. The Go standard library provides functionality to create `error`s for these return values, such as the [`fmt.Errorf`](https://pkg.go.dev/fmt#Errorf) function.
+当程序出现错误时，处理这些错误是很好的做法，这样用户就不会看到这些错误。但是要处理这些错误，你首先需要了解错误本身。在 Go 中，你可以通过使用 `error` 接口从函数中返回相关错误信息，来处理程序中的错误。使用 `error` 接口可以使任何 Go 类型作为 `error` 值返回，只要该类型定义了 `Error() string` 方法。Go 标准库提供了为这些返回值创建 `error` 的功能，例如 [`fmt.Errorf`](https://pkg.go.dev/fmt#Errorf) 函数。
 
-In this section, you’ll create a program with a function that uses `fmt.Errorf` to return an error, and you will also add an error handler to check for the errors that the function could return. (If you’d like more information on handling errors in Go, please see the tutorial, [Handling Errors in Go](https://www.digitalocean.com/community/tutorials/handling-errors-in-go).)
+在本节中，你将创建一个程序，它有着使用 `fmt.Errorf` 来返回错误的函数；你还会添加一个错误处理程序来检查该函数可能返回的错误。(如果你想了解更多关于在Go中处理错误的信息，请看教程：[Go 的错误处理]({{< relref "/docs/17-Handling_Errors_in_Go_DigitalOcean.md" >}}) 。)
 
-Many developers have a directory to keep current projects. In this tutorial, you’ll use a directory named `projects`.
+许多开发者可能已经有了存放项目的文件夹，但在本教程中，我们使用 `projects` 目录来。
 
-To begin, make the `projects` directory and navigate to it:
+创建 `projects` 目录并切换至此目录：
 
 ```shell
 mkdir projects
 cd projects
 ```
 
-From the `projects` directory, create a new `errtutorial` directory to keep the new program in:
+在 `projects` 目录下, 创建新文件夹 `errtutorial` 以存放项目：
 
 ```shell
 mkdir errtutorial
 ```
 
-Next, navigate into the new directory with the `cd` command:
+接着，使用 `cd` 命令进入此文件夹：
 
 ```shell
 cd errtutorial
 ```
 
-Once you’re in the `errtutorial` directory, use the `go mod init` command to create a new module named `errtutorial`:
+进入 `errtutorial` 目录后，请使用 `go mod init` 命令，创建一个名为 `errtutorial` 的新模块。
 
 ```shell
 go mod init errtutorial
 ```
 
-After creating the Go module, open a file named `main.go` in the `errtutorial` directory using `nano`, or your favorite editor:
+然后，在 `errtutorial` 目录下用 `nano` 或你喜欢的编辑器打开一个名为 `main.go` 的文件。
 
 ```shell
 nano main.go
 ```
 
-Next, you will write a program. The program will loop over the numbers `1` through `3` and try to determine if those numbers are valid or not using a function called `validateValue`. If the number is determined to be invalid, the program will use the `fmt.Errorf` function to generate an `error` value that is returned from the function. The `fmt.Errorf` function allows you to create an `error` value where the error message is the message you provide to the function. It works similarly to `fmt.Printf`, but instead of printing the message to the screen it returns it as an `error` instead.
+接下来，你将写一个程序。该程序将循环处理数字 `1` 到 `3` ，并尝试使用 `validateValue` 函数来判断这些数字是否有效。如果数字被确定为无效，程序将使用 `fmt.Errorf` 函数生成一个 `error` 值，并返回。你可以使用 `fmt.Errorf` 函数创建一个`error` 值，其中的错误信息是你提供给函数的信息。它的工作原理与 `fmt.Printf` 类似，但它不是将信息打印到屏幕上，而是将其作为 `error` 返回。
 
-Then, in the `main` function, the error value will be checked to see if it’s a `nil` value or not. If it is a `nil` value, the function succeeded and the `valid!` message is printed. If it’s not, the error received is printed instead.
+然后，将在 `main` 函数中检查错误值，看它是否为 `nil`。如果是`nil` 值，函数就运行成功了，`valid!` 信息会被打印出来。如果不是，就会打印收到的错误信息。
 
-To begin your program, add the following code into your `main.go` file:
+在开始编程前，请将以下代码粘贴至 `main.go` 中。
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```go
 package main
@@ -94,33 +94,34 @@ func main() {
 }
 ```
 
-The `validateValue` function from the program takes a number and then returns an `error` based on whether it was determined to be a valid value or not. In this program, the number `1` is invalid and returns the error `that's odd`. The number `2` is invalid and returns the error `uh oh`. The `validateValue` function uses the `fmt.Errorf` function to generate the `error` value being returned. The `fmt.Errorf` function is convenient for returning errors because it allows you to format an error message using formatting similar to `fmt.Printf` or `fmt.Sprintf` without needing to then pass that `string` to `errors.New`.
+程序中的 `validateValue` 函数接收一个数字，然后判断它是否为有效值，若不是，返回一个 `error`。在这个程序中，数字 `1` 是无效的，并返回错误 `that's odd（那是奇数）`。数字 `2` 是无效的，并返回错误 `uh oh`。`validateValue` 函数使用 `fmt.Errorf` 函数来生成被返回的 `error` 值。用 `fmt.Errorf` 函数来返回错误很方便，因为它允许你使用类似于 `fmt.Printf` 或 `fmt.Sprintf` 的方式来格式化错误信息，而不需要再将错误字符串传递给 `errors.New`。
 
-In the `main` function, the `for` loop will start by iterating over each number from `1` to `3` and will store the value in the `num` variable. Inside the loop body, a call to `fmt.Printf` will print the number the program is currently validating. Then, it will call the `validateValue` function and pass in `num`, the current number being validated, and store the error result in the `err` variable. Lastly, if `err` is not `nil` it means an error occured during validation and the error message is printed using `fmt.Println`. The `else` clause of the error check will print `"valid!"` when an error wasn’t encountered.
+在 `main` 函数中，`for` 循环将迭代 `1` 到 `3` 的每个数字，并将其值存储在 `num` 变量中。在循环体中，对 `fmt.Printf` 的调用将打印程序当前正在验证的数字。然后，它将调用 `validateValue` 函数并把 `num` （即当前正在验证的数字）作为参数传入 ，并将错误结果存储在 `err` 变量中。最后，如果 `err` 不是 `nil`，就意味着在验证过程中发生了错误，继而使用 `fmt.Println` 打印错误信息。如果没有遇到错误，错误检查的 `else` 子句将打印 `valid`。
 
-After saving your changes, run your program using the `go run` command with `main.go` as the argument from the `errtutorial` directory:
+保存程序，使用 `go run` 命令，以 `main.go` 为参数，在 `errtutorial` 目录下运行你的程序：
 
 ```shell
 go run main.go
 ```
 
-The output from running the program will show that validation was run for each number and number `1` and number `2` returned their appropriate errors:
+程序的输出结果将显示，每个数字都进行了验证，数字 `1` 和数字 `2` 都返回了相应的错误。
 
 ```
-Outputvalidating 1... there was an error: that's odd
+Output
+validating 1... there was an error: that's odd
 validating 2... there was an error: uh oh
 validating 3... valid!
 ```
 
-When you look at the output from the program, you’ll see the program tried to validate all three numbers. The first time it says the `validateValue` function returned the `that's odd` error, which would be expected for the value of `1`. The next value, `2`, also shows it returned an error, but it was the `uh oh` error this time . Finally, the `3` value returns `nil` for the error value, meaning there wasn’t an error and the number is valid. The way the `validateValue` function is written, the `nil` error value would be returned for any values that aren’t either `1` or `2`.
+当你看程序的输出时，你会看到程序试图验证所有的三个数字。第一次它说 `validateValue` 函数返回了 `that's odd` 错误，符合对数字 `1` 的预期。下一个值 `2`，也显示它返回了一个错误，但这次是 `uh oh` 错误。最后，`3` 值的错误值返回 `nil`，意味着没有错误，数字是有效的。按照 `validateValue` 函数的写法，任何不是 `1` 或 `2` 的值都会返回 `nil` 错误值。
 
-In this section, you used `fmt.Errorf` to create `error` values you returned from a function. You also added an error handler to print out the error message when any `error` is returned from the function. At times, though, it can be useful to know what an error means, not just that an error occurred. In the next section, you’ll learn to customize error handling for specific cases.
+在这一节中，你使用 `fmt.Errorf` 创建了一个 `error` 值，并从函数中返回。你还写一个错误处理程序，当函数返回任何 `error`时，打印出错误信息。但有时，知道一个错误的含义，而不仅仅是 "有错误发生了"，是非常有用的。在下一节中，你将学习如何为特定情况自定义错误处理。
 
-## Handling Specific Errors Using Sentinel Errors
+## 使用哨兵处理特定错误
 
-When you receive an `error` value from a function, the most basic error handling is to check if the `error` value is `nil` or not. This will tell you if the function had an error, but sometimes you may want to customize error handling for a specific error case. For example, imagine you have code connecting to a remote server, and the only error information you get back is “you had an error”. You may wish to tell whether the error was because the server was unavailable or if your connection credentials were invalid. If you knew the error meant a user’s credentials were wrong, you might want to let the user know right away. But if the error means the server was unavailable, you may want to try reconnecting a few times before letting the user know. Determining the difference between these errors allows you to write more robust and user-friendly programs.
+当你从一个函数接收到一个 `error` 值时，最基本的错误处理方式是检查 `error` 值是否为 `nil`。这将告诉你该函数是否有错误，但有时你可能想为特定的错误情况自定义错误处理。例如，如果有个连接到远程服务器的程序，而你得到的唯一错误信息是 "你有一个错误"。你可能希望知道这个错误是由于服务器不可用，还是连接凭证无效导致的。如果你知道这个错误意味着用户的凭证是错误的，你就可以马上告诉用户；如果该错误意味着服务器不可用，你可能想先尝试重新连接几次再告诉用户。分清这些错误之间的区别可以让你写出更健壮和用户友好的程序。
 
-One way you could check for a particular type of error might be using the `Error` method on an `error` type to get the message from the error and compare that value to the type of error you’re looking for. Imagine that in your program, you want to show a message other than `there was an error: uh oh` when the error value is `uh oh`. One approach to handling this case would be to check the value returned from the `Error` method, like so:
+为了判断特定类型的错误，一种可行的方式是在 `error` 类型的变量上调用 `Error` 方法来获取具体的错误信息，然后比对此信息与你预期的错误类型信息。想象一下，当错误值是 `uh oh` 时，你想显示一个除了 `there was an error: uh oh` 以外的消息。处理这种情况的一种方法是检查 `Error` 方法返回的值，像这样：
 
 ```go
 if err.Error() == "uh oh" {
@@ -129,7 +130,7 @@ if err.Error() == "uh oh" {
 }
 ```
 
-Checking the string value of `err.Error()` to see if it’s the value `uh oh`, as in the code above, would work in this case. But the code would not work if the `uh oh` error `string` is slightly different elsewhere in the program. Checking errors this way can also lead to significant updates to code if the error’s message itself needs to be updated because every place the error is checked would need to be updated. Take the following code, for example:
+检查 `err.Error()` 返回的字符串值，看看是否为 `uh oh`，就像上面的代码那样，在这种情况下是可行的。但是，如果 `uh oh` 错误字符串在程序中的其他地方略有不同，那么这段代码就无法正常运行。如果错误信息本身需要更新，这种方式检查错误也会导致代码的重大变动，因为每一个检查错误的地方都需要更新。以下面的代码为例：
 
 ```go
 func giveMeError() error {
@@ -142,11 +143,11 @@ if err.Error() == "uh h" {
 }
 ```
 
-In this code, the error message includes a typo and is missing the `o` in `uh oh`. If this is noticed and fixed at some point, but only after adding this error checking in several places, all those places will need to have their checks updated to `err.Error() == "uh oh"`. If one is missed, which could be easy because it’s only a single character change, the expected custom error handler will not run because it’s expecting `uh h` and not `uh oh`.
+在这段代码中，错误信息里有一个错别字， `uh oh` 少了个 `o`。如果这个问题在某个时候被注意到并被修复，但只是在几个地方添加了这个错误检查后，所有这些地方都需要将错误检查更新为 `err.Error() == "uh oh"`。 但很容易漏掉一个，因为它只变动了一个字符，预期的自定义错误处理程序将不会正常运行，因为它期望的是 `uh h` 而不是 `uh oh`。
 
-In cases like these, where you may want to handle a specific error differently than others, it’s common to create a variable whose purpose is to hold an error value. This way, the code can check against that variable instead of a string. Typically, these variables begin with either `err` or `Err` in their names to signify they’re errors. If the error is only meant to be used within the package it’s defined in, you would want to use the `err` prefix. If the error is meant to be used elsewhere, you would instead use the `Err` prefix to make it an exported value, similar to a function or a `struct`.
+在这样的情况下，你可能会想用另外的方式来处理一个特定的错误。通常会创建一个变量，以保存一个错误值。这样，代码就可以根据这个变量而不是一个字符串进行检查。通常，这些变量的名称以 `err` 或 `Err` 开头，来表示它们是错误。如果错误只在它所定义的包内使用，你可以使用 `err` 前缀；如果错误要在其他地方使用，你可以使用 `Err` 前缀，像导出函数和结构体那样，把它变成一个导出值。
 
-Now, let’s say you were using one of these error values in the typo example from before:
+现在，我们假设你使用了之前的错别字例子中的某个错误：
 
 ```go
 var errUhOh = fmt.Errorf("uh h")
@@ -161,19 +162,19 @@ if err == errUhOh {
 }
 ```
 
-In this example, the variable `errUhOh` is defined as the error value for an “uh oh” error (even though it’s misspelled). The `giveMeError` function returns the value of `errUhOh` because it wants to let the caller know that an “uh oh” error happened. Then, the error handling code compares the `err` value returned from `giveMeError` against `errUhOh` to see if an “uh oh” error is the one that happened. Even if the typo is found and fixed, all the code would still be working because the error check is checking against the value of `errUhOh`, and the value of `errUhOh` is the fixed version of the error value that `giveMeError` is returning.
+在这个例子中，变量 `errUhOh` 被定义为 "uh oh" 错误的错误值（尽管它被拼错了）。`giveMeError` 函数返回 `errUhOh` 的值，因为它想让调用者知道发生了一个 "uh oh" 错误。然后，错误处理代码比较 `giveMeError` 返回的 `err` 值与 `errUhOh`，看是否发生了 "uh oh"错误。即使发现并修复了错别字，所有的代码仍然可以正常运行，因为错误检查是针对 `errUhOh` 进行的，而 `errUhOh` 的值是 `giveMeError` 返回的错误值的固定版本。
 
-An error value that is intended to be checked and compared in this way is known as a _sentinel error_. A sentinel error is an error that’s designed to be a unique value that can always be compared against for a specific meaning. The `errUhOh` value above will always have the same meaning, that an “uh oh” error occurred, so a program can rely on comparing an error to `errUhOh` to determine whether that error occurred.
+一个以这种方式检查和比较的错误值被称为 _哨兵错误_。一个哨兵错误是被设计成唯一的、并在每次比较中都代表了同一个特定含义的值。上面的`errUhOh` 值总是有相同的含义，即，如果发生了一个"uh oh"错误，程序可以依靠将错误与 `errUhOh` 比较来确定是否发生了该错误。
 
-The Go standard library also defines a number of sentinel errors that are available when developing Go programs. One example would be the [`sql.ErrNoRows`](https://pkg.go.dev/database/sql#pkg-variables) error. The `sql.ErrNoRows` error is returned when a database query doesn’t return any results, so that error can be handled differently from a connection error. Since it’s a sentinel error, it can be compared against in error-checking code to know when a query doesn’t return any rows, and the program can handle that differently than other errors.
+Go 标准库也定义了一些哨兵错误，在开发 Go 程序时可以使用。例如 [`sql.ErrNoRows `](https://pkg.go.dev/database/sql#pkg-variables) 错误。`sql.ErrNoRows` 错误用来表示数据库查询没有返回任何结果，所以该错误的处理方式与连接错误不同。因为它是一个哨兵错误，它可以在错误检查代码中进行比较，以知道什么时候查询没有返回任何数据行，并且程序可以以不同于其他错误的方式处理这个错误。
 
-Generally, when creating a sentinel error value, the [`errors.New`](https://pkg.go.dev/errors#New) function from the [`errors`](https://pkg.go.dev/errors) package is used instead of the `fmt.Errorf` function you’ve been using thus far. Using `errors.New` instead of `fmt.Errorf` does not make any foundational changes to how the error works, though, and both functions could be used interchangeably most of the time. The biggest difference between the two is the `errors.New` function will only create an error with a static message and the `fmt.Errorf` function allows formatting the string with values, similar to `fmt.Printf` or `fmt.Sprintf`. Since sentinel errors are fundamental errors with values that don’t change, it’s common to use `errors.New` to create them.
+一般情况下，我们用 [`errors`](https://pkg.go.dev/errors) 包里的 `errors.New` 函数来创建一个前哨错误值，而不是你一直使用的 `fmt.Errorf` 函数。使用 `errors.New` 代替 `fmt.Errorf` 并不会对错误的运作方式产生任何根本性的改变，尽管如此，这两个函数在大多数时候都可以互换使用。两者最大的区别是 `errors.New` 函数只会创建一个带有静态信息的错误，而 `fmt.Errorf` 函数可以格式化字符串，类似于 `fmt.Printf` 或 `fmt.Sprintf` 。由于哨兵错误是基础错误，其值不会改变，所以通常使用 `errors.New` 来创建它们。
 
-Now, update your program to use a sentinel error for the “uh oh” error instead of `fmt.Errorf`.
+现在，更新你的程序，把 "uh oh" 错误改造成哨兵错误，而不是 `fmt.Errorf`。
 
-First, open the `main.go` file to add the new `errUhOh` sentinel error and update the program to use it. The `validateValue` function is updated to return the sentinel error instead of using `fmt.Errorf`. The `main` function is updated to check for the `errUhOh` sentinel error and print `oh no!` when it encounters it instead of the `there was an error:` message it shows for other errors.
+首先，打开 `main.go` 文件，添加新的 `errUhOh` 哨兵错误并更新程序。更新 `validateValue` 函数以返回哨兵错误，而不是使用 `fmt.Errorf`。更新 `main` 函数，以检查 `errUhOh` 哨兵错误，并在遇到它时打印 `oh no!`，而不是像显示其他错误那样显示 `there was an error:` 。
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```go
 package main
@@ -211,37 +212,38 @@ func main() {
 }
 ```
 
-Now, save your code and use `go run` to run your program again:
+保持代码并使用 `go run` 再次运行程序：
 
 ```shell
 go run main.go
 ```
 
-This time the output will show the generic error output for the `1` value, but it uses the custom `oh no!` message when it sees the `errUhOh` error returned from `validateValue` for `2`:
+这次输出将为数字 `1` 显示通用的错误描述，但是检测到数字 `2` 从 `validateValue` 中返回的 `errUhOh` 错误时，将显示自定义的 `oh no!` 。
 
 ```
-Outputvalidating 1... there was an error: that's odd
+Output
+validating 1... there was an error: that's odd
 validating 2... oh no!
 validating 3... valid!
 ```
 
-Using sentinel errors inside your error checking makes it easier to handle special error cases. For example, they can help determine whether the file you’re reading is failing because you’ve reached the end of the file, which is signified by the [`io.EOF`](https://pkg.go.dev/io#pkg-variables) sentinel error, or if it’s failing for some other reason.
+在你的错误检查中使用哨兵错误可以更容易地处理特殊的错误情况。例如，它们可以帮助确定你正在读取的文件是因为你已经到达了文件的末尾（由 [`io.EOF`](https://pkg.go.dev/io#pkg-variables) 哨兵错误表示）而失败，还是因为其他原因而失败。
 
-In this section, you created a Go program that uses a sentinel error using `errors.New` to signify when a specific type of error occurred. Over time as your program grows, though, you may get to the point where you’d like more information included in your error than just the `uh oh` error value. This error value doesn’t give any context on where the error happened or why it happened, and it can be hard to track down specifics of the error in larger programs. To aid in troubleshooting and to cut down the time for debugging, you can make use of error wrapping to include the specifics you need.
+在本节中，你创建了一个 Go 程序，使用 `errors.New` 来表示特定类型的错误发生时的哨兵错误。随着时间的推移，随着程序的发展，你可能会希望在错误中包含更多的信息，而不仅仅是 `uh oh` 错误值。目前的这个错误值没有提供任何关于错误发生地点或原因的背景信息，导致在大型程序中很难追踪到错误的具体细节。为了帮助排除故障和减少调试时间，你可以利用错误包装来包含你需要的细节。
 
-## Wrapping and Unwrapping Errors
+## 包装和解包错误
 
-Wrapping errors means taking one error value and putting another error value inside it, like a wrapped gift. Similar to a wrapped gift, though, you need to unwrap it to know what’s inside. Wrapping an error allows you to include additional information about where the error came from or how it happened without losing the original error value, since it’s inside the wrapper.
+包装错误是指将一个错误值放在另一个错误值里面，就像一个包装好的礼物。不过，与包装好的礼物类似，你需要解开包装才能知道里面是什么。包装一个错误可以让你在不丢失原始错误值的前提下加入错误来源或如何发生的额外信息，因为它被包装在外层错误里。
 
-Before Go 1.13, it was possible to wrap errors since you could create custom error values that included the original error. But you would either have to create your own wrappers or use a library that already did the work for you. In Go 1.13, though, Go added support for wrapping and unwrapping errors as part of the standard library by adding the [`errors.Unwrap`](https://pkg.go.dev/errors#Unwrap) function and the `%w` verb for the `fmt.Errorf` function. In this section, you’ll update your program to use the `%w` verb to wrap errors with more information, and you’ll then use `errors.Unwrap` to retrieve the wrapped information.
+在 Go 1.13 之前，由于你可以创建包含原始错误的自定义错误值，所以也可以对错误进行包装。但是你必须创建自己的包装器，或者使用已经为你做了这些工作的库。Go 在1.13中通过添加 [`errors.Unwrap`](https://pkg.go.dev/errors#Unwrap) 函数和 `fmt.Errorf` 函数的 `%w` 动词，增加了对包装和解包错误的支持，并将其作为标准库的一部分。在这一节中，你将更新你的程序，使用  `%w`  动词来包装带有更多信息的错误，然后用 `errors.Unwrap` 来提取被包装的信息。
 
-### Wrapping Errors with `fmt.Errorf`
+### 使用 `fmt.Errorf` 包装错误
 
-The first feature to examine when wrapping and unwrapping errors is an addition to the existing `fmt.Errorf` function. In the past, `fmt.Errorf` was used to create formatted error messages with additional information using verbs such as `%s` for strings and `%v` for generic values. Go 1.13 added a new verb with a special case, the `%w` verb. When the `%w` verb is included in a format string and an `error` is provided for the value, the error returned from `fmt.Errorf` will include the value of the `error` wrapped in the error being created.
+在学习包装和解包错误时，让我们先来补充一下对现有的 `fmt.Errorf` 函数的认识。之前，`fmt.Errorf` 被用来创建带有附加信息的格式化错误信息，使用的动词有：`%s` 用于字符串，`%v` 用于普通值。Go 1.13增加了一个新的特殊动词， `%w`。当 `%w` 动词包含在格式化字符串中，并且提供了一个 `error` 值时，从 `fmt.Errorf` 返回的错误将包含被包装的 `error` 的值。
 
-Now, open the `main.go` file and update it to include a new function called `runValidation`. This function will take the number currently being validated and run any validation needed on that number. In this case, it only needs to run the `validateValue` function. If it encounters an error validating the value it will wrap the error using `fmt.Errorf` and the `%w` verb to show there was a `run error` that occurred, then return that new error. You should also update the `main` function so instead of calling `validateValue` directly it calls `runValidation` instead:
+现在，打开 `main.go` 文件，加入一个名为 `runValidation` 的新函数。这个函数接收当前正在验证的数字，并对该数字进行任何需要的验证。在这种情况下，就只需要运行 `validateValue` 函数。如果它遇到一个错误的验证值，它将使用 `fmt.Errorf` 和 `%w` 动词来包装这个错误，以显示有一个 `运行错误` 发生，然后返回这个新的错误。你也应该更新 `main` 函数，这样就不会直接调用 `validateValue`，而是调用 `runValidation`。
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```go
 ...
@@ -275,13 +277,13 @@ func main() {
 }
 ```
 
-Once you’ve saved your updates, run the updated program using `go run`:
+保存更新后的代码，运行：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样： 
 
 ```
 Output
@@ -290,17 +292,17 @@ validating 2... there was an error: run error: uh oh
 validating 3... valid!
 ```
 
-There are a few things to look at in this output. First, you’ll see the error message being printed for the value `1` now includes `run error: that's odd` in the error message. This shows the error was wrapped by `runValidation`’s `fmt.Errorf` and that the value of the error being wrapped, `that's odd`, is included in the error message.
+在这个输出中，有几个地方值得注意。首先，你会看到为值 `1` 打印的错误信息现在包含了 `run error: that's odd` 错误信息。这表明错误被 `runValidation` 的 `fmt.Errorf` 包装了，被包装的错误值 `that's odd` 包含在错误信息中。
 
-Next, though, there’s a problem. The special error handling that was added for the `errUhOh` error isn’t running. If you look at the line validating the `2` input, you’ll see it shows the default error message of `there was an error: run error: uh oh` instead of the expected `oh no!` message. You know the `validateValue` function is still returning the `uh oh` error because you can see it at the end of the wrapped error, but the error detection of `errUhOh` is no longer working. This happens because the error being returned by `runValidation` is no longer `errUhOh`, it’s the wrapped error created by `fmt.Errorf`. When the `if` statement tries to compare the `err` variable to `errUhOh`, it returns false because `err` isn’t equal to `errUhOh` any more, it’s equal to the error that’s _wrapping_ `errUhOh`. To fix the `errUhOh` error checking, you’ll need to retrieve the error from inside the wrapper, using the `errors.Unwrap` function.
+但是，有一个问题。为 `errUhOh` 错误添加的特殊错误处理并没有正常运行。如果你看看检查参数 `2` 的那一行，你会发现它显示的是默认的错误信息 `there was an error: run error: uh oh`，而不是预期的 `oh no!` 信息。你知道 `validateValue` 函数仍在返回 `uh oh` 错误，因为你可以在包裹的错误末尾看到它，但 `errUhOh` 的错误检测不再如期运行。发生这种情况是因为 `runValidation` 返回的错误不再是 `errUhOh`，而是由 `fmt.Errorf` 创建的包装好的错误。当 `if` 语句试图比较 `err` 变量和 `errUhOh` 时，它将返回 `false` ，因为 `err` 不再等于 `errUhOh`，它等于包装着 `errUhOh` 的错误。要解决 `errUhOh` 的错误检查，你需要使用 `errors.Unwrap` 函数，以从包装中提取内部的错误。
 
-### Unwrapping Errors with `errors.Unwrap`
+### 使用  `errors.Unwrap` 解包错误
 
-In addition to the `%w` verb being added in Go 1.13, a few new functions were added to the Go [`errors`](https://pkg.go.dev/errors) package. One of these, the `errors.Unwrap` function, takes an `error` as a parameter and, if the error passed in is an error wrapper, it will return the wrapped `error`. If the `error` provided isn’t a wrapper, the function will return `nil`.
+Go 1.13 除了增加了 `%w` 动词外，还在 [`errors`](https://pkg.go.dev/errors) 包中增加了一些新的函数。其中一个是 `errors.Unwrap` 函数，接收一个 `error` 作为参数，如果传递的错误是一个错误包装器，它会返回被包装的 `error`。如果提供的 `error` 不是一个包装器，返回 `nil`。
 
-Now, open the `main.go` file again and, using `errors.Unwrap`, update the `errUhOh` error check to handle the case where `errUhOh` is wrapped inside an error wrapper:
+现在，再次打开 `main.go` 文件，使用 `errors.Unwrap`，更新 `errUhOh` 错误检查，以处理 `errUhOh` 被包装在一个错误包装器中的情况。
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```go
 func main() {
@@ -318,33 +320,34 @@ func main() {
 }
 ```
 
-After saving the edits, run the program again:
+保存并运行：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Outputvalidating 1... there was an error: run error: that's odd
+Output
+validating 1... there was an error: run error: that's odd
 validating 2... oh no!
 validating 3... valid!
 ```
 
-Now, in the output, you’ll see the `oh no!` error handling for the `2` input value is back. The additional `errors.Unwrap` function call you added to the `if` statement allows it to detect `errUhOh` both when `err` itself is an `errUhOh` value as well as if `err` is an error that is directly wrapping `errUhOh`.
+现在，在输出中，你会看到对 `2` 输入值的 `oh no!` 错误处理回来了。你在 `if` 语句中增加的 `errors.Unwrap` 函数调用，让它在 `err` 本身是 `errUhOh` 值时，以及 `err` 是直接包装了 `errUhOh` 的错误时检测  `errUhOh`。
 
-In this section, you used the `%w` verb added to `fmt.Errorf` to wrap the `errUhOh` error inside another error and give it additional information. Then, you used `errors.Unwrap` to access the `errorUhOh` error that is wrapped inside another error. Including errors inside other errors as `string` values is OK for humans reading error messages, but sometimes you’ll want to include additional information with the error wrapper to aid the program in handling the error, such as the status code in an HTTP request error. When this happens, you can create a new custom error to return.
+在本节中，你使用了添加到 `fmt.Errorf` 中的 `%w` 动词，把 `errUhOh` 错误包装在另一个错误中，并附加信息。然后，你使用 `errors.Unwrap` 来访问被包装在另一个错误中的 `errorUhOh` 错误。将错误以字符串的形式包含在其他错误中，对于人类阅读错误信息来说是可行的，但有时你又想在错误包装中包含额外的信息，以帮助程序处理错误，例如HTTP请求错误中的状态代码。这时候，你就可以创建一个新的自定义错误来返回。
 
-## Custom Wrapped Errors
+## 自定义包装错误
 
-Since Go’s only rule for the `error` interface is that it includes an `Error` method, it’s possible to turn many Go types into a custom error. One way is by defining a `struct` type with extra information about the error, and then also including an `Error` method.
+由于 Go 对 `error` 接口的唯一规定是它包含一个 `Error` 方法，所以可以把许多 Go 类型变成一个自定义的错误。一种方法是通过定义一个结构体类型，包含了关于错误的额外信息，同时也拥有一个 `Error` 方法。
 
-For a validation error, it may be useful to know which value actually caused the error. Next, let’s create a new `ValueError` struct that contains a field for the `Value` that caused the error and an `Err` field that contains the actual validation error. Custom error types commonly use the `Error` suffix on the end of the type name to signify it’s a type that conforms to the `error` interface.
+对于一个验证错误，知道哪个值实际导致了错误可能是有用的。接下来，让我们创建一个新的 `ValueError` 结构，它包含一个导致错误的 `Value` 字段和一个包含实际验证错误的 `Err` 字段。自定义错误类型通常在类型名称的末尾使用 `Error` 后缀，以表示它是一个实现了 `error` 接口的类型。
 
-Open your `main.go` file and add the new `ValueError` error struct, as well as a `newValueError` function to create instances of the error. You will also need to create a method called `Error` for `ValueError` so the struct will be considered an `error`. This `Error` method should return the value you want to be displayed whenever the error is converted to a string. In this case, it will use `fmt.Sprintf` to return a string that shows `value error:` and then the wrapped error. Also, update the `validateValue` function so instead of returning just the basic error, it uses the `newValueError` function to return a custom error:
+打开 `main.go` 文件，添加新的 `ValueError` 错误结构体，以及一个 `newValueError` 函数来创建错误实例。你还需要为 `ValueError` 创建一个名为 `Error` 的方法，以使该结构体被视为 `error`。这个 `Error` 方法应该返回你希望在错误被转换为字符串时显示的值。在这种情况下，它将使用 `fmt.Sprintf` 来返回一个字符串，这个字符串以  `value error:` 开头，后面是被包装的错误。另外，再更新`validateValue` 函数，这样它就不会只返回基本错误，而是使用 `newValueError` 函数来返回一个自定义错误：
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```go
 ...
@@ -383,25 +386,26 @@ func validateValue(number int) error {
 ...
 ```
 
-Once your updates are saved, run the program again with `go run`:
+保存更新的代码并再次运行：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Outputvalidating 1... there was an error: run error: value error: that's odd
+Output
+validating 1... there was an error: run error: value error: that's odd
 validating 2... there was an error: run error: value error: uh oh
 validating 3... valid!
 ```
 
-You’ll see that the output now shows the errors are wrapped inside of `ValueError` by the `value error:` before them in the output. However, the `uh oh` error detection is broken again because `errUhOh` is now inside two layers of wrappers, `ValueError` and the `fmt.Errorf` wrapper from `runValidation`. The code code only uses `errors.Unwrap` once on the error, so this results in the first `errors.Unwrap(err)` now only returning a `*ValueError` and not `errUhOh`.
+你会看到，现在的输出显示错误被包装在 `ValueError` 内，`value error:` 在被包装的错误前。然而，`uh oh` 错误检测又被破坏了，因为 `errUhOh` 现在在两层包装内：`ValueError` 和 `runValidation` 的 `fmt.Errorf` 包装器。代码中只对错误使用了一次 `errors.Unwrap`，所以这导致第一个 `errors.Unwrap(err)` 现在只返回 `*ValueError` 类型的值而不是 `errUhOh`。
 
-One way to fix this would be to update the `errUhOh` check to add an additional error check that calls `errors.Unwrap()` twice to unwrap both layers. To add this, open your `main.go` file and update your `main` function to include this change:
+修复这个问题的一个方法是更新 `errUhOh` 检查，增加一个额外的错误检查，调用 `errors.Unwrap()` 两次以解开两层包装。请打开 `main.go` 文件并更新 `main` 函数以实现此操作。
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```shell
 ...
@@ -423,25 +427,26 @@ func main() {
 }
 ```
 
-Now, save your `main.go` file and use `go run` to run your program again:
+保存文件并再次运行：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Outputvalidating 1... there was an error: run error: value error: that's odd
+Output
+validating 1... there was an error: run error: value error: that's odd
 validating 2... there was an error: run error: value error: uh oh
 validating 3... valid!
 ```
 
-You’ll see that, uh oh, the `errUhOh` special error handling is still not working. The line validating the `2` input where we’d expect to see the special error handling `oh no!` output still shows the default `there was an error: run error: ...` error output. This happens because the `errors.Unwrap` function doesn’t know how to unwrap the `ValueError` custom error type. In order for a custom error to be unwrapped, it needs to have its own `Unwrap` method that returns the inner error as an `error` value. When creating errors using `fmt.Errorf` with the `%w` verb earlier, Go was actually creating an error for you that already has an `Unwrap` method added, so you didn’t need to do it yourself. Now that you’re using your own custom function, though, you need to add your own.
+你会看到，uh oh，`errUhOh` 的特殊错误处理仍然没有如期运行。在验证 `2` 输入的那一行，我们期望看到特殊错误处理 `oh no!` 输出仍然显示默认的  `there was an error: run error: ...` 错误输出。发生这种情况是因为 `errors.Unwrap` 函数不知道如何解除 `ValueError` 自定义错误类型。为了让自定义错误被成功解包，它需要有自己的 `Unwrap` 方法，将内部错误作为 `error` 值返回。先前使用 `fmt.Errorf` 和 `%w` 动词创建错误时，Go 实际上是为你创建了一个已经添加了 `Unwrap` 方法的错误，所以你不需要自己做。不过现在你使用了自定义函数，需要添加你自己的 `Unwrap` 方法。
 
-To finally fix the `errUhOh` error case, open `main.go` and add an `Unwrap` method to `ValueError` that returns `Err`, the field the inner wrapped error is stored in:
+为了最终解决 `errUhOh` 错误的问题，打开 `main.go` ，给 `ValueError` 添加一个`Unwrap` 方法，返回 `Err` ，即内部的被包装的错误所存储的字段。
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```shell
 ...
@@ -457,37 +462,36 @@ func (ve *ValueError) Unwrap() error {
 ...
 ```
 
-Then, once you’ve saved the new `Unwrap` method, run your program:
+保存新的 `Unwrap` 方法，再次运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Outputvalidating 1... there was an error: run error: value error: that's odd
+Output
+validating 1... there was an error: run error: value error: that's odd
 validating 2... oh no!
 validating 3... valid!
 ```
 
-The output shows the `oh no!` error handling for the `errUhOh` error is working again because `errors.Unwrap` is now able to also unwrap `ValueError`.
+输出显示 `oh no!` 错误处理的 `errUhOh` 错误又如期运行了，因为 `errors.Unwrap` 现在也能解包 `ValueError`。
 
-In this section you created a new, custom `ValueError` error to provide yourself or your users with information about the validation process as part of the error message. You also added support for error unwrapping to your `ValueError` so `errors.Unwrap` can be used to access the wrapped error.
+在本小节中，你创建了一个新的、自定义的 `ValueError` 错误，给你自己或你的用户提供关于验证过程的信息，并将其作为错误信息的一部分。你还给你的 `ValueError` 添加了对错误解包的支持，所以 `errors.Unwrap` 可以访问到被包装的错误。
 
-The error handling is getting a bit clunky and hard to maintain, though. Every time there’s a new layer of wrapping you’ve had to add another `errors.Unwrap` to the error checking to handle it. Thankfully, the `errors.Is` and `errors.As` functions in the `errors` package are available to make working with wrapped errors easier.
+不过，错误处理变得有点笨拙，难以维护。每次有一个新的包装层，你就必须在错误检查中添加一个 `errors.Unwrap` 方法来处理它。值得庆幸的是，`errors` 包中的 `errors.Is` 和 `errors.As` 函数可以使处理被包装的错误更容易。
 
-## Working with Wrapped Errors
+## 与被包装的错误打交道
 
-If you needed to add a new `errors.Unwrap` function call for every potential layer of error wrapping your program had, it would get very long and difficult to maintain. For this reason, two additional functions were also added to the `errors` package in the Go 1.13 release. Both of these functions make it easier to work with errors by allowing you to interact with errors no matter how deeply they’re wrapped inside other errors. The `errors.Is` function allows you to check if a specific sentinel error value is anywhere inside a wrapped error. The `errors.As` function allows you to get a reference to a certain type of error anywhere inside a wrapped error.
+如果你需要为程序的每一个潜在的错误包装层添加一个新的 `errors.Unwrap` 函数调用，它将变得非常长，而且难以维护。出于这个原因，Go 1.13版本中的 `errors` 包还增加了两个函数。这两个函数使你更容易与错误打交道，无论它们在其他错误中被包装得多深，都可以获取得到。`errors.Is` 函数检查一个特定的哨兵错误值是否被包装在某错误中；`errors.As` 函数可以获取某个包装错误内部中的特定错误，无论它被包装在哪一层。
 
-### Checking an Error Value with `errors.Is`
+### 使用 `errors.Is` 检查错误
 
-Using `errors.Is` to check for a specific error makes the `errUhOh` special error handling much shorter because it handles all the nested error unwrapping you were doing manually. The function takes two `error` parameters, the first being the error you actually received and the second parameter being the error you want to check against.
+为了让 `errUhOh` 错误处理更清晰，请打开你的 `main.go` 文件，更新 `main` 函数中的 `errUhOh` 检查，用 `errors.Is` 代替。
 
-To clean up the `errUhOh` error handling, open your `main.go` file and update the `errUhOh` check in the `main` function to use `errors.Is` instead:
-
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```go
 ...
@@ -507,31 +511,32 @@ func main() {
 }
 ```
 
-Then, save your code and run the program again using `go run`:
+接着，保存并运行：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Outputvalidating 1... there was an error: run error: value error: that's odd
+Output
+validating 1... there was an error: run error: value error: that's odd
 validating 2... oh no!
 validating 3... valid!
 ```
 
-The output shows the `oh no!` error message, which means that even though there’s only one error check for `errUhOh`, it will still be found in the error chain. `errors.Is` takes advantage of an error type’s `Unwrap` method to keep digging deeper into a chain of errors until it either finds the error value you’re looking for, a sentinel error, or encounters an `Unwrap` method that returns a `nil` value.
+输出显示了 `oh no!` 错误信息，这意味着即使只有一个错误检查 `errUhOh`，它仍然会在错误链中被发现。`errors.Is` 利用错误类型的`Unwrap` 方法，不断深入挖掘错误链，直到找到你要找的错误值，在遇到一个哨兵错误，或者 `Unwrap` 方法返回 `nil` 值时停止检索。
 
-Using `errors.Is` is the recommended way to check for specific errors now that error wrapping exists as a feature in Go. Not only can it be used for your own error values, but it can also be used for other error values such as the `sql.ErrNoRows` error mentioned earlier in this tutorial.
+使用 `errors.Is` 是检查特定错误的推荐方法，现在错误包装已经成为了 Go 的一个特性。它不仅可以用于你自己的错误值，还可以用于其他错误值，比如本教程前面提到的 `sql.ErrNoRows` 错误。
 
-### Retrieving an Error Type with `errors.As`
+### 使用 `errors.As` 提取某个类型的错误
 
-The last function added to the `errors` package in Go 1.13 is the `errors.As` function. This function is used when you want to get a reference to a certain type of error to interact with it in more detail. For example, the `ValueError` custom error you added earlier gives access to the actual value being validated in the `Value` field of the error, but you can only access it if you have a reference to that error first. This is where `errors.As` comes in. You can give `errors.As` an error, similar to `errors.Is`, and a variable for a type of error. It will then go through the error chain to see if any of the wrapped errors match the type provided. If one matches, the variable passed in for the error type will be set with the error `errors.As` found, and the function will return `true`. If no error types match, it will return `false`.
+Go 1.13中的 `errors` 包添加的最后一个函数是 `errors.As` 函数。当你想获得某种类型的错误的引用以与之进行更详细的交互时，可以使用这个函数。例如，你之前添加的 `ValueError` 自定义错误可以访问错误的 `Value` 字段中正在验证的实际值，但你只有在首先拥有对该错误的引用时才能访问它，这就是`errors.As`的作用。你可以传入 `errors.As` 一个错误，类似于 `errors.Is`，和期望的错误类型对应的变量。然后它将通过错误链查看是否有任何被包装的错误与提供的类型相匹配。如果有匹配的，传递进来的错误类型的变量将被设置为 `errors.As` 找到的错误，并且该函数将返回 `true`。如果没有匹配的错误类型，它将返回 `false`。
 
-Using `errors.As` you can now take advantage of the `ValueError` type to show additional error information in your error handler. Open your `main.go` file one last time and update the `main` function to add a new error handling case for `ValueError`\-type errors that prints out `value error`, the invalid number, and the validation error:
+通过使用 `errors.As`，现在你可以利用 `ValueError` 类型，在错误处理中显示额外的错误信息。最后一次打开 `main.go` 文件，更新`main` 函数，为 `ValueError` 类型的错误添加一个新的错误处理案例，打印出 `value error`、无效的数字，和验证错误。
 
-projects/errtutorial/main.go
+> projects/errtutorial/main.go
 
 ```shell
 ...
@@ -555,34 +560,33 @@ func main() {
 }
 ```
 
-In the code above, you declared a new `valueErr` variable and used `errors.As` to get a reference to the `ValueError` if it’s wrapped inside the `err` value. By getting access to the error as a `ValueError`, you’re then able to access any additional fields the type provides, such as the actual value that failed validation. This could be helpful if the validation logic happens deeper inside the program and you don’t normally have access to the values to give users hints on where something might have gone wrong. Another example of where this could be helpful is if you’re doing network programming and run into a [`net.DNSError`](https://pkg.go.dev/net#DNSError). By getting a reference to the error, you are able to see if the error was the result of not being able to connect, or if the error was caused by being able to connect, but your resource was not found. Once you know this, you can handle the error in different ways.
+在上面的代码中，你声明了一个新的 `valueErr` 变量，并使用 `errors.As` 来获得对 `ValueError` 的引用，如果它被包装在 `err` 值中。通过获得 `ValueError` 的引用，你就能访问该类型提供的任何额外字段，例如验证失败的实际值。如果验证逻辑发生在程序的更深处，而你通常不能访问这些值来给用户提示可能出错的地方，这将是有用的。另一个例子是，如果你在做网络编程时遇到 [`net.DNSError`](https://pkg.go.dev/net#DNSError)，通过获得对错误的引用，你能够看到这个错误是由于无法连接导致的错误，还是由于能够连接，但没有找到你的资源而导致的错误。一旦你知道这一点，你就可以用不同的方式来处理这个错误。
 
-To see `errors.As` in action, save your file and run the program using `go run`:
+保存并运行程序以看看 `errors.As` 的实际效果：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Outputvalidating 1... value error (1): that's odd
+Output
+validating 1... value error (1): that's odd
 validating 2... oh no!
 validating 3... valid!
 ```
 
-This time in the output you won’t see the default `there was an error: ...` message, because all the errors are being handled by other error handlers. The output for validating `1` shows that the `errors.As` error check returned `true` because the `value error ...` error message is being displayed. Since the `errors.As` function returned true, the `valueErr` variable is set to be a `ValueError` and can be used to print out the value that failed validation by accessing `valueErr.Value`.
+这次你不会在输出中看到默认的 `there was an error: ...` 信息，因为所有的错误都被其他错误处理程序处理了。验证 `1` 的输出表明 `errors.As` 错误检查返回 `true`，因为 `value error ...` 错误信息显示在了输出中。由于 `errors.As` 函数返回 `true`，`valueErr` 变量被设置为 `ValueError`，可以通过访问 `valueErr.Value` 来打印出验证失败的值。
 
-For the `2` value, the output also shows that even though the `errUhOh` is also wrapped inside a `ValueError` wrapper, the `oh no!` special error handler is still executed. This is because the special error handler using `errors.Is` for `errUhOh` comes first in the collection of `if` statements handling the errors. Since this handler returns `true` before the `errors.As` even runs, the special `oh no!` handler is the one executed. If the `errors.As` in your code came before the `errors.Is`, the `oh no!` error message would become the same `value error ...` as the `1` value, except in this case it would print `value error (2): uh oh`.
+对于`2`值，输出结果还表明，即使 `errUhOh` 被包装在 `ValueError` 的包装内，`oh no！` 特殊错误处理程序仍然被执行。这是因为使用 `errors.Is` 处理 `errUhOh` 的特殊错误处理器在处理错误的 `if` 语句集合中排在第一位。因为这个判断在 `errors.As` 判断之前返回`true`，所以特殊的 `oh no!` 处理程序被执行。如果你的代码中的 `errors.As` 在 `errors.Is` 之前，`oh no!` 错误信息将变成与 `1` 值相同的 `value error ...`，只是在这种情况下它将打印`value error (2): uh oh`。
 
-In this section, you updated your program to use the `errors.Is` function to remove a lot of additional calls to `errors.Unwrap` and make your error handling code more robust and future-proof. You also used the `errors.As` function to check if any of the wrapped errors is a `ValueError`, and then used fields on the value if one was found.
+在本节中，你更新了你的程序，使用了 `errors.Is` 函数，删除了大量对 `errors.Unwrap` 的额外调用，使你的错误处理代码更健壮，更适合未来的需要。你还使用了 `errors.As` 函数来检查任何被包装的错误是否是 `ValueError`，如果是，就可以获得该值的所有字段。
 
-## Conclusion
+## 结论
 
-In this tutorial, you wrapped an error using the `%w` format verb and unwrapped an error using `errors.Unwrap`. You also created a custom error type that supports `errors.Unwrap` in your own code. Finally, you used your custom error type to explore the new helper functions `errors.Is` and `errors.As`.
+在本教程中，你使用 `%w` 格式动词包装了一个错误，使用 `errors.Unwrap` 解包了一个错误。你还创建了一个自定义的错误类型，在你自己的代码中支持 `errors.Unwrap`。最后，你使用你的自定义错误类型来探索新的辅助函数 `errors.Is` 和 `errors.As`。
 
-Using these new error functions makes it easier to include deeper information about the errors you create or work with. It also future proofs your code to ensure your error checking continues to work even if errors become deeply nested going forward.
+使用这些新的错误函数，可以更容易地包含你创建或处理的错误的更深层次的信息。它还可以确保你的代码中的错误，即使在未来被深入嵌套时，错误检查也能正常运行。
 
-If you’d like to find more details about how to use the new error features, the Go blog has a post about [Working with Errors in Go 1.13](https://go.dev/blog/go1.13-errors). The documentation for the [`errors` package](https://pkg.go.dev/errors) package also includes more information.
-
-This tutorial is also part of the [DigitalOcean](https://www.digitalocean.com/) [How to Code in Go](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go) series. The series covers a number of Go topics, from installing Go for the first time to how to use the language itself.
+如果你想找到更多关于如何使用新的错误功能的细节，Go 博客有一篇关于 [上手 Go 1.13 的错误处理](https://go.dev/blog/go1.13-errors)  的文章。[`errors`包](https://pkg.go.dev/errors) 的文档也包含了更多的信息。
