@@ -8,7 +8,7 @@ Go 的生态系统的一个优势是大量的模块是开源的。由于它们�
 
 ## 前期准备
 
-- 安装1.16 或更高版本的 Go。如何安装 Go ，请根据你的操作系统遵循 [如何安装Go](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04) 教程。
+- 安装1.16 或更高版本的 Go。如何安装 Go ，请根据你的操作系统遵循 [如何安装Go](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/) 教程。
 - 对分发 Go 模块的理解，可以在 [如何分发 Go 模块](https://www.digitalocean.com/community/tutorials/how-to-distribute-go-modules) 教程中找到。
 - 熟悉Git，你可以参考 [How To Use Git: A Reference Guide](https://www.digitalocean.com/community/cheatsheets/how-to-use-git-a-reference-guide) 。
 - 一个名为 `mysecret` 的空的 GitHub 私有仓库，用于发布你的私有模块。要开始使用，请遵循 [GitHub 创建仓库的文档](https://docs.github.com/en/get-started/quickstart/create-a-repo)。
@@ -16,7 +16,7 @@ Go 的生态系统的一个优势是大量的模块是开源的。由于它们�
 
 ## 分发一个私有模块
 
-与许多编程语言不同，Go 从存储库而不是中央软件包服务器发布模块。这种方法的一个好处是，发布私有模块与发布公共模块非常相似。Go 的私有模块不需要一个完全独立的私有包服务器，而是通过一个私有源代码库发布。由于大多数源代码托管选项都支持开箱即用，所以不需要再建立一个额外的私有服务器。
+与许多编程语言不同，Go 从仓库而不是中央包服务器发布模块。这种方法的一个好处是，发布私有模块与发布公共模块非常相似。Go 的私有模块不需要一个完全独立的私有包服务器，而是通过一个私有源代码库发布。由于大多数源代码托管选项都支持开箱即用，所以不需要再建立一个额外的私有服务器。
 
 为了使用私有模块，你需要访问一个私有 Go 模块。在本节中，你将创建并发布一个私有模块，你可以在以后的教程中使用，从另一个 Go 程序中访问一个私有模块。
 
@@ -35,7 +35,7 @@ cd projects
 git clone git@github.com:your_github_username/mysecret.git
 ```
 
-Git 会确认它已经克隆了你的模块，你可能会得到一个警告，说你克隆了一个空的版本库，但这并不值得担心：
+Git 会确认它已经克隆了你的模块，你可能会得到一个警告，说你克隆了一个空的仓库，但这并不值得担心：
 
 ```
 Output
@@ -50,13 +50,13 @@ cd mysecret
 go mod init github.com/your_github_username/mysecret
 ```
 
-现在你的模块已经创建，现在是时候添加一个你可以从另一个项目中使用的函数了。使用 `nano`，或你喜欢的文本编辑器，打开一个与你的版本库同名的文件，如 `mysecret.go`。这个名字并不重要，可以是任何东西，但使用与版本库相同的名字可以使你在使用新模块时，更容易确定先看哪个文件。
+现在你的模块已经创建，现在是时候添加一个你可以从另一个项目中使用的函数了。使用 `nano`，或你喜欢的文本编辑器，打开一个与你的仓库同名的文件，如 `mysecret.go`。这个名字并不重要，可以是任何东西，但使用与仓库相同的名字可以使你在使用新模块时，更容易确定先看哪个文件。
 
 ```
 nano mysecret.go
 ```
 
-在 `mysecret.go` 文件中，用与你的版本库相同的名字命名软件包，然后添加一个 `SecretProcess` 函数，在调用时打印 `Running the secret process!` 这一行：
+在 `mysecret.go` 文件中，用与你的仓库相同的名字命名软件包，然后添加一个 `SecretProcess` 函数，在调用时打印 `Running the secret process!` 这一行：
 
 projects/mysecret/mysecret.go
 
@@ -192,7 +192,7 @@ password your_github_access_token
 machine github.com login your_github_username password your_github_access_token
 ```
 
-**注意：**如果你使用 [Bitbucket](https://bitbucket.org/) 作为你的源代码托管，你可能还需要在 `bitbucket.org` 之外添加第二个条目 `api.bitbucket.org`。在过去，Bitbucket 为多种类型的版本控制提供托管服务，所以 Go 会在尝试下载之前使用 API 来检查版本库的类型。虽然现在已经不是这样了，但 API 检查仍然存在。如果你遇到这个问题，一个错误信息的例子可能是这样的：
+**注意：**如果你使用 [Bitbucket](https://bitbucket.org/) 作为你的源代码托管，你可能还需要在 `bitbucket.org` 之外添加第二个条目 `api.bitbucket.org`。在过去，Bitbucket 为多种类型的版本控制提供托管服务，所以 Go 会在尝试下载之前使用 API 来检查仓库的类型。虽然现在已经不是这样了，但 API 检查仍然存在。如果你遇到这个问题，一个错误信息的例子可能是这样的：
 
 ```
 go get bitbucket.org/your_github_username/mysecret: reading https://api.bitbucket.org/2.0/repositories/your_bitbucket_username/protocol?fields=scm: 403 Forbidden
@@ -205,7 +205,7 @@ server response: Access denied. You must have write or admin access.
 
 ## 为SSH提供私有模块凭证
 
-为了使用 SSH 密钥作为私有 Go 模块的认证方式而不是 HTTPS，Git 提供了一个名为 `insteadOf` 的配置选项。`insteadOf` 选项允许你说可以喊出：“与其”使用 `https://github.com/` 作为所有 Git 请求的 URL，你更愿意使用 `ssh://git@github.com/`。
+为了使用 SSH 密钥作为私有 Go 模块的认证方式而不是 HTTPS，Git 提供了一个名为 `insteadOf` 的配置选项。`insteadOf` 选项表示你说：“与其”使用 `https://github.com/` 作为所有 Git 请求的 URL，你更愿意使用 `ssh://git@github.com/`。
 
 在Linux、MacOS 和 WSL 上，这个配置存在于 `.gitconfig` 文件中。你可能已经很熟悉这个文件了，因为你的提交邮件地址和名字也是在这里配置的。要编辑该文件，请使用 `nano`，或你喜欢的文本编辑器，并打开你的主目录中的 `~/.gitconfig` 文件：
 
@@ -244,7 +244,7 @@ insteadOf = https://github.com/
 mkdir myproject
 ```
 
-一旦目录创建完毕，使用 `cd` 进入该目录，并根据你的项目所在的版本库 URL，使用 `go mod init` 为你的项目初始化一个新的 Go 模块，例如 `github.com/your_github_username/myproject`。如果你不打算将你的项目推送到任何其他仓库，模块名称可以是 `myproject`，或任何其他名称，但使用完整的 URL 是很好的做法，因为大多数共享的模块都需要它们。
+一旦目录创建完毕，使用 `cd` 进入该目录，并根据你的项目所在的仓库 URL，使用 `go mod init` 为你的项目初始化一个新的 Go 模块，例如 `github.com/your_github_username/myproject`。如果你不打算将你的项目推送到任何其他仓库，模块名称可以是 `myproject`，或任何其他名称，但使用完整的 URL 是很好的做法，因为大多数共享的模块都需要它们。
 
 ```
 Output

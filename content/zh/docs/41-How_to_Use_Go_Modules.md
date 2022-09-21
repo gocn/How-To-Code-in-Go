@@ -8,14 +8,14 @@
 
 ## 前期准备
 
-要遵循本教程，你将需要。
+要遵循本教程，你将需要：
 
-- 安装1.16 或更高版本的 Go。如何安装 Go ，请根据你的操作系统遵循 [如何安装Go](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04) 教程。
-- 熟悉用 Go 编写软件包。要了解更多，请遵循 [如何用 Go 编写包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go) 教程。
+- 安装1.16 或更高版本的 Go。如何安装 Go ，请根据你的操作系统遵循 [如何安装Go](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/) 教程。
+- 熟悉用 Go 编写软件包。要了解更多，请遵循 [如何用 Go 编写包](https://gocn.github.io/How-To-Code-in-Go/docs/21-How_To_Write_Packages_in_Go/) 教程。
 
 ## 创建一个新的模块
 
-乍看之下，Go模块与 [Go包](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go) 有些相似。一个模块有许多实现包的功能的 Go 代码文件，但它在根部还有两个额外的重要文件：`go.mod` 文件和 `go.sum` 文件。这些文件包含了 `go` 工具用来跟踪你的模块配置的信息，通常由工具维护，所以你不需要维护。
+乍看之下，Go模块与 [Go包](https://gocn.github.io/How-To-Code-in-Go/docs/21-How_To_Write_Packages_in_Go/) 有些相似。一个模块有许多实现包的功能的 Go 代码文件，但它在根部还有两个额外的重要文件：`go.mod` 文件和 `go.sum` 文件。这些文件包含了 `go` 工具用来跟踪你的模块配置的信息，通常由工具维护，所以你不需要维护。
 
 首先要做的是决定模块所处的目录。随着 Go 模块的引入，Go 项目有可能位于文件系统的任何地方，而不仅仅是 Go 定义的特定目录。你可能已经有了一个存放项目的目录，但在本教程中，你将创建一个名为 `projects` 的目录，新模块将被称为 `mymodule`。你可以通过 IDE 或者命令行来创建 `projects` 目录。
 
@@ -26,7 +26,7 @@ mkdir projects
 cd projects
 ~~~
 
-接下来，你将创建模块目录本身。通常，模块的顶层目录名称与模块名称相同，这使事情更容易跟踪。在你的 `projects` 目录下，运行以下命令来创建 `mymodule` 目录：
+接下来，你将创建模块目录本身。通常，模块的顶层目录名称与模块名称相同，这使得模块配置的信息更容易被追踪。在你的 `projects` 目录下，运行以下命令来创建 `mymodule` 目录：
 
 ~~~
 mkdir mymodule
@@ -247,7 +247,7 @@ Hello, Modules! This is mypackage speaking!
 
 Go 模块是通过版本控制库（通常是Git库）发布的。当你想添加一个新的模块作为自己的依赖时，你会使用仓库的路径作为你想使用的模块的引用方式。当 Go 看到这些模块的导入路径时，它可以根据这个仓库的路径推断出在哪里可以远程找到它。
 
-在这个例子中，你要在你的模块中加入对 [`github.com/spf13/cobra`](https://github.com/spf13/cobra) 库的依赖。Cobra是一个用于创建控制台应用程序的流行库，但我们不会在本教程中讨论这个问题。
+在这个例子中，你要在你的模块中加入对 [`github.com/spf13/cobra`](https://github.com/spf13/cobra) 库的依赖。Cobra 是一个常用来创建控制台应用程序的库，但我们不会在本教程中讨论这个问题。
 
 与你创建 `mymodule` 模块时类似，你将再次使用 `go` 工具。然而，这一次，你将在 `mymodule` 目录下运行 `go get` 命令。运行 `go get` 并提供你想添加的模块。在这种情况下，你会得到 `github.com/spf13/cobra` ：
 
