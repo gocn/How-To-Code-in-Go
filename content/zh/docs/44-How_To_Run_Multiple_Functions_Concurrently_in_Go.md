@@ -2,7 +2,7 @@
 
 ## 介绍
 
-Go 受欢迎的特性之一是它对 [_并发_](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) 的一流且原生的支持，或者说能立即让程序同时做多件事情。随着计算机从快速地运行单道程序，逐渐转变到现在的倾向于同时运行多个程序，能够并发地运行代码在现代编程中的重要程度越来越高。为了更快地运行程序，程序员通常需要将程序设计成并发运行的，因而程序的每个可并发的部分都能独立地运行。同时使用 Go 的两个特性 [_协程(goroutines)_](https://golangdocs.com/goroutines-in-golang) 和 [_通道(channels)_](https://golangdocs.com/channels-in-golang), 将会让并发变得更容易。协程解决了创建与运行并发代码的难度，而通道解决了并发运行的协程之间的安全通信问题。
+Go 受欢迎的特性之一是它对 [_并发_](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) 的一流且原生的支持，或者说能让程序同时做多件事情。随着计算机从快速地运行单道程序，逐渐转变到现在的倾向于同时运行多个程序，能够并发地运行代码在现代编程中的重要程度越来越高。为了更快地运行程序，程序员通常需要将程序设计成并发运行的，因而程序的每个可并发的部分都能独立地运行。同时使用 Go 的两个特性 [_协程(goroutines)_](https://golangdocs.com/goroutines-in-golang) 和 [_通道(channels)_](https://golangdocs.com/channels-in-golang), 将会让并发变得更容易。协程解决了创建与运行并发代码的难度，而通道解决了并发运行的协程之间的安全通信问题。
 
 在这个教程中，你将探索协程与通道的知识。首先，你将创建一个使用协程来同时运行多个函数的程序。然后，你将在程序中加入通道，以实现运行着的协程之间的通信。最后你将在程序中加入更多的协程，以模拟一个运行着多个工作协程的程序。
 
@@ -19,17 +19,17 @@ Go 受欢迎的特性之一是它对 [_并发_](https://en.wikipedia.org/wiki/Co
 
 在现代计算机中，处理器或 [CPU](https://en.wikipedia.org/wiki/Central_processing_unit) 被设计成在同一时间运行尽可能多的代码流。这些处理器拥有一个或更多的“核”，每个核都能同时运行一个代码流。因此，一个程序可以同时使用的内核越多，程序的运行速度就越快。然而，为了使程序能够利用 [多核](https://en.wikipedia.org/wiki/Multi-core_processor) 提供的速度提升，程序需要能够被分割成多个代码流。将一个程序分割成若干部分可能是编程中具有挑战性的事情之一，但 Go 的设计使之更容易。
 
-Go 实现这一功能的其中一个方式是使用 *goroutines*。goroutine 是一种特殊类型的函数，它可以在其他 goroutine 运行时同时运行。当一个程序被设计成同时运行多个代码流时，这个程序即被设计成  [_并发_](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) 运行。通常，当一个函数被调用时，调用方接下来的代码，只有当被调用的函数执行完毕后才会开始执行。这被称为“前台”运行，因为它可以当前代码运行结束前执行其他代码。对于一个协程，调用它的函数将继续执行接下来的代码，而 goroutine 本身则会在“后台”运行。当代码在完成之前不妨碍其他代码的运行时，它就被认为是在后台运行。
+Go 实现这一功能的其中一个方式是使用 *goroutines*。goroutine 是一种特殊类型的函数，它可以在其他 goroutine 运行时同时运行。当一个程序被设计成同时运行多个代码流时，这个程序即被设计成  [_并发_](https://en.wikipedia.org/wiki/Concurrency_(computer_science)) 运行。通常，当一个函数被调用时，调用方接下来的代码，只有当被调用的函数执行完毕后才会开始执行。这被称为“前台”运行，因为它可以防止你的代码在它结束之前做任何事情。对于一个协程，调用它的函数将继续执行接下来的代码，而 goroutine 本身则会在“后台”运行。当代码在完成之前不妨碍其他代码的运行时，它就被认为是在后台运行。
 
 goroutines 提供的能力是，每个 goroutine 可以同时在一个处理器核心上运行。如果你的计算机有四个处理器核心，且你的程序有四个 goroutine，那么所有四个 goroutine 都可以同时运行。当多个代码流像这样在不同的内核上同时运行时，就叫做以 [*并行*](https://en.wikipedia.org/wiki/Parallel_computing) 方式运行。
 
-为了直观地了解并发和并行之间的区别，请看下面的图表。当一个处理器运行一个函数时，它并不总是一次性地从开始运行到完成。有时，当一个函数在等待其他事情发生时，如读取文件，操作系统会在 CPU 核心上交错地运行其他函数、goroutine 或其他程序。该图展示了为并发而设计的程序如何在单核以及多核上运行。它还展示了一个 goroutine 在并行运行时比在单核上运行时可以在相同的时间区间内容纳更多的代码段（如图所示，9个垂直的代码段）。
+为了直观地了解并发和并行之间的区别，请看下面的图表。当一个处理器运行一个函数时，它并不总是一次性地从开始运行到完成。有时，当一个函数在等待其他事情发生时，如读取文件，操作系统会在 CPU 核心上交错地运行其他函数、goroutine 或其他程序。该图展示了为并发而设计的程序如何在单核以及多核上运行。它还展示了在相同的时间区间内，一个 goroutine 在并行运行时比在单核上运行时，可以容纳更多的代码段。（如图所示，9个垂直的代码段）。
 
 > 译者注：左侧为并发，右侧为并行。下图由上至下为时间轴。如左图，并发即为交错地快速地在多个 goroutine 间切换，因为切换足够快，在用户看来像同时运行了紫红绿三种 goroutine，但其实同一时间只有一个 goroutine 在运行；右图，并行为同一时间真的在运行多个 goroutine，横向地观察右图，可以看到每个时间窗口（每一行）都有两个 goroutine 同时在运行。
 
 ![Diagram split into two columns, labeled Concurrency and Parallelism. The Concurrency column has a single tall rectangle, labeled CPU core, divided into stacked sections of varying colors signifying different functions. The Parallelism column has two similar tall rectangles, both labeled CPU core, with each stacked section signifying different functions, except it only shows goroutine1 running on the left core and goroutine2 running on the right core.](https://assets.digitalocean.com/articles/68067/diagram2.png)
 
-图中左栏标有 "并发"，显示了围绕并发设计的程序如何在单个 CPU 核上运行，先运行部分 "goroutine1"，然后是另一个函数、goroutine 或程序，然后是 "goroutine2"，再是 "goroutine1"，如此循环。对用户来说，这似乎是程序在同时运行所有的函数或 goroutine，尽管它们实际上是在一个接一个的小部分中运行。
+图中左栏标有 "并发"，显示了围绕并发设计的程序如何能够在单个 CPU 核上运行，先运行部分 "goroutine1"，然后是另一个函数、goroutine 或程序，接着是 "goroutine2"，再是 "goroutine1"，如此循环。对用户来说，这似乎是程序在同时运行所有的函数或 goroutine，尽管它们实际上是在一个接一个的小部分中运行。
 
 图中右边一栏标有 "并行"，显示了同一个程序如何在一个有两个CPU核的处理器上并行运行。第一个CPU核显示 `goroutine1` 与其他函数、goroutine 或程序穿插运行，而第二个 CPU 核显示 `goroutine2` 与该核的其他函数或 goroutine 运行。有时 `goroutine1` 和 `goroutine2` 同时运行，只是在不同的 CPU 核上。
 
@@ -301,7 +301,7 @@ func main() {
 }
 ```
 
-在 `generateNumbers` 和 `printNumbers` 的形参中，你会看到 `chan` 类型使用的是只读和只写的类型。因为 `generateNumbers` 只需要能够将数字写入通道，所以它是只写类型，`<-` 箭头指向通道。`printNumbers` 只需要能够从通道中读取数字，所以它是只读类型，`<-` 箭头指向远离通道的方向。
+在 `generateNumbers` 和 `printNumbers` 的参数中，你会看到 `chan` 类型使用的是只读和只写的类型。因为 `generateNumbers` 只需要能够将数字写入通道，所以它是只写类型，`<-` 箭头指向通道。`printNumbers` 只需要能够从通道中读取数字，所以它是只读类型，`<-` 箭头指向远离通道的方向。
 
 尽管这两个地方的类型可以是 `chan int`，即允许读和写，但将它们限制在函数需要的范围内是有用的，以避免意外地导致你的程序因所谓的 [_死锁_](https://en.wikipedia.org/wiki/Deadlock) 而停止运行。当程序的 A 部分在等待 B 部分做某事，但 B 部分也在等待程序的 A 部分完成时，就会发生死锁。由于程序的两部分都在互相等待，程序将永远不会继续运行，几乎就像两个齿轮卡住一样。
 
