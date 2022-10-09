@@ -1,58 +1,58 @@
-# How to Use Go Modules
+# 如何使用 Go 模块
 
-### Introduction
+## 简介
 
-In version 1.13, the authors of Go added a new way of managing the libraries a Go project depends on, called [Go modules](https://golang.org/ref/mod). Go modules were added in response to a growing need to make it easier for developers to maintain various versions of their dependencies, as well as add more flexibility in the way developers organize their projects on their computer. Go modules commonly consist of one project or library and contain a collection of Go packages that are then released together. Go modules solve many problems with [`GOPATH`](https://golang.org/doc/gopath_code), the original system, by allowing users to put their project code in their chosen directory and specify versions of dependencies for each module.
+在 1.13 版本，Go 的作者增加了一种管理 Go 项目依赖库的新方法，称之为 [Go 模块](https://golang.org/ref/mod)。Go 模块的加入是为了满足日益增长的需求，使开发者更容易维护其依赖的各种版本，同时也为开发者在计算机上组织项目的方式上，增加了更多的灵活性。Go 模块通常由一个项目或库组成，并包含一系列的 Go 包，然后一起发布。Go 模块解决了原始系统 [`GOPATH`](https://golang.org/doc/gopath_code) 的许多问题，它允许用户将项目代码放在他们选择的目录中，并为每个模块指定依赖的版本。
 
-In this tutorial, you will create your own public Go module and add a package to your new module. In addition, you will also add someone else’s public module to your own project as well as add a specific version of that module to your project.
+在本教程中，你将创建你自己的公共 Go module，并为你的新模块添加一个包。此外，你还将把别人的公共模块添加到你自己的项目中，以及把该模块的一个特定版本添加到你的项目中。
 
-## Prerequisites
+## 前期准备
 
-To follow this tutorial, you will need:
+要遵循本教程，你将需要：
 
--   Go version 1.16 or greater installed. To set this up, follow the [How To Install Go](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04) tutorial for your operating system.
--   Familiarity with writing packages in Go. To learn more, follow the [How To Write Packages in Go](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go) tutorial.
+- 安装1.16 或更高版本的 Go。如何安装 Go ，请根据你的操作系统遵循 [如何安装Go](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local-Programming_Environment_on_Ubuntu_18.04_DigitalOcean/) 教程。
+- 熟悉用 Go 编写软件包。要了解更多，请遵循 [如何用 Go 编写包](https://gocn.github.io/How-To-Code-in-Go/docs/21-How_To_Write_Packages_in_Go/) 教程。
 
-## Creating a New Module
+## 创建一个新的模块
 
-At first glance, a Go module looks similar to a [Go package](https://www.digitalocean.com/community/tutorials/how-to-write-packages-in-go). A module has a number of Go code files implementing the functionality of a package, but it also has two additional and important files in the root: the `go.mod` file and the `go.sum` file. These files contain information the `go` tool uses to keep track of your module’s configuration, and are commonly maintained by the tool so you don’t need to.
+乍看之下，Go模块与 [Go包](https://gocn.github.io/How-To-Code-in-Go/docs/21-How_To_Write_Packages_in_Go/) 有些相似。一个模块有许多实现包的功能的 Go 代码文件，但它在根部还有两个额外的重要文件：`go.mod` 文件和 `go.sum` 文件。这些文件包含了 `go` 工具用来跟踪你的模块配置的信息，通常由工具维护，所以你不需要维护。
 
-The first thing to do is decide the directory the module will live in. With the introduction of Go modules, it became possible for Go projects to be located anywhere on the filesystem, not just a specific directory defined by Go. You may already have a directory for your projects, but in this tutorial, you’ll create a directory called `projects` and the new module will be called `mymodule`. You can create the `projects` directory either through an IDE or via the command line.
+首先要做的是决定模块所处的目录。随着 Go 模块的引入，Go 项目有可能位于文件系统的任何地方，而不仅仅是 Go 定义的特定目录。你可能已经有了一个存放项目的目录，但在本教程中，你将创建一个名为 `projects` 的目录，新模块将被称为 `mymodule`。你可以通过 IDE 或者命令行来创建 `projects` 目录。
 
-If you’re using the command line, begin by making the `projects` directory and navigating to it:
+如果你使用的是命令行，首先新建 `projects`目录并进入其中：
 
 ~~~
 mkdir projects
 cd projects
 ~~~
 
-Next, you’ll create the module directory itself. Usually, the module’s top-level directory name is the same as the module name, which makes things easier to keep track of. In your `projects` directory, run the following command to create the `mymodule` directory:
+接下来，你将创建模块目录本身。通常，模块的顶层目录名称与模块名称相同，这使得模块配置的信息更容易被追踪。在你的 `projects` 目录下，运行以下命令来创建 `mymodule` 目录：
 
 ~~~
 mkdir mymodule
 ~~~
 
-Once you’ve created the module directory, the directory structure will look like this:
+一旦你创建了模块目录，目录结构将看起来像这样：
 
 ```
 └── projects
     └── mymodule
 ```
 
-The next step is to create a `go.mod` file within the `mymodule` directory to define the Go module itself. To do this, you’ll use the `go` tool’s `mod init` command and provide it with the module’s name, which in this case is `mymodule`. Now create the module by running `go mod init` from the `mymodule` directory and provide it with the module’s name, `mymodule`:
+下一步是在 `mymodule` 目录下创建一个 `go.mod` 文件来定义 Go 模块本身。要做到这一点，你要使用 `go` 工具的 `mod init` 命令，并向它提供模块的名称，在这个例子中是 `mymodule`。现在通过在 `mymodule` 目录下运行 `go mod init` 来创建模块，并向它提供模块的名称 `mymodule`：
 
 ~~~
 go mod init mymodule
 ~~~
 
-This command will return the following output when creating the module:
+该命令在创建模块时将返回以下输出：
 
 ```
 Output
 go: creating new go.mod: module mymodule
 ```
 
-With the module created, your directory structure will now look like this:
+随着模块的创建，你的目录结构现在看起来会是这样：
 
 ```
 └── projects
@@ -60,19 +60,19 @@ With the module created, your directory structure will now look like this:
         └── go.mod
 ```
 
-Now that you have created a module, let’s take a look inside the `go.mod` file to see what the `go mod init` command did.
+现在你已经创建了一个模块，让我们看一下 `go.mod` 文件的内容，看看 `go mod init` 命令做了什么。
 
-### Understanding the `go.mod` File
+## 了解 `go.mod` 文件
 
-When you run commands with the `go` tool, the `go.mod` file is a very important part of the process. It’s the file that contains the name of the module and versions of other modules your own module depends on. It can also contain other directives, such as [`replace`](https://golang.org/ref/mod#go-mod-file-replace), which can be helpful for doing development on multiple modules at once.
+当你用 `go` 工具运行命令时，`go.mod` 文件是一个非常重要的部分。它是包含模块名称和你自己模块所依赖的其他模块的版本的文件。它还可以包含其他指令，如 [`replace`](https://golang.org/ref/mod#go-mod-file-replace)，这对同时进行多个模块的开发很有帮助。
 
-In the `mymodule` directory, open the `go.mod` file using `nano`, or your favorite text editor:
+在 `mymodule` 目录下，用 `nano` 或你喜欢的文本编辑器打开 `go.mod` 文件：
 
 ~~~
 nano go.mod
 ~~~
 
-The contents will look similar to this, which isn’t much:
+内容将看起来与此类似，这并不重要：
 
 projects/mymodule/go.mod
 
@@ -82,33 +82,33 @@ module mymodule
 go 1.16
 ~~~
 
-The first line, the `module` directive, tells Go the name of your module so that when it’s looking at `import` paths in a package, it knows not to look elsewhere for `mymodule`. The `mymodule` value comes from the parameter you passed to `go mod init`:
+第一行，`module` 指令，告诉 Go 你的模块名称，这样当它在包中寻找 `import` 路径时，它就不会在其他地方寻找 `mymodule`。`mymodule` 的值来自你传递给 `go mod init` 的参数：
 
 ~~~
 module mymodule
 ~~~
 
-The only other line in the file at this point, the `go` directive, tells Go which version of the language the module is targeting. In this case, since the module was created using Go 1.16, the `go` directive says `1.16`:
+文件中的另外一行，即 `go` 指令，告诉 Go 模块所针对的语言版本。在本例中，由于该模块是用 Go 1.16 创建的，所以 `go` 指令显示为 `1.16` ：
 
 ```
 go 1.16
 ```
 
-As more information is added to the module, this file will expand, but it’s a good idea to look at it now to see how it changes as dependencies are added further on.
+随着更多的信息被添加到模块中，这个文件将被扩展，但现在看看它是个好主意，看看它是如何随着依赖关系的进一步添加而变化的。
 
-You’ve now created a Go module with `go mod init` and looked at what an initial `go.mod` file contains, but your module doesn’t do anything yet. It’s time to take your module further and add some code.
+现在你已经用 `go mod init` 创建了一个 Go 模块，并查看了初始 `go.mod` 文件的内容，但你的模块还没有做任何事情。现在是时候让你的模块更进一步，添加一些代码了。
 
-### Adding Go Code to Your Module
+## 在你的模块中添加Go代码
 
-To ensure the module is created correctly and to add code so you can run your first Go module, you’ll create a `main.go` file within the `mymodule` directory. The `main.go` file is commonly used in Go programs to signal the starting point of a program. The file’s name isn’t as important as the `main` function inside, but matching the two makes it easier to find. In this tutorial, the `main` function will print out `Hello, Modules!` when run.
+为了确保模块被正确创建，并添加代码以便你能运行你的第一个 Go 模块，你将在 `mymodule` 目录下创建一个 `main.go` 文件。`main.go` 文件在 Go 程序中通常用来表示程序的起始点。该文件的名称并不像里面的 `main` 函数那么重要，但两者的匹配使其更容易被找到。在本教程中，`main` 函数在运行时将打印出 `Hello, Modules!`。
 
-To create the file, open the `main.go` file using `nano`, or your favorite text editor:
+要创建这个文件，用 `nano` 或你喜欢的文本编辑器打开 `main.go` 文件：
 
 ```
 nano main.go
 ```
 
-In the `main.go` file, add the following code to define your `main` package, import the `fmt` package, then print out the `Hello, Modules!` message in the `main` function:
+在 `main.go` 文件中，添加以下代码来定义你的 `main` 包，导入 `fmt` 包，然后在 `main` 函数中打印出 `Hello, Modules!`信息：
 
 projects/mymodule/main.go
 
@@ -122,15 +122,13 @@ func main() {
 }
 ~~~
 
+在 Go 中，每个目录都被视为自己的包，每个文件都有自己的 `package` 声明行。在你刚刚创建的 `main.go` 文件中，`包` 被命名为 `main`。通常情况下，你可以以任何方式命名包，但 `main` 包在 Go 中是很特别的。当 Go 看到一个包被命名为 `main ` 时，它知道这个包应该被视为二进制文件，应该被编译成可执行文件，而不是一个旨在用于其他程序的库。
 
+在定义了  `包` 之后，`import` 声明说要导入 [`fmt`](https://pkg.go.dev/fmt) 包，所以你可以使用它的 `Println` 函数将  `"Hello, Modules!"` 信息打印到屏幕上。
 
-In Go, each directory is considered its own package, and each file has its own `package` declaration line. In the `main.go` file you just created, the `package` is named `main`. Typically, you can name the package any way you’d like, but the `main` package is special in Go. When Go sees that a package is named `main` it knows the package should be considered a binary, and should be compiled into an executable file, instead of a library designed to be used in another program.
+最后，定义了 `main` 函数。`main` 函数是 Go 的另一个特例，与`main`包有关。当 Go 看到一个名为 `main` 的包内有一个名为 `main` 的函数时，它知道 `main` 函数是它应该运行的第一个函数。这被称为程序的入口点。
 
-After the `package` is defined, the `import` declaration says to import the [`fmt`](https://pkg.go.dev/fmt) package so you can use its `Println` function to print the `"Hello, Modules!` message to the screen.
-
-Finally, the `main` function is defined. The `main` function is another special case in Go, related to the `main` package. When Go sees a function named `main` inside a package named `main`, it knows the `main` function is the first function it should run. This is known as a program’s entry point.
-
-Once you have created the `main.go` file, the module’s directory structure will look similar to this:
+一旦你创建了 `main.go` 文件，该模块的目录结构将类似于这样：
 
 ```
 └── projects
@@ -139,36 +137,36 @@ Once you have created the `main.go` file, the module’s directory structure wil
         └── main.go
 ```
 
-If you are familiar with using Go and the [`GOPATH`](https://www.digitalocean.com/community/tutorials/understanding-the-gopath), running code in a module is similar to how you would do it from a directory in the `GOPATH`. (Don’t worry if you are not familiar with the `GOPATH`, because using modules replaces its usage.)
+如果你熟悉使用 Go 和 [`GOPATH`](https://www.digitalocean.com/community/tutorials/understanding-the-gopath) ，运行模块中的代码就类似于从 `GOPATH` 中的一个目录中进行。（如果你不熟悉 `GOPATH` 也不用担心，因为使用模块可以代替它的使用。）
 
-There are two common ways to run an executable program in Go: building a binary with `go build` or running a file with `go run`. In this tutorial, you’ll use `go run` to run the module directly instead of building a binary, which would have to be run separately.
+在 Go 中运行可执行程序有两种常见的方法：用 `go build` 构建二进制文件或用 `go run` 运行文件。在本教程中，你将使用 `go run` 直接运行模块，而不是构建二进制文件，后者必须单独运行。
 
-Run the `main.go` file you’ve created with `go run`:
+用 `go run` 运行你创建的 `main.go` 文件：
 
 ~~~
 go run main.go
 ~~~
 
-Running the command will print the `Hello, Modules!` text as defined in the code:
+运行该命令将打印代码中定义的 `Hello, Modules!` 文本：
 
 ```
 Output
 Hello, Modules!
 ```
 
-In this section, you added a `main.go` file to your module with an initial `main` function that prints `Hello, Modules!`. At this point, your program doesn’t yet benefit from being a Go module — it could be a file anywhere on your computer being run with `go run`. The first real benefit of Go modules is being able to add dependencies to your project in any directory and not just the `GOPATH` directory structure. You can also add packages to your module. In the next section, you will expand your module by creating an additional package within it.
+在这一节中，你为你的模块添加了一个 `main.go` 文件，其中的初始 `main` 函数打印出 `Hello, Modules!`。在这一点上，你的程序还没有从 Go 模块中获益—它可以是你电脑上任何地方的一个文件，用 `go run` 来运行。Go 模块的第一个真正好处是能够在任何目录下为你的项目添加依赖，而不仅仅是 `GOPATH` 目录结构。你还可以向你的模块添加包。在下一节中，你将通过在模块中创建一个额外的包来扩展你的模块。
 
-## Adding a Package to Your Module
+## 为你的模块添加一个包
 
-Similar to a standard Go package, a module may contain any number of packages and sub-packages, or it may contain none at all. For this example, you’ll create a package named `mypackage` inside the `mymodule` directory.
+类似于标准的 Go 包，一个模块可以包含任何数量的包和子包，也可以完全不包含。在这个例子中，你将在 `mymodule` 目录下创建一个名为 `mypackage` 的包。
 
-Create this new package by running the `mkdir` command inside the `mymodule` directory with the `mypackage` argument:
+通过在 `mymodule` 目录下运行 `mkdir` 命令并加上 `mypackage` 参数来创建这个新包：
 
 ```
 mkdir mypackage
 ```
 
-This will create the new directory `mypackage` as a sub-package of the `mymodule` directory:
+这将创建新的目录 `mypackage` 作为 `mymodule` 目录的一个子包：
 
 ```
 └── projects
@@ -178,14 +176,14 @@ This will create the new directory `mypackage` as a sub-package of the `mymodule
         └── go.mod
 ```
 
-Use the `cd` command to change the directory to your new `mypackage` directory, and then use `nano`, or your favorite text editor, to create a `mypackage.go` file. This file could have any name, but using the same name as the package makes it easier to find the primary file for the package:
+使用 `cd` 命令将当前目录改为新的 `mypackage` 目录，然后使用 `nano` ，或你喜欢的文本编辑器，创建一个 `mypackage.go` 文件。这个文件可以有任何名字，但使用与软件包相同的名字可以更容易找到软件包的主文件：
 
 ```
 cd mypackage
 nano mypackage.go
 ```
 
-In the `mypackage.go` file, add a function called `PrintHello` that will print the message `Hello, Modules! This is mypackage speaking!` when called:
+在 `mypackage.go` 文件中，添加一个名为 `PrintHello` 的函数，当被调用时，将打印 `Hello, Modules! This is mypackage speaking!` ：
 
 projects/mymodule/mypackage/mypackage.go
 
@@ -199,9 +197,9 @@ func PrintHello() {
 }
 ```
 
-Since you want the `PrintHello` function to be available from another package, the capital `P` in the function name is important. The capital letter means the function is exported and available to any outside program. For more information about how package visibility works in Go, [Understanding Package Visibility in Go](https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go) includes more detail.
+由于你希望 `PrintHello` 函数可以从另一个包中使用，函数名称中的大写字母 `P` 很重要。大写字母意味着该函数是导出的，对任何外部程序都是可用的。关于 Go 中包的可见性的更多信息，[Understanding Package Visibility in Go](https://www.digitalocean.com/community/tutorials/understanding-package-visibility-in-go) 包括更多细节。
 
-Now that you’ve created the `mypackage` package with an exported function, you will need to `import` it from the `mymodule` package to use it. This is similar to how you would import other packages, such as the `fmt` package previously, except this time you’ll include your module’s name at the beginning of the import path. Open your `main.go` file from the `mymodule` directory and add a call to `PrintHello` by adding the highlighted lines below:
+现在你已经创建了带有导出函数的 `mypackage` 包，你将需要从 `mymodule` 包中 `导入` 它来使用它。这与你导入其他包的方法类似，比如之前的 `fmt` 包，只是这次你要在导入路径的开头加入你的模块名称。从 `mymodule` 目录下打开你的 `main.go` 文件，通过添加下面高亮的行来添加对 `PrintHello` 的调用：
 
 projects/mymodule/main.go
 
@@ -221,21 +219,21 @@ func main() {
 }
 ```
 
-If you take a closer look at the `import` statement, you’ll see the new import begins with `mymodule`, which is the same module name you set in the `go.mod` file. This is followed by the path separator and the package you want to import, `mypackage` in this case:
+如果你仔细看一下 `import` 语句，你会看到新的导入以 `mymodule` 开始，也就是你在 `go.mod` 文件中设置的模块名称。后面是路径分隔符和你要导入的包，本例中是`mypackage`：
 
 ```
 "mymodule/mypackage"
 ```
 
-In the future, if you add packages inside `mypackage`, you would also add them to the end of the import path in a similar way. For example, If you had another package called `extrapackage` inside `mypackage`, your import path for that package would be `mymodule/mypackage/extrapackage`.
+在未来，如果你在 `mypackage` 内添加包，你也会以类似的方式将它们添加到导入路径的末尾。例如，如果你在 `mypackage` 内有另一个叫 `extrapackage` 的包，你对该包的导入路径将是 `mymodule/mypackage/extrapackage`。
 
-Run your updated module with `go run` and `main.go` from the `mymodule` directory as before:
+像以前一样，用`go run` 和 `main.go` 从 `mymodule` 目录中运行你的更新模块：
 
 ```
 go run main.go
 ```
 
-When you run the module again you’ll see both the `Hello, Modules!` message from earlier as well as the new message printed from your new `mypackage`’s `PrintHello` function:
+当你再次运行该模块时，你会看到先前的 "Hello, Modules!"信息，以及新的 `mypackage` 的 `PrintHello` 函数打印的新信息：
 
 ```
 Output
@@ -243,23 +241,23 @@ Hello, Modules!
 Hello, Modules! This is mypackage speaking!
 ```
 
-You’ve now added a new package to your initial module by creating a directory called `mypackage` with a `PrintHello` function. As your module’s functionality expands, though, it can be useful to start using other peoples’ modules in your own. In the next section, you’ll add a remote module as a dependency to yours.
+你现在通过创建一个名为 `mypackage` 的目录和 `PrintHello` 函数，为你的初始模块添加了一个新包。随着你的模块功能的扩展，在你的模块中开始使用其他人的模块可能会很有用。在下一节中，你将添加一个远程模块作为你的模块的依赖。
 
-## Adding a Remote Module as a Dependency
+## 添加一个远程模块作为依赖
 
-Go modules are distributed from version control repositories, commonly Git repositories. When you want to add a new module as a dependency to your own, you use the repository’s path as a way to reference the module you’d like to use. When Go sees the import path for these modules, it can infer where to find it remotely based on this repository path.
+Go 模块是通过版本控制库（通常是Git库）发布的。当你想添加一个新的模块作为自己的依赖时，你会使用仓库的路径作为你想使用的模块的引用方式。当 Go 看到这些模块的导入路径时，它可以根据这个仓库的路径推断出在哪里可以远程找到它。
 
-For this example, you’ll add a dependency on the [`github.com/spf13/cobra`](https://github.com/spf13/cobra) library to your module. Cobra is a popular library for creating console applications, but we won’t address that in this tutorial.
+在这个例子中，你要在你的模块中加入对 [`github.com/spf13/cobra`](https://github.com/spf13/cobra) 库的依赖。Cobra 是一个常用来创建控制台应用程序的库，但我们不会在本教程中讨论这个问题。
 
-Similar to when you created the `mymodule` module, you’ll again use the `go` tool. However, this time, you’ll run the `go get` command from the `mymodule` directory. Run `go get` and provide the module you’d like to add. In this case, you’ll get `github.com/spf13/cobra`:
+与你创建 `mymodule` 模块时类似，你将再次使用 `go` 工具。然而，这一次，你将在 `mymodule` 目录下运行 `go get` 命令。运行 `go get` 并提供你想添加的模块。在这种情况下，你会得到 `github.com/spf13/cobra` ：
 
 ```
 go get github.com/spf13/cobra
 ```
 
-When you run this command, the `go` tool will look up the Cobra repository from the path you specified and determine which version of Cobra is the latest by looking at the repository’s branches and tags. It will then download that version and keep track of the one it chose by adding the module name and the version to the `go.mod` file for future reference.
+当你运行这个命令时，`go` 工具将从你指定的路径查找 Cobra 仓库，并通过查看仓库的分支和标签来确定哪个版本的 Cobra 是最新的。然后，它将下载该版本，并通过在 `go.mod` 文件中添加模块名称和版本来跟踪它所选择的版本，以供将来参考。
 
-Now, open the `go.mod` file in the `mymodule` directory to see how the `go` tool updated the `go.mod` file when you added the new dependency. The example below could change depending on the current version of Cobra that’s been released or the version of the Go tooling you’re using, but the overall structure of the changes should be similar:
+现在，打开 `mymodule` 目录下的 `go.mod` 文件，看看当你添加新的依赖时，`go` 工具如何更新 `go.mod` 文件。下面的例子可能会有变化，这取决于当前已经发布的 Cobra 版本或你使用的 Go 工具的版本，但整体的变化结构应该是相似的：
 
 projects/mymodule/go.mod
 
@@ -275,11 +273,11 @@ require (
 )
 ```
 
-A new section using the `require` directive has been added. This directive tells Go which module you want, such as `github.com/spf13/cobra`, and the version of the module you added. Sometimes `require` directives will also include an `// indirect` comment. This comment says that, at the time the `require` directive was added, the module is not referenced directly in any of the module’s source files. A few additional `require` lines were also added to the file. These lines are other modules Cobra depends on that the Go tool determined should be referenced as well.
+增加了一个使用  `require`  指令的新部分。这个指令告诉 Go 你想要哪个模块，比如    `github.com/spf13/cobra`，以及你添加的模块的版本。有时 `require` 指令也会包括一个`//间接`注释。这个注释表示，在添加 `require` 指令时，该模块没有在该模块的任何源文件中被直接引用。文件中还增加了一些额外的 `require` 行。这些行是 Cobra 所依赖的其他模块，Go 工具认为这些模块也应该被引用。
 
-You may have also noticed a new file, `go.sum`, was created in the `mymodule` directory after running the `go run` command. This is another important file for Go modules and contains information used by Go to record specific hashes and versions of dependencies. This ensures consistency of the dependencies, even if they are installed on a different machine.
+你可能还注意到，在运行 `go run ` 命令后，在 `mymodule` 目录下创建了一个新的文件，`go.sum` 。这是 Go 模块的另一个重要文件，包含了 Go 用来记录依赖关系的具体哈希值和版本的信息。这确保了依赖关系的一致性，即使它们被安装在不同的机器上。
 
-Once you have the dependency downloaded you’ll want to update your `main.go` file with some minimal Cobra code to use the new dependency. Update your `main.go` file in the `mymodule` directory with the Cobra code below to use the new dependency:
+一旦你下载了依赖关系，你要用一些最小的 Cobra 代码更新你的 `main.go` 文件，以使用新的依赖关系。用下面的Cobra 代码更新 `mymodule` 目录下的 `main.go` 文件，以使用新的依赖性：
 
 projects/mymodule/main.go
 
@@ -308,15 +306,13 @@ func main() {
 }
 ```
 
-This code creates a `cobra.Command` structure with a `Run` function containing your existing “Hello” statements, which will then be executed with a call to `cmd.Execute()`. Now, run the updated code:
+这段代码创建了一个 `cobra.Command` 结构，其中的 `Run` 函数包含你现有的 "Hello" 语句，然后将通过调用 `cmd.Execute()` 来执行。现在，运行更新后的代码：
 
 ```
 go run main.go
 ```
 
-
-
-You’ll see the following output, which looks similar to what you saw before. This time, though, it’s using your new dependency as shown by the `Calling cmd.Execute()!` line:
+你会看到下面的输出，它看起来与你之前看到的相似。不过这一次，它使用了你的新的依赖关系，如 `Calling cmd.Execute()!` 一行所示：
 
 ```
 Output
@@ -325,37 +321,35 @@ Hello, Modules!
 Hello, Modules! This is mypackage speaking!
 ```
 
-Using `go get` to add the latest version of a remote dependency, such as `github.com/sp13/cobra` here, makes it easier to keep your dependencies updated with the latest bug fixes. However, sometimes there may be times where you’d rather use a specific version of a module, a repository tag, or a repository branch. In the next section, you’ll use `go get` to reference these versions when you’d like that option.
+使用 `go get` 来添加远程依赖的最新版本，例如这里的 `github.com/sp13/cobra` ，使你的依赖更容易保持最新的错误修复。然而，有时你可能更愿意使用一个特定版本的模块、一个版本库标签或一个版本库分支。在下一节中，你将使用 `go get` 来引用这些版本，当你想要这个选项时。
 
-## Using a Specific Version of a Module
+## 使用一个模块的特定版本
 
-Since Go modules are distributed from a version control repository, they can use version control features such as tags, branches, and even commits. You can reference these in your dependencies using the `@` symbol at the end of the module path along with the version you’d like to use. Earlier, when you installed the latest version of Cobra, you were taking advantage of this capability, but you didn’t need to add it explicitly to your command. The `go` tool knows that if a specific version isn’t provided using `@`, it should use the special version `latest`. The `latest` version isn’t actually in the repository, like `my-tag` or `my-branch` may be. It’s built into the `go` tool as a helper so you don’t need to search for the latest version yourself.
+由于 Go 模块是从版本控制库中发布的，它们可以使用版本控制功能，如标签、分支、甚至 commits 。你可以在你的依赖关系中使用`@`符号在模块路径的末尾加上你想使用的版本来引用这些。早些时候，当你安装最新版本的Cobra 时，你正在利用这种能力，但你不需要在命令中明确添加它。`go` 工具知道，如果没有用`@`提供特定的版本，它应该使用特殊的版本 `latest` 。`latest` 版本实际上并不在版本库中，就像 `my-tag` 或 `my-branch` 可能是一样。它作为一个辅助工具内置于  `go`  工具中，所以你不需要自己去搜索最新的版本。
 
-For example, when you added your dependency initially, you could have also used the following command for the same result:
+例如，当你最初添加你的依赖关系时，你也可以使用下面的命令获得同样的结果：
 
 ```
 go get github.com/spf13/cobra@latest
 ```
 
-Now, imagine there’s a module you use that’s currently in development. For this example, call it `your_domain/sammy/awesome`. There’s a new feature being added to this `awesome` module and work is being done in a branch called `new-feature`. To add this branch as a dependency of your own module you would provide `go get` with the module path, followed by the `@` symbol, followed by the name of the branch:
+现在，想象有一个你使用的模块，目前正在开发中。在这个例子中，称它为 `your_domain/sammy/awesome` 。这个 `awesome` 模块正在增加一个新的功能，工作在一个叫做 `new-feature` 的分支中进行。要把这个分支作为你自己的模块的依赖项，你可以向 `go get` 提供模块的路径，后面是`@`符号，再后面是分支的名称：
 
 ```
 go get your_domain/sammy/awesome@new-feature
 ```
 
-Running this command would cause `go` to connect to the `your_domain/sammy/awesome` repository, download the `new-feature` branch at the current latest commit for the branch, and add that information to the `go.mod` file.
+运行这个命令会使 `go` 连接到 `your_domain/sammy/awesome` 仓库，下载 `new-feature` 分支的当前最新提交，并将该信息添加到 `go.mod` 文件。
 
-Branches aren’t the only way you can use the `@` option, though. This syntax can be used for tags and even specific commits to the repository. For example, sometimes the latest version of the library you’re using may have a broken commit. In these cases, it can be useful to reference the commit just before the broken commit.
+不过，分支并不是唯一可以使用`@`选项的方式。这个语法可以用于标签，甚至是版本库的特定提交。例如，有时你正在使用的库的最新版本可能有一个坏的提交。在这种情况下，引用破损提交之前的提交可能会很有用。
 
-Using your module’s Cobra dependency as an example, suppose you need to reference commit `07445ea` of `github.com/spf13/cobra` because it has some changes you need and you can’t use another version for some reason. In this case, you can provide the commit hash after the `@` symbol the same as you would for a branch or a tag. Run the `go get` command in your `mymodule` directory with the module and version to download the new version:
+以你的模块所依赖的 Cobra 为例，假设你需要引用 `github.com/spf13/cobra` 的 `07445ea` 提交，因为它有一些你需要的修改，而你因为某些原因不能使用其他版本。在这种情况下，你可以在`@`符号后面提供提交哈希值，就像对分支或标签一样。在你的 `mymodule`目 录下运行`go get`命令，输入模块和版本来下载新版本：
 
 ```
 go get github.com/spf13/cobra@07445ea
 ```
 
-
-
-If you open your module’s `go.mod` file again you’ll see that `go get` has updated the `require` line for `github.com/spf13/cobra` to reference the commit you specified:
+如果你再次打开你模块的 `go.mod` 文件，你会看到 `go get` 已经更新了 `github.com/spf13/cobra` 的`require`行，引用你指定的提交：
 
 projects/mymodule/go.mod
 
@@ -371,17 +365,17 @@ require (
 )
 ```
 
-Since a commit is a particular point in time, unlike a tag or a branch, Go includes additional information in the `require` directive to ensure it’s using the correct version in the future. If you look closely at the version, you’ll see it does include the commit hash you provided: `v1.1.2-0.20210209210842-07445ea179fc`.
+由于提交是一个特定的时间点，与标签或分支不同，Go在 `require` 指令中包含了额外的信息，以确保它在未来使用正确的版本。如果你仔细看一下版本，你会发现它确实包括你提供的提交散列。`v1.1.2-0.20210209210842-07445ea179fc`.
 
-Go modules also use this functionality to support releasing different versions of the module. When a Go module releases a new version, a new tag is added to the repository with the version number as the tag. If you want to use a specific version, you can look at a list of tags in the repository to find the version you’re looking for. If you already know the version, you may not need to search through the tags because version tags are named consistently.
+Go 模块也使用这个功能来支持发布不同版本的模块。当 Go 模块发布新版本时，一个新的标签会被添加到版本库中，并以版本号作为标签。如果你想使用一个特定的版本，你可以查看版本库中的标签列表，找到你要找的版本。如果你已经知道版本，你可能不需要在标签中搜索，因为版本标签的命名是一致的。
 
-Returning to Cobra as an example, suppose you want to use Cobra version 1.1.1. You could look at the Cobra repository and see it has a tag named `v1.1.1`, among others. To use this tagged version, you would use the `@` symbol in a `go get` command, just as you would use a non-version tag or branch. Now, update your module to use Cobra 1.1.1 by running the `go get` command with `v1.1.1` as the version:
+再以 Cobra 为例，假设你想使用 Cobra 1.1.1 版本。你可以查看 Cobra 仓库，发现它有一个名为  `v1.1.1` 的标签，还有其他标签。要使用这个标记的版本，你可以在 `go get` 命令中使用 `@` 符号，就像你使用一个非版本标记或分支。现在，通过运行以 `v1.1.1` 为版本的 `go get` 命令，更新你的模块以使用 Cobra 1.1.1：
 
 ```
 go get github.com/spf13/cobra@v1.1.1
 ```
 
-Now if you open your module’s `go.mod` file, you’ll see `go get` has updated the `require` line for `github.com/spf13/cobra` to reference the version you provided:
+现在，如果你打开你的模块的 `go.mod` 文件，你会看到 `go get` 已经更新了  `github.com/spf13/cobra` 的`require` 行，引用你提供的版本：
 
 projects/mymodule/go.mod
 
@@ -397,17 +391,13 @@ require (
 )
 ```
 
-
-
-Finally, if you’re using a specific version of a library, such as the `07445ea` commit or `v1.1.1` from earlier, but you determine you’d rather start using the latest version, it’s possible to do this by using the special `latest` version. To update your module to the latest version of Cobra, run `go get` again with the module path and the `latest` version:
+最后，如果你正在使用一个特定版本的库，例如 `07445ea` 提交或早期的 `v1.1.1` ，但你确定你宁愿开始使用最新版本，可以通过使用特殊的 `latest` 版本来实现。要将你的模块更新到最新版本的 Cobra，请再次运行 `go get`，输入模块路径和 `latest` 版本：
 
 ```
 go get github.com/spf13/cobra@latest
 ```
 
-
-
-Once this command finishes, the `go.mod` file will update to look like it did before you referenced a specific version of Cobra. Depending on your version of Go and the current latest version of Cobra your output may look slightly different, but you should still see that the `github.com/spf13/cobra` line in the `require` section is updated to the latest version again:
+一旦这个命令完成，`go.mod` 文件将更新为你引用特定版本的 Cobra 之前的样子。根据你的 Go 版本和当前最新的Cobra 版本，你的输出可能会略有不同，但你仍然应该看到 `require` 部分的 `github.com/spf13/cobra` 行再次更新为最新版本：
 
 ```
 module mymodule
@@ -421,12 +411,12 @@ require (
 )
 ```
 
-The `go get` command is a powerful tool you can use to manage dependencies in your `go.mod` file without needing to edit it manually. As you saw in this section, using the `@` character with a module name allows you to use particular versions for a module, from release versions to specific repository commits. It can even be used to go back to the `latest` version of your dependencies. Using a combination of these options will allow you to ensure the stability of your programs in the future.
+`go get` 命令是一个强大的工具，你可以用它来管理 `go.mod` 文件中的依赖关系，而不需要手动编辑它。正如你在本节中看到的，在模块名称中使用 `@` 字符可以让你使用模块的特定版本，从发布版本到特定的版本库提交。它甚至可以用来回到你的依赖的 `latest` 版本。使用这些选项的组合将使你能够确保你的程序在未来的稳定性。
 
-## Conclusion
+## 总结
 
-In this tutorial, you created a Go module with a sub-package and used that package within your module. You also added another module to yours as a dependency and explored how to reference module versions in various ways.
+在本教程中，你创建了一个带有子包的 Go 模块，并在你的模块中使用该包。你还将另一个模块作为依赖关系添加到你的模块中，并探索了如何以各种方式引用模块版本。
 
-For more information on Go modules, the Go project has [a series of blog posts](https://blog.golang.org/using-go-modules) about how the Go tools interact with and understand modules. The Go project also has a very detailed and technical reference for Go modules in the [Go Modules Reference](https://golang.org/ref/mod).
+关于 Go 模块的更多信息，Go 项目有[一系列博文](https://blog.golang.org/using-go-modules)介绍 Go 工具如何与模块互动和理解模块。Go 项目还在 [Go模块参考](https://golang.org/ref/mod) 中为 Go 模块提供了非常详细的技术参考。
 
-This tutorial is also part of the [DigitalOcean](https://www.digitalocean.com/) [How to Code in Go](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go) series. The series covers a number of Go topics, from installing Go for the first time to how to use the language itself.
+本教程也是 [DigitalOcean](https://www.digitalocean.com/)[How to Code in Go](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go) 系列教程的一部分。该系列涵盖了许多 Go 主题，从首次安装 Go 到如何使用语言本身。
