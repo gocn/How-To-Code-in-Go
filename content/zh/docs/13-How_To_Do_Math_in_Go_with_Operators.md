@@ -6,7 +6,7 @@
 
 在编程中进行数学运算是一项重要的技能，因为你会经常与数字打交道。尽管对数学的理解肯定能帮助你成为一个更好的程序员，但它不是一个先决条件。如果你没有数学背景，试着把数学看作是完成你想实现的目标的工具，并作为提高你的逻辑思维能力的一种方式。
 
-我们将使用 Go 中最常用的两种数字[数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}})，整数和浮点数。
+我们将使用 Go 中最常用的两种数字[数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go)，整数和浮点数。
 
 * [整数](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%95%B4%E6%95%B0)是可以是正数、负数或 0 的整数（...，`-1`，`0`，`1`，...）。
 * [浮点数](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go/#%E6%B5%AE%E7%82%B9%E6%95%B0)是包含小数点的实数，如 `9.0` 或 `2.25` ...
@@ -442,4 +442,4 @@ y %= 3
 
 ## 总结
 
-本教程涵盖了许多你将在整数和浮点数数据类型中使用的运算符。你可以在[理解 Go 的数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}})和[如何在 Go 中转换数据类型]({{< relref "/docs/12-How_To_Convert_Data_Types_in_Go.md" >}})中了解更多关于不同的数据类型。
+本教程涵盖了许多你将在整数和浮点数数据类型中使用的运算符。你可以在[理解 Go 的数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go)和[如何在 Go 中转换数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/12-How_To_Convert_Data_Types_in_Go)中了解更多关于不同的数据类型。

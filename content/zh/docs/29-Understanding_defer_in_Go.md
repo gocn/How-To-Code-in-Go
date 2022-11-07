@@ -10,7 +10,7 @@ Go 有许多其他编程语言中常见的控制流关键字，如 `if`、`switc
 
 ## 什么是 `defer` 语句
 
-`defer` 语句将 `defer` 关键字后面的[函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}})调用添加到一个栈中。当该语句所在的函数返回时，将执行堆栈中所有的函数调用。由于这些调用位于堆栈上，因此将按照后进先出的顺序进行调用。
+`defer` 语句将 `defer` 关键字后面的[函数](https://gocn.github.io/How-To-Code-in-Go/docs/27-How_To_Define_and_Call_Functions_in_Go)调用添加到一个栈中。当该语句所在的函数返回时，将执行堆栈中所有的函数调用。由于这些调用位于堆栈上，因此将按照后进先出的顺序进行调用。
 
 让我们看看 `defer` 是如何工作的，打印出一些文本：
 

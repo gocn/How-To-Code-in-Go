@@ -10,7 +10,7 @@
 
 使用 flag 包包括三个步骤：首先，定义变量以捕获标志值，然后定义你的 Go 应用程序将使用的标志，最后解析执行时提供给应用程序的标志。`flag`包内的大多数函数都与定义标志和将它们与你定义的变量绑定有关。解析阶段由`Parse()`函数处理。
 
-为了阐述这一点，你将创建一个程序，定义一个 [Boolean]({{< relref "/docs/14-Understanding_Boolean_Logic_in_Go.md" >}})标志，改变这个标志将会把信息打印到标准输出上。如果提供一个`-color`标志，程序会用蓝色来打印消息。如果没有这个标志，则打印消息不会有颜色。
+为了阐述这一点，你将创建一个程序，定义一个 [Boolean](https://gocn.github.io/How-To-Code-in-Go/docs/14-Understanding_Boolean_Logic_in_Go)标志，改变这个标志将会把信息打印到标准输出上。如果提供一个`-color`标志，程序会用蓝色来打印消息。如果没有这个标志，则打印消息不会有颜色。
 
 创建一个叫`boolean.go`的文件：
 
@@ -59,7 +59,7 @@ func main() {
 
 在`main`中，我们使用`flag.Bool`函数来定义一个名为`color`的 Boolean 标志。这个函数的第二个参数，`false`，在没有提供这个标志的情况下，设置这个标志的默认值。与你可能有的期望相反，将其设置为`true`并不会颠倒行为，如提供一个标志会导致它变成 false。因此，这个参数的值在布尔标志下几乎总是`false`。
 
-最后一个参数是一个可以作为使用信息打印出来的文档 string。从这个函数返回的值是一个指向`bool`的指针。下一行的`flag.Parse`函数使用这个指针，然后根据用户传入的标志，设置`bool`变量。 然后我们就可以通过取消引用这个指针来检查这个`bool`指针的值。更多关于指针变量的信息可以在[指针教程]({{< relref "/docs/32-Understanding_Pointers_in_Go.md" >}})找到。使用这个 Boolean，我们就可以在设置`-color`标志时调用`colorize`，而在没有这个标志时调用`fmt.Println`变量。
+最后一个参数是一个可以作为使用信息打印出来的文档 string。从这个函数返回的值是一个指向`bool`的指针。下一行的`flag.Parse`函数使用这个指针，然后根据用户传入的标志，设置`bool`变量。 然后我们就可以通过取消引用这个指针来检查这个`bool`指针的值。更多关于指针变量的信息可以在[指针教程](https://gocn.github.io/How-To-Code-in-Go/docs/32-Understanding_Pointers_in_Go)找到。使用这个 Boolean，我们就可以在设置`-color`标志时调用`colorize`，而在没有这个标志时调用`fmt.Println`变量。
 
 保存文件，并在未传入没有任何标志的情况下运行该程序：
 
@@ -139,11 +139,11 @@ func main() {
 }
 ```
 
-首先，我们定义了一个`count`变量，用来保存程序应该从文件中读取的行数。然后，我们使用`flag.IntVar`定义`-n`标志，模拟原始`head`程序的行为。 这个函数允许我们将自己的[pointer]({{< relref "/docs/32-Understanding_Pointers_in_Go.md" >}})传递给一个变量，与没有`Var`后缀的标志函数相反。除了这个区别之外，`flag.IntVar`的其他参数与`flag.Int`对应的参数相同：标志名称、默认值和描述。 和前面的例子一样，我们随后调用`flag.Parse()`来处理用户的输入。
+首先，我们定义了一个`count`变量，用来保存程序应该从文件中读取的行数。然后，我们使用`flag.IntVar`定义`-n`标志，模拟原始`head`程序的行为。 这个函数允许我们将自己的[pointer](https://gocn.github.io/How-To-Code-in-Go/docs/32-Understanding_Pointers_in_Go)传递给一个变量，与没有`Var`后缀的标志函数相反。除了这个区别之外，`flag.IntVar`的其他参数与`flag.Int`对应的参数相同：标志名称、默认值和描述。 和前面的例子一样，我们随后调用`flag.Parse()`来处理用户的输入。
 
 下一节读取文件。我们首先定义一个`io.Reader`变量，该变量将被设置为用户请求的文件，或传递给程序的标准输入。在`if`语句中，我们使用`flag.Arg`函数来访问所有标志之后的第一个位置参数。如果用户提供了文件名，这个位置参数会被设置。否则，它将为空 string(`""`)。当文件名提供时，我们使用`os.Open`函数来打开该文件，并将我们之前定义的`io.Reader`设置为该文件。否则，我们使用`os.stdin`来读取标准输入。
 
-最后一节使用一个用`bufio.NewScanner`创建的`*bufio.Scanner`从`io.Reader`变量`in`中读取行数据。我们使用[`for`loop]({{< relref "/docs/25-How_To_Construct_For_Loops_in_Go.md" >}})遍历到 count 的值，如果用`buf.Scan`扫描该行结果为`false`，则调用`break`，表示行数少于用户要求的数量。
+最后一节使用一个用`bufio.NewScanner`创建的`*bufio.Scanner`从`io.Reader`变量`in`中读取行数据。我们使用[`for`loop](https://gocn.github.io/How-To-Code-in-Go/docs/25-How_To_Construct_For_Loops_in_Go)遍历到 count 的值，如果用`buf.Scan`扫描该行结果为`false`，则调用`break`，表示行数少于用户要求的数量。
 
 运行这个程序，用`head.go`作为文件参数，显示你刚才写的文件的内容：
 
@@ -274,9 +274,9 @@ func main() {
 }
 ```
 
-这个程序分为几个部分：`main`函数，`root`函数，以及实现子命令的各个函数。`main`函数处理从命令返回的错误。如果任何函数返回[错误]({{< relref "/docs/17-Handling_Errors_in_Go_DigitalOcean.md" >}})，`if`语句将捕捉到它，打印出错误，程序将以`1`的状态码退出，向操作系统的其他部分表明发生了错误。在`main`中，我们将程序被调用的所有参数传递给`root`。我们通过先将`os.Args`切片来删除第一个参数，也就是程序的名称（在前面的例子中是`./subcommand`）。
+这个程序分为几个部分：`main`函数，`root`函数，以及实现子命令的各个函数。`main`函数处理从命令返回的错误。如果任何函数返回[错误](https://gocn.github.io/How-To-Code-in-Go/docs/17-Handling_Errors_in_Go_DigitalOcean)，`if`语句将捕捉到它，打印出错误，程序将以`1`的状态码退出，向操作系统的其他部分表明发生了错误。在`main`中，我们将程序被调用的所有参数传递给`root`。我们通过先将`os.Args`切片来删除第一个参数，也就是程序的名称（在前面的例子中是`./subcommand`）。
 
-`root`函数定义了`[]Runner`，所有的子命令都会在这里定义。`Runner`是一个子命令的 [interface]({{< relref "/docs/37-How_To_Use_Interfaces_in_Go.md" >}}) ，允许`root`使用`Name()`获取子命令的名称，并将其与变量`subcommand`内容进行比较。一旦在遍历`cmds`变量后找到了正确的子命令，我们就用其余的参数初始化子命令，并调用该命令的`Run()`方法。
+`root`函数定义了`[]Runner`，所有的子命令都会在这里定义。`Runner`是一个子命令的 [interface](https://gocn.github.io/How-To-Code-in-Go/docs/37-How_To_Use_Interfaces_in_Go) ，允许`root`使用`Name()`获取子命令的名称，并将其与变量`subcommand`内容进行比较。一旦在遍历`cmds`变量后找到了正确的子命令，我们就用其余的参数初始化子命令，并调用该命令的`Run()`方法。
 
 我们只定义了一个子命令，尽管这个框架很容易让我们创建其他子命令。`GreetCommand`是使用`NewGreetCommand`实例化的，在这里我们使用`flag.NewFlagSet`创建一个新的`*flag.FlagSet`。`flag.NewFlagSet`需要两个参数：一个标志集的名称，和一个报告解析错误的策略。用`flag.(*FlagSet).Name`方法获取`*flag.FlagSet`的名称。我们在`(*GreetCommand).Name()`方法中使用这个方法，所以子命令的名字与我们给`*flag.FlagSet`的名字一致。 `NewGreetCommand`也用了类似于以前的例子的方式定义了一个`-name`标志，但它改为从`*GreetCommand`的`*flag.FlagSet`字段中调用这个方法，`gc.fs`。当`root`调用`*GreetCommand`的`Init()`方法时，我们将传入的参数传递给`*flag.FlagSet`字段的`Parse`方法。
 

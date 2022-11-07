@@ -5,12 +5,12 @@
 本教程将指导你如何编写 Go 包，以便在其他编程文件中使用。
 ## 前提条件
 
-- 按照[如何安装和设置 Go 的本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})系列教程中的一个教程设置 Go 编程环境。按照本地编程环境教程中的步骤5创建你的 Go 工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。
-- 为了加深你对 GOPATH 的了解，请阅读文章[了解 GOPATH]({{< relref "/docs/05-Understanding_the_GOPATH.md" >}})。
+- 按照[如何安装和设置 Go 的本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean)系列教程中的一个教程设置 Go 编程环境。按照本地编程环境教程中的步骤5创建你的 Go 工作区。要遵循本文的例子和命名规则，请阅读第一节「编写和导入软件包」。
+- 为了加深你对 GOPATH 的了解，请阅读文章[了解 GOPATH](https://gocn.github.io/How-To-Code-in-Go/docs/05-Understanding_the_GOPATH)。
 
 ## 编写和导入软件包
 
-编写包就像编写任何其他 Go 文件一样，包可以包含函数、[类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}})和[变量](https://gocn.github.io/How-To-Code-in-Go/docs/11-How_To_Use_Variables_and_Constants_in_Go/#%E7%90%86%E8%A7%A3%E5%8F%98%E9%87%8F)的定义，然后可以在其他 Go 程序中使用。
+编写包就像编写任何其他 Go 文件一样，包可以包含函数、[类型](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go)和[变量](https://gocn.github.io/How-To-Code-in-Go/docs/11-How_To_Use_Variables_and_Constants_in_Go/#%E7%90%86%E8%A7%A3%E5%8F%98%E9%87%8F)的定义，然后可以在其他 Go 程序中使用。
 
 在我们创建一个新的包之前，我们需要进入我们的 Go 工作区。这通常是在我们的`gopath`下。对于这个例子，本教程中我们将把包称为`greet`。为了做到这一点，在我们的项目空间下的`gopath`中创建了一个名为`greet`的目录。当使用 Github 作为代码库，组织名称为`gopherguides`，想在此组织下创建`greet`包，那么我们的目录会是这样的：
 

@@ -1,46 +1,46 @@
-# How To Use Dates and Times in Go
+# 如何在 Go 中使用日期和时间
 
-## Introduction
+## 介绍
 
-Software is designed to make it easier to get work done, and for many people, that includes interacting with dates and times. Date and time values show up everywhere in modern software. For example, keeping track of when a car needs service and letting the owner know, keeping track of changes in a database to create an audit log, or just comparing one time to another to determine how long a process took. Therefore, retrieving the current time, manipulating time values to extract information from them, and displaying them to users in an easy-to-understand format are essential properties of an application.
+软件旨在使完成工作更容易，对许多人来说，这包括与日期和时间的交互。日期和时间在现代软件中随处可见。例如，跟踪汽车何时需要维修并让车主知道，跟踪数据库的变化以创建审计日志，或者只是将一个时间与另一个时间相比较以确定一个过程花了多长时间。因此，检索当前时间，操作时间值以从中提取信息，并以易于理解的格式显示给用户，是对一个应用程序最基本的要求之一。
 
-In this tutorial, you will create a Go program to get the current local time of your computer, then print it to the screen in a format that is easier for people to read. Next, you will interpret a string to extract the date and time information. You will also translate the date and time values between two time zones, as well as add or subtract time values to determine the interval between two times.
+在本教程中，你将创建一个 Go 程序来获取你的计算机的当前本地时间，然后以一种更容易让人阅读的格式将其打印到屏幕。接下来，你将从字符串中提取日期和时间信息。你还将转换两个时区之间的日期和时间值，以及加减时间值以确定两个时间之间的间隔。
 
-## Prerequisites
+## 先决条件
 
-To follow this tutorial, you will need:
+在阅读本教程前，你需要：
 
--   Go version 1.16 or greater installed. To set this up, follow the [How To Install Go](https://www.digitalocean.com/community/tutorials/how-to-install-go-on-ubuntu-20-04) tutorial for your operating system.
+-   Go 版本 >= 1.16。你可以按照 [如何安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean) 来安装 Go。
 
-## Getting the Current Time
+## 获取当前时间
 
-In this section, you will get the current time using Go’s `time` package. The `time` package in Go’s standard library provides a variety of date- and time-related functions, and can be used to represent a specific point in time using the `time.Time` type. In addition to a time and date, it can also hold information about the time zone the represented date and time are in.
+在本节中，你将使用 Go 的 `time` 包获得当前时间。Go 标准库中的 `time` 包提供了各种与日期和时间有关的函数，并且可以使用 `time.Time` 类型来表示一个特定的时间点。除了时间和日期之外，它还可以保存时区信息。
 
-To begin creating a program to explore the `time` package, you’ll need to create a directory for the files. This directory can be created anywhere you’d like on your computer, but many developers tend to have a directory for their projects. In this tutorial, you’ll use a directory named `projects`.
+在开始创建一个程序来探索 `time` 包前，你需要创建一个目录。这个目录可以在你的计算机上的任何地方创建，但许多开发者倾向于为他们的项目专门建立一个目录。在本教程中，你将使用一个名为 `projects` 的目录。
 
-Make the `projects` directory and navigate to it:
+创建 `projects` 目录并切换至此目录：
 
 ```shell
 mkdir projects
 cd projects
 ```
 
-From the `projects` directory, run `mkdir` to create a `datetime` directory and then use `cd` to navigate to it:
+在 `projects` 目录下，使用 `mkdir` 来创建一个 `datetime` 目录，然后使用 `cd` 命令进入此目录：
 
 ```shell
 mkdir datetime
 cd datetime
 ```
 
-Once you have your project directory created, open a `main.go` file using `nano`, or your preferred editor:
+完成目录创建操作后，使用 `nano` 或你喜欢的文本编辑器创建一个名为 `main.go` 的文件：
 
 ```shell
 nano main.go
 ```
 
-In the `main.go` file, add a `main` function that will get the current time and print it out:
+在 `main.go` 文件中，添加一个 `main` 函数以获取当前时间并打印出来：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 package main
@@ -56,31 +56,32 @@ func main() {
 }
 ```
 
-In this program, the `time.Now` function from the `time` package is used to get the current local time as a `time.Time` value, and then stores it in the `currentTime` variable. Once it’s stored in the variable, the `fmt.Println` function prints `currentTime` to the screen using `time.Time`’s default string output format.
+在这个程序中， `time` 包中的 `time.Now` 函数被用来获取当前本地时间作为 `time.Time` 值，然后将其存储在 `currentTime` 变量中。接着，`fmt.Println` 函数以 `time.Time` 类型的默认字符串输出格式把 `currentTime` 打印到屏幕上。
 
-Run the program using `go run` with the `main.go` file:
+使用 `go run` 命令，以 `main.go` 为参数，运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output showing your current date and time will look similar to this:
+这将会输出你当前的日期和时间，看起来类似于这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT m=+0.000066626
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT m=+0.000066626
 ```
 
-The output will show your current date and time, which will differ from the example. Additionally, the time zone you see (`-0500 CDT` in this output) will likely be different, since `time.Now()` returns the time in the local time zone.
+输出将显示你当前的日期和时间，显示会与例子不同。此外，你看到的时区（本输出中的 `0500 CDT`）也可能会不同，因为 `time.Now()` 返回的是本地时区的时间。
 
-You may also notice an `m=` value in your output. This value is the [_monotonic clock_](https://pkg.go.dev/time#hdr-Monotonic_Clocks), and is used internally by Go when measuring differences in time. The monotonic clock is designed to compensate for any potential changes to the date and time of a computer’s system clock while a program is running. By using the monotonic clock, a `time.Now` value compared to a `time.Now` value five minutes later will still end up with the correct result (a five-minute interval), even if the system clock for the computer is changed an hour forward or backward during that five-minute interval. You don’t need to understand it thoroughly for the code or examples in this tutorial, but if you’d like to learn more about monotonic clocks and how Go uses them, the [Monotonic Clocks](https://pkg.go.dev/time#hdr-Monotonic_Clocks) section in the `time` package documentation provides additional details.
+你可能还注意到输出中的 `m=` 值。这个值是 [_单调时钟（monotonic clock）_](https://pkg.go.dev/time#hdr-Monotonic_Clocks)，被 Go 用来在内部计算时间差时使用。单调时钟的设计是为了保证程序运行时计算机系统时钟的日期和时间发生了任何潜在变化时，时间计算仍能正常运行。通过使用单调时钟，一个 `time.Now` 值与五分钟后的 `time.Now` 值相比，即使计算机的系统时钟在这五分钟的间隔内向前或向后改变了一个小时，最终仍会得出正确的结果（五分钟的间隔）。对于本教程中的代码或例子，你不需要彻底了解它，但如果你想了解更多关于单调时钟以及 Go 如何使用它们，`time` 包文档中的 [单调时钟](https://pkg.go.dev/time#hdr-Monotonic_Clocks) 部分提供了更多细节。
 
-Now, while you do have the current time displayed, it might not be useful for users. It may not be the format you’re looking for, or it may include more parts of the date or time than you want to display.
+现在，虽然你确实显示了当前时间，但它对用户来说可能并不实用。它可能不是你期望的格式，或者它可能包含了比你想显示的更多的日期或时间部分。
 
-Fortunately, the `time.Time` type includes various methods to get specific parts of the date or time you want. For example, if you only wanted to know the year portion of the `currentTime` variable, you could use the `Year` method, or get the current hour using the `Hour` method.
+幸运的是，`time.Time` 类型有着各种方法来获得你想要的日期或时间的特定部分。例如，如果你只想知道 `currentTime` 变量的年份部分，你可以使用 `Year` 方法，或者使用 `Hour` 方法获得当前小时。
 
-Open your `main.go` file again and add a few of the `time.Time` methods to your output to see what they produce:
+再次打开 `main.go` 文件，在输出中添加一些 `time.Time` 的方法，看看发生了什么：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -98,16 +99,17 @@ func main() {
 }
 ```
 
-Next, run your program again using `go run`:
+现在，使用 `go run` 再次运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT m=+0.000066626
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT m=+0.000066626
 The year is 2021
 The month is August
 The day is 15
@@ -116,11 +118,11 @@ The minute is 14
 The second is 45
 ```
 
-Like the previous output, your current date and time will be different from the example, but the format should be similar. This time in the output, you’ll see the full date and time printed as it was before, but you also have a list of the year, month, day of the month, hour, minute, and second. Note that instead of the month printing as a number (like it does in the full date), it appears as the English string `August`. This is because the `Month` method returns the month as a `time.Month` type instead of just a number, and that type is designed to print out the full English name when it’s printed as a `string`.
+和前面的输出一样，你看到的输出中的日期和时间会和例子中的不同，但格式应该是相似的。在这次在输出中，你不但能看到完整的日期和时间被打印出来，就像以前一样，也能看到年、月、日、时、分、秒被分别打印出来。请注意，月份不是以数字的形式出现（就像在完整日期中那样），而是以英文字符串 `August` 的形式出现。这是因为 `Month` 方法将月份作为 `time.Month` 类型返回，而不仅仅是一个数字。同时，该类型被设计为，在以 `string` 的格式打印时输出完整的英文名称。
 
-Now, update the `main.go` file in your program again and replace the various function outputs with a single function call to `fmt.Printf`, so you can print the current date and time in a format that’s closer to what you may want to display to a user:
+现在，再次更新程序中的 `main.go` 文件，使用 `fmt.Printf` 函数来格式化各种函数输出，这样你就可以用更接近你可能想要显示给用户的格式来打印当前日期和时间：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -139,32 +141,33 @@ func main() {
 }
 ```
 
-Once you’ve saved your updates to the `main.go` file, run it using the `go run` command as you did before:
+保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT m=+0.000066626
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT m=+0.000066626
 2021-8-15 14:14:45
 ```
 
-This time your output may be much closer to what you’d like, but there are still a few things that could be tweaked about the output. The month is now showing up in number format again, because the `fmt.Printf` format used `%d` to tell the `time.Month` type it should use a number and not a `string`, but it’s only showing up as a single digit. If you want to display two digits, you could change the `fmt.Printf` format to say that, but what if you also wanted to show a 12-hour time instead of a 24-hour time as shown in the output above? Using the `fmt.Printf` method, you would have to do your own math to calculate it. Printing dates and times using `fmt.Printf` is possible, but as you can see, it can eventually become cumbersome. Doing it this way, you could either end up with a large number of lines for each part you want to display, or you’d need to do a number of your own calculations to determine what to display.
+这次的输出可能更接近于你想要的，但仍有一些可以调整的地方。月份现在又显示为数字格式了，因为 `fmt.Printf` 使用 `%d` 来告诉 `time.Month` 类型应该作为数字格式渲染而不是 `string`。但它只显示了一位数的月份，如果你想显示两位数，你可以改变 `fmt.Printf` 的格式化控制字符。但如果你还想显示12小时的时间而不是上面输出中显示的24小时的时间呢？使用 `fmt.Printf` 方法，你将不得不自己做数学运算。使用 `fmt.Printf` 打印日期和时间是可行的，但正如你所看到的，它最终会变得很麻烦。这样做，你可能需要为每个时间字段都要写大量的显示控制代码，甚至需要额外做一些数学运算。
 
-In this section, you created a new program to get the current time using `time.Now`. Once you had the current time, you then used various functions, such as `Year` and `Hour` on the `time.Time` type to print out information about the current time. It did start to become a lot of work to display it in a custom format, though. To make this type of common work easier, many programming languages, Go included, provide a special way to format dates and times, similar to how `fmt.Printf` can be used to format a string.
+在本节中，你创建了一个新的程序，使用 `time.Now` 获得当前时间。一旦你得到了当前时间，就可以使用各种函数，如 `time.Time` 类型上的 `Year` 和 `Hour` 函数来打印出关于当前时间的信息。不过，以自定义的格式来显示确实很麻烦。为了使这种对时间的基本操作变得更容易，许多编程语言，包括 Go，都提供了一种特殊的方式来格式化日期和时间，类似于 `fmt.Printf` 可以用来格式化字符串。
 
-## Printing and Formatting Specific Dates
+## 打印和格式化特定日期
 
-In addition to the `Year`, `Hour`, and other data-related methods the `time.Time` type provides, it also provides a method called `Format`. The `Format` method allows you to provide a layout `string`, similar to how you would provide `fmt.Printf` or `fmt.Sprintf` a format, that will tell the `Format` method how you’d like the date and time printed out. In this section, you will replicate the time output you added in the last section, but in a much more concise manner using the `Format` method.
+除了 `time.Time` 类型提供的 `Year`、`Hour` 和其他与数据相关的方法外，它还提供了一个叫做 `Format` 的方法。`Format` 方法允许你提供一个格式化字符串，类似于你提供给 `fmt.Printf` 或 `fmt.Sprintf` 的格式那样，这将告诉  `Format` 方法你希望以什么样的格式打印出日期和时间。在本节中，你将复制在上一节中添加的时间输出，但使用 `Format` 方法来控制输出格式要简洁得多。
 
-Before you use the `Format` method, though, it will be easier to see how `Format` affects the output of a date and time if it’s not changing every time you run the program. Up until now, you were getting the current time using `time.Now`, so each time you ran it a different number would show up. The Go `time` package provides another useful function, the `time.Date` function, which will allow you to specify a specific date and time for the `time.Time` to represent.
+在你使用 `Format` 方法之前，如果每次运行程序时 `Format` 不发生变化，就能更容易看到 `Format` 如何影响日期和时间的输出。到目前为止，你是用 `time.Now` 来获得当前时间的，所以每次运行都会显示不同的数字。Go的 `time` 包提供了另一个有用的函数，`time.Date` 函数，它允许你指定一个特定的日期和时间让 `time.Time` 来表示。
 
-To begin using `time.Date` instead of `time.Now` in your program, open the `main.go` file again and update it to replace `time.Now` with `time.Date`:
+为了使用 `time.Date` 而不是 `time.Now` 来获取时间，请再次打开 `main.go` 文件并更新它：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -175,33 +178,34 @@ func main() {
 }
 ```
 
-The parameters to the `time.Date` function include the year, month, day of the month, hour, minute, and second of the date and time you want a `time.Time` for. The first of the last two parameters accounts for nanoseconds, and the last parameter is the time zone to create the time for. Using time zones themselves are covered later in this tutorial.
+`time.Date` 函数的参数包括你想要的 `time.Time` 的日期和时间的年、月、日、时、分、秒。最后两个参数中的第一个是纳秒，最后一个参数是要创建的时间的时区。本教程将在后面介绍和使用时区。
 
-After saving your updates, run your program using `go run`:
+保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT
 ```
 
-The output you see should now be much closer to the output above because you’re using a specific local date and time instead of the current one when you run the program. (Depending on the time zone your computer is set to, the time zone may show up differently, though.) The output format still looks similar to what you saw before because it’s still using the default `time.Time` format. Now that you have a standard date and time to work with, you can use it to start tweaking how the time is formatted when displayed using the `Format` method.
+现在你看到的输出应该更接近上面的输出，因为你之前在运行程序时使用的是一个特定的本地日期和时间，而不是当前的日期和时间。(根据你计算机设置的时区的不同，时区可能会显示得不同）。输出格式看起来仍然与你之前看到的相似，因为它仍然使用默认的 `time.Time` 格式。现在你可以使用一个固定的日期和时间，并基于它在使用 `Format` 方法格式化时间时，来调整时间的显示格式。
 
-### Customizing Date Strings Using the `Format` Method
+### 使用 `Format` 方法来自定义日期字符串
 
-Many other programming languages include a similar way to format dates and times to be displayed, but the way Go constructs the layout of those formats may be slightly different than what you’re used to if you’ve used them in other languages. In other languages, the date formatting uses a style similar to how `Printf` works in Go, with a `%` character followed by a letter representing the part of the date or time to insert. For example, a 4-digit year might be represented by `%Y`. In Go, though, these parts of a date or time are represented by characters that represent a specific date. To include a 4-digit year in a Go date format, you would actually include `2006` in the string itself. The benefit of this type of layout is that what you see in the code actually represents what you’ll see in the output. When you’re able to see a representation of your output, it makes it easier to double-check that your format matches what you’re looking for, and also makes it easier for other developers to understand the output of a program without running the program first.
+许多其他编程语言有类似的方式来格式化日期和时间的显示，但如果你在其他语言中使用过这些格式，Go 的日期格式化方式可能与你习惯的方式略有不同。在其他语言中，日期格式化使用类似于 `Printf` 在 Go 中的格式化方式，在 `%` 字符后面有一个字母，代表要插入的日期或时间的部分。例如，一个4位数的年份可以用 `%Y` 表示。但在 Go 中，日期或时间的特定部分是由代表特定日期的字符来表示的。要在 Go 的日期格式中包含一个4位数的年份，你要在字符串本身中包含 `2006`。这种布局的好处是，你在代码中看到的东西真实代表了你将在输出中看到的东西。当你能够看到你的输出格式化字符串时，你也能更容易仔细检查你的格式是否符合你所期望的，也使其他开发者更容易理解程序的输出，而不需要先运行程序。
 
-The specific date Go uses for date and time layouts in string formatting is `01/02 03:04:05PM '06 -0700`. If you look at each component of the date and time, you’ll see that they increase by one for each part. The month comes first at `01`, followed by the day of the month at `02`, then the hour at `03`, the minute at `04`, the second at `05`, the year at `06` (or `2006`) and, finally, the time zone at `07`. Remembering this order will make it easier to create date and time formats in the future. Examples of the options available for formatting can also be found in Go’s [documentation of the `time` package](https://pkg.go.dev/time#pkg-constants).
+Go 在字符串格式化中用于日期和时间布局的具体日期是 `01/02 03:04:05PM '06 -0700`。如果你看一下日期和时间的每个组成部分，你会发现每一部分都会加一。月 `01`、日 `02` 、时 `03`、分 `04`、秒 `05`、年 `06`（或`2006`），时区 `07`。记住这个顺序将使今后创建日期和时间格式更加容易。在 Go 的 [`time`包的文档](https://pkg.go.dev/time#pkg-constants) 中也可以找到格式化选项的详细例子。
 
-Now, use this new `Format` method to replicate and clean up the date format you printed in the last section. It required several lines and function calls to display, and using the `Format` method should make it much easier and cleaner to duplicate.
+现在，使用这个新的 `Format` 方法来复制和清理你在上一节打印的日期格式。它需要几行函数调用来显示，使用 `Format` 方法应该可以使它更容易、简明地复制。
 
-Open the `main.go` file and add a new `fmt.Println` call and pass it `theTime` with a date formatted using the `Format` method:
+打开 `main.go` 文件，使用 `Format` 方法格式化 `theTime` 这个日期，并用 `fmt.Println` 来输出格式化的结果：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -214,26 +218,27 @@ func main() {
 }
 ```
 
-If you look at the layout being used for the format, you’ll see it’s using the same time from above to specify how the date and time should be formatted (January 2, 2006). One thing to notice is that the hour uses `15` instead of `03` like the previous example. This shows that you’d like the hour displayed in 24-hour format instead of 12-hour format.
+如果你看一下正在使用的格式布局，你会发现它使用了和上面相同的时间来指定日期和时间的格式（2006年1月2日）。有一点需要注意的是，小时使用的是 `15`，而不是像前面的例子中的 `03`。这表明你希望以24小时格式而不是12小时格式显示小时。
 
-To see the output from this new format, save your program and run it using `go run`:
+保存程序并使用 `go run` 运行，以看看新的格式化方式的输出：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT
 2021-8-15 14:30:45
 ```
 
-The output you see now will be similar to the output from the end of the last section, but it was much simpler to accomplish. All you needed to include was a single line of code and a layout string. The `Format` function does the rest for you.
+你现在看到的输出将类似于上一节末尾的输出，但它的代码实现要简单得多。你只要写一行代码和一个布局字符串，`Format` 函数为你完成了剩下的工作。
 
-Depending on the date or time you’re displaying, using a variable-length format like the one you ended up with when printing out numbers directly can potentially be hard to read for yourself, your users, or other code trying to read the value. Using `1` for the month format would result in March being displayed as `3`, while October would use two characters and show up as `10`. Now, open `main.go` and add an additional line to your program with another, more structured layout. In this layout, include a `0` prefix on the components and update the hour to use a 12-hour format:
+取决于你要显示的日期或时间，使用变长格式打印数字（就像上一段程序那样），有可能对你自己、你的用户或其他试图读取数值的代码造成困难。使用 `1` 作为月份格式会导致三月显示为 `3` ，而十月会占用两个字符，显示为 `10` 。现在，打开 `main.go`，在你的程序中添加一行，加入另一个更加结构化的布局。在这个布局中，在组件上包括一个 `0` 前缀，并更新小时，使用12小时格式：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -247,35 +252,36 @@ func main() {
 }
 ```
 
-After saving your code, run the program again using `go run`:
+保存并运行：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT
 2021-8-15 14:30:45
 2021-08-15 02:30:45 pm
 ```
 
-You’ll see that by adding a `0` prefix to the numbers in the layout string, the `8` for the month in the new output becomes `08` to match the layout. The hour, which is now in the 12-hour format, also has its own `0` prefix. In the end, though, what you end up seeing in the output mirrors the format you see in the code, so it’s easier to tweak the format if you need to.
+你会看到，通过给布局字符串中的数字添加 `0` 前缀，新的输出中的月份的 `8` 变成了 `08` 以匹配布局。小时，现在是12小时的格式，也有自己的 `0` 前缀。不过，最终你在输出中看到的东西反映了你在代码中看到的格式，所以如果你需要，很容易调整格式化布局字符串。
 
-Many times, formatted dates are intended to be interpreted by other programs, and it can become a burden to re-create those formats every time you want to use them. In some cases, you can use a pre-defined format.
+很多时候，格式化的日期是要被其他程序读取并解析的，每次你想使用它们时，重新创建这些格式会成为一种负担。在某些情况下，你可以使用一个预定义的格式。
 
-### Using a Pre-Defined Format
+### 使用预定义格式
 
-There are many commonly used date formats, such as timestamps for log messages, and re-creating those every time you want to use them could end up being a hassle. For some of these cases, the `time` package includes pre-defined formats you can use.
+有许多常用的日期格式，如日志信息的时间戳，每次你想使用它们时，重新创建这些格式可能会麻烦。对于其中的一些情况，`time` 包涵盖了你可以使用的预定义格式。
 
-One of the formats available and used often is the one defined in [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339). An _[RFC](https://en.wikipedia.org/wiki/Request_for_Comments)_ is a document used to define how standards on the internet work, and other RFCs can then build upon each other. There is an RFC that defines how HTTP works ([RFC 2616](https://datatracker.ietf.org/doc/html/rfc2616)), for example, and others that build on top of that to further define HTTP. So, in the case of RFC 3339, the RFC defines a standard format to use for timestamps on the internet. The format is well-known and well-supported around the internet, so chances of seeing it elsewhere are high.
+其中一个常用的格式由 [RFC 3339](https://datatracker.ietf.org/doc/html/rfc3339) 定义。[_RFC_](https://en.wikipedia.org/wiki/Request_for_Comments) 是一份用来定义互联网上的标准如何工作的文件，然后其他 RFC 可以在此基础上发展。例如，有一个 RFC 定义了 HTTP 的工作方式（[RFC 2616](https://datatracker.ietf.org/doc/html/rfc2616)），而其他 RFC 则在此基础上进一步定义 HTTP。因此，就 RFC 3339 而言，该 RFC 定义了一种用于互联网上的时间戳的标准格式。这种格式在互联网上是众所周知的，并且得到了广泛的支持，所以能在很多地方看到它。
 
-Each of the pre-defined time formats in the `time` package are represented by a `const string` named after the format they represent. The RFC 3339 format happens to have two formats available, one called `time.RFC3339` and another called `time.RFC3339Nano`. The difference between the formats is that the `time.RFC3339Nano` version includes nanoseconds in the format.
+在 `time` 包中的每个预定义的时间格式都由一个 `const string` 表示，并以它们所代表的格式命名。RFC3339 刚好有两种格式，一种叫做 `time.RFC3339`，另一种叫做 `time.RFC3339Nano` 。这两种格式的区别在于，`time.RFC3339Nano` 版本的格式中包括纳秒。
 
-Now, open your `main.go` file again and update your program to use the `time.RFC3339Nano` format for its output:
+打开 `main.go` 文件，更新程序，使其使用 `time.RFC3339Nano` 格式输出时间：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -288,32 +294,33 @@ func main() {
 }
 ```
 
-Since the pre-defined formats are `string` values with the desired format, you just need to replace the format you’d usually use with one of them.
+由于预定义的格式是所期望的时间格式的 `string` 值，所以你只需要选取其中一种 `RFC3339` 格式来替换之前的格式化字符串就好。
 
-To see the output, run your program with `go run` again:
+再次运行程序以查看输出：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT
 2021-08-15T14:30:45.0000001-05:00
 ```
 
-The RFC 3339 format is good to use if you need to save a time value as a `string` somewhere. It can be read by many other programming languages and applications, and is about as compact as a date and time can be in a flexible `string` format.
+如果你需要把时间值保存为一个 `string` ，RFC 3339格式是很好的选择。它可以被许多其他的编程语言和应用程序读取，`string` 格式很灵活，又与日期和时间一样紧凑。
 
-In this section, you updated your program to use the `Format` method to print out a date and time. Using this flexible layout also allowed your code to look similar to the final output. Lastly, you used one of the pre-defined layout strings to print out a date and time using a well-supported format. In the next section, you’ll update your program to convert that same `string` value back into a `time.Time` value that you can work with.
+在这一节中，你更新了程序，使用 `Format` 方法来打印出一个日期和时间。使用这种灵活的布局也使你的代码看起来与最终的输出相似。最后，你使用了一个预定义的布局字符串来打印出一个日期和时间，并使用了一个被广泛应用的格式。在下一节中，你将继续更新程序，将同样的 `string` 值转换回 `time.Time` 值。
 
-## Parsing Dates and Times in Strings
+## 从字符串中解析出日期和时间
 
-Often when developing applications, you’ll come across dates represented as `string` values that you’ll need to interpret in some way. Sometimes, you’ll need to know the date portion of the value, other times you might need to know the time portion, and yet others you might need the whole value. In addition to using the `Format` method to create `string` values from `time.Time` values, the Go `time` package provides a `time.Parse` function to convert a `string` into a `time.Time` value. The `time.Parse` function works similar to the `Format` method, in that it takes the expected date and time layout as well as the `string` value as parameters.
+在开发应用程序时，你经常会遇到以 `string` 形式表示的日期，你需要以某种方式来读取并解析它。有时，你需要知道该值的日期部分，有时你可能需要知道时间部分，还有些时候，你可能需要整个值。除了使用 `Format` 方法根据 `time.Time` 值创建 `string` 值外，Go 的 `time` 包还提供了一个 `time.Parse` 函数来将 `string` 转换成 `time.Time` 值。`time.Parse` 函数的工作原理与 `Format` 方法类似，它有两个参数，一个是预期的日期和时间布局，另一个是待解析的日期和时间的 `string` 值。
 
-Now, open the `main.go` file in your program and update it to use the `time.Parse` function to parse a `timeString` into a `time.Time` variable:
+现在，打开你程序中的 `main.go` 文件，更新它以使用 `time.Parse` 函数来把 `timeString` 解析到 `time.Time` 变量：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -330,26 +337,31 @@ func main() {
 }
 ```
 
-Unlike the `Format` method, the `time.Parse` method also returns a potential `error` value in case the `string` value passed in does not match the layout provided as the first parameter. If you look at the layout used, you’ll see that the layout given to `time.Parse` uses the same `1` for month, `2` for day of month, etc, that is used in the `Format` method.
+与 `Format` 方法不同，`time.Parse` 方法还会返回一个潜在的 `error` 值，以防传入的 `string` 值与提供的布局（第一个参数）不符。如果你看一下使用的布局，你会发现传给 `time.Parse` 的布局使用了与 `Format` 方法中相同的布局：使用 `1` 表示月，`2` 表示日，等等。
 
-After saving your updates, you can run your updated program using `go run`:
+保存、更新，并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 02:30:45 +0000 UTC
+Output
+The time is 2021-08-15 02:30:45 +0000 UTC
 2021-08-15T02:30:45Z
 ```
 
-There are a couple of things to notice in this output. One is that the time zone being parsed from `timeString` is using the default time zone, which is a `+0` offset and known as [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (UTC). Since neither the time value nor the layout includes the time zone, the `time.Parse` function doesn’t know which time zone to associate it with. If you need it at some point, though, the `time` package does include a [`time.ParseInLocation`](https://pkg.go.dev/time#ParseInLocation) function so you can provide the location to use. The other part to notice is in the RFC 3339 output. The output is using the `time.RFC3339Nano` layout, but the output doesn’t include any nanoseconds. This is because the `time.Parse` function is not parsing any nanoseconds, so the value is set to the default of `0`. When nanoseconds are `0`, the `time.RFC3339Nano` format will not include nanoseconds in the output.
+在这次的输出中，有这么几个地方需要注意：
 
-The `time.Parse` method can also use any of the pre-defined time layouts provided in the `time` package when parsing a `string` value. To see this in practice, open your `main.go` file and update the `timeString` value to match the output from `time.RFC3339Nano` earlier, and update the `time.Parse` parameter to match:
+一个是，解析 `timeString` 时使用了默认的时区，它是一个 `+0` 的偏移量，被称为[协调世界时](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (UTC)。由于时间值和布局都不包括时区，所以 `time.Parse` 函数不知道该把它与哪个时区联系起来。不过，如果你在某些时候需要它，`time` 包确实包含了一个 [`time.ParseInLocation`](https://pkg.go.dev/time#ParseInLocation) 函数，所以你可以提供期望的时区。
 
-projects/datetime/main.go
+另一个需要注意的地方是，在 RFC 3339的输出中，输出使用 `time.RFC3339Nano` 布局，但输出不包括任何纳秒。这是因为 `time.Parse` 函数没有解析出任何纳秒信息，所以该值被设置为默认的 `0`。当纳秒为 `0` 时，`time.RFC3339Nano` 格式将不在输出中显示纳秒。
+
+`time.Parse` 方法在解析 `string` 值时也可以使用 `time` 包中提供的任何预定义的时间布局。要想在实操中看到这一点，请打开 `main.go` 文件，更新 `timeString` 值，使之与前面 `time.RFC3339Nano` 的输出相匹配，并更新 `time.Parse` 参数，使之相匹配：
+
+> projects/datetime/main.go
 
 ```go
 ...
@@ -366,36 +378,37 @@ func main() {
 }
 ```
 
-Once you have the code updated, you can save your program and run it again using `go run`:
+更新、保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT
 2021-08-15T14:30:45.0000001-05:00
 ```
 
-This time, the output from the `Format` method shows that `time.Parse` was able to parse both the time zone and the nanoseconds from `timeString`.
+这一次，`Format ` 方法的输出显示，`time.Parse` 能够从 `timeString` 中解析出时区和纳秒。
 
-In this section, you used the `time.Parse` function to parse an arbitrarily formatted date and time string value as well as a pre-defined layout. Thus far, though, you haven’t interacted with the various time zones you’ve seen. Another set of features Go provides for the `time.Time` type is the ability to convert between different time zones, as you’ll see in the next section.
+在本节中，你用 `time.Parse` 函数解析了一个任意方式格式化的日期和时间字符串值，以及一个预定义的布局。不过到目前为止，你还没有与你所看到的各种时区进行交互。Go 为 `time.Time` 类型提供的另一组特性是能够在不同的时区之间进行转换，你将在下一节中看到这一点。
 
-## Working with Time Zones
+## 处理时区
 
-When developing an application with users across the world, or even across only a few time zones, a common practice is to store dates and times using [Coordinated Universal Time](https://en.wikipedia.org/wiki/Coordinated_Universal_Time) (UTC) and then convert to a user’s local time when required. This allows the data to be stored in a consistent format and makes calculations between them easier, since conversion is needed only when displaying the date and time to a user.
+当开发一个有着来自世界各地、或只有几个时区的用户的应用程序时，一个常见的做法是使用 [协调世界时](https://en.wikipedia.org/wiki/Coordinated_Universal_Time)(UTC) 来存储日期和时间，然后在需要时转换为用户的当地时间。这能让数据以一致的格式存储，并使它们之间的计算更容易，因为只有在向用户显示日期和时间时才需要转换。
 
-In earlier sections of this tutorial, you created a program that worked primarily on times based in your own local time zone. To save your `time.Time` values as UTC, you’ll first need to convert them to UTC. You will do this using the `UTC` method, which will return a copy of the time you call it on, but in UTC.
+在本教程的前几节中，你创建了一个基于你自己的本地时区的时间的程序。如果要把你的 `time.Time` 值以 UTC 格式保存，你首先需要把它们转换为 UTC。你可以用 `UTC` 方法来完成这一转换，该方法将返回你所调用的时间的 UTC 格式的副本。
 
-**Note:** This section converts times between your computer’s local time zone and UTC. If the computer you’re using has the local time zone set to one that matches UTC, you’ll notice that converting between UTC and back again won’t show a difference in the times.
+**注意：**本节在你计算机的本地时区和 UTC 之间进行时间转换。如果你使用的计算机的本地时区设置与 UTC 一致，你会发现在 UTC 之间转换与转回不会显示出差别。
 
-Now, open your `main.go` file to update your program to use the `UTC` method on `theTime` to return the UTC version of the time:
+现在，打开 `main.go` 文件，更新程序，使用 `theTime` 的 `UTC` 方法来返回 UTC 版本的时间：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
-```shell
+```go
 ...
 
 func main() {
@@ -409,28 +422,29 @@ func main() {
 }
 ```
 
-This time your program creates `theTime` as a `time.Time` value in your local time zone, prints it out in two different formats, then uses the `UTC` method to translate that time from your local time to UTC time.
+这次程序在你的本地时区创建 `time.Time` 类型的时间值 `theTime` ，并以两种不同的格式打印出来，然后使用 `UTC` 方法把该时间从你的本地时间转换为 UTC 时间。
 
-To see the output from the program, you can run it using `go run`:
+再次运行程序并看看输出：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT
 2021-08-15T14:30:45.0000001-05:00
 The UTC time is 2021-08-15 19:30:45.0000001 +0000 UTC
 2021-08-15T19:30:45.0000001Z
 ```
 
-Your output will vary depending on your local time zone, but in the output above, you’ll see that the first time that’s printed out is in `CDT` (North American Central Daylight Time), which is `-5` hours from UTC. Once the `UTC` method is called and the UTC time prints, you can see the hour in the time goes from `14` to `19`, because converting the time to UTC added five hours.
+你的输出会因你当地的时区而不同，但在上面的输出中，你会看到第一个打印出来的时间是 `CDT`（北美中部夏令时），与UTC相比是 `-5` 小时。一旦调用 `UTC` 方法，打印出 UTC 时间，你可以看到时间中的小时数从 `14` 变成了 `19`，因为把时间转换为 UTC 增加了 5 个小时。
 
-It’s also possible to convert a UTC time back to a local time using the `Local` method on a `time.Time` in the same way. Open your `main.go` file again and update it to add a call to the `Local` method on `utcTime` to convert it back to your local time zone:
+也可以用同样的方法在 `time.Time` 上调用 `Local` 方法把 UTC 时间转换回本地时间。再次打开 `main.go` 文件，更新它，在 `utcTime`  上 添加对 `Local` 方法的调用，将其转换回你的本地时区：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -450,16 +464,17 @@ func main() {
 }
 ```
 
-Once your file is saved, run your program using `go run`:
+保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 -0500 CDT
+Output
+The time is 2021-08-15 14:30:45.0000001 -0500 CDT
 2021-08-15T14:30:45.0000001-05:00
 The UTC time is 2021-08-15 19:30:45.0000001 +0000 UTC
 2021-08-15T19:30:45.0000001Z
@@ -467,21 +482,21 @@ The Local time is 2021-08-15 14:30:45.0000001 -0500 CDT
 2021-08-15T14:30:45.0000001-05:00
 ```
 
-You’ll see that the UTC time has been converted back to your local time zone. In the output above, the UTC conversion back to CDT means that five hours has been subtracted from the UTC, changing the hour from `19` to `14`.
+你会看到，UTC 时间已经被转换回你的本地时区。在上面的输出中，UTC 转换回 CDT 意味着从 UTC 中减去了5个小时，将小时数从 `19` 变为 `14`。
 
-In this section, you updated your program to convert dates and times between your local time zone and the standard UTC time zone using the `UTC` method, then back again using the `Local` method.
+在这一节中，你更新了程序，使用 `UTC` 方法在本地时区和标准 UTC 时区之间进行日期和时间的转换，然后使用 `Local` 方法再次转换回来。
 
-Once you have your date and time values available, there are a number of additional features the Go `time` package provides that can be useful in your applications. One of these features is determining whether a given time is before or after another.
+一旦你有了日期和时间值，Go `time` 包提供了一些额外的特性，可以在你的应用程序中发挥作用。其中一个特性是判断一个给定的时间是在另一个时间之前还是之后。
 
-## Comparing Two Times
+## 比较两个时间
 
-Comparing two dates with each other can be deceptively difficult at times, due to all the variables that need to be considered when comparing them. For example, needing to take time zones into account, or the fact that months have a different number of days from each other. The `time` package provides a few methods to make this easier.
+比较两个时间，有时看似很困难，因为在比较时要考虑内部的所有变量。传说，需要考虑到时区，或者每个月都有不同的天数。不过，`time` 包提供了一些方法来让比较变得更简单。
 
-The `time` package provides two methods to make these comparisons easier: the `Before` and `After` methods, available on the `time.Time` type. These methods both accept a single time value and return either `true` or `false` depending on whether the time they’re being called on is before or after the time being provided.
+`time` 包提供了两种方法使时间比较更加容易：`Before` 和 `After` 方法，可用于 `time.Time` 类型。这些方法都接受一个单一的时间值，并根据调用者的时间是在所提供的时间（函数参数）之前还是之后，返回 `true` 或 `false`。
 
-To see an example of these functions in action, open your `main.go` file and update it to include two different dates, then use `Before` and `After` to compare those dates to see the output:
+要看这些函数的实际效果，请打开你的 `main.go` 文件，并更新它以创建两个不同的日期，然后使用 `Before` 和 `After` 来比较这些日期，看看输出：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -501,16 +516,17 @@ func main() {
 }
 ```
 
-Once you have your file updated, save it and run it using `go run`:
+更新并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe first time is 2021-08-15 14:30:45.0000001 +0000 UTC
+Output
+The first time is 2021-08-15 14:30:45.0000001 +0000 UTC
 The second time is 2021-12-25 16:40:55.0000002 +0000 UTC
 First time before second? true
 First time after second? false
@@ -518,13 +534,13 @@ Second time before first? false
 Second time after first? true
 ```
 
-Since the code is using explicit dates in the UTC time zone, your output should match the output above. You’ll see that when using the `Before` method on `firstTime` and providing it `secondTime` to compare to, it’s saying that it’s `true` that `2021-08-15` is before `2021-12-25`. When using the `After` method of `firstTime` and providing `secondTime`, it says it’s `false` that `2021-08-15` is after `2021-12-25`. Changing the order to call the methods on `secondTime` shows the opposite results, as expected.
+因为代码使用的是 UTC 时区的确定的日期，所以你看到的输出应该与上面的输出一致。你会看到，当 `firstTime` 调用  `Before` 方法并与 `secondTime` 比较时，它说 `2021-08-15` 在 `2021-12-25` 之前是 `true`。当 `firstTime` 调用 `After`方法并与 `secondTime` 进行比较时，它说 `2021-08-15` 在 `2021-12-25` 之后是 `false`。改变顺序来调用 `secondTime` 上的方法，显示出相反的结果，正如预期。
 
-Another way to compare two dates and times with the `time` package is the `Sub` method. The `Sub` method will subtract one date from another and return a value using a new type, the `time.Duration`. Unlike a `time.Time` value, which represents an absolute point in time, a `time.Duration` value represents a difference in time. For example, “in one hour” would be a duration because it means something different based on the current time of day, but “at noon” represents a specific, absolute time. Go uses the `time.Duration` type in a number of places, such as when you’d want to define how long a function should wait before returning an error or here, where you need to know how much time is between one time and another.
+用 `time` 包比较两个日期和时间的另一种方式是 `Sub` 方法。`Sub` 方法用一个日期减去另一个日期，并使用一个新的类型 `time.Duration` 返回一个值。与代表绝对时间点的 `time.Time` 值不同，`time.Duration` 值代表了时间间隔。例如，"一小时内" 是一个时间间隔，因为它会因当前时间的不同而表达出不同的意思，但 "中午" 代表一个特定的、绝对的时间。Go 在很多地方使用 `time.Duration` 类型，比如你想定义一个函数在返回错误之前应该等待多长时间，或者在本例中，你需要知道一个时间和另一个时间之间有多久。
 
-Now, update your `main.go` file to use the `Sub` method on the `firstTime` and `secondTime` values and print out the results:
+现在，更新你的 `main.go` 文件，对 `firstTime` 和 `secondTime` 值使用 `Sub` 方法并打印出结果：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -540,30 +556,31 @@ func main() {
 	fmt.Println("Duration between second and first time is", secondTime.Sub(firstTime))
 ```
 
-Save your file and then run it using `go run`:
+保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe first time is 2021-08-15 14:30:45.0000001 +0000 UTC
+Output
+The first time is 2021-08-15 14:30:45.0000001 +0000 UTC
 The second time is 2021-12-25 16:40:55.0000002 +0000 UTC
 Duration between first and second time is -3170h10m10.0000001s
 Duration between second and first time is 3170h10m10.0000001s
 ```
 
-The output above says there are 3,170 hours, 10 minutes, 10 seconds, and 100 nanoseconds between the two dates, and there are a few things to note about the output. The first is that the duration between the first and second times is a negative value. This says the second time is after the first, and would be similar to if you subtracted `5` from `0` and got `-5`. The second thing to note is that a duration’s largest unit of measure is an hour, so it doesn’t break it down into days or months. Since the number of days in a month is not consistent and a “day” could have a different meaning during a switch for daylight saving time, an hour is the most accurate measurement that wouldn’t fluctuate.
+上面的输出说两个日期之间有3170小时、10分钟、10秒和100纳秒，输出中有几个需要注意的地方：首先是第一个和第二个时间之间的时间间隔是一个负值。这说明第二个时间在第一个时间之后，类似于 `0` 减 `5` 得到 `-5`。第二是，时间间隔的最大计量单位是小时，所以它不会分解成天或月。由于每个月的天数并不一致，而且 "日" 在夏令时的转换中可能有不同的含义，一小时是最准确的度量，不会有波动。
 
-In this section, you updated your program to compare two times using three different methods. First, you used the `Before` and `After` methods to determine if a time is before or after another time, then you used `Sub` to see how long it is between two times. Getting the duration between two times isn’t the only way the `time` package uses `time.Duration`, though. You are also able to use it to add or remove time from a `time.Time` value, as you’ll see in the next section.
+在本节中，你更新了你的程序，用三种不同的方法比较两个时间。首先，你使用 `Before` 和 `After` 方法来判断一个时间是在另一个时间之前还是之后，然后你使用 `Sub` 来计算两个时间之间有多长。不过，获取两个时间之间的时间间隔并不是 `time` 包使用 `time.Duration` 的唯一方式。你还可以用它来增加或减少 `time.Time` 值中的时间，我们将在下一小节中学到。
 
-## Adding or Subtracting Times
+## 增减时间
 
-When writing an application, one common operation using dates and times is determining a past or future time based on another time. It could be used for functionality, such as determining when a subscription will come up for renewal next, or if it’s been a certain amount of time since some value was checked. Either way, the Go `time` package provides a way to handle it. To find another date based on a date you already know, though, you’ll need to be able to define your own `time.Duration` values.
+在编写应用程序时，使用日期和时间的一个常见操作是根据某个时间来生成一个过去或未来的时间。它可以用来实现一些功能，比如确定一个订阅的下一次续订时间，或者确定自某些值被检查以来已经过了一定的时间。无论是哪种方式，Go 的 `time` 包都提供了相应的处理方式。不过，要根据你已经知道的日期找到另一个日期，你需要能够自行创建 `time.Duration` 值。
 
-Creating a `time.Duration` value is similar to how you might write a duration on paper, just with multiplication for the unit of time. For example, to create a `time.Duration` to represent an hour, you would define it using the `time.Hour` value multiplied by the number of hours you want the `time.Duration` to represent:
+创建 `time.Duration` 值类似于你在纸上写下一个时间间隔，只是乘了个时间单位。例如，要创建一个代表若干小时的 `time.Duration`，你可以用 `time.Hour` 值乘你希望的小时数：
 
 ```go
 oneHour := 1 * time.Hour
@@ -571,16 +588,16 @@ twoHours := 2 * time.Hour
 tenHours := 10 * time.Hour
 ```
 
-Declaring smaller time units is handled in a similar way, except using `time.Minute`, `time.Second`, and so on:
+声明更小的时间单位的方式也类似，例如使用 `time.Minute`,  `time.Second` 等：
 
 ```go
 tenMinutes := 10 * time.Minute
 fiveSeconds := 5 * time.Second
 ```
 
-One duration can also be added to another duration to get the sum of the durations. To see this in action, open your `main.go` file and update it to declare a `toAdd` duration variable and add different durations to it:
+一个时间间隔也可以加到另一个时间间隔上，得到时间间隔的总和。想看看实际效果的话，请打开你的 `main.go` 文件，并更新它，声明一个 `toAdd` 时间间隔变量，并向它添加不同的时间间隔：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -597,30 +614,33 @@ func main() {
 }
 ```
 
-Once you have your updates finished, save the file and run your program using `go run`:
+更新、保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Output1: 1h0m0s
+Output
+1: 1h0m0s
 2: 1h1m0s
 3: 1h1m1s
 ```
 
-When you look at the output, you’ll se the first duration printed is for one hour, corresponding to the `1 * time.Hour` in your code. Next, you added `1 * time.Minute` to the `toAdd` value, which shows up as the one hour, one minute value. Finally, you added `1 * time.Second` to `toAdd`, which resulted in a `time.Duration` value of one hour, one minute and one second.
+看看输出，你会发现打印的第一个时间间隔是1小时，对应于你代码中的 `1 * time.Hour` 。接下来，你把 `1 * time.Minute` 添加到 `toAdd` 值中，显示为1小时1分钟的值。最后，你把 `1 * time.Second` 加到 `toAdd` 中，结果为 `time.Duration` 值是1小时1分1秒钟。
 
-It’s also possible to combine adding the durations together in one statement, or subtracting a duration from another:
+也可以在一条语句中把持续时间加在一起，或者把一个持续时间从另一个持续时间中减去，都是可以的。
 
 ```go
 oneHourOneMinute := 1 * time.Hour + 1 * time.Minute
 tenMinutes := 1 * time.Hour - 50 * time.Minute
 ```
 
-Next, open your `main.go` file and update your program to use a combination like this to subtract one minute and one second from `toAdd`:
+接下来，打开你的 `main.go` 文件，更新程序，使用这样的组合，从 `toAdd` 中减去1分1秒：
+
+> projects/datetime/main.go
 
 ```go
 ...
@@ -637,28 +657,27 @@ func main() {
 }
 ```
 
-projects/datetime/main.go
-
-After saving your code, you can run the program using `go run`:
+保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-Output1: 1h0m0s
+Output
+1: 1h0m0s
 2: 1h1m0s
 3: 1h1m1s
 4: 1h0m0s
 ```
 
-The new fourth line added to the output shows the new code you included to subtract the sum of `1 * time.Minute` and `1 * time.Second` worked correctly, resulting in the original one-hour value again.
+在输出中新增加的第四行显示，你在新代码的末尾减去了 `1 * time.Minute` 和 `1 * time.Second` 的总和，他们如期运行，最后又变回了原来的一小时零分零秒。
 
-Using these durations paired with the `Add` method of the `time.Time` type allows you to take a time value you already have and determine the time at some other arbitrary point before or after that time. To see an example of this running, open your `main.go` file and update it to set the `toAdd` value to 24 hours, or `24 * time.Hour`. Then, use the `Add` method on a `time.Time` value to see what the time would be 24 hours after that point:
+使用这些时间间隔并配合 `time.Time` 类型的 `Add` 方法，可以使你基于一个已有的时间值，获取该时间之前或之后的其他任意的时间点。想看实际例子的话，请打开你的 `main.go` 文件并更新它，将 `toAdd` 值设置为24小时，或 `24 * time.Hour`。然后，在 `time.Time` 值上使用 `Add` 方法，看看24小时之后的时间是多少：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -675,27 +694,28 @@ func main() {
 }
 ```
 
-After saving your file, run your program using `go run`:
+保存并运行程序：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 +0000 UTC
+Output
+The time is 2021-08-15 14:30:45.0000001 +0000 UTC
 Adding 24h0m0s
 The new time is 2021-08-16 14:30:45.0000001 +0000 UTC
 ```
 
-Looking at the output, you’ll see that adding 24 hours to `2021-08-15` results in the new date of `2021-08-16`.
+看一下输出结果，你会发现在 `2021-08-15` 的基础上加上24小时，得到的新日期是 `2021-08-16`。
 
-To subtract time, you would also use the `Add` method, which is slightly counter-intuitive. Since the `Sub` method is used to get the difference in time between two dates, you subtract time from the `time.Time` value by using `Add` with a negative value.
+要减去时间，你也需要使用 `Add` 方法，这稍微有点违反直觉。因为 `Sub` 方法是用来获取两个日期之间的时间差的，你通过使用 `Add` 方法，传入负的时间间隔，以减去时间。
 
-Once again, to see this running in your program, open your `main.go` file and update it to change the 24-hour `toAdd` value to a negative value:
+打开 `main.go` 并更新它，将24小时的 `toAdd` 值改为负值：
 
-projects/datetime/main.go
+> projects/datetime/main.go
 
 ```go
 ...
@@ -712,28 +732,32 @@ func main() {
 }
 ```
 
-After saving your file, run your program one more time using `go run`:
+保存并运行：
 
 ```shell
 go run main.go
 ```
 
-The output will look similar to this:
+输出看起来像这样：
 
 ```
-OutputThe time is 2021-08-15 14:30:45.0000001 +0000 UTC
+Output
+The time is 2021-08-15 14:30:45.0000001 +0000 UTC
 Adding -24h0m0s
 The new time is 2021-08-14 14:30:45.0000001 +0000 UTC
 ```
 
-This time in the output you’ll see that instead of adding 24 hours to the original time, the new date is 24 hours before the original time.
+这次你会在输出中看到，新的日期不是在原来的时间上增加24小时，而是在原来的时间上减去24小时。
 
-In this section, you used `time.Hour`, `time.Minute`, and `time.Second` to create `time.Duration` values of varying degrees. You also used the `time.Duration` values with the `Add` method to get a new `time.Time` value both before and after the original value. By combining `time.Now`, the `Add` method, and `Before` or `After` methods, you’ll have access to powerful date and time functionality for your applications.
+在这一节中，你用 `time.Hour` ,  `time.Minute` , 和 `time.Second` 来创建不同跨度的 `time.Duration` 值。你还使用 `time.Duration`值与 `Add` 方法来获得在原始值之前和之后的新的 `time.Time` 值。通过结合 `time.Now`、`Add` 方法和 `Before` 或 `After` 方法，你还可以让你的应用程序获得强大的日期和时间功能。
 
-## Conclusion
+## 结论
 
-In this tutorial, you used `time.Now` to retrieve a `time.Time` value for the current local time on your computer, then used the `Year`, `Month`, `Hour`, and other methods to access specific information about that time. Then, you used the `Format` method to print the time using a custom format and a pre-defined format. Next, you used the `time.Parse` function to interpret a `string` value with a time in it and extract the time value from it. Once you had the time value, you used the `UTC` and `Local` methods to translate the time between UTC and your local time zone. After that, you used the `Sub` method to get the duration between two different times before using the `Add` method to find the time relative to a different time value.
+* 在本教程中，你使用 `time.Now` 检索计算机上当前本地时间的 `time.Time` 值，然后使用 `Year`、`Month`、`Hour` 和其他方法来访问该时间的具体信息。
 
-Using the various functions and methods described in this tutorial will go a long way in your applications, but the Go [`time`](https://pkg.go.dev/time) package also includes a number of other features if you’re interested.
+* 然后，你使用 `Format` 方法，使用自定义的格式和预定义的格式打印时间。
+* 接下来，你使用了 `time.Parse` 函数来解析一个包含时间的 `string` 值，并从中提取时间值。
+* 一旦你有了时间值，你就可以使用 `UTC` 和 `Local` 方法在 UTC 和你的本地时区之间进行时间转换。
+* 最后，你使用 `Sub` 方法来获得两个不同时间之间的时间间隔，然后使用 `Add` 方法来找到相对于不同时间值的时间点。
 
-This tutorial is also part of the [DigitalOcean](https://www.digitalocean.com/) [How to Code in Go](https://www.digitalocean.com/community/tutorial_series/how-to-code-in-go) series. The series covers a number of Go topics, from installing Go for the first time to how to use the language itself.
+使用本教程中描述的各种函数和方法对你的应用程序很有帮助，如果你有兴趣，也可以看看 Go [`time`](https://pkg.go.dev/time) 包的一些其他特性。

@@ -16,7 +16,7 @@
 
 ## 定义一个数组
 
-数组的定义是在大括号 `[]` 中声明数组的大小，然后是各元素的数据类型。Go 中的数组必须使其所有元素都是相同的[数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}})。在数据类型之后，你可以用大括号 `{ }` 来声明数组元素的单个值。
+数组的定义是在大括号 `[]` 中声明数组的大小，然后是各元素的数据类型。Go 中的数组必须使其所有元素都是相同的[数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go)。在数据类型之后，你可以用大括号 `{ }` 来声明数组元素的单个值。
 
 下面是声明一个数组的一般模式：
 
@@ -552,4 +552,4 @@ seaNames[1][3] = "Jamie"
 
 在本教程中，你学到了在 Go 中使用数组和切片的基础。通过多个练习来证明数组的长度是固定的，而切片的长度是可变的，并发现这种差异是如何影响这些数据结构的用途场景。
 
-要继续学习 Go 中的数据结构，请查看我们的文章[理解 Go 中的 Map]({{< relref "/docs/15-Understanding_Maps_in_Go.md" >}})，或探索整个[如何在 Go 中编码](https://gocn.github.io/How-To-Code-in-Go/)系列。
+要继续学习 Go 中的数据结构，请查看我们的文章[理解 Go 中的 Map](https://gocn.github.io/How-To-Code-in-Go/docs/15-Understanding_Maps_in_Go)，或探索整个[如何在 Go 中编码](https://gocn.github.io/How-To-Code-in-Go/)系列。
