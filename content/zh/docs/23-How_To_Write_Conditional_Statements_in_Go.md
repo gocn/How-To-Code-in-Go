@@ -36,9 +36,9 @@ func main() {
 }
 ```
 
-在这段代码中，我们有一个变量`grade`，并给它一个整数值`70`。然后我们使用`if`语句来评估变量`grade`是否大于或等于（`>=`）`65`。如果它确实满足这个条件，我们告诉程序打印出[字符串]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}}) `Passing grade`。
+在这段代码中，我们有一个变量`grade`，并给它一个整数值`70`。然后我们使用`if`语句来评估变量`grade`是否大于或等于（`>=`）`65`。如果它确实满足这个条件，我们告诉程序打印出[字符串](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go) `Passing grade`。
 
-将程序保存为`grade.go`，并在[终端窗口]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})中用`go run grade.go`命令运行它。
+将程序保存为`grade.go`，并在[终端窗口](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean)中用`go run grade.go`命令运行它。
 
 在这种情况下，70分的成绩*符合大于或等于65分的条件，因此，一旦你运行该程序，你将收到以下输出：
 
@@ -147,7 +147,7 @@ Your balance is 0 or above.
 
 ## Else if 语句
 
-到目前为止，我们已经为条件语句提出了一个[布尔]({{< relref "/docs/14-Understanding_Boolean_Logic_in_Go.md" >}})选项，每个`if`语句的评估结果为真或假。在许多情况下，我们会希望一个程序能评估出两个以上的可能结果。为此，我们将使用**else if**语句，在 Go 中写成`else if`。`else if`或 else if 语句看起来和`if`语句一样，将评估另一个条件。
+到目前为止，我们已经为条件语句提出了一个[布尔](https://gocn.github.io/How-To-Code-in-Go/docs/14-Understanding_Boolean_Logic_in_Go)选项，每个`if`语句的评估结果为真或假。在许多情况下，我们会希望一个程序能评估出两个以上的可能结果。为此，我们将使用**else if**语句，在 Go 中写成`else if`。`else if`或 else if 语句看起来和`if`语句一样，将评估另一个条件。
 
 在银行账户程序中，我们可能希望在三种不同的情况下有三个离散的输出。
 
@@ -377,4 +377,4 @@ Passing grade of: A
 
 通过使用像 `if` 语句这样的条件语句，你将对你的程序执行内容有更大的控制。条件性语句告诉程序要评估是否满足某个条件。如果满足条件，它将执行特定的代码，但如果不满足条件，程序将继续执行其他代码。
 
-要继续练习条件语句，请尝试使用不同的[运算符]({{< relref "/docs/13-How_To_Do_Math_in_Go_with_Operators.md" >}})来获得对条件语句的更多熟悉。
+要继续练习条件语句，请尝试使用不同的[运算符](https://gocn.github.io/How-To-Code-in-Go/docs/13-How_To_Do_Math_in_Go_with_Operators)来获得对条件语句的更多熟悉。

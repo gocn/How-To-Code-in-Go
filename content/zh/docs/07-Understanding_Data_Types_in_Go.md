@@ -343,7 +343,7 @@ output
 Say "hello" to Go!
 ```
 
-你几乎总会使用解释字符串，因为它们允许在其中使用转义字符。想要了解更多关于字符串使用的信息，请查看[Go 中使用字符串的简介]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})。
+你几乎总会使用解释字符串，因为它们允许在其中使用转义字符。想要了解更多关于字符串使用的信息，请查看[Go 中使用字符串的简介](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go)。
 
 ### UTF-8 字符的字符串
 
@@ -586,4 +586,4 @@ blue
 
 此时，你应该对 Go 中可用的一些主要数据类型有了更好的理解。当你使用 Go 语言开发编程项目时，这些数据类型中的每一种都将变得非常重要。
 
-一旦掌握了 Go 中可用的数据类型，就可以学习[如何转换数据类型]({{< relref "/docs/12-How_To_Convert_Data_Types_in_Go.md" >}})，以便根据具体情况更改数据类型。
+一旦掌握了 Go 中可用的数据类型，就可以学习[如何转换数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/12-How_To_Convert_Data_Types_in_Go)，以便根据具体情况更改数据类型。

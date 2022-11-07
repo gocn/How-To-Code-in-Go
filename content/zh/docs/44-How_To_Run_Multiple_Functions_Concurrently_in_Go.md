@@ -12,8 +12,8 @@ Go 受欢迎的特性之一是它对 [_并发_](https://en.wikipedia.org/wiki/Co
 
 为了更顺畅地阅读本教程，你需要：
 
-* Go 版本 >= 1.16。你可以按照 [如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}}) 来安装 Go。
-* 熟悉 Go 的 [函数]({{< relref "/docs/27-How_To_Define_and_Call_Functions_in_Go.md" >}}) 相关知识。
+* Go 版本 >= 1.16。你可以按照 [如何安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean) 来安装 Go。
+* 熟悉 Go 的 [函数](https://gocn.github.io/How-To-Code-in-Go/docs/27-How_To_Define_and_Call_Functions_in_Go) 相关知识。
 
 ## 使用协程同时运行函数
 
@@ -199,7 +199,7 @@ Done!
 
 虽然在 Go 中仍有可能遇到像数据竞争这样的并发问题，但该语言的底层设计使其更容易避免这些问题。除了 goroutines 之外，通道（channel）是另一个使并发更安全和更容易使用的特性。通道可以被看作是两个或多个不同的 goroutine 之间的管道，数据可以通过它来发送。一个 goroutine 将数据放入管道的一端，另一个 goroutine 将同样的数据取出。确保数据安全地从一端到达另一端是困难的，但这部分 Go 已经替你解决了。
 
-在 Go 中创建一个通道类似于创建一个 [切片]({{< relref "/docs/16-Understanding_Arrays_and_Slices_in_Go.md" >}})，需要使用内置的 `make()` 函数。通道的类型声明由两部分组成： `chan` 关键字在前，后面是你想在通道上发送的 [数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}})。例如，要创建一个用于发送 `int`类型值的通道，你可以使用 `chan int` 类型。如果你想要一个发送 `[]byte` 类型数据的通道，就用 `chan []byte`，像这样：
+在 Go 中创建一个通道类似于创建一个 [切片](https://gocn.github.io/How-To-Code-in-Go/docs/16-Understanding_Arrays_and_Slices_in_Go)，需要使用内置的 `make()` 函数。通道的类型声明由两部分组成： `chan` 关键字在前，后面是你想在通道上发送的 [数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go)。例如，要创建一个用于发送 `int`类型值的通道，你可以使用 `chan int` 类型。如果你想要一个发送 `[]byte` 类型数据的通道，就用 `chan []byte`，像这样：
 
 ```go
 bytesChan := make(chan []byte)
@@ -223,7 +223,7 @@ intVar := <- intChan
 
 为了更直观、容易地弄清这两种操作，可以记住 `<-` 箭头总是向左（相对于`->`），并指向了数据的去向。向通道写入数据时，箭头指向通道；从通道中读取数据时，箭头指向保存数据的变量。
 
-像切片那样，也可以在 [`for`循环]({{< relref "/docs/25-How_To_Construct_For_Loops_in_Go.md" >}}) 中使用 `range` 关键字来读取通道。当使用 `range` 关键字读取一个通道时，循环的每次迭代都从通道中读取下一个值，并将其赋值给循环变量。然后，它将继续从通道中读取数据，直到通道关闭或以其他方式退出 `for` 循环，如`break`：
+像切片那样，也可以在 [`for`循环](https://gocn.github.io/How-To-Code-in-Go/docs/25-How_To_Construct_For_Loops_in_Go) 中使用 `range` 关键字来读取通道。当使用 `range` 关键字读取一个通道时，循环的每次迭代都从通道中读取下一个值，并将其赋值给循环变量。然后，它将继续从通道中读取数据，直到通道关闭或以其他方式退出 `for` 循环，如`break`：
 
 ```go
 intChan := make(chan int)

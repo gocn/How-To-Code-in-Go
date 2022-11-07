@@ -14,15 +14,15 @@
 
 为了更顺畅地阅读本教程，你需要：
 
-* Go 版本 >= 1.13。你可以按照 [如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}}) 来安装 Go。
-* （可选）阅读 [Go 的错误处理]({{< relref "/docs/17-Handling_Errors_in_Go_DigitalOcean.md" >}}) 有助于加深对本教程的理解，但本教程也在更高的层次上覆盖了此文章的部分内容。
-* （可选）本教程在 [在 Go 中创建自定义错误]({{< relref "/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean.md" >}}) 的基础上，拓展介绍了 Go 加入的新特性。阅读之前的教程有助于理解本教程，但不是必须的。
+* Go 版本 >= 1.13。你可以按照 [如何安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean) 来安装 Go。
+* （可选）阅读 [Go 的错误处理](https://gocn.github.io/How-To-Code-in-Go/docs/17-Handling_Errors_in_Go_DigitalOcean) 有助于加深对本教程的理解，但本教程也在更高的层次上覆盖了此文章的部分内容。
+* （可选）本教程在 [在 Go 中创建自定义错误](https://gocn.github.io/How-To-Code-in-Go/docs/18-Creating_Custom_Errors_in_Go_DigitalOcean) 的基础上，拓展介绍了 Go 加入的新特性。阅读之前的教程有助于理解本教程，但不是必须的。
 
 ## 在用 Go 中返回和处理错误
 
 当程序出现错误时，最佳实践方式是处理这些错误，这样你的用户就不会看到这些错误。但要处理这些错误，你首先需要了解错误本身。在 Go 中，你可以通过使用 `error` 接口从函数中返回相关错误信息，来处理程序中的错误。使用 `error` 接口可以使任何 Go 类型作为 `error` 值返回，只要该类型定义了 `Error() string` 方法。Go 标准库提供了为这些返回值创建 `error` 的功能，例如 [`fmt.Errorf`](https://pkg.go.dev/fmt#Errorf) 函数。
 
-在本节中，你将创建一个程序，用 `fmt.Errorf` 来返回错误的函数 ，同时你也会添加一个错误处理器来检查这些错误是否能被该函数返回。(如果你想了解更多关于在 Go 中处理错误的信息，请看教程：[Go 的错误处理]({{< relref "/docs/17-Handling_Errors_in_Go_DigitalOcean.md" >}}) 。)
+在本节中，你将创建一个程序，用 `fmt.Errorf` 来返回错误的函数 ，同时你也会添加一个错误处理器来检查这些错误是否能被该函数返回。(如果你想了解更多关于在 Go 中处理错误的信息，请看教程：[Go 的错误处理](https://gocn.github.io/How-To-Code-in-Go/docs/17-Handling_Errors_in_Go_DigitalOcean) 。)
 
 许多开发者可能已经有了存放项目的文件夹，但在本教程中，我们使用 `projects` 文件夹。
 

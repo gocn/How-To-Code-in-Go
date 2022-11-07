@@ -12,7 +12,7 @@
 
 要遵循本文的例子，你将需要：
 
-* 按照 [如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})设置的 Go 工作区。
+* 按照 [如何安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean)设置的 Go 工作区。
 
 ## 构建免费版本
 
@@ -56,7 +56,7 @@ func main() {
   }
 }
 ```
-在这个文件中，我们创建了一个程序，声明了一个名为 `features` 的[切片](https://gocn.github.io/How-To-Code-in-Go/docs/16-Understanding_Arrays_and_Slices_in_Go/#%E5%88%87%E7%89%87)，它容纳了两个[字符串]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})，代表我们免费版本的应用程序的特征。应用程序中的 `main()` 函数使用一个 `for` [循环](https://gocn.github.io/How-To-Code-in-Go/docs/25-How_To_Construct_For_Loops_in_Go/#%E4%BD%BF%E7%94%A8-rangeclause-%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E9%A1%BA%E5%BA%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B) `range` 遍历  `features` 切片，并将所有可用的功能打印到屏幕上。
+在这个文件中，我们创建了一个程序，声明了一个名为 `features` 的[切片](https://gocn.github.io/How-To-Code-in-Go/docs/16-Understanding_Arrays_and_Slices_in_Go/#%E5%88%87%E7%89%87)，它容纳了两个[字符串](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go)，代表我们免费版本的应用程序的特征。应用程序中的 `main()` 函数使用一个 `for` [循环](https://gocn.github.io/How-To-Code-in-Go/docs/25-How_To_Construct_For_Loops_in_Go/#%E4%BD%BF%E7%94%A8-rangeclause-%E5%BE%AA%E7%8E%AF%E9%81%8D%E5%8E%86%E9%A1%BA%E5%BA%8F%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B) `range` 遍历  `features` 切片，并将所有可用的功能打印到屏幕上。
 
 保存并退出该文件。现在这个文件已经保存了，在文章的其余部分，我们将不再需要编辑它。相反，我们将使用构建标签来改变我们将从中构建的二进制文件的功能特性。
 
@@ -192,7 +192,7 @@ go build -tags pro
 
 ## 构建标签布尔逻辑
 
-当一个 Go 包中有多个构建标签时，这些标签会使用[布尔逻辑]({{< relref "/docs/14-Understanding_Boolean_Logic_in_Go.md" >}})相互作用。为了证明这一点，我们将同时使用 `pro` 标签和 `enterprise` 标签来添加我们应用程序的企业级。
+当一个 Go 包中有多个构建标签时，这些标签会使用[布尔逻辑](https://gocn.github.io/How-To-Code-in-Go/docs/14-Understanding_Boolean_Logic_in_Go)相互作用。为了证明这一点，我们将同时使用 `pro` 标签和 `enterprise` 标签来添加我们应用程序的企业级。
 
 为了建立一个企业级二进制文件，我们将需要包括默认功能、专业级功能和一套新的企业级功能。首先，打开一个编辑器并创建一个新文件，`enterprise.go`，它将添加新的企业级功能：
 

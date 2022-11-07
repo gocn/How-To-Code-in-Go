@@ -2,7 +2,7 @@
 
 ## 介绍
 
-Go 的 [`strings`](https://golang.org/pkg/strings/) 包有几个函数可用于 [string 数据类型]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})。这些函数可以轻松地修改和操作字符串。我们可以将函数视为对代码元素执行的操作。内置函数是那些在 Go 编程语言中定义并且可供我们随时使用的函数。
+Go 的 [`strings`](https://golang.org/pkg/strings/) 包有几个函数可用于 [string 数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go)。这些函数可以轻松地修改和操作字符串。我们可以将函数视为对代码元素执行的操作。内置函数是那些在 Go 编程语言中定义并且可供我们随时使用的函数。
 
 在本教程中，我们将回顾几个可用于在 Go 中处理字符串的不同函数。
 
@@ -222,6 +222,6 @@ Sammy had a balloon.
 
 本教程介绍了一些用于字符串数据类型的常见字符串包函数，你可以使用这些函数在 Go 程序中处理和操作字符串。
 
-你可以在 [理解 Go 的数据类型]({{< relref "/docs/07-Understanding_Data_Types_in_Go.md" >}}) 中了解有关其他数据类型的更多信息，并在 [Go 中处理字符串的介绍]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}}) 了解更多有关字符串的信息。
+你可以在 [理解 Go 的数据类型](https://gocn.github.io/How-To-Code-in-Go/docs/07-Understanding_Data_Types_in_Go) 中了解有关其他数据类型的更多信息，并在 [Go 中处理字符串的介绍](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go) 了解更多有关字符串的信息。
 
 ------

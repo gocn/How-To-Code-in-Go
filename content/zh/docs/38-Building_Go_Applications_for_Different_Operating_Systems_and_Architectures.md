@@ -2,15 +2,15 @@
 
 在软件开发中，重要的是要考虑你想为之编译二进制的[操作系统](https://en.wikipedia.org/wiki/Operating_system)和底层处理器[架构](https://en.wikipedia.org/wiki/Microarchitecture)。因为在不同的操作系统/架构平台上运行一个二进制文件通常很慢或不可能，所以通常的做法是为许多不同的平台编译你最终的二进制文件，以最大化你的程序的受众。然而，这通常是很困难的，当你开发软件的平台和你想要部署的平台不是同一个的时候。例如，在过去，在 Windows 上开发一个程序并将其部署到 Linux 或 macOS 机器上，需要为每一个你想要的二进制文件的环境设置构建机器。你还需要保持你的工具同步，此外还有其他考虑因素，这些因素会增加成本，使协作测试和分布式更加困难。
 
-Go 通过在`go build`工具中直接建立对多平台的支持，以及 Go 工具链的其他部分解决了这个问题。通过使用[环境变量](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps)和[构建标签]({{< relref "/docs/31-Customizing_Go_Binaries_with_Build_Tags.md" >}})，你可以控制你最终的二进制文件是为哪个操作系统和架构构建的，此外还可以把一个工作流程放在一起，在不改变你的代码库的情况下快速切换对平台依赖的代码。
+Go 通过在`go build`工具中直接建立对多平台的支持，以及 Go 工具链的其他部分解决了这个问题。通过使用[环境变量](https://www.digitalocean.com/community/tutorials/how-to-read-and-set-environmental-and-shell-variables-on-a-linux-vps)和[构建标签](https://gocn.github.io/How-To-Code-in-Go/docs/31-Customizing_Go_Binaries_with_Build_Tags)，你可以控制你最终的二进制文件是为哪个操作系统和架构构建的，此外还可以把一个工作流程放在一起，在不改变你的代码库的情况下快速切换对平台依赖的代码。
 
-在本教程中，你将把一个将[strings]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})连接成文件路径的示例应用程序放在一起，创建并有选择地包括与平台有关的片段，并在你自己的系统上为多个操作系统和系统架构构建二进制文件，向你展示如何使用 Go 编程语言的这一强大能力。
+在本教程中，你将把一个将[strings](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go)连接成文件路径的示例应用程序放在一起，创建并有选择地包括与平台有关的片段，并在你自己的系统上为多个操作系统和系统架构构建二进制文件，向你展示如何使用 Go 编程语言的这一强大能力。
 
 ## 前期准备
 
 为了跟随本文的例子，你将需要：
 
-- 按照[如何安装 Go 和设置本地程序环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}})设置的 Go 的 workspace
+- 按照[如何安装 Go 和设置本地程序环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean)设置的 Go 的 workspace
 
 ## `GOOS`和`GOARCH`可能支持的平台
 
@@ -107,7 +107,7 @@ func main() {
 }
 ```
 
-在这个文件的`main()`函数用`filepath.Join()`将三个[strings]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})用正确的，平台依赖的路径分隔符连接起来。
+在这个文件的`main()`函数用`filepath.Join()`将三个[strings](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go)用正确的，平台依赖的路径分隔符连接起来。
 
 保存并退出文件，然后运行程序：
 
@@ -129,7 +129,7 @@ Output
 a/b/c
 ```
 
-这表明，由于这些操作系统使用的文件系统协议不同，程序将不得不为不同的平台构建不同的代码。但由于它已经根据操作系统使用了不同的文件分隔符，所有我们知道`filepath.Join()`已经考虑了平台的差异。这是因为 Go 工具链会自动检测你的机器的`GOOS`和`GOARCH`，并使用这些信息来使用具有正确[构建标签]({{< relref "/docs/31-Customizing_Go_Binaries_with_Build_Tags.md" >}})和文件分隔符的代码片段。
+这表明，由于这些操作系统使用的文件系统协议不同，程序将不得不为不同的平台构建不同的代码。但由于它已经根据操作系统使用了不同的文件分隔符，所有我们知道`filepath.Join()`已经考虑了平台的差异。这是因为 Go 工具链会自动检测你的机器的`GOOS`和`GOARCH`，并使用这些信息来使用具有正确[构建标签](https://gocn.github.io/How-To-Code-in-Go/docs/31-Customizing_Go_Binaries_with_Build_Tags)和文件分隔符的代码片段。
 
 让我们思考一下`filepath.Join()`函数的分隔符是从哪里来的。运行以下命令来查看 Go 标准库中的相关片段：
 
@@ -215,7 +215,7 @@ func main() {
 }
 ```
 
-Join 函数接收若干`parts`，并使用[strings 包]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}})中的[`strings.Join()`](https://godoc.org/strings.Join)方法将它们连接起来，使用`PathSeparator`将各部分连接起来。
+Join 函数接收若干`parts`，并使用[strings 包](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go)中的[`strings.Join()`](https://godoc.org/strings.Join)方法将它们连接起来，使用`PathSeparator`将各部分连接起来。
 
 你还没有定义`PathSeparator`，所以现在在另一个文件中做。保存并退出`main.go`，打开你喜欢的编辑器，创建一个名为`path.go`的新文件。
 
@@ -245,7 +245,7 @@ Output
 a/b/c
 ```
 
-这样运行成功，得到一个 Unix 风格的文件路径。但这还不是我们想要的：无论在什么平台上运行，输出总是 a/b/c。为了添加创建 Windows 风格文件路径的功能，你需要添加一个 Windows 版本的`PathSeparator`，并告诉`go build`命令使用哪个版本。在下一节中，你将使用[构建标签]({{< relref "/docs/31-Customizing_Go_Binaries_with_Build_Tags.md" >}})来完成这个任务。
+这样运行成功，得到一个 Unix 风格的文件路径。但这还不是我们想要的：无论在什么平台上运行，输出总是 a/b/c。为了添加创建 Windows 风格文件路径的功能，你需要添加一个 Windows 版本的`PathSeparator`，并告诉`go build`命令使用哪个版本。在下一节中，你将使用[构建标签](https://gocn.github.io/How-To-Code-in-Go/docs/31-Customizing_Go_Binaries_with_Build_Tags)来完成这个任务。
 
 ## 使用`GOOS`或`GOARCH`构建标签
 

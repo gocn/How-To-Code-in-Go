@@ -28,7 +28,7 @@
 
 在组合反引号和双引号的方式中，我们可以控制字符串中引号和反引号的显示方式。
 
-这里有个重点，在 Go 中使用反引号会创建一个 `raw` 字符串文字，而使用双引号会创建一个 `interpreted` 字符串文字。要了解有关差异的更多信息，请阅读 [Go 中处理字符串的介绍]({{< relref "/docs/08-An_Introduction_to_Working_with_Strings_in_Go.md" >}}) 教程。
+这里有个重点，在 Go 中使用反引号会创建一个 `raw` 字符串文字，而使用双引号会创建一个 `interpreted` 字符串文字。要了解有关差异的更多信息，请阅读 [Go 中处理字符串的介绍](https://gocn.github.io/How-To-Code-in-Go/docs/08-An_Introduction_to_Working_with_Strings_in_Go) 教程。
 
 ## 转义字符
 

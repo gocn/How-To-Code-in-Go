@@ -10,7 +10,7 @@
 
 在阅读本教程前，你需要：
 
--   Go 版本 >= 1.16。你可以按照 [如何安装 Go 和设置本地编程环境]({{< relref "/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean.md" >}}) 来安装 Go。
+-   Go 版本 >= 1.16。你可以按照 [如何安装 Go 和设置本地编程环境](https://gocn.github.io/How-To-Code-in-Go/docs/01-How_To_Install_Go_and_Set_Up_a_Local Programming_Environment_on_Ubuntu_18.04_DigitalOcean) 来安装 Go。
 
 ## 获取当前时间
 
