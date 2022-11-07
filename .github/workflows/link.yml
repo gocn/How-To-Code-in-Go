@@ -1,0 +1,51 @@
+name: links
+
+on:
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: "30 8 * * *"
+
+jobs:
+  linkChecker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Download Exclude Path
+        run: |
+          curl https://raw.githubusercontent.com/gocn/How-To-Code-in-Go/main/.lycheeignore --output .lycheeignore
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2
+        with:
+          hugo-version: "latest"
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Check Links
+        uses: lycheeverse/lychee-action@v1.5.0
+        with:
+          # For parameter description, see https://github.com/lycheeverse/lychee#commandline-parameters
+          # -E, --exclude-all-private    Exclude all private IPs from checking.
+          # -v, --verbose                Verbose program output
+          # -i, --insecure               Proceed for server connections considered insecure (invalid TLS)
+          # -n, --no-progress            Do not show progress bar.
+          # -t, --timeout <timeout>      Website timeout in seconds from connect to response finished [default:20]
+          # --max-concurrency <max-concurrency>    Maximum number of concurrent network requests [default: 128]
+          # -a --accept <accept>                      Comma-separated list of accepted status codes for valid links
+
+          # ./site the MkDocs site directory to check
+          # ./*.md all markdown files in the root directory
+          args: -E -v -i -n -t 45 --max-concurrency 64 -a 429,401 -- 'public' '*.md'
+          output: out.md
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      - name: Create Issue From File
+        uses: peter-evans/create-issue-from-file@v3
+        with:
+          title: Broken Link Detected
+          content-filepath: out.md
+#          assignees: aFlyBird0
