@@ -4,7 +4,7 @@
 
 贡献者（按昵称首字母排序）:
 
-> [astaxie](https://github.com/astaxie) | [Cluas](https://github.com/Cluas) | [cvley](https://github.com/cvley) | [Fivezh](https://github.com/fivezh) | [iddunk](https://github.com/iddunk) | [lsj1342](https://github.com/lsj1342) | [watermelon](https://github.com/watermelo) | [小超人](https://github.com/ddikvy) | [Xiaomin Zheng](https://github.com/zxmfke) | [Yu Zhang](https://github.com/pseudoyu) | [朱亚光](https://github.com/zhuyaguang)
+> [astaxie](https://github.com/astaxie) | [Cluas](https://github.com/Cluas) | [cvley](https://github.com/cvley) | [Fivezh](https://github.com/fivezh) | [iddunk](https://github.com/iddunk) | [lsj1342](https://github.com/lsj1342) | [watermelon](https://github.com/watermelo) | [小超人](https://github.com/focozz) | [Xiaomin Zheng](https://github.com/zxmfke) | [Yu Zhang](https://github.com/pseudoyu) | [朱亚光](https://github.com/zhuyaguang)
 
 安装完 `hugo` 之后，需要先同步主题文件
 
@@ -137,7 +137,7 @@ The articles in 《How-To-Code-in-Go》 are licensed under a [Creative Commons A
         </a>
     </td>
     <td align="center">
-        <a href="https://github.com/dijkvy">
+        <a href="https://github.com/focozz">
             <img src="https://avatars.githubusercontent.com/u/67250607?v=4" width="100;" alt="dijkvy"/>
             <br />
             <sub><b>小超人</b></sub>
